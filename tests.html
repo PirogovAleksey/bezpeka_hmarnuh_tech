@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Тести з курсу фінансової безпеки та захисту активів.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0f9e72">
+  <title>Тести — Фінансова Безпека</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">🛡️</div>
+      <div class="logo-text">
+        Фінансова<br>Безпека
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html"><span class="nav-icon">📚</span> Лекції</a>
+      <a href="practicals.html"><span class="nav-icon">💻</span> Практичні</a>
+      <a href="tests.html" class="active"><span class="nav-icon">📝</span> Тести</a>
+      <a href="materials.html"><span class="nav-icon">📖</span> Матеріали</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="page-header">
+      <h1>Тести</h1>
+      <p>Перевірте свої знання після кожної лекції. Для проходження тесту потрібно набрати щонайменше 60% правильних відповідей.</p>
+    </div>
+
+    <div class="tests-list">
+
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-icon">📝</div>
+          <div class="test-info">
+            <h3>Тест 1: Основи фінансової безпеки</h3>
+            <p>До лекції: Вступ до фінансової безпеки</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 20 питань</span>
+          <span>⏱ 30 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-result">
+          <div class="test-score">85%</div>
+          <span class="badge badge-done">Пройдено</span>
+        </div>
+      </div>
+
+      <div class="test-card">
+        <div class="test-header">
+          <div class="test-icon">📝</div>
+          <div class="test-info">
+            <h3>Тест 2: Бюджетування</h3>
+            <p>До лекції: Бюджетування та планування</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 15 питань</span>
+          <span>⏱ 25 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-footer">
+          <a href="#" class="btn-test">Розпочати тест</a>
+        </div>
+      </div>
+
+      <div class="test-card test-locked">
+        <div class="test-header">
+          <div class="test-icon">🔒</div>
+          <div class="test-info">
+            <h3>Тест 3: Захист від шахрайства</h3>
+            <p>До лекції: Захист від шахрайства</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 25 питань</span>
+          <span>⏱ 35 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-footer">
+          <span class="btn-test disabled">Спочатку пройдіть лекцію</span>
+        </div>
+      </div>
+
+      <div class="test-card test-locked">
+        <div class="test-header">
+          <div class="test-icon">🔒</div>
+          <div class="test-info">
+            <h3>Тест 4: Інвестиції та ризики</h3>
+            <p>До лекції: Інвестиції та ризики</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 20 питань</span>
+          <span>⏱ 30 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-footer">
+          <span class="btn-test disabled">Спочатку пройдіть лекцію</span>
+        </div>
+      </div>
+
+      <div class="test-card test-locked">
+        <div class="test-header">
+          <div class="test-icon">🔒</div>
+          <div class="test-info">
+            <h3>Тест 5: Кібербезпека у фінансах</h3>
+            <p>До лекції: Кібербезпека у фінансах</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 20 питань</span>
+          <span>⏱ 30 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-footer">
+          <span class="btn-test disabled">Спочатку пройдіть лекцію</span>
+        </div>
+      </div>
+
+      <div class="test-card test-locked">
+        <div class="test-header">
+          <div class="test-icon">🔒</div>
+          <div class="test-info">
+            <h3>Тест 6: Страхування та резерви</h3>
+            <p>До лекції: Страхування та резерви</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 15 питань</span>
+          <span>⏱ 25 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-footer">
+          <span class="btn-test disabled">Спочатку пройдіть лекцію</span>
+        </div>
+      </div>
+
+      <div class="test-card test-locked">
+        <div class="test-header">
+          <div class="test-icon">🔒</div>
+          <div class="test-info">
+            <h3>Тест 7: Податкова грамотність</h3>
+            <p>До лекції: Податкова грамотність</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 20 питань</span>
+          <span>⏱ 30 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-footer">
+          <span class="btn-test disabled">Спочатку пройдіть лекцію</span>
+        </div>
+      </div>
+
+      <div class="test-card test-locked">
+        <div class="test-header">
+          <div class="test-icon">🔒</div>
+          <div class="test-info">
+            <h3>Тест 8: Фінансова стратегія</h3>
+            <p>До лекції: Фінансова стратегія</p>
+          </div>
+        </div>
+        <div class="test-details">
+          <span>📋 25 питань</span>
+          <span>⏱ 40 хв</span>
+          <span>✅ Мін. 60%</span>
+        </div>
+        <div class="test-footer">
+          <span class="btn-test disabled">Спочатку пройдіть лекцію</span>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div>
+          Кафедра твердотільної електроніки та інформаційної безпеки (ТЕІБ)<br>
+          Ужгородський національний університет<br>
+          <a href="https://teib.info/" target="_blank" rel="noopener">teib.info</a>
+        </div>
+        <div class="footer-right">
+          &copy; 2026 Фінансова Безпека
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Навчальні матеріали з курсу фінансової безпеки та захисту активів.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0f9e72">
+  <title>Матеріали — Фінансова Безпека</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">🛡️</div>
+      <div class="logo-text">
+        Фінансова<br>Безпека
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html"><span class="nav-icon">📚</span> Лекції</a>
+      <a href="practicals.html"><span class="nav-icon">💻</span> Практичні</a>
+      <a href="tests.html"><span class="nav-icon">📝</span> Тести</a>
+      <a href="materials.html" class="active"><span class="nav-icon">📖</span> Матеріали</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="page-header">
+      <h1>Навчальні матеріали</h1>
+      <p>Додаткові ресурси для поглибленого вивчення курсу: підручники, презентації, корисні посилання.</p>
+    </div>
+
+    <h2 class="section-title">Презентації до лекцій</h2>
+    <div class="materials-list">
+
+      <a href="slides.html" class="material-item">
+        <div class="material-icon">📊</div>
+        <div class="material-info">
+          <h3>Слайди: Вступ до фінансової безпеки</h3>
+          <p>Презентація до лекції 1</p>
+        </div>
+        <span class="material-type">HTML</span>
+      </a>
+
+      <a href="#" class="material-item">
+        <div class="material-icon">📊</div>
+        <div class="material-info">
+          <h3>Слайди: Бюджетування та планування</h3>
+          <p>Презентація до лекції 2</p>
+        </div>
+        <span class="material-type">PDF</span>
+      </a>
+
+      <a href="#" class="material-item">
+        <div class="material-icon">📊</div>
+        <div class="material-info">
+          <h3>Слайди: Захист від шахрайства</h3>
+          <p>Презентація до лекції 3</p>
+        </div>
+        <span class="material-type">PDF</span>
+      </a>
+
+    </div>
+
+    <h2 class="section-title">Рекомендована література</h2>
+    <div class="materials-list">
+
+      <a href="#" class="material-item">
+        <div class="material-icon">📕</div>
+        <div class="material-info">
+          <h3>Основи фінансової грамотності</h3>
+          <p>Підручник, 2024 — базовий курс фінансової грамотності</p>
+        </div>
+        <span class="material-type">PDF</span>
+      </a>
+
+      <a href="#" class="material-item">
+        <div class="material-icon">📗</div>
+        <div class="material-info">
+          <h3>Кібербезпека у фінансовому секторі</h3>
+          <p>Навчальний посібник — захист від цифрових загроз</p>
+        </div>
+        <span class="material-type">PDF</span>
+      </a>
+
+      <a href="#" class="material-item">
+        <div class="material-icon">📘</div>
+        <div class="material-info">
+          <h3>Інвестування для початківців</h3>
+          <p>Практичний посібник з основ інвестування</p>
+        </div>
+        <span class="material-type">PDF</span>
+      </a>
+
+    </div>
+
+    <h2 class="section-title">Корисні посилання</h2>
+    <div class="materials-list">
+
+      <a href="https://bank.gov.ua" target="_blank" rel="noopener" class="material-item">
+        <div class="material-icon">🔗</div>
+        <div class="material-info">
+          <h3>Національний банк України</h3>
+          <p>Офіційний сайт — регулятор фінансового ринку</p>
+        </div>
+        <span class="material-type">Посилання</span>
+      </a>
+
+      <a href="https://www.nssmc.gov.ua" target="_blank" rel="noopener" class="material-item">
+        <div class="material-icon">🔗</div>
+        <div class="material-info">
+          <h3>НКЦПФР</h3>
+          <p>Національна комісія з цінних паперів та фондового ринку</p>
+        </div>
+        <span class="material-type">Посилання</span>
+      </a>
+
+      <a href="https://cert.gov.ua" target="_blank" rel="noopener" class="material-item">
+        <div class="material-icon">🔗</div>
+        <div class="material-info">
+          <h3>CERT-UA</h3>
+          <p>Команда реагування на кіберінциденти України</p>
+        </div>
+        <span class="material-type">Посилання</span>
+      </a>
+
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div>
+          Кафедра твердотільної електроніки та інформаційної безпеки (ТЕІБ)<br>
+          Ужгородський національний університет<br>
+          <a href="https://teib.info/" target="_blank" rel="noopener">teib.info</a>
+        </div>
+        <div class="footer-right">
+          &copy; 2026 Фінансова Безпека
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>

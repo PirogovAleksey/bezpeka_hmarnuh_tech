@@ -416,6 +416,441 @@ footer a:hover {
   text-align: right;
 }
 
+/* --- Lecture cards as links --- */
+a.lecture-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* --- Lecture Page --- */
+.lecture-nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.back-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.back-link:hover {
+  opacity: 0.8;
+}
+
+.lecture-badge {
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+.lecture-content {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 48px;
+  box-shadow: var(--shadow);
+  margin-bottom: 32px;
+}
+
+.lecture-content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.lecture-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.lecture-content section {
+  margin-bottom: 32px;
+}
+
+.lecture-content section:last-child {
+  margin-bottom: 0;
+}
+
+.lecture-content h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--accent);
+}
+
+.lecture-content p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.lecture-content ul,
+.lecture-content ol {
+  margin: 12px 0 16px 24px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.lecture-content li {
+  margin-bottom: 4px;
+}
+
+.lecture-content strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.lecture-nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--accent);
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+}
+
+.nav-btn.disabled {
+  color: var(--text-secondary);
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- Practicals Page --- */
+.practicals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.practical-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s;
+}
+
+.practical-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.practical-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.practical-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--accent-light);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.practical-header > div:nth-child(2) {
+  flex: 1;
+}
+
+.practical-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.practical-lecture {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.practical-card > p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.practical-tasks {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.practical-tasks h4 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.practical-tasks ol {
+  margin-left: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.practical-tasks li {
+  margin-bottom: 2px;
+}
+
+/* --- Tests Page --- */
+.tests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.test-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s;
+}
+
+.test-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.test-card.test-locked {
+  opacity: 0.6;
+}
+
+.test-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.test-icon {
+  font-size: 24px;
+  width: 40px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.test-info {
+  flex: 1;
+}
+
+.test-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.test-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.test-details {
+  display: flex;
+  gap: 24px;
+  padding: 12px 0;
+  border-top: 1px solid var(--card-border);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.test-result {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--card-border);
+  margin-top: 12px;
+}
+
+.test-score {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.test-footer {
+  padding-top: 12px;
+  border-top: 1px solid var(--card-border);
+  margin-top: 12px;
+}
+
+.btn-test {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  background: var(--accent);
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.btn-test:hover {
+  background: var(--accent-hover);
+}
+
+.btn-test.disabled {
+  background: var(--card-border);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- Materials Page --- */
+.materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.material-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s;
+}
+
+.material-item:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.material-icon {
+  font-size: 24px;
+  width: 40px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.material-info {
+  flex: 1;
+}
+
+.material-info h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.material-info p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.material-type {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+  background: var(--bg);
+  padding: 4px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* --- 404 Page --- */
+.error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 60vh;
+}
+
+.error-code {
+  font-size: 120px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+.error-page h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.error-page p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  background: var(--accent);
+  color: #fff;
+  transition: all 0.2s;
+}
+
+.btn-back:hover {
+  background: var(--accent-hover);
+}
+
 /* --- Mobile --- */
 @media (max-width: 768px) {
   aside {
@@ -434,4 +869,11 @@ footer a:hover {
   }
   .stats { grid-template-columns: 1fr; }
   .lectures { grid-template-columns: 1fr; }
+  .lecture-content { padding: 24px; }
+  .lecture-nav-top { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .lecture-nav-bottom { flex-direction: column; }
+  .practical-header { flex-wrap: wrap; }
+  .test-details { flex-wrap: wrap; gap: 12px; }
+  .material-item { flex-wrap: wrap; }
+  .error-code { font-size: 80px; }
 }
