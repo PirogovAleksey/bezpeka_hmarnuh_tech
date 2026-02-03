@@ -9,10 +9,10 @@
   <meta property="og:description" content="Курс з безпеки хмарних технологій та розподілених обчислень. Опануйте архітектуру Zero Trust, захист контейнерів та реагування на інциденти.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uk_UA">
-  <meta name="theme-color" content="#0f9e72">
+  <meta name="theme-color" content="#0ea5e9">
   <title>Безпека хмарних технологій</title>
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script>
     if (localStorage.getItem('theme') === 'dark') {
@@ -24,7 +24,13 @@
 
   <aside>
     <div class="logo">
-      <div class="logo-icon">☁️</div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
       <div class="logo-text">
         Безпека<br>хмарних технологій
         <span>онлайн-курс</span>
@@ -32,15 +38,27 @@
     </div>
 
     <nav>
-      <a href="index.html" class="active"><span class="nav-icon">📚</span> Лекції</a>
-      <a href="practicals.html"><span class="nav-icon">💻</span> Практичні</a>
-      <a href="tests.html"><span class="nav-icon">📝</span> Тести</a>
-      <a href="materials.html"><span class="nav-icon">📖</span> Матеріали</a>
+      <a href="index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></span>
+        Практичні
+      </a>
+      <a href="tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
     </nav>
 
     <div class="sidebar-footer">
       <button class="theme-toggle" onclick="toggleTheme()">
-        <span id="theme-icon">🌙</span>
+        <svg id="theme-icon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         <span id="theme-label">Темна тема</span>
       </button>
     </div>
@@ -86,7 +104,7 @@
         <h3>Вступ до хмарних обчислень та еталонна архітектура NIST</h3>
         <p>Основні визначення, моделі обслуговування (SaaS, PaaS, IaaS), моделі розгортання та Shared Responsibility Model.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-new">Нова</span>
         </div>
       </a>
@@ -96,7 +114,7 @@
         <h3>Стандартизація та управління ризиками</h3>
         <p>ISO/IEC 27017, ключові контроли для хмари, угоди SLA та роль хмарного аудитора.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -106,7 +124,7 @@
         <h3>Архітектура нульової довіри (Zero Trust) у хмарі</h3>
         <p>Компоненти ZTA: PEP, Identity Governance, мікросегментація та використання ШІ для виявлення аномалій.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -116,7 +134,7 @@
         <h3>Безпека віртуалізації та контейнеризації</h3>
         <p>Загрози для VM та гіпервізорів, безпека Docker/Kubernetes, CWPP та захист runtime-середовища.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -126,7 +144,7 @@
         <h3>Безпека безсерверних обчислень (Serverless Security)</h3>
         <p>Архітектура FaaS/BaaS, специфічні загрози Serverless, технології ізоляції (Firecracker, gVisor).</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -136,7 +154,7 @@
         <h3>Блокчейн у розподілених системах безпеки</h3>
         <p>Блокчейн для кібербезпеки, децентралізоване управління ідентифікацією та смарт-контракти для автоматизації.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -151,7 +169,7 @@
         <h3>Управління станом безпеки та конфігураціями (CSPM)</h3>
         <p>Проблема конфігураційного дрейфу, інструменти CSPM, моніторинг відповідності CIS Benchmarks та GDPR.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -161,7 +179,7 @@
         <h3>Комплексний захист додатків (CNAPP)</h3>
         <p>Еволюція до CNAPP, інтеграція CSPM/CWPP/CIEM, підхід Shift-Left та DevSecOps.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -171,7 +189,7 @@
         <h3>ШІ та машинне навчання в хмарній безпеці</h3>
         <p>ML для виявлення аномалій (UEBA), автоматизоване реагування на інциденти, інтелектуальна пріоритезація сповіщень.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -181,7 +199,7 @@
         <h3>Захист даних та криптографія у хмарі</h3>
         <p>Шифрування at rest та in transit, управління ключами (KMS, CloudHSM), Confidential Computing та TEE.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -191,7 +209,7 @@
         <h3>Актуальні загрози та аналіз реальних інцидентів</h3>
         <p>Топ загроз 2024-2025 (CSA), кейси Snowflake/Microsoft/CrowdStrike, специфіка загроз в Україні.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
@@ -201,7 +219,7 @@
         <h3>Ринок хмарної безпеки та стратегія впровадження</h3>
         <p>Огляд ринку в Україні (AWS, Google Cloud, Azure, De Novo), побудова стратегії міграції в хмару.</p>
         <div class="lecture-meta">
-          <span>⏱ 2 год</span>
+          <span><svg viewBox="0 0 24 24" width="14" height="14" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
           <span class="badge badge-locked">Скоро</span>
         </div>
       </a>
