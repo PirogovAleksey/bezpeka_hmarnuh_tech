@@ -853,19 +853,44 @@ a.lecture-card {
 
 /* --- Mobile --- */
 @media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
   aside {
     width: 100%;
-    min-height: auto;
+    height: auto;
     position: relative;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     padding: 16px;
     gap: 16px;
   }
-  nav { flex-direction: row; overflow-x: auto; }
+  .logo {
+    justify-content: center;
+  }
+  nav {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  nav a {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .sidebar-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 12px;
+  }
+  .theme-toggle {
+    width: auto;
+  }
   main {
     margin-left: 0;
     padding: 24px 16px;
+  }
+  .page-header h1 {
+    font-size: 24px;
   }
   .stats { grid-template-columns: 1fr; }
   .lectures { grid-template-columns: 1fr; }
@@ -876,4 +901,11 @@ a.lecture-card {
   .test-details { flex-wrap: wrap; gap: 12px; }
   .material-item { flex-wrap: wrap; }
   .error-code { font-size: 80px; }
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-right {
+    text-align: center;
+  }
 }
