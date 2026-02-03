@@ -47,6 +47,11 @@ body {
   transition: background var(--transition), color var(--transition);
 }
 
+/* SVG icons default styling */
+svg {
+  fill: none;
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
