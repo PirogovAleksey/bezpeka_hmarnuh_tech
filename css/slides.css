@@ -10,6 +10,52 @@ body {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   overflow: hidden;
   margin: 0;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* --- Light Theme --- */
+body.light {
+  background: #f0f9ff;
+  color: #0c4a6e;
+}
+
+body.light .slide h1 {
+  color: #0284c7;
+}
+
+body.light .slide p {
+  color: #475569;
+}
+
+body.light .slide li {
+  color: #334155;
+}
+
+body.light .slide li::before {
+  background: #0284c7;
+}
+
+body.light .controls button,
+body.light .top-controls button,
+body.light .top-controls a {
+  background: rgba(0, 0, 0, 0.05);
+  color: #0c4a6e;
+  border-color: #bae6fd;
+}
+
+body.light .controls button:hover,
+body.light .top-controls button:hover,
+body.light .top-controls a:hover {
+  background: rgba(2, 132, 199, 0.1);
+  border-color: #0284c7;
+}
+
+body.light .slide-counter {
+  color: #64748b;
+}
+
+body.light .slide-progress {
+  background: linear-gradient(90deg, #0284c7, #22c55e);
 }
 
 /* --- Slide Deck --- */
@@ -131,4 +177,45 @@ body {
   font-size: 14px;
   color: #64748b;
   z-index: 100;
+}
+
+/* --- Top Controls (Back & Theme) --- */
+.top-controls {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-controls a,
+.top-controls button {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+  border: 1px solid #2a3a52;
+  height: 44px;
+  padding: 0 16px;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.top-controls a:hover,
+.top-controls button:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+}
+
+.top-controls svg {
+  width: 18px;
+  height: 18px;
 }

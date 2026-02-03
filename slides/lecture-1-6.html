@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 1.6 — Загрози та реальні кейси | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../lecture.html?id=1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 1.6: Топ загроз CSA та реальні інциденти</p>
+    </section>
+
+    <section class="slide">
+      <h1>CSA Top Threats to Cloud Computing</h1>
+      <ul>
+        <li>Cloud Security Alliance — провідна організація</li>
+        <li>Регулярно публікує звіт про загрози</li>
+        <li>На основі реальних інцидентів</li>
+        <li>Практичні рекомендації захисту</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>#1 Неправильна конфігурація</h1>
+      <ul>
+        <li>Публічні S3 bucket'и</li>
+        <li>Відкриті бази даних</li>
+        <li>Security groups 0.0.0.0/0</li>
+        <li>Logging вимкнено</li>
+        <li><strong>Причина 90% хмарних breach'ів</strong></li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>#2 Проблеми IAM</h1>
+      <ul>
+        <li>Надмірні привілеї</li>
+        <li>Відсутність MFA</li>
+        <li>Shared credentials</li>
+        <li>Hardcoded ключі в коді</li>
+        <li>Застарілі акаунти</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>#3 Небезпечні API</h1>
+      <ul>
+        <li>Broken authentication</li>
+        <li>Excessive data exposure</li>
+        <li>No rate limiting</li>
+        <li>Injection вразливості</li>
+        <li>OWASP API Security Top 10</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>#4 Компрометація акаунтів</h1>
+      <ul>
+        <li><strong>Phishing</strong> — найпоширеніший вектор</li>
+        <li>Credential stuffing</li>
+        <li>Витік ключів у GitHub</li>
+        <li>Malware / keyloggers</li>
+        <li><strong>MFA — критичний захист</strong></li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>#5 Внутрішні загрози</h1>
+      <ul>
+        <li><strong>Зловмисні</strong> — крадіжка даних, саботаж</li>
+        <li><strong>Недбалі</strong> — помилки конфігурації</li>
+        <li><strong>Compromised</strong> — викрадені credentials</li>
+        <li>Principle of Least Privilege</li>
+        <li>Моніторинг привілейованих дій</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Кейс: Capital One (2019)</h1>
+      <ul>
+        <li><strong>106 мільйонів</strong> записів клієнтів</li>
+        <li>Імена, адреси, SSN, кредитна історія</li>
+        <li>Штраф <strong>$80 мільйонів</strong></li>
+        <li>Атакуюча — колишня працівниця AWS</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Capital One — як це сталося</h1>
+      <ul>
+        <li>WAF з надмірними IAM правами</li>
+        <li>SSRF вразливість у WAF</li>
+        <li>Доступ до EC2 metadata service</li>
+        <li>Отримання IAM credentials</li>
+        <li>Доступ до S3 з даними клієнтів</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Capital One — чия відповідальність?</h1>
+      <ul>
+        <li><strong>AWS?</strong> — інфраструктура працювала правильно</li>
+        <li><strong>Capital One?</strong> — неправильна конфігурація</li>
+        <li>Надмірні IAM права</li>
+        <li>Відсутність захисту від SSRF</li>
+        <li><strong>= Відповідальність клієнта</strong></li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Кейс: Uber (2016)</h1>
+      <ul>
+        <li><strong>57 мільйонів</strong> записів</li>
+        <li>AWS credentials у GitHub репозиторії</li>
+        <li>Uber заплатила хакерам $100K</li>
+        <li>Приховували інцидент рік</li>
+        <li><strong>Урок:</strong> ніколи не hardcode credentials</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Кейс: Log4Shell (2021)</h1>
+      <ul>
+        <li>CVE-2021-44228 — критична вразливість</li>
+        <li>Remote Code Execution</li>
+        <li>Мільйони Java-додатків вразливі</li>
+        <li><strong>Supply chain</strong> — залежності мають вразливості</li>
+        <li>SCA (Software Composition Analysis)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Як захищатися</h1>
+      <ul>
+        <li><strong>CSPM</strong> — автоматичне сканування конфігурацій</li>
+        <li><strong>IAM гігієна</strong> — least privilege, MFA, аудит</li>
+        <li><strong>Secrets management</strong> — ніякого hardcoding</li>
+        <li><strong>Infrastructure as Code</strong> — версіонування, review</li>
+        <li><strong>Continuous monitoring</strong> — виявлення аномалій</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Ключові висновки</h1>
+      <ul>
+        <li>Конфігурація — #1 причина інцидентів</li>
+        <li>Shared Responsibility — знай свою частину</li>
+        <li>Автоматизуй безпеку</li>
+        <li>Моніторинг та аудит — постійно</li>
+        <li>Вчись на чужих помилках</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Кінець Лекції 1</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../js/slides.js"></script>
+
+</body>
+</html>
