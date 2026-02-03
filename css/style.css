@@ -960,6 +960,85 @@ a.lecture-card {
   flex-shrink: 0;
 }
 
+/* --- Seminars --- */
+.seminars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.seminar-module {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.seminar-module > h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+  color: var(--accent);
+}
+
+.seminar-lecture {
+  margin-bottom: 24px;
+}
+
+.seminar-lecture:last-child {
+  margin-bottom: 0;
+}
+
+.seminar-lecture > h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.seminars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seminar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: 10px;
+  transition: all var(--transition);
+}
+
+.seminar-item:hover {
+  background: var(--accent-light);
+  transform: translateX(4px);
+}
+
+.seminar-number {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.seminar-title {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
 /* --- 404 Page --- */
 .error-page {
   display: flex;

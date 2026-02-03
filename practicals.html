@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Практичні роботи з курсу безпеки хмарних технологій та розподілених обчислень.">
+  <meta name="description" content="Теми семінарських занять з курсу безпеки хмарних технологій.">
   <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
   <meta name="theme-color" content="#0ea5e9">
-  <title>Практичні роботи — Безпека хмарних технологій</title>
+  <title>Теми семінарів — Безпека хмарних технологій</title>
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
@@ -39,8 +39,8 @@
         Лекції
       </a>
       <a href="practicals.html" class="active">
-        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></span>
-        Практичні
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
       </a>
       <a href="tests.html">
         <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
@@ -62,137 +62,363 @@
 
   <main>
     <div class="page-header">
-      <h1>Практичні роботи</h1>
-      <p>Закріпіть теоретичні знання на практиці. Кожна практична робота відповідає матеріалу відповідних лекцій.</p>
+      <h1>Теми семінарів</h1>
+      <p>60 тем для індивідуальних та групових семінарських виступів, розподілені за модулями курсу.</p>
     </div>
 
-    <div class="practicals-list">
+    <article class="lecture-content">
+      <section>
+        <h2>Що таке семінарське заняття?</h2>
+        <p><strong>Семінар</strong> — це форма навчального заняття, на якому викладач організовує обговорення студентами питань з попередньо визначених тем. Семінари сприяють розвитку критичного мислення, навичок публічних виступів та поглибленому засвоєнню матеріалу.</p>
 
-      <div class="practical-card">
-        <div class="practical-header">
-          <div class="practical-number">01</div>
-          <div>
-            <h3>Аналіз моделі розподілу відповідальності</h3>
-            <p class="practical-lecture">До лекцій 1-2: Архітектура NIST та стандартизація</p>
-          </div>
-          <span class="badge badge-new">Нова</span>
-        </div>
-        <p>Проаналізуйте модель Shared Responsibility для різних хмарних провайдерів та типів сервісів.</p>
-        <div class="practical-tasks">
-          <h4>Завдання:</h4>
-          <ol>
-            <li>Порівняйте матриці відповідальності AWS, Azure та GCP для IaaS/PaaS/SaaS</li>
-            <li>Визначте зони відповідальності клієнта для конкретного сценарію</li>
-            <li>Складіть чек-лист контролів безпеки згідно ISO/IEC 27017</li>
-            <li>Проаналізуйте типові SLA хмарних провайдерів</li>
-          </ol>
-        </div>
-      </div>
+        <h3>Формат проведення</h3>
+        <ul>
+          <li><strong>Доповідь</strong> — студент готує виступ на 10-15 хвилин за обраною темою</li>
+          <li><strong>Презентація</strong> — супровід доповіді слайдами (10-15 слайдів)</li>
+          <li><strong>Обговорення</strong> — відповіді на питання групи та викладача</li>
+          <li><strong>Дискусія</strong> — групове обговорення проблемних аспектів теми</li>
+        </ul>
 
-      <div class="practical-card">
-        <div class="practical-header">
-          <div class="practical-number">02</div>
-          <div>
-            <h3>Проєктування Zero Trust архітектури</h3>
-            <p class="practical-lecture">До лекції 3: Архітектура нульової довіри</p>
-          </div>
-          <span class="badge badge-locked">Скоро</span>
-        </div>
-        <p>Розробіть архітектуру Zero Trust для гіпотетичної організації з хмарною інфраструктурою.</p>
-        <div class="practical-tasks">
-          <h4>Завдання:</h4>
-          <ol>
-            <li>Визначте критичні ресурси та потоки даних</li>
-            <li>Спроєктуйте мікросегментацію мережі</li>
-            <li>Опишіть політики доступу (PEP/PDP)</li>
-            <li>Запропонуйте механізми верифікації ідентичності</li>
-          </ol>
-        </div>
-      </div>
+        <h3>Вимоги до доповіді</h3>
+        <ul>
+          <li>Використання актуальних джерел (не старше 3-5 років)</li>
+          <li>Посилання на офіційну документацію, стандарти, наукові статті</li>
+          <li>Практичні приклади та реальні кейси</li>
+          <li>Власний аналіз та висновки</li>
+          <li>Список використаних джерел (мінімум 5)</li>
+        </ul>
 
-      <div class="practical-card">
-        <div class="practical-header">
-          <div class="practical-number">03</div>
-          <div>
-            <h3>Безпека контейнерів та Kubernetes</h3>
-            <p class="practical-lecture">До лекції 4: Безпека віртуалізації та контейнеризації</p>
-          </div>
-          <span class="badge badge-locked">Скоро</span>
-        </div>
-        <p>Налаштуйте безпечне середовище Kubernetes та проведіть аудит конфігурації.</p>
-        <div class="practical-tasks">
-          <h4>Завдання:</h4>
-          <ol>
-            <li>Розгорніть тестовий Kubernetes кластер (minikube/kind)</li>
-            <li>Налаштуйте RBAC політики та Network Policies</li>
-            <li>Проскануйте образи контейнерів на вразливості (Trivy)</li>
-            <li>Перевірте відповідність CIS Kubernetes Benchmark</li>
-          </ol>
-        </div>
-      </div>
+        <h3>Критерії оцінювання</h3>
+        <ul>
+          <li><strong>Зміст</strong> — повнота розкриття теми, актуальність інформації (40%)</li>
+          <li><strong>Презентація</strong> — якість слайдів, візуалізація (20%)</li>
+          <li><strong>Виступ</strong> — чіткість викладу, володіння матеріалом (20%)</li>
+          <li><strong>Відповіді на питання</strong> — глибина розуміння теми (20%)</li>
+        </ul>
+      </section>
+    </article>
 
-      <div class="practical-card">
-        <div class="practical-header">
-          <div class="practical-number">04</div>
-          <div>
-            <h3>Аудит конфігурації хмарних ресурсів (CSPM)</h3>
-            <p class="practical-lecture">До лекцій 7-8: CSPM та CNAPP</p>
-          </div>
-          <span class="badge badge-locked">Скоро</span>
-        </div>
-        <p>Використайте інструменти CSPM для виявлення помилок конфігурації в хмарному середовищі.</p>
-        <div class="practical-tasks">
-          <h4>Завдання:</h4>
-          <ol>
-            <li>Налаштуйте Scout Suite або Prowler для AWS/Azure</li>
-            <li>Проведіть сканування тестового середовища</li>
-            <li>Проаналізуйте знайдені вразливості за CIS Benchmarks</li>
-            <li>Складіть план усунення критичних проблем</li>
-          </ol>
-        </div>
-      </div>
+    <div class="seminars-container">
 
-      <div class="practical-card">
-        <div class="practical-header">
-          <div class="practical-number">05</div>
-          <div>
-            <h3>Шифрування та управління ключами</h3>
-            <p class="practical-lecture">До лекції 10: Захист даних та криптографія</p>
-          </div>
-          <span class="badge badge-locked">Скоро</span>
-        </div>
-        <p>Практичне налаштування шифрування даних та управління ключами в хмарі.</p>
-        <div class="practical-tasks">
-          <h4>Завдання:</h4>
-          <ol>
-            <li>Створіть та налаштуйте ключі в AWS KMS або Azure Key Vault</li>
-            <li>Налаштуйте шифрування даних at rest для сховища</li>
-            <li>Реалізуйте envelope encryption для додатку</li>
-            <li>Налаштуйте ротацію ключів та аудит доступу</li>
-          </ol>
-        </div>
-      </div>
+      <section class="seminar-module">
+        <h2>Модуль 1: Архітектура, стандарти та основи безпеки</h2>
 
-      <div class="practical-card">
-        <div class="practical-header">
-          <div class="practical-number">06</div>
-          <div>
-            <h3>Аналіз реального інциденту безпеки</h3>
-            <p class="practical-lecture">До лекції 11: Актуальні загрози та аналіз інцидентів</p>
+        <div class="seminar-lecture">
+          <h3>Лекція 1: Вступ до хмарних обчислень та NIST</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">1</span>
+              <span class="seminar-title">Еволюція хмарних обчислень: від мейнфреймів до serverless</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">2</span>
+              <span class="seminar-title">Порівняльний аналіз визначень хмарних обчислень (NIST, ISO, Gartner)</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">3</span>
+              <span class="seminar-title">П'ять характеристик NIST: безпекові імплікації кожної</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">4</span>
+              <span class="seminar-title">Аналіз ринку хмарних провайдерів: AWS vs Azure vs GCP</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">5</span>
+              <span class="seminar-title">Multi-tenancy: технічні механізми ізоляції та їх обмеження</span>
+            </div>
           </div>
-          <span class="badge badge-locked">Скоро</span>
         </div>
-        <p>Детальний аналіз реального інциденту хмарної безпеки та розробка рекомендацій.</p>
-        <div class="practical-tasks">
-          <h4>Завдання:</h4>
-          <ol>
-            <li>Оберіть інцидент з публічних звітів (Capital One, Snowflake тощо)</li>
-            <li>Відтворіть хронологію атаки та вектори проникнення</li>
-            <li>Визначте порушені контролі безпеки</li>
-            <li>Розробіть план превентивних заходів</li>
-          </ol>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 2: Стандартизація та управління ризиками</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">6</span>
+              <span class="seminar-title">ISO/IEC 27017: контролі безпеки для хмарних сервісів</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">7</span>
+              <span class="seminar-title">ISO/IEC 27018: захист персональних даних у публічній хмарі</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">8</span>
+              <span class="seminar-title">SOC 2 Type II: що він означає і чого не гарантує</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">9</span>
+              <span class="seminar-title">CSA STAR: рівні сертифікації та їх значення</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">10</span>
+              <span class="seminar-title">GDPR та хмарні обчислення: вимоги до обробки даних в ЄС</span>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 3: Zero Trust Architecture</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">11</span>
+              <span class="seminar-title">Принципи Zero Trust: "Never trust, always verify"</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">12</span>
+              <span class="seminar-title">NIST SP 800-207: еталонна архітектура Zero Trust</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">13</span>
+              <span class="seminar-title">Мікросегментація мережі в хмарному середовищі</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">14</span>
+              <span class="seminar-title">Software-Defined Perimeter (SDP) як реалізація Zero Trust</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">15</span>
+              <span class="seminar-title">Порівняння ZTNA-рішень: Zscaler, Cloudflare, Palo Alto</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 4: Безпека віртуалізації та контейнерів</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">16</span>
+              <span class="seminar-title">Вразливості гіпервізорів: Spectre, Meltdown та їх наслідки</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">17</span>
+              <span class="seminar-title">Docker security: best practices та типові помилки</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">18</span>
+              <span class="seminar-title">Kubernetes RBAC: проектування політик доступу</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">19</span>
+              <span class="seminar-title">Container image security: сканування та підпис образів</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">20</span>
+              <span class="seminar-title">Service mesh (Istio, Linkerd): безпека мікросервісної архітектури</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 5: Serverless Security</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">21</span>
+              <span class="seminar-title">AWS Lambda security model: можливості та обмеження</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">22</span>
+              <span class="seminar-title">Вразливості serverless-додатків: OWASP Serverless Top 10</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">23</span>
+              <span class="seminar-title">Cold start attacks та інші специфічні загрози FaaS</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">24</span>
+              <span class="seminar-title">Порівняння безпеки: serverless vs containers vs VMs</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">25</span>
+              <span class="seminar-title">Event injection attacks у serverless архітектурах</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 6: Blockchain у безпеці розподілених систем</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">26</span>
+              <span class="seminar-title">Консенсусні механізми: PoW, PoS, PBFT — безпекові властивості</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">27</span>
+              <span class="seminar-title">Smart contract vulnerabilities: реальні кейси (DAO hack, Parity)</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">28</span>
+              <span class="seminar-title">Blockchain для управління ідентичностями (Self-Sovereign Identity)</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">29</span>
+              <span class="seminar-title">Приватні блокчейни в enterprise: Hyperledger vs R3 Corda</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">30</span>
+              <span class="seminar-title">Децентралізоване зберігання даних: IPFS, Filecoin, Storj</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="seminar-module">
+        <h2>Модуль 2: Моніторинг, захист даних та реагування</h2>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 7: Cloud Security Posture Management (CSPM)</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">31</span>
+              <span class="seminar-title">CSPM: архітектура та ключові функції</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">32</span>
+              <span class="seminar-title">Порівняння CSPM-рішень: Prisma Cloud, Wiz, Orca Security</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">33</span>
+              <span class="seminar-title">CIS Benchmarks для AWS/Azure/GCP: практичне застосування</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">34</span>
+              <span class="seminar-title">Infrastructure as Code security: сканування Terraform/CloudFormation</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">35</span>
+              <span class="seminar-title">Автоматичне виправлення misconfigurations: можливості та ризики</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 8: Cloud-Native Application Protection (CNAPP)</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">36</span>
+              <span class="seminar-title">CNAPP як еволюція CSPM + CWPP: що нового?</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">37</span>
+              <span class="seminar-title">Runtime protection для контейнерів та serverless</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">38</span>
+              <span class="seminar-title">Cloud Workload Protection Platforms (CWPP): огляд ринку</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">39</span>
+              <span class="seminar-title">Supply chain security: захист CI/CD pipeline</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">40</span>
+              <span class="seminar-title">Shift-left security: інтеграція безпеки в DevOps</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 9: AI/ML у хмарній безпеці</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">41</span>
+              <span class="seminar-title">Machine Learning для виявлення аномалій у хмарі</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">42</span>
+              <span class="seminar-title">UEBA (User and Entity Behavior Analytics) в хмарному середовищі</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">43</span>
+              <span class="seminar-title">AI-powered threat detection: можливості та обмеження</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">44</span>
+              <span class="seminar-title">Adversarial attacks на ML-моделі в хмарі</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">45</span>
+              <span class="seminar-title">Безпека MLOps: захист ML pipeline та моделей</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 10: Захист даних та криптографія</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">46</span>
+              <span class="seminar-title">Encryption at rest vs in transit: технічна реалізація в хмарі</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">47</span>
+              <span class="seminar-title">Key Management Services: AWS KMS, Azure Key Vault, GCP Cloud KMS</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">48</span>
+              <span class="seminar-title">Bring Your Own Key (BYOK) vs Hold Your Own Key (HYOK)</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">49</span>
+              <span class="seminar-title">Confidential Computing: Intel SGX, AMD SEV, ARM TrustZone</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">50</span>
+              <span class="seminar-title">Homomorphic encryption: практичне застосування в хмарі</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 11: Актуальні загрози та аналіз інцидентів</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">51</span>
+              <span class="seminar-title">Capital One breach (2019): детальний технічний аналіз</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">52</span>
+              <span class="seminar-title">SolarWinds attack: supply chain compromise в хмарну еру</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">53</span>
+              <span class="seminar-title">Codecov breach: компрометація CI/CD як вектор атаки</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">54</span>
+              <span class="seminar-title">Snowflake incidents (2024): масова компрометація клієнтів</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">55</span>
+              <span class="seminar-title">Log4Shell: уроки для хмарної безпеки</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="seminar-lecture">
+          <h3>Лекція 12: Ринок хмарної безпеки та стратегія міграції</h3>
+          <div class="seminars-list">
+            <div class="seminar-item">
+              <span class="seminar-number">56</span>
+              <span class="seminar-title">Cloud Security Market: ключові гравці та тренди 2024-2025</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">57</span>
+              <span class="seminar-title">Secure cloud migration framework: методологія та best practices</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">58</span>
+              <span class="seminar-title">Multi-cloud security strategy: виклики та рішення</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">59</span>
+              <span class="seminar-title">Cloud exit strategy: як безпечно покинути провайдера</span>
+            </div>
+            <div class="seminar-item">
+              <span class="seminar-number">60</span>
+              <span class="seminar-title">Майбутнє хмарної безпеки: quantum computing, AI, edge</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
     </div>
 
