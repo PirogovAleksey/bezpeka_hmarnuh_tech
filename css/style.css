@@ -1130,6 +1130,22 @@ a.lecture-card {
   max-width: 400px;
 }
 
+/* --- Tablet --- */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+  .lectures {
+    grid-template-columns: 1fr;
+  }
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .slides-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* --- Mobile --- */
 @media (max-width: 768px) {
   body {

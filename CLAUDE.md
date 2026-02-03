@@ -14,7 +14,7 @@
 ```
 ├── index.html          # Головна — список лекцій
 ├── lecture.html        # Сторінка лекції (динамічна через ?id=N)
-├── practicals.html     # Практичні завдання
+├── practicals.html     # Семінари (60 тем)
 ├── tests.html          # Тести
 ├── materials.html      # Матеріали
 ├── slides.html         # Презентації (список)
@@ -90,7 +90,9 @@ node scripts/generate-slides.js data/lecture-N.json
 
 ### CSS
 - CSS змінні для кольорів (визначені в `:root` та `.dark`)
-- Mobile-first, брейкпоінт: `max-width: 768px`
+- Responsive брейкпоінти:
+  - Планшет: `max-width: 1024px`
+  - Мобільний: `max-width: 768px`
 - Класи теми: `.dark` на `<html>` та `<body>`
 
 ### JavaScript
@@ -133,5 +135,7 @@ node scripts/generate-slides.js data/lecture-N.json
 
 ## Готовий контент
 
-- ✅ Лекція 1: конспект + 4 презентації
+- ✅ Лекція 1: конспект + 6 презентацій
+- ✅ 60 тем семінарських занять
 - ⏳ Лекції 2-12: в розробці
+- ⏳ Тести: структура готова, функціонал в розробці
