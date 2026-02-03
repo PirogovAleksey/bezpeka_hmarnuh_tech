@@ -183,6 +183,71 @@
   </main>
 
   <script src="js/main.js"></script>
+  <script>
+    // Lecture data for lectures 2-12 (coming soon)
+    const lectures = {
+      1: { title: 'Вступ до хмарних обчислень та еталонна архітектура NIST', available: true },
+      2: { title: 'Стандартизація та управління ризиками', available: false },
+      3: { title: 'Архітектура нульової довіри (Zero Trust) у хмарі', available: false },
+      4: { title: 'Безпека віртуалізації та контейнеризації', available: false },
+      5: { title: 'Безпека безсерверних обчислень (Serverless Security)', available: false },
+      6: { title: 'Блокчейн у розподілених системах безпеки', available: false },
+      7: { title: 'Управління станом безпеки та конфігураціями (CSPM)', available: false },
+      8: { title: 'Комплексний захист додатків (CNAPP)', available: false },
+      9: { title: 'ШІ та машинне навчання в хмарній безпеці', available: false },
+      10: { title: 'Захист даних та криптографія у хмарі', available: false },
+      11: { title: 'Актуальні загрози та аналіз реальних інцидентів', available: false },
+      12: { title: 'Ринок хмарної безпеки та стратегія впровадження', available: false }
+    };
+
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const lectureId = parseInt(params.get('id')) || 1;
+      const lecture = lectures[lectureId];
+
+      if (!lecture) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Update page title and badge
+      document.title = `Лекція ${lectureId} — Безпека хмарних технологій`;
+      document.querySelector('.lecture-badge').textContent = `Лекція ${lectureId} з 12`;
+
+      // Update navigation buttons
+      const navBottom = document.querySelector('.lecture-nav-bottom');
+      const prevBtn = lectureId > 1
+        ? `<a href="lecture.html?id=${lectureId - 1}" class="nav-btn">← Попередня</a>`
+        : `<span class="nav-btn disabled">← Попередня</span>`;
+      const nextBtn = lectureId < 12
+        ? `<a href="lecture.html?id=${lectureId + 1}" class="nav-btn">Наступна →</a>`
+        : `<span class="nav-btn disabled">Наступна →</span>`;
+      navBottom.innerHTML = prevBtn + nextBtn;
+
+      // If lecture is not available, show "coming soon" content
+      if (!lecture.available) {
+        const article = document.querySelector('.lecture-content');
+        article.innerHTML = `
+          <h1>${lecture.title}</h1>
+          <div class="lecture-info">
+            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+            <span class="badge badge-locked">Скоро</span>
+          </div>
+          <section class="coming-soon">
+            <div class="coming-soon-icon">
+              <svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <h2>Матеріали готуються</h2>
+            <p>Конспект та презентації для цієї лекції будуть доступні найближчим часом.</p>
+            <a href="index.html" class="btn-back">← Повернутися до списку лекцій</a>
+          </section>
+        `;
+      }
+    })();
+  </script>
 
 </body>
 </html>

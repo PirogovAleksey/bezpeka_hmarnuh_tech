@@ -907,6 +907,19 @@ a.lecture-card {
   box-shadow: var(--shadow-lg);
 }
 
+.material-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.material-disabled:hover {
+  transform: none;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  border-color: var(--card-border);
+}
+
 .material-icon {
   width: 40px;
   height: 40px;
@@ -1084,6 +1097,37 @@ a.lecture-card {
 
 .btn-back:hover {
   background: var(--accent-hover);
+}
+
+/* --- Coming Soon --- */
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 20px;
+  margin-top: 20px;
+}
+
+.coming-soon-icon {
+  color: var(--accent);
+  opacity: 0.4;
+  margin-bottom: 24px;
+}
+
+.coming-soon h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.coming-soon p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  max-width: 400px;
 }
 
 /* --- Mobile --- */
