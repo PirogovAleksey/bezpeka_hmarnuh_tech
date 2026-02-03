@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 1.3 — Моделі обслуговування | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 1.3: Моделі обслуговування — IaaS, PaaS, SaaS</p>
+    </section>
+
+    <section class="slide">
+      <h1>Три моделі обслуговування</h1>
+      <ul>
+        <li><strong>IaaS</strong> — Infrastructure as a Service</li>
+        <li><strong>PaaS</strong> — Platform as a Service</li>
+        <li><strong>SaaS</strong> — Software as a Service</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>IaaS — Infrastructure as a Service</h1>
+      <ul>
+        <li>Споживач отримує: VM, сховища, мережі</li>
+        <li>Контролює: ОС, додатки, дані</li>
+        <li><strong>Приклади:</strong> AWS EC2, Azure VMs, GCE</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>IaaS — Безпекові зобов'язання</h1>
+      <ul>
+        <li>Патчинг операційних систем</li>
+        <li>Конфігурація Security Groups</li>
+        <li>Шифрування даних at rest</li>
+        <li>Моніторинг та логування</li>
+        <li>Управління доступом до VM</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>PaaS — Platform as a Service</h1>
+      <ul>
+        <li>Споживач отримує: платформу для додатків</li>
+        <li>Контролює: код додатків, конфігурації</li>
+        <li><strong>Приклади:</strong> Heroku, App Engine, Azure App Service</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>PaaS — Безпекові зобов'язання</h1>
+      <ul>
+        <li>Безпека коду (OWASP Top 10)</li>
+        <li>Захист даних додатку</li>
+        <li>Управління API ключами</li>
+        <li>Secrets management</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>SaaS — Software as a Service</h1>
+      <ul>
+        <li>Споживач отримує: готовий додаток</li>
+        <li>Контролює: налаштування, користувачів</li>
+        <li><strong>Приклади:</strong> Microsoft 365, Salesforce, Slack</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>SaaS — Безпекові зобов'язання</h1>
+      <ul>
+        <li>Управління ідентифікаціями (IAM)</li>
+        <li>Захист облікових записів (MFA)</li>
+        <li>Класифікація даних</li>
+        <li>Compliance з політиками</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Порівняння моделей</h1>
+      <ul>
+        <li><strong>IaaS:</strong> Максимальний контроль, найбільші зобов'язання</li>
+        <li><strong>PaaS:</strong> Середній контроль, фокус на коді</li>
+        <li><strong>SaaS:</strong> Мінімальний контроль, фокус на даних</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна тема: Shared Responsibility Model</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../js/slides.js"></script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Лекція з курсу безпеки хмарних технологій та розподілених обчислень.">
+  <meta name="description" content="Лекція 1: Вступ до хмарних обчислень та еталонна архітектура NIST. Курс безпеки хмарних технологій.">
   <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
   <meta name="theme-color" content="#0ea5e9">
   <title>Лекція 1 — Безпека хмарних технологій</title>
@@ -74,105 +74,72 @@
       </div>
 
       <section>
-        <h2>1.1 Що таке хмарні обчислення?</h2>
-        <p>Хмарні обчислення (Cloud Computing) — це модель надання зручного мережевого доступу на вимогу до спільного пулу налаштовуваних обчислювальних ресурсів (мережі, сервери, сховища, додатки та сервіси), які можуть бути швидко надані та звільнені з мінімальними зусиллями з управління або взаємодії з постачальником послуг.</p>
-        <p>Згідно з <strong>NIST SP 800-145</strong>, хмарні обчислення мають п'ять основних характеристик:</p>
+        <h2>Огляд лекції</h2>
+        <p>У цій лекції ми закладемо фундамент для розуміння хмарних технологій через призму безпеки. Хмарні обчислення радикально змінили спосіб, у який організації використовують інформаційні технології — від стартапів до транснаціональних корпорацій усі переносять свою інфраструктуру в хмару.</p>
+        <p>Ви дізнаєтесь про еталонну архітектуру NIST з п'ятьма акторами (споживач, провайдер, аудитор, брокер, носій), три моделі обслуговування (IaaS, PaaS, SaaS), чотири моделі розгортання (публічна, приватна, гібридна, громадська хмара), а також фундаментальну модель розподілу відповідальності (Shared Responsibility Model).</p>
+
+        <h3>Теми лекції</h3>
         <ul>
-          <li><strong>Самообслуговування на вимогу (On-demand self-service)</strong> — споживач може самостійно замовляти обчислювальні потужності без участі персоналу провайдера.</li>
-          <li><strong>Широкий мережевий доступ (Broad network access)</strong> — ресурси доступні через мережу за допомогою стандартних механізмів.</li>
-          <li><strong>Пул ресурсів (Resource pooling)</strong> — ресурси провайдера об'єднані для обслуговування багатьох споживачів (модель multi-tenant).</li>
-          <li><strong>Швидка еластичність (Rapid elasticity)</strong> — можливості можуть швидко та еластично надаватися і звільнятися.</li>
-          <li><strong>Вимірюваний сервіс (Measured service)</strong> — використання ресурсів автоматично контролюється та оптимізується.</li>
+          <li><strong>Еволюція хмарних обчислень</strong> — від мейнфреймів до хмари, ключові віхи (AWS 2006, Azure 2010, NIST SP 800-145)</li>
+          <li><strong>Визначення та характеристики за NIST</strong> — п'ять характеристик: on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service</li>
+          <li><strong>Еталонна архітектура NIST</strong> — п'ять акторів: Cloud Consumer, Provider, Auditor, Broker, Carrier</li>
+          <li><strong>Моделі обслуговування</strong> — IaaS, PaaS, SaaS та їх безпекові імплікації</li>
+          <li><strong>Моделі розгортання</strong> — Public, Private, Hybrid, Community Cloud</li>
+          <li><strong>Shared Responsibility Model</strong> — розподіл відповідальності між клієнтом та провайдером</li>
         </ul>
       </section>
 
-      <section>
-        <h2>1.2 Еталонна архітектура NIST: 5 головних акторів</h2>
-        <p>NIST визначає п'ять основних учасників екосистеми хмарних обчислень:</p>
-        <ol>
-          <li><strong>Хмарний споживач (Cloud Consumer)</strong> — особа або організація, яка використовує хмарні сервіси.</li>
-          <li><strong>Хмарний провайдер (Cloud Provider)</strong> — особа, організація чи компанія, яка надає хмарні сервіси.</li>
-          <li><strong>Хмарний аудитор (Cloud Auditor)</strong> — сторона, що проводить незалежну оцінку хмарних сервісів (безпека, продуктивність, відповідність).</li>
-          <li><strong>Хмарний брокер (Cloud Broker)</strong> — посередник, що управляє використанням, продуктивністю та доставкою хмарних сервісів.</li>
-          <li><strong>Хмарний носій (Cloud Carrier)</strong> — посередник, що забезпечує підключення та транспортування хмарних сервісів.</li>
-        </ol>
+      <section class="lecture-materials">
+        <h2>Матеріали лекції</h2>
+        <a href="conspects/lecture-1.html" class="material-item">
+          <div class="material-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg></div>
+          <div class="material-info">
+            <h3>Конспект лекції 1</h3>
+            <p>Повний текст лекції з усіх тем</p>
+          </div>
+          <span class="material-type">Конспект</span>
+        </a>
       </section>
 
-      <section>
-        <h2>1.3 Моделі обслуговування</h2>
-        <p>Існує три основні моделі хмарних сервісів:</p>
-        <ul>
-          <li><strong>SaaS (Software as a Service)</strong> — програмне забезпечення як послуга. Споживач використовує додатки провайдера, що працюють на хмарній інфраструктурі (наприклад, Gmail, Microsoft 365, Salesforce).</li>
-          <li><strong>PaaS (Platform as a Service)</strong> — платформа як послуга. Споживач розгортає власні або придбані додатки, створені за допомогою мов програмування та інструментів провайдера (наприклад, Google App Engine, Heroku, Azure App Service).</li>
-          <li><strong>IaaS (Infrastructure as a Service)</strong> — інфраструктура як послуга. Споживач отримує обчислювальні ресурси (процесор, пам'ять, мережі, сховища) і може розгортати довільне ПЗ (наприклад, AWS EC2, Google Compute Engine, Azure VMs).</li>
-        </ul>
-      </section>
+      <section class="lecture-slides">
+        <h2>Презентації</h2>
+        <div class="slides-grid">
+          <a href="slides/lecture-1-1.html" class="material-item">
+            <div class="material-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+            <div class="material-info">
+              <h3>Тема 1.1 — Еволюція та визначення</h3>
+              <p>Від мейнфреймів до хмари, NIST SP 800-145, п'ять характеристик</p>
+            </div>
+            <span class="material-type">Слайди</span>
+          </a>
 
-      <section>
-        <h2>1.4 Моделі розгортання</h2>
-        <p>Хмарна інфраструктура може бути розгорнута в різних конфігураціях:</p>
-        <ul>
-          <li><strong>Публічна хмара (Public Cloud)</strong> — інфраструктура доступна для широкого загалу, належить та управляється хмарним провайдером.</li>
-          <li><strong>Приватна хмара (Private Cloud)</strong> — інфраструктура призначена для виключного використання однією організацією.</li>
-          <li><strong>Гібридна хмара (Hybrid Cloud)</strong> — композиція двох або більше хмар (приватних, публічних), що залишаються окремими сутностями, але пов'язані технологіями.</li>
-          <li><strong>Громадська хмара (Community Cloud)</strong> — інфраструктура для спільного використання певною спільнотою організацій зі спільними інтересами.</li>
-        </ul>
-      </section>
+          <a href="slides/lecture-1-2.html" class="material-item">
+            <div class="material-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+            <div class="material-info">
+              <h3>Тема 1.2 — Еталонна архітектура NIST</h3>
+              <p>П'ять акторів: Consumer, Provider, Auditor, Broker, Carrier</p>
+            </div>
+            <span class="material-type">Слайди</span>
+          </a>
 
-      <section>
-        <h2>1.5 Модель розподілу відповідальності (Shared Responsibility Model)</h2>
-        <p>Один з найважливіших концептів у хмарній безпеці — це розуміння того, хто за що відповідає:</p>
-        <table>
-          <tr>
-            <th>Компонент</th>
-            <th>IaaS</th>
-            <th>PaaS</th>
-            <th>SaaS</th>
-          </tr>
-          <tr>
-            <td>Дані</td>
-            <td>Клієнт</td>
-            <td>Клієнт</td>
-            <td>Клієнт</td>
-          </tr>
-          <tr>
-            <td>Додатки</td>
-            <td>Клієнт</td>
-            <td>Клієнт</td>
-            <td>Провайдер</td>
-          </tr>
-          <tr>
-            <td>Runtime/Middleware</td>
-            <td>Клієнт</td>
-            <td>Провайдер</td>
-            <td>Провайдер</td>
-          </tr>
-          <tr>
-            <td>ОС</td>
-            <td>Клієнт</td>
-            <td>Провайдер</td>
-            <td>Провайдер</td>
-          </tr>
-          <tr>
-            <td>Віртуалізація</td>
-            <td>Провайдер</td>
-            <td>Провайдер</td>
-            <td>Провайдер</td>
-          </tr>
-          <tr>
-            <td>Фізична інфраструктура</td>
-            <td>Провайдер</td>
-            <td>Провайдер</td>
-            <td>Провайдер</td>
-          </tr>
-        </table>
-        <p><strong>Ключовий принцип:</strong> Безпека В хмарі — відповідальність клієнта. Безпека хмари — відповідальність провайдера.</p>
-      </section>
+          <a href="slides/lecture-1-3.html" class="material-item">
+            <div class="material-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+            <div class="material-info">
+              <h3>Тема 1.3 — Моделі обслуговування</h3>
+              <p>IaaS, PaaS, SaaS — порівняння та безпекові зобов'язання</p>
+            </div>
+            <span class="material-type">Слайди</span>
+          </a>
 
-      <section>
-        <h2>Підсумок</h2>
-        <p>У цій лекції ми розглянули базові поняття хмарних обчислень згідно з NIST SP 800-145, еталонну архітектуру з п'ятьма ключовими акторами, три моделі обслуговування (SaaS, PaaS, IaaS) та моделі розгортання. Особливу увагу приділено моделі розподілу відповідальності, яка є фундаментом для розуміння хмарної безпеки.</p>
-        <p>У наступній лекції ми детально розглянемо стандарти безпеки (ISO/IEC 27017) та управління ризиками у хмарному середовищі.</p>
+          <a href="slides/lecture-1-4.html" class="material-item">
+            <div class="material-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+            <div class="material-info">
+              <h3>Тема 1.4 — Shared Responsibility Model</h3>
+              <p>Розподіл відповідальності, моделі розгортання, загрози</p>
+            </div>
+            <span class="material-type">Слайди</span>
+          </a>
+        </div>
       </section>
     </article>
 
@@ -185,6 +152,7 @@
       <div class="footer-content">
         <div>
           Кафедра твердотільної електроніки та інформаційної безпеки (ТЕІБ)<br>
+          Фізичний факультет<br>
           Ужгородський національний університет<br>
           <a href="https://teib.info/" target="_blank" rel="noopener">teib.info</a>
         </div>
