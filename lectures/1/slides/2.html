@@ -39,13 +39,28 @@
 
     <section class="slide">
       <h1>5 акторів еталонної архітектури</h1>
-      <ul>
-        <li><strong>Cloud Consumer</strong> — споживач</li>
-        <li><strong>Cloud Provider</strong> — провайдер</li>
-        <li><strong>Cloud Auditor</strong> — аудитор</li>
-        <li><strong>Cloud Broker</strong> — брокер</li>
-        <li><strong>Cloud Carrier</strong> — носій</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>Consumer</h3>
+          <p>Споживач</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div>
+          <h3>Provider</h3>
+          <p>Провайдер</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>Auditor</h3>
+          <p>Аудитор</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3>Broker</h3>
+          <p>Брокер</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
@@ -100,11 +115,42 @@
 
     <section class="slide">
       <h1>Взаємодія акторів</h1>
-      <p>Consumer ↔ Provider</p>
-      <p>↓ ↓</p>
-      <p>Broker</p>
-      <p>↓</p>
-      <p>Carrier → Auditor</p>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 450 280" width="450" height="280">
+          <!-- Consumer -->
+          <rect x="20" y="100" width="100" height="50" rx="8" class="diagram-box"/>
+          <text x="70" y="130" text-anchor="middle" class="diagram-text">Consumer</text>
+
+          <!-- Provider -->
+          <rect x="320" y="100" width="100" height="50" rx="8" class="diagram-box"/>
+          <text x="370" y="130" text-anchor="middle" class="diagram-text">Provider</text>
+
+          <!-- Broker (middle) -->
+          <rect x="170" y="100" width="100" height="50" rx="8" class="diagram-box"/>
+          <text x="220" y="130" text-anchor="middle" class="diagram-text">Broker</text>
+
+          <!-- Carrier (bottom) -->
+          <rect x="170" y="200" width="100" height="50" rx="8" class="diagram-box"/>
+          <text x="220" y="230" text-anchor="middle" class="diagram-text">Carrier</text>
+
+          <!-- Auditor (top) -->
+          <rect x="170" y="20" width="100" height="50" rx="8" class="diagram-box"/>
+          <text x="220" y="50" text-anchor="middle" class="diagram-text">Auditor</text>
+
+          <!-- Arrows -->
+          <line x1="120" y1="125" x2="165" y2="125" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="275" y1="125" x2="315" y2="125" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="220" y1="150" x2="220" y2="195" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="220" y1="70" x2="220" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+          <line x1="370" y1="70" x2="275" y2="50" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5,5"/>
+
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

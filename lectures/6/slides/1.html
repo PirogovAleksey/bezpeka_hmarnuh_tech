@@ -39,12 +39,37 @@
 
     <section class="slide">
       <h1>Структура блоку</h1>
-      <ul>
-        <li><strong>Previous Block Hash:</strong> зв'язок у ланцюзі</li>
-        <li><strong>Merkle Root:</strong> хеш усіх транзакцій</li>
-        <li><strong>Timestamp:</strong> час створення</li>
-        <li><strong>Nonce:</strong> число для PoW</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 420 130" width="420" height="130">
+          <!-- Block N-1 -->
+          <rect x="10" y="25" width="110" height="80" rx="8" class="diagram-box"/>
+          <text x="65" y="48" text-anchor="middle" class="diagram-text-small">Block N-1</text>
+          <text x="65" y="68" text-anchor="middle" class="diagram-text-small" fill="#64748b">Hash: abc...</text>
+          <text x="65" y="88" text-anchor="middle" class="diagram-text-small" fill="#64748b">Prev: xyz...</text>
+
+          <!-- Block N -->
+          <rect x="155" y="25" width="110" height="80" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="210" y="48" text-anchor="middle" class="diagram-text-small">Block N</text>
+          <text x="210" y="68" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">Hash: def...</text>
+          <text x="210" y="88" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">Prev: abc...</text>
+
+          <!-- Block N+1 -->
+          <rect x="300" y="25" width="110" height="80" rx="8" class="diagram-box"/>
+          <text x="355" y="48" text-anchor="middle" class="diagram-text-small">Block N+1</text>
+          <text x="355" y="68" text-anchor="middle" class="diagram-text-small" fill="#64748b">Hash: ghi...</text>
+          <text x="355" y="88" text-anchor="middle" class="diagram-text-small" fill="#64748b">Prev: def...</text>
+
+          <!-- Chain arrows -->
+          <path d="M120,65 L150,65" stroke="#38bdf8" stroke-width="2" marker-end="url(#bcarrow)"/>
+          <path d="M265,65 L295,65" stroke="#38bdf8" stroke-width="2" marker-end="url(#bcarrow)"/>
+
+          <defs>
+            <marker id="bcarrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#38bdf8"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

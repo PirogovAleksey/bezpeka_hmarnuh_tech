@@ -104,13 +104,45 @@
 
     <section class="slide">
       <h1>Capital One — як це сталося</h1>
-      <ul>
-        <li>WAF з надмірними IAM правами</li>
-        <li>SSRF вразливість у WAF</li>
-        <li>Доступ до EC2 metadata service</li>
-        <li>Отримання IAM credentials</li>
-        <li>Доступ до S3 з даними клієнтів</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 450 180" width="450" height="180">
+          <!-- Attack flow boxes -->
+          <rect x="10" y="70" width="70" height="45" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="45" y="90" text-anchor="middle" class="diagram-text-small">SSRF</text>
+          <text x="45" y="105" text-anchor="middle" class="diagram-text-small">атака</text>
+
+          <rect x="100" y="70" width="70" height="45" rx="6" class="diagram-box"/>
+          <text x="135" y="90" text-anchor="middle" class="diagram-text-small">WAF</text>
+          <text x="135" y="105" text-anchor="middle" class="diagram-text-small">(вразл.)</text>
+
+          <rect x="190" y="70" width="70" height="45" rx="6" class="diagram-box"/>
+          <text x="225" y="90" text-anchor="middle" class="diagram-text-small">Metadata</text>
+          <text x="225" y="105" text-anchor="middle" class="diagram-text-small">169.254.*</text>
+
+          <rect x="280" y="70" width="70" height="45" rx="6" class="diagram-box"/>
+          <text x="315" y="90" text-anchor="middle" class="diagram-text-small">IAM</text>
+          <text x="315" y="105" text-anchor="middle" class="diagram-text-small">Creds</text>
+
+          <rect x="370" y="70" width="70" height="45" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="405" y="90" text-anchor="middle" class="diagram-text-small">S3</text>
+          <text x="405" y="105" text-anchor="middle" class="diagram-text-small">Дані!</text>
+
+          <!-- Arrows -->
+          <path d="M80,92 L95,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
+          <path d="M170,92 L185,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
+          <path d="M260,92 L275,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
+          <path d="M350,92 L365,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
+
+          <!-- Labels -->
+          <text x="225" y="145" text-anchor="middle" class="diagram-text-small">Ланцюжок атаки: 5 кроків до breach</text>
+
+          <defs>
+            <marker id="redarrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L9,3 z" fill="#ef4444"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

@@ -61,14 +61,44 @@
 
     <section class="slide">
       <h1>Data Lifecycle</h1>
-      <ul>
-        <li><strong>Creation:</strong> Класифікація, мінімізація збору</li>
-        <li><strong>Storage:</strong> Encryption at-rest, access controls</li>
-        <li><strong>Use:</strong> Logging, masking, encryption in-use</li>
-        <li><strong>Sharing:</strong> Encryption in-transit, secure APIs</li>
-        <li><strong>Archival:</strong> Long-term encryption, key management</li>
-        <li><strong>Destruction:</strong> Secure deletion, crypto-shredding</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 140" width="400" height="140">
+          <!-- Lifecycle boxes -->
+          <rect x="10" y="45" width="55" height="40" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="37" y="70" text-anchor="middle" class="diagram-text-small">Create</text>
+
+          <rect x="75" y="45" width="55" height="40" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="102" y="70" text-anchor="middle" class="diagram-text-small">Store</text>
+
+          <rect x="140" y="45" width="55" height="40" rx="6" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="167" y="70" text-anchor="middle" class="diagram-text-small">Use</text>
+
+          <rect x="205" y="45" width="55" height="40" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
+          <text x="232" y="70" text-anchor="middle" class="diagram-text-small">Share</text>
+
+          <rect x="270" y="45" width="55" height="40" rx="6" fill="rgba(100, 116, 139, 0.2)" stroke="#64748b" stroke-width="2"/>
+          <text x="297" y="70" text-anchor="middle" class="diagram-text-small">Archive</text>
+
+          <rect x="335" y="45" width="55" height="40" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="362" y="70" text-anchor="middle" class="diagram-text-small">Destroy</text>
+
+          <!-- Arrows -->
+          <path d="M65,65 L72,65" stroke="#64748b" stroke-width="2" marker-end="url(#dlarrow)"/>
+          <path d="M130,65 L137,65" stroke="#64748b" stroke-width="2" marker-end="url(#dlarrow)"/>
+          <path d="M195,65 L202,65" stroke="#64748b" stroke-width="2" marker-end="url(#dlarrow)"/>
+          <path d="M260,65 L267,65" stroke="#64748b" stroke-width="2" marker-end="url(#dlarrow)"/>
+          <path d="M325,65 L332,65" stroke="#64748b" stroke-width="2" marker-end="url(#dlarrow)"/>
+
+          <!-- Labels -->
+          <text x="200" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Шифрування на кожному етапі</text>
+
+          <defs>
+            <marker id="dlarrow" markerWidth="6" markerHeight="6" refX="5" refY="2.5" orient="auto">
+              <path d="M0,0 L0,5 L6,2.5 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

@@ -69,12 +69,39 @@
 
     <section class="slide">
       <h1>Event-Driven Architecture</h1>
-      <ul>
-        <li><strong>Trigger → Function → Action</strong></li>
-        <li>HTTP запити (API Gateway)</li>
-        <li>Зміни в базі даних (DynamoDB)</li>
-        <li>Завантаження файлів (S3)</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 150" width="400" height="150">
+          <!-- Event Sources -->
+          <rect x="10" y="20" width="80" height="30" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="50" y="40" text-anchor="middle" class="diagram-text-small">HTTP</text>
+          <rect x="10" y="60" width="80" height="30" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="50" y="80" text-anchor="middle" class="diagram-text-small">Storage</text>
+          <rect x="10" y="100" width="80" height="30" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="50" y="120" text-anchor="middle" class="diagram-text-small">Queue</text>
+
+          <!-- Function -->
+          <rect x="150" y="45" width="100" height="60" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="200" y="70" text-anchor="middle" class="diagram-text-small">Lambda</text>
+          <text x="200" y="90" text-anchor="middle" class="diagram-text-small">Function</text>
+
+          <!-- Output -->
+          <rect x="310" y="45" width="80" height="60" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="350" y="70" text-anchor="middle" class="diagram-text-small">Database</text>
+          <text x="350" y="90" text-anchor="middle" class="diagram-text-small">API / Queue</text>
+
+          <!-- Arrows -->
+          <path d="M90,35 Q120,35 145,65" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#sarrow)"/>
+          <path d="M90,75 L145,75" stroke="#38bdf8" stroke-width="2" marker-end="url(#sarrow)"/>
+          <path d="M90,115 Q120,115 145,85" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#sarrow)"/>
+          <path d="M255,75 L305,75" stroke="#4ade80" stroke-width="2" marker-end="url(#sarrow)"/>
+
+          <defs>
+            <marker id="sarrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

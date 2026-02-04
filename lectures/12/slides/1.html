@@ -29,13 +29,32 @@
 
     <section class="slide">
       <h1>Розмір ринку</h1>
-      <ul>
-        <li><strong>2023:</strong> $40.8 млрд глобально</li>
-        <li><strong>2028:</strong> $77.5 млрд (прогноз)</li>
-        <li><strong>CAGR:</strong> 13.7% річного зростання</li>
-        <li>Драйвери: cloud adoption, compliance, threats</li>
-        <li>Один з найшвидше зростаючих IT сегментів</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 380 140" width="380" height="140">
+          <!-- 2023 -->
+          <rect x="40" y="65" width="120" height="55" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="100" y="90" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">$40.8B</text>
+          <text x="100" y="110" text-anchor="middle" class="diagram-text-small">2023</text>
+
+          <!-- Arrow -->
+          <path d="M165,92 L195,92" stroke="#4ade80" stroke-width="3" marker-end="url(#marketarrow)"/>
+          <text x="180" y="80" text-anchor="middle" class="diagram-text-small" fill="#4ade80">+90%</text>
+
+          <!-- 2028 -->
+          <rect x="220" y="45" width="120" height="75" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="280" y="80" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">$77.5B</text>
+          <text x="280" y="105" text-anchor="middle" class="diagram-text-small">2028</text>
+
+          <!-- CAGR -->
+          <text x="190" y="130" text-anchor="middle" class="diagram-text-small" fill="#64748b">CAGR: 13.7%</text>
+
+          <defs>
+            <marker id="marketarrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L9,3 z" fill="#4ade80"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

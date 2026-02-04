@@ -29,12 +29,32 @@
 
     <section class="slide">
       <h1>Що таке CNAPP?</h1>
-      <ul>
-        <li><strong>Cloud-Native Application Protection Platform</strong></li>
-        <li>Об'єднання CSPM + CWPP + CIEM + Container Security</li>
-        <li>Єдина платформа замість 10-15 окремих tools</li>
-        <li>Gartner термін з 2021 року</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 380 160" width="380" height="160">
+          <!-- CNAPP outer box -->
+          <rect x="10" y="10" width="360" height="140" rx="12" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="190" y="35" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">CNAPP</text>
+
+          <!-- Components -->
+          <rect x="25" y="55" width="75" height="40" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="62" y="80" text-anchor="middle" class="diagram-text-small">CSPM</text>
+
+          <rect x="110" y="55" width="75" height="40" rx="6" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="147" y="80" text-anchor="middle" class="diagram-text-small">CWPP</text>
+
+          <rect x="195" y="55" width="75" height="40" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
+          <text x="232" y="80" text-anchor="middle" class="diagram-text-small">CIEM</text>
+
+          <rect x="280" y="55" width="75" height="40" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="317" y="80" text-anchor="middle" class="diagram-text-small">Container</text>
+
+          <!-- Labels -->
+          <text x="62" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Posture</text>
+          <text x="147" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Workload</text>
+          <text x="232" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Identity</text>
+          <text x="317" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Security</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

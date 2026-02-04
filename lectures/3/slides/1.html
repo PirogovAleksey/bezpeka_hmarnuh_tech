@@ -89,21 +89,55 @@
 
     <section class="slide">
       <h1>Три стовпи Zero Trust</h1>
-      <ul>
-        <li><strong>Identity:</strong> хто запитує? (MFA, SSO, IAM)</li>
-        <li><strong>Device:</strong> з чого запитує? (MDM, EDR, compliance)</li>
-        <li><strong>Network:</strong> як захищена комунікація? (mTLS, сегментація)</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>Identity</h3>
+          <p>MFA, SSO, IAM</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <h3>Device</h3>
+          <p>MDM, EDR, compliance</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3>Network</h3>
+          <p>mTLS, сегментація</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
       <h1>Периметр vs Zero Trust</h1>
-      <ul>
-        <li><strong>Довіра:</strong> "Trust but verify" → "Never trust"</li>
-        <li><strong>Периметр:</strong> Один на границі → Навколо кожного ресурсу</li>
-        <li><strong>Авторизація:</strong> За IP → За ідентичністю</li>
-        <li><strong>Доступ:</strong> Широкий → Мінімально необхідний</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 450 180" width="450" height="180">
+          <!-- Perimeter model (left) -->
+          <rect x="10" y="30" width="200" height="120" rx="12" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,5"/>
+          <text x="110" y="55" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Периметр</text>
+          <text x="110" y="80" text-anchor="middle" class="diagram-text-small">"Trust but verify"</text>
+          <text x="110" y="100" text-anchor="middle" class="diagram-text-small">Один firewall</text>
+          <text x="110" y="120" text-anchor="middle" class="diagram-text-small">Широкий доступ</text>
+          <text x="110" y="140" text-anchor="middle" class="diagram-text-small">За IP-адресою</text>
+
+          <!-- Arrow -->
+          <path d="M220,95 L230,95" stroke="#64748b" stroke-width="3" marker-end="url(#vsarrow)"/>
+
+          <!-- Zero Trust model (right) -->
+          <rect x="240" y="30" width="200" height="120" rx="12" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="2"/>
+          <text x="340" y="55" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Zero Trust</text>
+          <text x="340" y="80" text-anchor="middle" class="diagram-text-small">"Never trust"</text>
+          <text x="340" y="100" text-anchor="middle" class="diagram-text-small">Мікропериметри</text>
+          <text x="340" y="120" text-anchor="middle" class="diagram-text-small">Least privilege</text>
+          <text x="340" y="140" text-anchor="middle" class="diagram-text-small">За ідентичністю</text>
+
+          <defs>
+            <marker id="vsarrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

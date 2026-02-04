@@ -39,13 +39,37 @@
 
     <section class="slide">
       <h1>Ключові віхи розвитку хмари</h1>
-      <ul>
-        <li><strong>2006</strong> — Amazon AWS (EC2, S3)</li>
-        <li><strong>2008</strong> — Google App Engine</li>
-        <li><strong>2010</strong> — Microsoft Azure</li>
-        <li><strong>2011</strong> — NIST SP 800-145</li>
-        <li><strong>2014</strong> — Kubernetes</li>
-      </ul>
+      <div class="slide-timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2006</div>
+          <div class="timeline-text">AWS EC2, S3</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2008</div>
+          <div class="timeline-text">Google App Engine</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2010</div>
+          <div class="timeline-text">Microsoft Azure</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2011</div>
+          <div class="timeline-text">NIST SP 800-145</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2014</div>
+          <div class="timeline-text">Kubernetes</div>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
@@ -55,13 +79,36 @@
 
     <section class="slide">
       <h1>5 характеристик хмарних обчислень</h1>
-      <ul>
-        <li><strong>On-demand Self-service</strong> — самообслуговування</li>
-        <li><strong>Broad Network Access</strong> — широкий доступ</li>
-        <li><strong>Resource Pooling</strong> — пул ресурсів</li>
-        <li><strong>Rapid Elasticity</strong> — еластичність</li>
-        <li><strong>Measured Service</strong> — вимірюваність</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 300" width="400" height="300">
+          <!-- Central cloud -->
+          <ellipse cx="200" cy="150" rx="60" ry="40" class="diagram-box"/>
+          <text x="200" y="155" text-anchor="middle" class="diagram-text-bold">Cloud</text>
+
+          <!-- 5 characteristics around -->
+          <rect x="145" y="20" width="110" height="35" rx="8" class="diagram-box"/>
+          <text x="200" y="43" text-anchor="middle" class="diagram-text-small">On-demand</text>
+
+          <rect x="290" y="70" width="100" height="35" rx="8" class="diagram-box"/>
+          <text x="340" y="93" text-anchor="middle" class="diagram-text-small">Network Access</text>
+
+          <rect x="280" y="190" width="110" height="35" rx="8" class="diagram-box"/>
+          <text x="335" y="213" text-anchor="middle" class="diagram-text-small">Elasticity</text>
+
+          <rect x="10" y="190" width="110" height="35" rx="8" class="diagram-box"/>
+          <text x="65" y="213" text-anchor="middle" class="diagram-text-small">Resource Pool</text>
+
+          <rect x="10" y="70" width="100" height="35" rx="8" class="diagram-box"/>
+          <text x="60" y="93" text-anchor="middle" class="diagram-text-small">Measured</text>
+
+          <!-- Connecting lines -->
+          <line x1="200" y1="55" x2="200" y2="110" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="290" y1="87" x2="250" y2="130" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="280" y1="207" x2="240" y2="175" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="120" y1="207" x2="160" y2="175" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="110" y1="87" x2="150" y2="130" stroke="#38bdf8" stroke-width="2"/>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

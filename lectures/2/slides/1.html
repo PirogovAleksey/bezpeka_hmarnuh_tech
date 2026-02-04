@@ -69,13 +69,38 @@
 
     <section class="slide">
       <h1>NIST Cybersecurity Framework</h1>
-      <ul>
-        <li><strong>Identify:</strong> активи, ризики, governance</li>
-        <li><strong>Protect:</strong> safeguards</li>
-        <li><strong>Detect:</strong> моніторинг, виявлення</li>
-        <li><strong>Respond:</strong> реагування на інциденти</li>
-        <li><strong>Recover:</strong> відновлення</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 200" width="400" height="200">
+          <!-- 5 boxes in a cycle -->
+          <rect x="160" y="10" width="80" height="35" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="200" y="33" text-anchor="middle" class="diagram-text-small">IDENTIFY</text>
+
+          <rect x="290" y="60" width="80" height="35" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="330" y="83" text-anchor="middle" class="diagram-text-small">PROTECT</text>
+
+          <rect x="260" y="140" width="80" height="35" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="300" y="163" text-anchor="middle" class="diagram-text-small">DETECT</text>
+
+          <rect x="60" y="140" width="80" height="35" rx="8" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="100" y="163" text-anchor="middle" class="diagram-text-small">RESPOND</text>
+
+          <rect x="30" y="60" width="80" height="35" rx="8" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
+          <text x="70" y="83" text-anchor="middle" class="diagram-text-small">RECOVER</text>
+
+          <!-- Arrows connecting the cycle -->
+          <path d="M240,30 Q280,40 285,60" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#csfarrow)"/>
+          <path d="M340,95 Q350,130 340,140" fill="none" stroke="#4ade80" stroke-width="2" marker-end="url(#csfarrow)"/>
+          <path d="M260,157 L140,157" stroke="#fbbf24" stroke-width="2" marker-end="url(#csfarrow)"/>
+          <path d="M60,140 Q40,100 50,95" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#csfarrow)"/>
+          <path d="M110,60 Q140,40 155,30" fill="none" stroke="#a855f7" stroke-width="2" marker-end="url(#csfarrow)"/>
+
+          <defs>
+            <marker id="csfarrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

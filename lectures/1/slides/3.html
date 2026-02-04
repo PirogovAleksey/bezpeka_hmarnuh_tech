@@ -29,11 +29,29 @@
 
     <section class="slide">
       <h1>Три моделі обслуговування</h1>
-      <ul>
-        <li><strong>IaaS</strong> — Infrastructure as a Service</li>
-        <li><strong>PaaS</strong> — Platform as a Service</li>
-        <li><strong>SaaS</strong> — Software as a Service</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 350 220" width="350" height="220">
+          <!-- SaaS (top) -->
+          <rect x="50" y="10" width="250" height="55" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="175" y="32" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">SaaS</text>
+          <text x="175" y="52" text-anchor="middle" class="diagram-text-small">Software as a Service</text>
+
+          <!-- PaaS (middle) -->
+          <rect x="50" y="75" width="250" height="55" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="175" y="97" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">PaaS</text>
+          <text x="175" y="117" text-anchor="middle" class="diagram-text-small">Platform as a Service</text>
+
+          <!-- IaaS (bottom) -->
+          <rect x="50" y="140" width="250" height="55" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="175" y="162" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">IaaS</text>
+          <text x="175" y="182" text-anchor="middle" class="diagram-text-small">Infrastructure as a Service</text>
+
+          <!-- Arrows on the right side -->
+          <text x="325" y="40" text-anchor="start" class="diagram-text-small">Користувачі</text>
+          <text x="325" y="105" text-anchor="start" class="diagram-text-small">Розробники</text>
+          <text x="325" y="170" text-anchor="start" class="diagram-text-small">ІТ-адміни</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

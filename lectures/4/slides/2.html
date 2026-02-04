@@ -29,12 +29,37 @@
 
     <section class="slide">
       <h1>Контейнери vs VM</h1>
-      <ul>
-        <li><strong>VM:</strong> повна ОС, GB, хвилини запуску</li>
-        <li><strong>Контейнери:</strong> спільне ядро, MB, секунди</li>
-        <li>Контейнери — слабша ізоляція!</li>
-        <li>Більша поверхня атаки</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 420 180" width="420" height="180">
+          <!-- VM (left) -->
+          <text x="100" y="20" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Virtual Machines</text>
+          <rect x="20" y="145" width="160" height="25" rx="4" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="100" y="162" text-anchor="middle" class="diagram-text-small">Hardware</text>
+          <rect x="20" y="115" width="160" height="25" rx="4" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
+          <text x="100" y="132" text-anchor="middle" class="diagram-text-small">Hypervisor</text>
+          <rect x="25" y="35" width="70" height="75" rx="4" class="diagram-box"/>
+          <text x="60" y="55" text-anchor="middle" class="diagram-text-small">App</text>
+          <text x="60" y="73" text-anchor="middle" class="diagram-text-small">Guest OS</text>
+          <rect x="105" y="35" width="70" height="75" rx="4" class="diagram-box"/>
+          <text x="140" y="55" text-anchor="middle" class="diagram-text-small">App</text>
+          <text x="140" y="73" text-anchor="middle" class="diagram-text-small">Guest OS</text>
+
+          <!-- Containers (right) -->
+          <text x="320" y="20" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Containers</text>
+          <rect x="240" y="145" width="160" height="25" rx="4" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="320" y="162" text-anchor="middle" class="diagram-text-small">Hardware</text>
+          <rect x="240" y="115" width="160" height="25" rx="4" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2"/>
+          <text x="320" y="132" text-anchor="middle" class="diagram-text-small">Host OS + Kernel</text>
+          <rect x="240" y="85" width="160" height="25" rx="4" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
+          <text x="320" y="102" text-anchor="middle" class="diagram-text-small">Container Runtime</text>
+          <rect x="250" y="35" width="45" height="45" rx="4" class="diagram-box"/>
+          <text x="272" y="62" text-anchor="middle" class="diagram-text-small">App</text>
+          <rect x="305" y="35" width="45" height="45" rx="4" class="diagram-box"/>
+          <text x="327" y="62" text-anchor="middle" class="diagram-text-small">App</text>
+          <rect x="360" y="35" width="30" height="45" rx="4" class="diagram-box"/>
+          <text x="375" y="62" text-anchor="middle" class="diagram-text-small">...</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
