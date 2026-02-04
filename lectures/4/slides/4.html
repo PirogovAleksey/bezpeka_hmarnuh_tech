@@ -39,12 +39,28 @@
 
     <section class="slide">
       <h1>Можливості CWPP</h1>
-      <ul>
-        <li><strong>Vulnerability Management:</strong> сканування образів</li>
-        <li><strong>Runtime Protection:</strong> виявлення аномалій</li>
-        <li><strong>Compliance:</strong> CIS Benchmarks, PCI DSS</li>
-        <li><strong>Network Security:</strong> мікросегментація</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+          <h3>Vulnerability</h3>
+          <p>Сканування образів</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Runtime</h3>
+          <p>Виявлення аномалій</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>Compliance</h3>
+          <p>CIS, PCI DSS</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div>
+          <h3>Network</h3>
+          <p>Мікросегментація</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
@@ -98,12 +114,43 @@
 
     <section class="slide">
       <h1>DevSecOps Pipeline</h1>
-      <ul>
-        <li><strong>Code:</strong> SAST (Semgrep, Snyk)</li>
-        <li><strong>Build:</strong> Image scan (Trivy)</li>
-        <li><strong>Deploy:</strong> Admission (OPA)</li>
-        <li><strong>Runtime:</strong> Protection (Falco)</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 450 150" width="450" height="150">
+          <!-- Code -->
+          <rect x="10" y="40" width="90" height="60" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="55" y="65" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Code</text>
+          <text x="55" y="85" text-anchor="middle" class="diagram-text-small">SAST</text>
+
+          <!-- Build -->
+          <rect x="120" y="40" width="90" height="60" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="165" y="65" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">Build</text>
+          <text x="165" y="85" text-anchor="middle" class="diagram-text-small">Image Scan</text>
+
+          <!-- Deploy -->
+          <rect x="230" y="40" width="90" height="60" rx="8" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
+          <text x="275" y="65" text-anchor="middle" class="diagram-text-bold" fill="#a855f7">Deploy</text>
+          <text x="275" y="85" text-anchor="middle" class="diagram-text-small">Admission</text>
+
+          <!-- Runtime -->
+          <rect x="340" y="40" width="90" height="60" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="385" y="65" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Runtime</text>
+          <text x="385" y="85" text-anchor="middle" class="diagram-text-small">Protection</text>
+
+          <!-- Arrows -->
+          <line x1="100" y1="70" x2="115" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-pipe)"/>
+          <line x1="210" y1="70" x2="225" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-pipe)"/>
+          <line x1="320" y1="70" x2="335" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-pipe)"/>
+
+          <!-- Shift Left label -->
+          <text x="225" y="130" text-anchor="middle" class="diagram-text-small">Shift Left: знаходьте проблеми раніше</text>
+
+          <defs>
+            <marker id="arrow-pipe" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

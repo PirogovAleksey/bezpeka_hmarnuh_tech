@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/print.css" media="print">
   <script>
     if (localStorage.getItem('theme') === 'dark') {
       document.documentElement.classList.add('dark');
@@ -284,6 +285,135 @@
           <li>Traffic flow analysis</li>
           <li>Microsegmentation recommendations</li>
         </ul>
+
+        <!-- Diagram: CSPM Capabilities Overview -->
+        <div class="diagram">
+          <div class="diagram-title">CSPM: Ключові можливості та їх взаємозв'язок</div>
+          <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Central CSPM -->
+            <circle fill="var(--accent)" cx="350" cy="150" r="50"/>
+            <text fill="white" x="350" y="145" text-anchor="middle" font-weight="600" font-size="14">CSPM</text>
+            <text fill="white" x="350" y="162" text-anchor="middle" font-size="10">Platform</text>
+
+            <!-- Asset Discovery -->
+            <g transform="translate(80, 40)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="130" height="70" rx="8"/>
+              <text fill="#1d4ed8" x="65" y="25" text-anchor="middle" font-weight="600" font-size="11">Asset Discovery</text>
+              <text fill="#1e40af" x="65" y="42" text-anchor="middle" font-size="9">VMs, Containers</text>
+              <text fill="#1e40af" x="65" y="55" text-anchor="middle" font-size="9">Storage, Databases</text>
+              <text fill="#1e40af" x="65" y="68" text-anchor="middle" font-size="9">IAM, Networks</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="210" y1="75" x2="305" y2="120"/>
+
+            <!-- Configuration Assessment -->
+            <g transform="translate(490, 40)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="130" height="70" rx="8"/>
+              <text fill="#166534" x="65" y="25" text-anchor="middle" font-weight="600" font-size="11">Config Assessment</text>
+              <text fill="#14532d" x="65" y="42" text-anchor="middle" font-size="9">CIS Benchmarks</text>
+              <text fill="#14532d" x="65" y="55" text-anchor="middle" font-size="9">Best Practices</text>
+              <text fill="#14532d" x="65" y="68" text-anchor="middle" font-size="9">Custom Policies</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="490" y1="75" x2="395" y2="120"/>
+
+            <!-- Risk Prioritization -->
+            <g transform="translate(80, 190)">
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="0" y="0" width="130" height="70" rx="8"/>
+              <text fill="#dc2626" x="65" y="25" text-anchor="middle" font-weight="600" font-size="11">Risk Prioritization</text>
+              <text fill="#991b1b" x="65" y="42" text-anchor="middle" font-size="9">Attack Path Analysis</text>
+              <text fill="#991b1b" x="65" y="55" text-anchor="middle" font-size="9">Blast Radius</text>
+              <text fill="#991b1b" x="65" y="68" text-anchor="middle" font-size="9">Severity Scoring</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="210" y1="225" x2="305" y2="180"/>
+
+            <!-- Compliance Monitoring -->
+            <g transform="translate(490, 190)">
+              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="130" height="70" rx="8"/>
+              <text fill="#b45309" x="65" y="25" text-anchor="middle" font-weight="600" font-size="11">Compliance</text>
+              <text fill="#92400e" x="65" y="42" text-anchor="middle" font-size="9">PCI DSS, HIPAA</text>
+              <text fill="#92400e" x="65" y="55" text-anchor="middle" font-size="9">SOC 2, GDPR</text>
+              <text fill="#92400e" x="65" y="68" text-anchor="middle" font-size="9">Auto Reports</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="490" y1="225" x2="395" y2="180"/>
+
+            <!-- Remediation -->
+            <g transform="translate(285, 240)">
+              <rect fill="#e0e7ff" stroke="#6366f1" stroke-width="2" x="0" y="0" width="130" height="50" rx="8"/>
+              <text fill="#4f46e5" x="65" y="22" text-anchor="middle" font-weight="600" font-size="11">Remediation</text>
+              <text fill="#4338ca" x="65" y="40" text-anchor="middle" font-size="9">Auto-fix, Guidance, IaC</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="350" y1="200" x2="350" y2="240"/>
+          </svg>
+          <div class="diagram-caption">Рис. 7.2. П'ять ключових можливостей CSPM працюють разом для забезпечення безпеки хмарної інфраструктури</div>
+        </div>
+
+        <h3>Приклади типових misconfigurations за категоріями</h3>
+        <table>
+          <tr>
+            <th>Категорія</th>
+            <th>Misconfiguration</th>
+            <th>Ризик</th>
+            <th>CIS Control</th>
+          </tr>
+          <tr>
+            <td rowspan="3"><strong>Storage</strong></td>
+            <td>S3 bucket public access</td>
+            <td>Критичний</td>
+            <td>CIS AWS 2.1.5</td>
+          </tr>
+          <tr>
+            <td>Unencrypted EBS volumes</td>
+            <td>Високий</td>
+            <td>CIS AWS 2.2.1</td>
+          </tr>
+          <tr>
+            <td>S3 без versioning</td>
+            <td>Середній</td>
+            <td>CIS AWS 2.1.3</td>
+          </tr>
+          <tr>
+            <td rowspan="3"><strong>Network</strong></td>
+            <td>Security Group 0.0.0.0/0 SSH</td>
+            <td>Критичний</td>
+            <td>CIS AWS 5.2</td>
+          </tr>
+          <tr>
+            <td>VPC Flow Logs disabled</td>
+            <td>Середній</td>
+            <td>CIS AWS 3.9</td>
+          </tr>
+          <tr>
+            <td>Default VPC in use</td>
+            <td>Низький</td>
+            <td>CIS AWS 5.1</td>
+          </tr>
+          <tr>
+            <td rowspan="3"><strong>Identity</strong></td>
+            <td>Root account without MFA</td>
+            <td>Критичний</td>
+            <td>CIS AWS 1.5</td>
+          </tr>
+          <tr>
+            <td>Unused IAM credentials</td>
+            <td>Високий</td>
+            <td>CIS AWS 1.12</td>
+          </tr>
+          <tr>
+            <td>Overly permissive IAM policies</td>
+            <td>Високий</td>
+            <td>CIS AWS 1.16</td>
+          </tr>
+          <tr>
+            <td rowspan="2"><strong>Logging</strong></td>
+            <td>CloudTrail disabled</td>
+            <td>Критичний</td>
+            <td>CIS AWS 3.1</td>
+          </tr>
+          <tr>
+            <td>CloudTrail not encrypted</td>
+            <td>Середній</td>
+            <td>CIS AWS 3.7</td>
+          </tr>
+        </table>
       </section>
 
       <section>
@@ -572,6 +702,178 @@
           <li>Extensible через plugins</li>
         </ul>
 
+        <h3>Практичний приклад: Prowler</h3>
+        <pre>
+# Встановлення Prowler
+pip install prowler
+
+# Базовий скан AWS
+prowler aws
+
+# Скан з конкретним compliance framework
+prowler aws --compliance cis_2.0_aws
+
+# Скан конкретних сервісів
+prowler aws -s s3 iam ec2
+
+# Вивід у JSON для автоматизації
+prowler aws -M json -o ./results/
+
+# Приклад виводу:
+# PASS - S3 bucket "my-bucket" has server-side encryption enabled
+# FAIL - S3 bucket "public-bucket" has public access enabled
+# FAIL - IAM user "admin" has inline policies attached
+# PASS - CloudTrail is enabled in all regions
+
+# Інтеграція в CI/CD (GitHub Actions)
+# .github/workflows/security.yml
+name: Cloud Security Scan
+on: [push]
+jobs:
+  prowler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Prowler
+        run: |
+          pip install prowler
+          prowler aws --compliance cis_2.0_aws --severity critical high
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        </pre>
+
+        <h3>Практичний приклад: Steampipe</h3>
+        <pre>
+# Встановлення Steampipe
+brew install turbot/tap/steampipe
+
+# Встановлення AWS плагіна
+steampipe plugin install aws
+
+# Запуск інтерактивної консолі
+steampipe query
+
+# Приклади SQL-запитів для security checks:
+
+-- Знайти публічні S3 buckets
+SELECT
+  name,
+  region,
+  bucket_policy_is_public
+FROM
+  aws_s3_bucket
+WHERE
+  bucket_policy_is_public = true;
+
+-- IAM користувачі без MFA
+SELECT
+  name,
+  mfa_enabled,
+  password_last_used
+FROM
+  aws_iam_user
+WHERE
+  mfa_enabled = false
+  AND password_enabled = true;
+
+-- Security groups з відкритим SSH
+SELECT
+  group_name,
+  vpc_id,
+  ip_permissions
+FROM
+  aws_vpc_security_group,
+  jsonb_array_elements(ip_permissions) as p
+WHERE
+  p ->> 'FromPort' = '22'
+  AND p -> 'IpRanges' @> '[{"CidrIp": "0.0.0.0/0"}]';
+
+-- Запуск compliance mod
+steampipe check all --mod-path=~/.steampipe/mods/cis-aws
+        </pre>
+
+        <!-- Diagram: CSPM Market Landscape -->
+        <div class="diagram">
+          <div class="diagram-title">CSPM Market Landscape: вибір рішення</div>
+          <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+            <!-- Axes -->
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="80" y1="220" x2="650" y2="220"/>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="80" y1="220" x2="80" y2="40"/>
+
+            <!-- Axis labels -->
+            <text class="diagram-text-small" x="365" y="245" text-anchor="middle">Функціональність</text>
+            <text class="diagram-text-small" x="40" y="130" text-anchor="middle" transform="rotate(-90, 40, 130)">Вартість</text>
+
+            <text class="diagram-text-small" x="130" y="235" text-anchor="middle">Basic</text>
+            <text class="diagram-text-small" x="600" y="235" text-anchor="middle">Enterprise</text>
+
+            <!-- Open Source - Low cost, varying functionality -->
+            <g transform="translate(130, 160)">
+              <circle fill="#22c55e" r="25"/>
+              <text fill="white" x="0" y="5" text-anchor="middle" font-size="9">Prowler</text>
+            </g>
+            <g transform="translate(180, 170)">
+              <circle fill="#22c55e" r="20"/>
+              <text fill="white" x="0" y="5" text-anchor="middle" font-size="8">Steampipe</text>
+            </g>
+            <g transform="translate(200, 150)">
+              <circle fill="#22c55e" r="18"/>
+              <text fill="white" x="0" y="4" text-anchor="middle" font-size="7">CloudSploit</text>
+            </g>
+
+            <!-- Native Tools - Low-medium cost -->
+            <g transform="translate(280, 140)">
+              <circle fill="#f59e0b" r="22"/>
+              <text fill="white" x="0" y="0" text-anchor="middle" font-size="8">AWS</text>
+              <text fill="white" x="0" y="10" text-anchor="middle" font-size="8">Config</text>
+            </g>
+            <g transform="translate(340, 130)">
+              <circle fill="#f59e0b" r="24"/>
+              <text fill="white" x="0" y="0" text-anchor="middle" font-size="8">Defender</text>
+              <text fill="white" x="0" y="10" text-anchor="middle" font-size="8">for Cloud</text>
+            </g>
+            <g transform="translate(310, 155)">
+              <circle fill="#f59e0b" r="20"/>
+              <text fill="white" x="0" y="5" text-anchor="middle" font-size="8">GCP SCC</text>
+            </g>
+
+            <!-- Commercial - High functionality, high cost -->
+            <g transform="translate(480, 80)">
+              <circle fill="#3b82f6" r="30"/>
+              <text fill="white" x="0" y="0" text-anchor="middle" font-size="9">Prisma</text>
+              <text fill="white" x="0" y="12" text-anchor="middle" font-size="9">Cloud</text>
+            </g>
+            <g transform="translate(550, 70)">
+              <circle fill="#3b82f6" r="28"/>
+              <text fill="white" x="0" y="5" text-anchor="middle" font-size="10">Wiz</text>
+            </g>
+            <g transform="translate(600, 90)">
+              <circle fill="#3b82f6" r="26"/>
+              <text fill="white" x="0" y="5" text-anchor="middle" font-size="9">Orca</text>
+            </g>
+            <g transform="translate(520, 110)">
+              <circle fill="#3b82f6" r="22"/>
+              <text fill="white" x="0" y="5" text-anchor="middle" font-size="8">Lacework</text>
+            </g>
+
+            <!-- Legend -->
+            <g transform="translate(100, 30)">
+              <circle fill="#22c55e" r="8"/>
+              <text class="diagram-text-small" x="15" y="4" text-anchor="start">Open Source</text>
+            </g>
+            <g transform="translate(220, 30)">
+              <circle fill="#f59e0b" r="8"/>
+              <text class="diagram-text-small" x="15" y="4" text-anchor="start">Native Cloud</text>
+            </g>
+            <g transform="translate(350, 30)">
+              <circle fill="#3b82f6" r="8"/>
+              <text class="diagram-text-small" x="15" y="4" text-anchor="start">Commercial</text>
+            </g>
+          </svg>
+          <div class="diagram-caption">Рис. 7.3. Ландшафт CSPM рішень: від безкоштовних open source до enterprise платформ</div>
+        </div>
+
         <h3>Порівняння підходів</h3>
 
         <table>
@@ -735,6 +1037,114 @@
           <li><strong>Runtime context:</strong> Combination з runtime signals для accurate prioritization</li>
           <li><strong>Multi-cloud native:</strong> Справжня підтримка hybrid та multi-cloud</li>
         </ul>
+
+        <!-- Diagram: CNAPP Convergence -->
+        <div class="diagram">
+          <div class="diagram-title">Еволюція до CNAPP: конвергенція security categories</div>
+          <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- Historical separate tools -->
+            <text class="diagram-text-bold" x="150" y="25" text-anchor="middle">2018-2020: Окремі інструменти</text>
+
+            <rect fill="#dbeafe" stroke="#3b82f6" x="30" y="40" width="70" height="50" rx="6"/>
+            <text fill="#1d4ed8" x="65" y="60" text-anchor="middle" font-size="10">CSPM</text>
+            <text fill="#1d4ed8" x="65" y="75" text-anchor="middle" font-size="8">Config</text>
+
+            <rect fill="#dcfce7" stroke="#22c55e" x="110" y="40" width="70" height="50" rx="6"/>
+            <text fill="#166534" x="145" y="60" text-anchor="middle" font-size="10">CWPP</text>
+            <text fill="#166534" x="145" y="75" text-anchor="middle" font-size="8">Workload</text>
+
+            <rect fill="#fef3c7" stroke="#f59e0b" x="190" y="40" width="70" height="50" rx="6"/>
+            <text fill="#b45309" x="225" y="60" text-anchor="middle" font-size="10">CIEM</text>
+            <text fill="#b45309" x="225" y="75" text-anchor="middle" font-size="8">Identity</text>
+
+            <!-- Arrow -->
+            <path d="M295 65 L340 65" stroke="var(--accent)" stroke-width="3" marker-end="url(#arrow-cspm)"/>
+
+            <!-- Current CNAPP -->
+            <text class="diagram-text-bold" x="520" y="25" text-anchor="middle">2023+: CNAPP (Unified)</text>
+
+            <rect fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2" x="380" y="35" width="280" height="170" rx="12"/>
+            <text fill="var(--accent)" x="520" y="58" text-anchor="middle" font-weight="600" font-size="14">CNAPP Platform</text>
+
+            <!-- CSPM inside -->
+            <rect fill="#dbeafe" x="395" y="70" width="80" height="40" rx="4"/>
+            <text fill="#1d4ed8" x="435" y="95" text-anchor="middle" font-size="10">CSPM</text>
+
+            <!-- CWPP inside -->
+            <rect fill="#dcfce7" x="485" y="70" width="80" height="40" rx="4"/>
+            <text fill="#166534" x="525" y="95" text-anchor="middle" font-size="10">CWPP</text>
+
+            <!-- CIEM inside -->
+            <rect fill="#fef3c7" x="575" y="70" width="80" height="40" rx="4"/>
+            <text fill="#b45309" x="615" y="95" text-anchor="middle" font-size="10">CIEM</text>
+
+            <!-- DSPM inside -->
+            <rect fill="#fce7f3" x="395" y="120" width="80" height="40" rx="4"/>
+            <text fill="#be185d" x="435" y="145" text-anchor="middle" font-size="10">DSPM</text>
+
+            <!-- Code Security inside -->
+            <rect fill="#e0e7ff" x="485" y="120" width="80" height="40" rx="4"/>
+            <text fill="#4f46e5" x="525" y="138" text-anchor="middle" font-size="9">Code</text>
+            <text fill="#4f46e5" x="525" y="150" text-anchor="middle" font-size="9">Security</text>
+
+            <!-- Attack Path inside -->
+            <rect fill="#fee2e2" x="575" y="120" width="80" height="40" rx="4"/>
+            <text fill="#dc2626" x="615" y="138" text-anchor="middle" font-size="9">Attack</text>
+            <text fill="#dc2626" x="615" y="150" text-anchor="middle" font-size="9">Path</text>
+
+            <!-- Unified dashboard -->
+            <rect fill="var(--card)" stroke="var(--card-border)" x="440" y="168" width="160" height="28" rx="4"/>
+            <text class="diagram-text-small" x="520" y="186" text-anchor="middle">Unified Dashboard & Correlation</text>
+
+            <!-- Benefits -->
+            <g transform="translate(30, 110)">
+              <text fill="var(--text-secondary)" x="0" y="0" font-size="9">Проблеми:</text>
+              <text fill="var(--text-secondary)" x="0" y="15" font-size="8">- Tool sprawl</text>
+              <text fill="var(--text-secondary)" x="0" y="28" font-size="8">- No correlation</text>
+              <text fill="var(--text-secondary)" x="0" y="41" font-size="8">- Alert fatigue</text>
+              <text fill="var(--text-secondary)" x="0" y="54" font-size="8">- Multiple dashboards</text>
+            </g>
+
+            <g transform="translate(30, 180)">
+              <text fill="var(--accent)" x="0" y="0" font-size="9">Переваги CNAPP:</text>
+              <text fill="var(--text-secondary)" x="0" y="15" font-size="8">+ Single pane of glass</text>
+              <text fill="var(--text-secondary)" x="0" y="28" font-size="8">+ Correlated findings</text>
+            </g>
+          </svg>
+          <div class="diagram-caption">Рис. 7.4. Еволюція від окремих інструментів до уніфікованої CNAPP платформи</div>
+        </div>
+
+        <h3>Attack Path Analysis: приклад</h3>
+        <p>Сучасні CSPM/CNAPP не просто показують окремі misconfigurations — вони аналізують їх у контексті та будують attack paths:</p>
+
+        <pre>
+Attack Path: Internet → S3 Data Breach
+
+Step 1: [EXPOSURE] Public-facing Lambda function
+  └─ Risk: Function accessible from internet
+
+Step 2: [VULNERABILITY] Lambda has SSRF vulnerability
+  └─ Risk: Attacker can make arbitrary requests
+
+Step 3: [MISCONFIGURATION] IMDSv1 enabled
+  └─ Risk: Metadata accessible without token
+
+Step 4: [EXCESSIVE PERMISSION] Lambda role has s3:*
+  └─ Risk: Full S3 access from stolen credentials
+
+Step 5: [SENSITIVE DATA] S3 bucket contains PII
+  └─ Risk: Regulatory and reputational damage
+
+Combined Risk Score: CRITICAL (9.8)
+Blast Radius: 50M customer records
+
+Remediation Priority:
+1. Enable IMDSv2 (blocks step 3) - Quick win
+2. Restrict Lambda IAM role (blocks step 4) - High impact
+3. Patch SSRF vulnerability (blocks step 2) - Root cause
+        </pre>
+
+        <p>Цей підхід дозволяє фокусуватися на реальних ризиках замість тисяч ізольованих findings.</p>
       </section>
 
       <section>

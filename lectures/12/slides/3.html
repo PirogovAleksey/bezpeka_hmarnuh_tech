@@ -51,24 +51,75 @@
 
     <section class="slide">
       <h1>Key Metrics</h1>
-      <ul>
-        <li><strong>MTTD:</strong> Mean Time to Detect (&lt;24h)</li>
-        <li><strong>MTTR:</strong> Mean Time to Remediate (&lt;4h critical)</li>
-        <li><strong>Coverage:</strong> % assets monitored</li>
-        <li><strong>Compliance:</strong> % resources compliant</li>
-        <li><strong>Automation:</strong> % auto-remediated</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-stat" style="font-size: 2rem;">&lt;24h</div>
+          <h3>MTTD</h3>
+          <p>Mean Time to Detect</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-stat" style="font-size: 2rem;">&lt;4h</div>
+          <h3>MTTR</h3>
+          <p>Time to Remediate</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-stat" style="font-size: 2rem;">95%+</div>
+          <h3>Coverage</h3>
+          <p>Assets monitored</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-stat" style="font-size: 2rem;">90%+</div>
+          <h3>Compliance</h3>
+          <p>Resources compliant</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
       <h1>DevSecOps Pipeline</h1>
-      <ul>
-        <li><strong>Pre-commit:</strong> IDE plugins, hooks</li>
-        <li><strong>Build:</strong> SAST, SCA, secrets, IaC scan</li>
-        <li><strong>Test:</strong> DAST, container scan, API tests</li>
-        <li><strong>Deploy:</strong> Policy gates, validation</li>
-        <li><strong>Runtime:</strong> CWPP, CSPM, detection</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 450 150" width="450" height="150">
+          <!-- Pre-commit -->
+          <rect x="10" y="40" width="70" height="60" rx="8" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
+          <text x="45" y="65" text-anchor="middle" class="diagram-text-small" fill="#a855f7">Pre-commit</text>
+          <text x="45" y="85" text-anchor="middle" class="diagram-text-small">IDE, hooks</text>
+
+          <!-- Build -->
+          <rect x="100" y="40" width="70" height="60" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="135" y="65" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">Build</text>
+          <text x="135" y="85" text-anchor="middle" class="diagram-text-small">SAST, SCA</text>
+
+          <!-- Test -->
+          <rect x="190" y="40" width="70" height="60" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="225" y="65" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">Test</text>
+          <text x="225" y="85" text-anchor="middle" class="diagram-text-small">DAST, API</text>
+
+          <!-- Deploy -->
+          <rect x="280" y="40" width="70" height="60" rx="8" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="315" y="65" text-anchor="middle" class="diagram-text-small" fill="#ef4444">Deploy</text>
+          <text x="315" y="85" text-anchor="middle" class="diagram-text-small">Gates</text>
+
+          <!-- Runtime -->
+          <rect x="370" y="40" width="70" height="60" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="405" y="65" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Runtime</text>
+          <text x="405" y="85" text-anchor="middle" class="diagram-text-small">CWPP</text>
+
+          <!-- Arrows -->
+          <line x1="80" y1="70" x2="95" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-ds)"/>
+          <line x1="170" y1="70" x2="185" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-ds)"/>
+          <line x1="260" y1="70" x2="275" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-ds)"/>
+          <line x1="350" y1="70" x2="365" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-ds)"/>
+
+          <!-- Shift Left -->
+          <text x="225" y="130" text-anchor="middle" class="diagram-text-small">Shift Left: Find issues earlier, fix cheaper</text>
+
+          <defs>
+            <marker id="arrow-ds" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

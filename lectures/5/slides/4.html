@@ -29,12 +29,29 @@
 
     <section class="slide">
       <h1>Принцип найменших привілеїв</h1>
-      <ul>
-        <li>Одна функція = один IAM role</li>
-        <li>Тільки потрібні permissions</li>
-        <li><strong>Ніколи "*" у Resource</strong></li>
-        <li>Регулярний аудит невикористаних прав</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 180" width="400" height="180">
+          <!-- Bad example -->
+          <rect x="20" y="20" width="160" height="130" rx="8" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2"/>
+          <text x="100" y="45" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Погано</text>
+          <rect x="35" y="55" width="130" height="25" rx="4" fill="#ef4444" opacity="0.2"/>
+          <text x="100" y="73" text-anchor="middle" class="diagram-text-small">"s3:*" на "*"</text>
+          <rect x="35" y="90" width="130" height="25" rx="4" fill="#ef4444" opacity="0.2"/>
+          <text x="100" y="108" text-anchor="middle" class="diagram-text-small">Shared IAM role</text>
+          <rect x="35" y="125" width="130" height="20" rx="4" fill="#ef4444" opacity="0.2"/>
+          <text x="100" y="140" text-anchor="middle" class="diagram-text-small">No audit</text>
+
+          <!-- Good example -->
+          <rect x="220" y="20" width="160" height="130" rx="8" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="2"/>
+          <text x="300" y="45" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Добре</text>
+          <rect x="235" y="55" width="130" height="25" rx="4" fill="#4ade80" opacity="0.2"/>
+          <text x="300" y="73" text-anchor="middle" class="diagram-text-small">s3:GetObject на bucket</text>
+          <rect x="235" y="90" width="130" height="25" rx="4" fill="#4ade80" opacity="0.2"/>
+          <text x="300" y="108" text-anchor="middle" class="diagram-text-small">1 function = 1 role</text>
+          <rect x="235" y="125" width="130" height="20" rx="4" fill="#4ade80" opacity="0.2"/>
+          <text x="300" y="140" text-anchor="middle" class="diagram-text-small">Regular audit</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -139,12 +156,28 @@
 
     <section class="slide">
       <h1>Checklist безпеки</h1>
-      <ul>
-        <li>☑ Least privilege IAM</li>
-        <li>☑ Input validation</li>
-        <li>☑ Secrets у Secrets Manager</li>
-        <li>☑ Dependency scanning в CI</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Least Privilege</h3>
+          <p>Мінімальні IAM права</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Input Validation</h3>
+          <p>Перевірка всіх вхідних даних</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Secrets Manager</h3>
+          <p>Безпечне зберігання</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Dependency Scan</h3>
+          <p>Сканування в CI/CD</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">

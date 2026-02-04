@@ -40,13 +40,29 @@
 
     <section class="slide">
       <h1>Confidential Computing</h1>
-      <ul>
-        <li>Encryption In-Use — захист під час processing</li>
-        <li><strong>Intel SGX:</strong> Secure Enclaves</li>
-        <li><strong>AMD SEV:</strong> Encrypted Virtualization</li>
-        <li><strong>Cloud:</strong> Azure Confidential VMs, GCP Confidential</li>
-        <li>Use: Multi-party computation, data collaboration</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 180" width="400" height="180">
+          <!-- Three states of encryption -->
+          <rect x="20" y="30" width="100" height="70" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="70" y="55" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">At Rest</text>
+          <text x="70" y="80" text-anchor="middle" class="diagram-text-small">Disk encryption</text>
+
+          <rect x="150" y="30" width="100" height="70" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="200" y="55" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">In Transit</text>
+          <text x="200" y="80" text-anchor="middle" class="diagram-text-small">TLS/mTLS</text>
+
+          <rect x="280" y="30" width="100" height="70" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="330" y="55" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">In Use</text>
+          <text x="330" y="80" text-anchor="middle" class="diagram-text-small">Confidential</text>
+
+          <!-- Technologies -->
+          <text x="200" y="130" text-anchor="middle" class="diagram-text-small">Technologies: Intel SGX, AMD SEV, ARM TrustZone</text>
+
+          <!-- Cloud options -->
+          <rect x="80" y="145" width="240" height="25" rx="4" fill="rgba(56, 189, 248, 0.1)"/>
+          <text x="200" y="163" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">Azure Confidential VMs | GCP Confidential Compute</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -72,12 +88,28 @@
 
     <section class="slide">
       <h1>Compliance Requirements</h1>
-      <ul>
-        <li><strong>GDPR:</strong> Encryption, pseudonymization, right to erasure</li>
-        <li><strong>PCI DSS:</strong> Encrypt stored cards, TLS, HSM for keys</li>
-        <li><strong>HIPAA:</strong> Encryption recommended, breach safe harbor</li>
-        <li><strong>Data Residency:</strong> In-country storage requirements</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3>GDPR</h3>
+          <p>Encryption, pseudonymization</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+          <h3>PCI DSS</h3>
+          <p>Card data, TLS, HSM</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <h3>HIPAA</h3>
+          <p>PHI encryption</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <h3>Data Residency</h3>
+          <p>In-country storage</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">

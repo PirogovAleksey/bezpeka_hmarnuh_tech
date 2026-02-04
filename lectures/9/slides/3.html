@@ -60,12 +60,28 @@
 
     <section class="slide">
       <h1>LLM Use Cases</h1>
-      <ul>
-        <li><strong>Alert summarization:</strong> Raw → human-readable</li>
-        <li><strong>Investigation:</strong> Рекомендації next steps</li>
-        <li><strong>Reporting:</strong> Automated incident reports</li>
-        <li><strong>Code analysis:</strong> Пояснення malicious scripts</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Summarization</h3>
+          <p>Raw → Human-readable</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Investigation</h3>
+          <p>Next steps рекомендації</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h3>Reporting</h3>
+          <p>Auto incident reports</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3>Code Analysis</h3>
+          <p>Malicious script пояснення</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
@@ -80,13 +96,35 @@
 
     <section class="slide">
       <h1>Vulnerability Prioritization</h1>
-      <ul>
-        <li>CVSS alone: Тисячі Critical/High</li>
-        <li><strong>EPSS:</strong> Exploit Prediction Scoring</li>
-        <li><strong>Threat intel:</strong> Actively exploited?</li>
-        <li><strong>Context:</strong> Internet-facing? Production?</li>
-        <li>Результат: Фокус на реально exploitable</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 200" width="400" height="200">
+          <!-- CVSS Only -->
+          <rect x="20" y="30" width="160" height="80" rx="8" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2"/>
+          <text x="100" y="55" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">CVSS Only</text>
+          <text x="100" y="80" text-anchor="middle" class="diagram-text-small">1000s Critical/High</text>
+          <text x="100" y="100" text-anchor="middle" class="diagram-text-small" fill="#ef4444">Alert fatigue</text>
+
+          <!-- AI-Enhanced -->
+          <rect x="220" y="30" width="160" height="80" rx="8" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="2"/>
+          <text x="300" y="55" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">AI-Enhanced</text>
+          <text x="300" y="80" text-anchor="middle" class="diagram-text-small">EPSS + Context</text>
+          <text x="300" y="100" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Focused action</text>
+
+          <!-- Arrow -->
+          <line x1="180" y1="70" x2="215" y2="70" stroke="#64748b" stroke-width="2" marker-end="url(#arrow-vuln)"/>
+
+          <!-- Factors -->
+          <text x="200" y="145" text-anchor="middle" class="diagram-text-small">+ EPSS + Threat Intel + Exposure = Real Risk</text>
+          <rect x="50" y="160" width="300" height="25" rx="4" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="1"/>
+          <text x="200" y="178" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Prioritize truly exploitable vulnerabilities</text>
+
+          <defs>
+            <marker id="arrow-vuln" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

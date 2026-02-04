@@ -69,12 +69,36 @@
 
     <section class="slide">
       <h1>Порівняння: VM vs MicroVM</h1>
-      <ul>
-        <li><strong>Traditional VM:</strong> ~1GB RAM, 30+ sec boot</li>
-        <li><strong>MicroVM:</strong> ~5MB RAM, 125ms boot</li>
-        <li><strong>Container:</strong> ~1MB overhead, instant</li>
-        <li>MicroVM = безпека VM + швидкість container</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 420 200" width="420" height="200">
+          <!-- Traditional VM -->
+          <rect x="20" y="30" width="110" height="120" rx="8" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="2"/>
+          <text x="75" y="55" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">VM</text>
+          <text x="75" y="80" text-anchor="middle" class="diagram-text-small">~1GB RAM</text>
+          <text x="75" y="100" text-anchor="middle" class="diagram-text-small">30+ sec boot</text>
+          <rect x="35" y="110" width="80" height="30" rx="4" fill="#ef4444" opacity="0.3"/>
+          <text x="75" y="130" text-anchor="middle" class="diagram-text-small">Heavy</text>
+
+          <!-- MicroVM -->
+          <rect x="155" y="30" width="110" height="120" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="210" y="55" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">MicroVM</text>
+          <text x="210" y="80" text-anchor="middle" class="diagram-text-small">~5MB RAM</text>
+          <text x="210" y="100" text-anchor="middle" class="diagram-text-small">125ms boot</text>
+          <rect x="170" y="110" width="80" height="30" rx="4" fill="#4ade80" opacity="0.3"/>
+          <text x="210" y="130" text-anchor="middle" class="diagram-text-small">Best of both</text>
+
+          <!-- Container -->
+          <rect x="290" y="30" width="110" height="120" rx="8" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="345" y="55" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Container</text>
+          <text x="345" y="80" text-anchor="middle" class="diagram-text-small">~1MB overhead</text>
+          <text x="345" y="100" text-anchor="middle" class="diagram-text-small">Instant</text>
+          <rect x="305" y="110" width="80" height="30" rx="4" fill="#38bdf8" opacity="0.3"/>
+          <text x="345" y="130" text-anchor="middle" class="diagram-text-small">Less isolation</text>
+
+          <!-- Legend -->
+          <text x="210" y="175" text-anchor="middle" class="diagram-text">MicroVM = Security VM + Speed Container</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -129,12 +153,23 @@
 
     <section class="slide">
       <h1>Defence in Depth</h1>
-      <ul>
-        <li><strong>1. MicroVM</strong> — hardware ізоляція</li>
-        <li><strong>2. Seccomp</strong> — syscall filtering</li>
-        <li><strong>3. cgroups</strong> — resource limits</li>
-        <li><strong>4. Network isolation</strong> — VPC</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 300 220" width="300" height="220">
+          <!-- Layers from outside to inside -->
+          <rect x="20" y="20" width="260" height="180" rx="12" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="150" y="38" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">4. Network isolation (VPC)</text>
+
+          <rect x="40" y="50" width="220" height="140" rx="10" fill="rgba(251, 191, 36, 0.1)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="150" y="68" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">3. cgroups (resource limits)</text>
+
+          <rect x="60" y="80" width="180" height="100" rx="8" fill="rgba(168, 85, 247, 0.1)" stroke="#a855f7" stroke-width="2"/>
+          <text x="150" y="98" text-anchor="middle" class="diagram-text-small" fill="#a855f7">2. Seccomp (syscall filtering)</text>
+
+          <rect x="80" y="110" width="140" height="60" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="150" y="135" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">1. MicroVM</text>
+          <text x="150" y="155" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Hardware isolation</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

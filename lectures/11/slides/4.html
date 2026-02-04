@@ -29,13 +29,28 @@
 
     <section class="slide">
       <h1>Спільні патерни інцидентів</h1>
-      <ul>
-        <li><strong>IAM misconfiguration:</strong> Overly permissive roles</li>
-        <li><strong>Missing detection:</strong> Months undetected</li>
-        <li><strong>Credential exposure:</strong> Hardcoded secrets</li>
-        <li><strong>Supply chain trust:</strong> Blind trust in vendors</li>
-        <li><strong>Patch management:</strong> Slow response</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #ef4444;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>IAM Misconfig</h3>
+          <p>Overly permissive</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #ef4444;"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7"/><line x1="2" y1="2" x2="22" y2="22"/></svg></div>
+          <h3>No Detection</h3>
+          <p>Months undetected</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #ef4444;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Hardcoded Secrets</h3>
+          <p>Credentials exposed</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #ef4444;"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h3>Supply Chain</h3>
+          <p>Blind vendor trust</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
@@ -51,14 +66,52 @@
 
     <section class="slide">
       <h1>Cloud IR Framework</h1>
-      <ul>
-        <li><strong>1. Preparation:</strong> Playbooks, tools, training</li>
-        <li><strong>2. Detection:</strong> SIEM, alerts, anomalies</li>
-        <li><strong>3. Containment:</strong> Isolate, revoke access</li>
-        <li><strong>4. Eradication:</strong> Remove threat, patch</li>
-        <li><strong>5. Recovery:</strong> Restore, validate</li>
-        <li><strong>6. Lessons:</strong> Post-mortem, improve</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 420 160" width="420" height="160">
+          <!-- Circular flow -->
+          <rect x="20" y="30" width="55" height="40" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="47" y="45" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">1</text>
+          <text x="47" y="62" text-anchor="middle" class="diagram-text-small">Prep</text>
+
+          <rect x="90" y="30" width="55" height="40" rx="6" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="117" y="45" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">2</text>
+          <text x="117" y="62" text-anchor="middle" class="diagram-text-small">Detect</text>
+
+          <rect x="160" y="30" width="55" height="40" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="187" y="45" text-anchor="middle" class="diagram-text-small" fill="#ef4444">3</text>
+          <text x="187" y="62" text-anchor="middle" class="diagram-text-small">Contain</text>
+
+          <rect x="230" y="30" width="55" height="40" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
+          <text x="257" y="45" text-anchor="middle" class="diagram-text-small" fill="#a855f7">4</text>
+          <text x="257" y="62" text-anchor="middle" class="diagram-text-small">Eradicate</text>
+
+          <rect x="300" y="30" width="55" height="40" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="327" y="45" text-anchor="middle" class="diagram-text-small" fill="#4ade80">5</text>
+          <text x="327" y="62" text-anchor="middle" class="diagram-text-small">Recover</text>
+
+          <rect x="370" y="30" width="45" height="40" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="392" y="45" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">6</text>
+          <text x="392" y="62" text-anchor="middle" class="diagram-text-small">Learn</text>
+
+          <!-- Arrows -->
+          <line x1="75" y1="50" x2="85" y2="50" stroke="#64748b" stroke-width="2"/>
+          <line x1="145" y1="50" x2="155" y2="50" stroke="#64748b" stroke-width="2"/>
+          <line x1="215" y1="50" x2="225" y2="50" stroke="#64748b" stroke-width="2"/>
+          <line x1="285" y1="50" x2="295" y2="50" stroke="#64748b" stroke-width="2"/>
+          <line x1="355" y1="50" x2="365" y2="50" stroke="#64748b" stroke-width="2"/>
+
+          <!-- Return arrow -->
+          <path d="M 392 75 Q 392 120 210 120 Q 47 120 47 75" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrow-ir)"/>
+
+          <text x="210" y="145" text-anchor="middle" class="diagram-text-small">Continuous improvement cycle</text>
+
+          <defs>
+            <marker id="arrow-ir" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

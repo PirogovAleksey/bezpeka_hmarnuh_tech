@@ -29,12 +29,46 @@
 
     <section class="slide">
       <h1>Архітектура Kubernetes</h1>
-      <ul>
-        <li><strong>Control Plane:</strong> API Server, etcd, Scheduler</li>
-        <li><strong>Worker Nodes:</strong> Kubelet, Container Runtime</li>
-        <li><strong>API Server</strong> — центральна точка входу</li>
-        <li>Кожен компонент — потенційна ціль</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 450 250" width="450" height="250">
+          <!-- Control Plane -->
+          <rect x="20" y="20" width="200" height="100" rx="8" class="diagram-box" fill="rgba(56, 189, 248, 0.15)"/>
+          <text x="120" y="40" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Control Plane</text>
+          <rect x="35" y="50" width="70" height="25" rx="4" class="diagram-box"/>
+          <text x="70" y="68" text-anchor="middle" class="diagram-text-small">API Server</text>
+          <rect x="115" y="50" width="45" height="25" rx="4" class="diagram-box"/>
+          <text x="137" y="68" text-anchor="middle" class="diagram-text-small">etcd</text>
+          <rect x="170" y="50" width="40" height="25" rx="4" class="diagram-box"/>
+          <text x="190" y="68" text-anchor="middle" class="diagram-text-small">Sched</text>
+          <rect x="75" y="85" width="70" height="25" rx="4" class="diagram-box"/>
+          <text x="110" y="103" text-anchor="middle" class="diagram-text-small">Controller</text>
+
+          <!-- Worker Nodes -->
+          <rect x="230" y="20" width="200" height="100" rx="8" class="diagram-box" fill="rgba(74, 222, 128, 0.15)"/>
+          <text x="330" y="40" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Worker Nodes</text>
+          <rect x="245" y="50" width="55" height="25" rx="4" class="diagram-box"/>
+          <text x="272" y="68" text-anchor="middle" class="diagram-text-small">Kubelet</text>
+          <rect x="310" y="50" width="55" height="25" rx="4" class="diagram-box"/>
+          <text x="337" y="68" text-anchor="middle" class="diagram-text-small">Runtime</text>
+          <rect x="375" y="50" width="45" height="25" rx="4" class="diagram-box"/>
+          <text x="397" y="68" text-anchor="middle" class="diagram-text-small">Proxy</text>
+          <rect x="275" y="85" width="70" height="25" rx="4" class="diagram-box"/>
+          <text x="310" y="103" text-anchor="middle" class="diagram-text-small">Pods</text>
+
+          <!-- Arrow -->
+          <line x1="220" y1="70" x2="245" y2="70" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-k8s)"/>
+
+          <!-- Warning -->
+          <rect x="120" y="140" width="210" height="40" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="225" y="165" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">Кожен компонент — потенційна ціль</text>
+
+          <defs>
+            <marker id="arrow-k8s" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -49,12 +83,38 @@
 
     <section class="slide">
       <h1>RBAC: Role-Based Access Control</h1>
-      <ul>
-        <li><strong>Role:</strong> права в межах namespace</li>
-        <li><strong>ClusterRole:</strong> права на весь кластер</li>
-        <li><strong>RoleBinding:</strong> прив'язка до user/group</li>
-        <li><strong>Принцип:</strong> least privilege</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 200" width="400" height="200">
+          <!-- User/Group -->
+          <rect x="20" y="70" width="80" height="50" rx="8" class="diagram-box"/>
+          <text x="60" y="100" text-anchor="middle" class="diagram-text-small">User/Group</text>
+
+          <!-- RoleBinding -->
+          <rect x="150" y="70" width="100" height="50" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="200" y="100" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">RoleBinding</text>
+
+          <!-- Role -->
+          <rect x="300" y="30" width="80" height="40" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="340" y="55" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Role</text>
+          <text x="340" y="85" text-anchor="middle" class="diagram-text-small">(namespace)</text>
+
+          <!-- ClusterRole -->
+          <rect x="300" y="110" width="80" height="40" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="340" y="135" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">ClusterRole</text>
+          <text x="340" y="165" text-anchor="middle" class="diagram-text-small">(cluster-wide)</text>
+
+          <!-- Arrows -->
+          <line x1="100" y1="95" x2="145" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-rbac)"/>
+          <line x1="250" y1="85" x2="295" y2="55" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-rbac)"/>
+          <line x1="250" y1="105" x2="295" y2="130" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-rbac)"/>
+
+          <defs>
+            <marker id="arrow-rbac" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

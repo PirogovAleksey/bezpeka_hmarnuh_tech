@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/print.css" media="print">
   <script>
     if (localStorage.getItem('theme') === 'dark') {
       document.documentElement.classList.add('dark');
@@ -242,6 +243,155 @@
             <td>Resource limits, QoS</td>
           </tr>
         </table>
+
+        <!-- Diagram: Hypervisor Architecture -->
+        <div class="diagram">
+          <div class="diagram-title">Архітектура гіпервізорів: Type 1 vs Type 2</div>
+          <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+            <!-- Type 1: Bare-metal -->
+            <text class="diagram-text-bold" x="175" y="25" text-anchor="middle">Type 1: Bare-metal Hypervisor</text>
+
+            <!-- Hardware -->
+            <rect fill="#64748b" x="30" y="200" width="290" height="40" rx="6"/>
+            <text fill="white" x="175" y="225" text-anchor="middle" font-size="12">Hardware (CPU, RAM, Storage)</text>
+
+            <!-- Type 1 Hypervisor -->
+            <rect fill="#8b5cf6" x="30" y="150" width="290" height="45" rx="6"/>
+            <text fill="white" x="175" y="178" text-anchor="middle" font-size="12">Type 1 Hypervisor (ESXi, Xen, KVM)</text>
+
+            <!-- VMs on Type 1 -->
+            <g transform="translate(45, 50)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="80" height="95" rx="6"/>
+              <rect fill="#bfdbfe" x="8" y="8" width="64" height="25" rx="3"/>
+              <text fill="#1e3a8a" x="40" y="26" text-anchor="middle" font-size="9">Guest OS</text>
+              <rect fill="var(--card)" stroke="var(--card-border)" x="8" y="38" width="30" height="25" rx="3"/>
+              <text fill="var(--text)" x="23" y="55" text-anchor="middle" font-size="8">App</text>
+              <rect fill="var(--card)" stroke="var(--card-border)" x="42" y="38" width="30" height="25" rx="3"/>
+              <text fill="var(--text)" x="57" y="55" text-anchor="middle" font-size="8">App</text>
+              <text fill="#1d4ed8" x="40" y="82" text-anchor="middle" font-size="9">VM 1</text>
+            </g>
+
+            <g transform="translate(135, 50)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="80" height="95" rx="6"/>
+              <rect fill="#bfdbfe" x="8" y="8" width="64" height="25" rx="3"/>
+              <text fill="#1e3a8a" x="40" y="26" text-anchor="middle" font-size="9">Guest OS</text>
+              <rect fill="var(--card)" stroke="var(--card-border)" x="8" y="38" width="64" height="25" rx="3"/>
+              <text fill="var(--text)" x="40" y="55" text-anchor="middle" font-size="8">Application</text>
+              <text fill="#1d4ed8" x="40" y="82" text-anchor="middle" font-size="9">VM 2</text>
+            </g>
+
+            <g transform="translate(225, 50)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="80" height="95" rx="6"/>
+              <rect fill="#bfdbfe" x="8" y="8" width="64" height="25" rx="3"/>
+              <text fill="#1e3a8a" x="40" y="26" text-anchor="middle" font-size="9">Guest OS</text>
+              <rect fill="var(--card)" stroke="var(--card-border)" x="8" y="38" width="64" height="25" rx="3"/>
+              <text fill="var(--text)" x="40" y="55" text-anchor="middle" font-size="8">Application</text>
+              <text fill="#1d4ed8" x="40" y="82" text-anchor="middle" font-size="9">VM 3</text>
+            </g>
+
+            <!-- Type 2: Hosted -->
+            <text class="diagram-text-bold" x="525" y="25" text-anchor="middle">Type 2: Hosted Hypervisor</text>
+
+            <!-- Hardware -->
+            <rect fill="#64748b" x="380" y="200" width="290" height="40" rx="6"/>
+            <text fill="white" x="525" y="225" text-anchor="middle" font-size="12">Hardware (CPU, RAM, Storage)</text>
+
+            <!-- Host OS -->
+            <rect fill="#475569" x="380" y="150" width="290" height="45" rx="6"/>
+            <text fill="white" x="525" y="178" text-anchor="middle" font-size="12">Host OS (Windows, macOS, Linux)</text>
+
+            <!-- Type 2 Hypervisor -->
+            <rect fill="#8b5cf6" x="380" y="105" width="290" height="40" rx="6"/>
+            <text fill="white" x="525" y="130" text-anchor="middle" font-size="11">Type 2 Hypervisor (VirtualBox, VMware Workstation)</text>
+
+            <!-- VMs on Type 2 -->
+            <g transform="translate(400, 45)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="75" height="55" rx="6"/>
+              <text fill="#1d4ed8" x="37" y="20" text-anchor="middle" font-size="9">Guest OS</text>
+              <text fill="#1d4ed8" x="37" y="35" text-anchor="middle" font-size="9">+ Apps</text>
+              <text fill="#1d4ed8" x="37" y="50" text-anchor="middle" font-size="8">VM 1</text>
+            </g>
+
+            <g transform="translate(487, 45)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="75" height="55" rx="6"/>
+              <text fill="#1d4ed8" x="37" y="20" text-anchor="middle" font-size="9">Guest OS</text>
+              <text fill="#1d4ed8" x="37" y="35" text-anchor="middle" font-size="9">+ Apps</text>
+              <text fill="#1d4ed8" x="37" y="50" text-anchor="middle" font-size="8">VM 2</text>
+            </g>
+
+            <g transform="translate(575, 45)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="75" height="55" rx="6"/>
+              <text fill="#1d4ed8" x="37" y="20" text-anchor="middle" font-size="9">Guest OS</text>
+              <text fill="#1d4ed8" x="37" y="35" text-anchor="middle" font-size="9">+ Apps</text>
+              <text fill="#1d4ed8" x="37" y="50" text-anchor="middle" font-size="8">VM 3</text>
+            </g>
+          </svg>
+          <div class="diagram-caption">Рис. 4.1b. Type 1 гіпервізор працює напряму на hardware (вища безпека), Type 2 — поверх Host OS (більша атакова поверхня)</div>
+        </div>
+
+        <h3>Детальний аналіз Side-Channel атак</h3>
+        <p>Side-channel атаки експлуатують фізичні характеристики системи, а не логічні вразливості в коді. У віртуалізованих середовищах вони особливо небезпечні через спільне використання ресурсів.</p>
+
+        <h4>Типи Side-Channel атак у віртуалізації</h4>
+        <table>
+          <tr>
+            <th>Атака</th>
+            <th>CVE</th>
+            <th>Механізм</th>
+            <th>Вплив</th>
+          </tr>
+          <tr>
+            <td><strong>Spectre</strong></td>
+            <td>CVE-2017-5753/5715</td>
+            <td>Speculative execution, branch prediction</td>
+            <td>Читання пам'яті інших процесів/VM</td>
+          </tr>
+          <tr>
+            <td><strong>Meltdown</strong></td>
+            <td>CVE-2017-5754</td>
+            <td>Out-of-order execution</td>
+            <td>Читання kernel memory з userspace</td>
+          </tr>
+          <tr>
+            <td><strong>L1TF</strong></td>
+            <td>CVE-2018-3646</td>
+            <td>L1 cache speculation</td>
+            <td>Читання L1 cache інших VM</td>
+          </tr>
+          <tr>
+            <td><strong>MDS</strong></td>
+            <td>CVE-2018-12126/7</td>
+            <td>Microarchitectural buffers</td>
+            <td>Читання даних з CPU buffers</td>
+          </tr>
+          <tr>
+            <td><strong>RIDL</strong></td>
+            <td>CVE-2019-11091</td>
+            <td>Load port data sampling</td>
+            <td>Витік даних між hyper-threads</td>
+          </tr>
+        </table>
+
+        <h4>Захист від Side-Channel атак</h4>
+        <pre>
+# Перевірка мітигацій на Linux
+cat /sys/devices/system/cpu/vulnerabilities/*
+
+# Типовий вивід:
+spectre_v1: Mitigation: usercopy/swapgs barriers and __user pointer sanitization
+spectre_v2: Mitigation: Retpolines, IBPB: conditional, STIBP: conditional, RSB filling
+meltdown: Mitigation: PTI
+l1tf: Mitigation: PTE Inversion; VMX: conditional cache flushes, SMT vulnerable
+mds: Mitigation: Clear CPU buffers; SMT vulnerable
+        </pre>
+
+        <ul>
+          <li><strong>Microcode updates:</strong> Регулярне оновлення мікрокоду процесора</li>
+          <li><strong>Kernel patches:</strong> KPTI (Kernel Page Table Isolation) для Meltdown</li>
+          <li><strong>Retpolines:</strong> Компіляторна техніка проти Spectre v2</li>
+          <li><strong>SMT/HT disable:</strong> Вимкнення Hyper-Threading для критичних workloads</li>
+          <li><strong>Dedicated hosts:</strong> Виділені фізичні сервери без multi-tenancy</li>
+        </ul>
       </section>
 
       <section>
@@ -799,6 +949,112 @@ resources:
           <li>Container images скануються</li>
           <li>Service accounts з мінімальними правами</li>
         </ul>
+
+        <!-- Diagram: Kubernetes Security Layers -->
+        <div class="diagram">
+          <div class="diagram-title">Рівні безпеки Kubernetes: Defense in Depth</div>
+          <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer layer: Cluster -->
+            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="30" y="20" width="640" height="260" rx="16"/>
+            <text fill="#dc2626" x="350" y="45" text-anchor="middle" font-weight="600" font-size="12">Cluster Security (API Server, etcd, Network)</text>
+
+            <!-- Second layer: Namespace -->
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="60" y="60" width="580" height="200" rx="12"/>
+            <text fill="#b45309" x="350" y="82" text-anchor="middle" font-weight="600" font-size="11">Namespace Isolation (RBAC, Network Policies, Resource Quotas)</text>
+
+            <!-- Third layer: Pod -->
+            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="90" y="100" width="520" height="140" rx="10"/>
+            <text fill="#1d4ed8" x="350" y="120" text-anchor="middle" font-weight="600" font-size="11">Pod Security (PSS, Service Accounts, Security Context)</text>
+
+            <!-- Inner layer: Container -->
+            <g transform="translate(120, 135)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="140" height="85" rx="8"/>
+              <text fill="#166534" x="70" y="20" text-anchor="middle" font-weight="600" font-size="10">Container</text>
+              <text fill="#166534" x="70" y="38" text-anchor="middle" font-size="8">Read-only rootfs</text>
+              <text fill="#166534" x="70" y="50" text-anchor="middle" font-size="8">Non-root user</text>
+              <text fill="#166534" x="70" y="62" text-anchor="middle" font-size="8">Dropped capabilities</text>
+              <text fill="#166534" x="70" y="74" text-anchor="middle" font-size="8">Seccomp profile</text>
+            </g>
+
+            <g transform="translate(280, 135)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="140" height="85" rx="8"/>
+              <text fill="#166534" x="70" y="20" text-anchor="middle" font-weight="600" font-size="10">Container</text>
+              <text fill="#166534" x="70" y="38" text-anchor="middle" font-size="8">Image scanning</text>
+              <text fill="#166534" x="70" y="50" text-anchor="middle" font-size="8">Signed images</text>
+              <text fill="#166534" x="70" y="62" text-anchor="middle" font-size="8">Minimal base image</text>
+              <text fill="#166534" x="70" y="74" text-anchor="middle" font-size="8">No secrets in image</text>
+            </g>
+
+            <g transform="translate(440, 135)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="140" height="85" rx="8"/>
+              <text fill="#166534" x="70" y="20" text-anchor="middle" font-weight="600" font-size="10">Container</text>
+              <text fill="#166534" x="70" y="38" text-anchor="middle" font-size="8">Resource limits</text>
+              <text fill="#166534" x="70" y="50" text-anchor="middle" font-size="8">Liveness probes</text>
+              <text fill="#166534" x="70" y="62" text-anchor="middle" font-size="8">Network isolation</text>
+              <text fill="#166534" x="70" y="74" text-anchor="middle" font-size="8">Audit logging</text>
+            </g>
+          </svg>
+          <div class="diagram-caption">Рис. 4.3. Defense in Depth у Kubernetes: кожен рівень додає захист</div>
+        </div>
+
+        <h3>Реальні інциденти безпеки Kubernetes</h3>
+
+        <h4>Tesla Cryptojacking (2018)</h4>
+        <p>Атакуючі знайшли незахищену Kubernetes dashboard Tesla без автентифікації:</p>
+        <ul>
+          <li><strong>Вектор атаки:</strong> Публічно доступний Kubernetes Dashboard без пароля</li>
+          <li><strong>Експлуатація:</strong> Запуск pods для криптомайнінгу</li>
+          <li><strong>Наслідки:</strong> Використання AWS ресурсів Tesla для майнінгу</li>
+          <li><strong>Урок:</strong> Ніколи не виставляти dashboard без автентифікації</li>
+        </ul>
+
+        <h4>Shopify Bug Bounty (2020)</h4>
+        <p>Дослідник знайшов спосіб отримати доступ до Google Cloud метаданих через Kubernetes:</p>
+        <ul>
+          <li><strong>Вектор:</strong> SSRF через pod до metadata service</li>
+          <li><strong>Отримані дані:</strong> Service account credentials</li>
+          <li><strong>Вплив:</strong> Потенційний доступ до GCP ресурсів</li>
+          <li><strong>Захист:</strong> Workload Identity, metadata concealment</li>
+        </ul>
+
+        <h4>Приклад безпечного Pod manifest</h4>
+        <pre>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-pod
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10000
+    runAsGroup: 10000
+    fsGroup: 10000
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - name: app
+    image: myregistry/myapp:v1.2.3@sha256:abc123...
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+          - ALL
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: 8080
+      initialDelaySeconds: 3
+      periodSeconds: 10
+  automountServiceAccountToken: false
+        </pre>
       </section>
 
       <section>

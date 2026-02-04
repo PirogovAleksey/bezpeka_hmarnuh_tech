@@ -59,12 +59,34 @@
 
     <section class="slide">
       <h1>Приклад Reentrancy</h1>
-      <ul>
-        <li><strong>Погано:</strong> transfer → update balance</li>
-        <li><strong>Добре:</strong> update balance → transfer</li>
-        <li>Спочатку змінюємо стан</li>
-        <li>Потім взаємодіємо із зовнішнім кодом</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 180" width="400" height="180">
+          <!-- Bad pattern -->
+          <rect x="20" y="20" width="160" height="130" rx="8" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2"/>
+          <text x="100" y="45" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Вразливий</text>
+          <rect x="35" y="55" width="130" height="25" rx="4" fill="#ef4444" opacity="0.2"/>
+          <text x="100" y="73" text-anchor="middle" class="diagram-text-small">1. transfer()</text>
+          <line x1="100" y1="80" x2="100" y2="90" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-bad)"/>
+          <rect x="35" y="95" width="130" height="25" rx="4" fill="#ef4444" opacity="0.2"/>
+          <text x="100" y="113" text-anchor="middle" class="diagram-text-small">2. update balance</text>
+          <text x="100" y="140" text-anchor="middle" class="diagram-text-small" fill="#ef4444">Reentry можливий!</text>
+
+          <!-- Good pattern -->
+          <rect x="220" y="20" width="160" height="130" rx="8" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="2"/>
+          <text x="300" y="45" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Безпечний</text>
+          <rect x="235" y="55" width="130" height="25" rx="4" fill="#4ade80" opacity="0.2"/>
+          <text x="300" y="73" text-anchor="middle" class="diagram-text-small">1. update balance</text>
+          <line x1="300" y1="80" x2="300" y2="90" stroke="#4ade80" stroke-width="2" marker-end="url(#arrow-good)"/>
+          <rect x="235" y="95" width="130" height="25" rx="4" fill="#4ade80" opacity="0.2"/>
+          <text x="300" y="113" text-anchor="middle" class="diagram-text-small">2. transfer()</text>
+          <text x="300" y="140" text-anchor="middle" class="diagram-text-small" fill="#4ade80">CEI Pattern</text>
+
+          <defs>
+            <marker id="arrow-bad" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#ef4444"/></marker>
+            <marker id="arrow-good" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#4ade80"/></marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -109,12 +131,28 @@
 
     <section class="slide">
       <h1>Security Tools</h1>
-      <ul>
-        <li><strong>Slither:</strong> static analysis</li>
-        <li><strong>Mythril:</strong> symbolic execution</li>
-        <li><strong>Echidna:</strong> fuzzing</li>
-        <li><strong>Certora:</strong> formal verification</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Slither</h3>
+          <p>Static analysis</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h3>Mythril</h3>
+          <p>Symbolic execution</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>Echidna</h3>
+          <p>Fuzzing</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>Certora</h3>
+          <p>Formal verification</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">

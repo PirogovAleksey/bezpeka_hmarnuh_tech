@@ -39,12 +39,32 @@
 
     <section class="slide">
       <h1>Варіанти Audit Log</h1>
-      <ul>
-        <li><strong>Повне зберігання:</strong> все on-chain (дорого)</li>
-        <li><strong>Хеші:</strong> тільки Merkle root</li>
-        <li><strong>Hybrid:</strong> off-chain + on-chain anchoring</li>
-        <li>Баланс між ціною та безпекою</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 420 170" width="420" height="170">
+          <!-- Full storage -->
+          <rect x="20" y="20" width="110" height="110" rx="8" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="2"/>
+          <text x="75" y="45" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Full</text>
+          <text x="75" y="70" text-anchor="middle" class="diagram-text-small">On-chain</text>
+          <text x="75" y="90" text-anchor="middle" class="diagram-text-small">100% data</text>
+          <text x="75" y="115" text-anchor="middle" class="diagram-text-small" fill="#ef4444">$$$ дорого</text>
+
+          <!-- Hashes only -->
+          <rect x="155" y="20" width="110" height="110" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="210" y="45" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">Hashes</text>
+          <text x="210" y="70" text-anchor="middle" class="diagram-text-small">Merkle root</text>
+          <text x="210" y="90" text-anchor="middle" class="diagram-text-small">Proof only</text>
+          <text x="210" y="115" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">$ економно</text>
+
+          <!-- Hybrid -->
+          <rect x="290" y="20" width="110" height="110" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="345" y="45" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Hybrid</text>
+          <text x="345" y="70" text-anchor="middle" class="diagram-text-small">Off-chain data</text>
+          <text x="345" y="90" text-anchor="middle" class="diagram-text-small">On-chain anchor</text>
+          <text x="345" y="115" text-anchor="middle" class="diagram-text-small" fill="#4ade80">$$ баланс</text>
+
+          <text x="210" y="155" text-anchor="middle" class="diagram-text-small">Вибір залежить від threat model</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -109,12 +129,28 @@
 
     <section class="slide">
       <h1>Коли використовувати?</h1>
-      <ul>
-        <li>☑ Потрібна незмінність</li>
-        <li>☑ Немає довіри між учасниками</li>
-        <li>☑ Децентралізація важлива</li>
-        <li>☒ High-frequency → традиційна БД</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Незмінність</h3>
+          <p>Потрібен immutable log</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>No Trust</h3>
+          <p>Немає довіри</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Децентралізація</h3>
+          <p>Критична вимога</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="background: rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #ef4444;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+          <h3>High-frequency</h3>
+          <p>Традиційна БД краще</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">

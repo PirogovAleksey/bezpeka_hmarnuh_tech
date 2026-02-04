@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/print.css" media="print">
   <script>
     if (localStorage.getItem('theme') === 'dark') {
       document.documentElement.classList.add('dark');
@@ -186,6 +187,83 @@
         </ul>
 
         <h3>Serverless vs Containers vs VMs</h3>
+
+        <!-- Diagram: Abstraction Levels -->
+        <div class="diagram">
+          <div class="diagram-title">Рівні абстракції: від VM до Serverless</div>
+          <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- VM Stack -->
+            <g transform="translate(30, 30)">
+              <text class="diagram-text-bold" x="70" y="0" text-anchor="middle">VMs</text>
+              <rect fill="#64748b" x="0" y="15" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="33" text-anchor="middle" font-size="9">Hardware</text>
+              <rect fill="#475569" x="0" y="45" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="63" text-anchor="middle" font-size="9">Hypervisor</text>
+              <rect fill="#3b82f6" x="0" y="75" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="93" text-anchor="middle" font-size="9">Guest OS</text>
+              <rect fill="#60a5fa" x="0" y="105" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="123" text-anchor="middle" font-size="9">Runtime</text>
+              <rect fill="#93c5fd" x="0" y="135" width="140" height="25" rx="4"/>
+              <text fill="#1e3a8a" x="70" y="153" text-anchor="middle" font-size="9">Application</text>
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-dasharray="4,4" x="-5" y="10" width="150" height="155" rx="6"/>
+              <text fill="#dc2626" x="70" y="180" text-anchor="middle" font-size="8">You manage</text>
+            </g>
+
+            <!-- Container Stack -->
+            <g transform="translate(190, 30)">
+              <text class="diagram-text-bold" x="70" y="0" text-anchor="middle">Containers</text>
+              <rect fill="#64748b" x="0" y="15" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="33" text-anchor="middle" font-size="9">Hardware</text>
+              <rect fill="#475569" x="0" y="45" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="63" text-anchor="middle" font-size="9">Host OS</text>
+              <rect fill="#22c55e" x="0" y="75" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="93" text-anchor="middle" font-size="9">Container Runtime</text>
+              <rect fill="#86efac" x="0" y="105" width="140" height="25" rx="4"/>
+              <text fill="#166534" x="70" y="123" text-anchor="middle" font-size="9">Application + Deps</text>
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-dasharray="4,4" x="-5" y="70" width="150" height="65" rx="6"/>
+              <text fill="#dc2626" x="70" y="180" text-anchor="middle" font-size="8">You manage</text>
+            </g>
+
+            <!-- Serverless Stack -->
+            <g transform="translate(350, 30)">
+              <text class="diagram-text-bold" x="70" y="0" text-anchor="middle">Serverless</text>
+              <rect fill="#64748b" x="0" y="15" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="33" text-anchor="middle" font-size="9">Hardware</text>
+              <rect fill="#475569" x="0" y="45" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="63" text-anchor="middle" font-size="9">Host OS</text>
+              <rect fill="#8b5cf6" x="0" y="75" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="93" text-anchor="middle" font-size="9">Isolation (Firecracker)</text>
+              <rect fill="#a78bfa" x="0" y="105" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="123" text-anchor="middle" font-size="9">Runtime (Node, Python)</text>
+              <rect fill="#c4b5fd" x="0" y="135" width="140" height="25" rx="4"/>
+              <text fill="#5b21b6" x="70" y="153" text-anchor="middle" font-size="9">Function Code</text>
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-dasharray="4,4" x="-5" y="130" width="150" height="35" rx="6"/>
+              <text fill="#dc2626" x="70" y="180" text-anchor="middle" font-size="8">You manage</text>
+            </g>
+
+            <!-- Edge Functions Stack -->
+            <g transform="translate(510, 30)">
+              <text class="diagram-text-bold" x="70" y="0" text-anchor="middle">Edge (V8)</text>
+              <rect fill="#64748b" x="0" y="15" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="33" text-anchor="middle" font-size="9">Hardware</text>
+              <rect fill="#475569" x="0" y="45" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="63" text-anchor="middle" font-size="9">Host OS</text>
+              <rect fill="#f59e0b" x="0" y="75" width="140" height="25" rx="4"/>
+              <text fill="white" x="70" y="93" text-anchor="middle" font-size="9">V8 Engine</text>
+              <rect fill="#fcd34d" x="0" y="105" width="140" height="25" rx="4"/>
+              <text fill="#92400e" x="70" y="123" text-anchor="middle" font-size="9">Isolate</text>
+              <rect fill="#fef3c7" x="0" y="135" width="140" height="25" rx="4"/>
+              <text fill="#92400e" x="70" y="153" text-anchor="middle" font-size="9">JS/WASM Code</text>
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-dasharray="4,4" x="-5" y="130" width="150" height="35" rx="6"/>
+              <text fill="#dc2626" x="70" y="180" text-anchor="middle" font-size="8">You manage</text>
+            </g>
+
+            <!-- Arrow showing abstraction increase -->
+            <line stroke="var(--accent)" stroke-width="3" x1="30" y1="200" x2="650" y2="200" marker-end="url(#arrow-sls)"/>
+            <text class="diagram-text-small" x="340" y="215" text-anchor="middle">Збільшення рівня абстракції / Зменшення управління</text>
+          </svg>
+          <div class="diagram-caption">Рис. 5.0. Еволюція абстракцій: від повного контролю (VM) до мінімального управління (Edge Functions)</div>
+        </div>
 
         <!-- Diagram: Serverless Execution Flow -->
         <div class="diagram">
@@ -461,6 +539,146 @@ exports.handler = async (event) => {
           <li>Вкрадено дані 100+ мільйонів клієнтів</li>
           <li><strong>Урок:</strong> Principle of Least Privilege критичний</li>
         </ul>
+
+        <!-- Diagram: Capital One Attack Flow -->
+        <div class="diagram">
+          <div class="diagram-title">Capital One Breach: Attack Flow через SSRF</div>
+          <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow-cap" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+              </marker>
+            </defs>
+
+            <!-- Attacker -->
+            <g transform="translate(30, 60)">
+              <circle fill="#fecaca" stroke="#ef4444" cx="35" cy="35" r="30"/>
+              <text fill="#dc2626" x="35" y="40" text-anchor="middle" font-size="10">Attacker</text>
+              <text fill="#dc2626" x="35" y="85" text-anchor="middle" font-size="8">Paige Thompson</text>
+            </g>
+
+            <!-- Step 1: WAF -->
+            <g transform="translate(130, 50)">
+              <rect fill="#fee2e2" stroke="#ef4444" x="0" y="0" width="90" height="55" rx="6"/>
+              <text fill="#dc2626" x="45" y="25" text-anchor="middle" font-size="9">ModSecurity</text>
+              <text fill="#dc2626" x="45" y="40" text-anchor="middle" font-size="9">WAF</text>
+              <text fill="#991b1b" x="45" y="70" text-anchor="middle" font-size="7">Misconfigured!</text>
+            </g>
+            <line stroke="#ef4444" stroke-width="2" x1="95" y1="95" x2="130" y2="77" marker-end="url(#arrow-cap)"/>
+            <text fill="#ef4444" x="112" y="75" text-anchor="middle" font-size="7">1. SSRF</text>
+
+            <!-- Step 2: Lambda -->
+            <g transform="translate(250, 50)">
+              <rect fill="#fef3c7" stroke="#f59e0b" x="0" y="0" width="90" height="55" rx="6"/>
+              <text fill="#b45309" x="45" y="25" text-anchor="middle" font-size="9">Lambda</text>
+              <text fill="#b45309" x="45" y="40" text-anchor="middle" font-size="9">Function</text>
+              <text fill="#92400e" x="45" y="70" text-anchor="middle" font-size="7">Overly permissive IAM</text>
+            </g>
+            <line stroke="#ef4444" stroke-width="2" x1="220" y1="77" x2="250" y2="77" marker-end="url(#arrow-cap)"/>
+            <text fill="#ef4444" x="235" y="65" text-anchor="middle" font-size="7">2. Request</text>
+
+            <!-- Step 3: Metadata -->
+            <g transform="translate(370, 50)">
+              <rect fill="#dbeafe" stroke="#3b82f6" x="0" y="0" width="90" height="55" rx="6"/>
+              <text fill="#1d4ed8" x="45" y="25" text-anchor="middle" font-size="9">Metadata</text>
+              <text fill="#1d4ed8" x="45" y="40" text-anchor="middle" font-size="9">169.254.169.254</text>
+            </g>
+            <line stroke="#ef4444" stroke-width="2" x1="340" y1="77" x2="370" y2="77" marker-end="url(#arrow-cap)"/>
+            <text fill="#ef4444" x="355" y="65" text-anchor="middle" font-size="7">3. SSRF</text>
+
+            <!-- Step 4: IAM Creds -->
+            <g transform="translate(370, 120)">
+              <rect fill="#fecaca" stroke="#ef4444" x="0" y="0" width="90" height="40" rx="6"/>
+              <text fill="#dc2626" x="45" y="18" text-anchor="middle" font-size="9">IAM Creds</text>
+              <text fill="#dc2626" x="45" y="32" text-anchor="middle" font-size="9">Stolen!</text>
+            </g>
+            <line stroke="#ef4444" stroke-width="2" x1="415" y1="105" x2="415" y2="120" marker-end="url(#arrow-cap)"/>
+            <text fill="#ef4444" x="430" y="113" text-anchor="middle" font-size="7">4. Creds</text>
+
+            <!-- Step 5: S3 -->
+            <g transform="translate(500, 50)">
+              <rect fill="#dcfce7" stroke="#22c55e" x="0" y="0" width="90" height="55" rx="6"/>
+              <text fill="#166534" x="45" y="25" text-anchor="middle" font-size="9">S3 Buckets</text>
+              <text fill="#166534" x="45" y="40" text-anchor="middle" font-size="9">Customer Data</text>
+            </g>
+            <line stroke="#ef4444" stroke-width="2" x1="460" y1="140" x2="500" y2="100" marker-end="url(#arrow-cap)"/>
+            <text fill="#ef4444" x="475" y="130" text-anchor="middle" font-size="7">5. Access</text>
+
+            <!-- Result -->
+            <g transform="translate(600, 70)">
+              <text fill="#dc2626" x="50" y="0" text-anchor="middle" font-weight="600" font-size="10">106M records</text>
+              <text fill="#dc2626" x="50" y="15" text-anchor="middle" font-size="9">compromised</text>
+              <text fill="#dc2626" x="50" y="35" text-anchor="middle" font-size="9">$80M fine</text>
+            </g>
+          </svg>
+          <div class="diagram-caption">Рис. 5.2. Анатомія Capital One breach: SSRF через misconfigured WAF дозволив доступ до metadata та S3</div>
+        </div>
+
+        <h4>Правильний захист від SSRF у Lambda</h4>
+        <pre>
+# IMDSv2 вимагає токен — блокує простий SSRF
+# Увімкніть IMDSv2 для всіх EC2/Lambda:
+
+# AWS CLI
+aws ec2 modify-instance-metadata-options \
+  --instance-id i-1234567890abcdef0 \
+  --http-tokens required \
+  --http-endpoint enabled
+
+# Terraform
+resource "aws_instance" "example" {
+  metadata_options {
+    http_tokens   = "required"  # IMDSv2 only
+    http_endpoint = "enabled"
+  }
+}
+
+# Lambda — використовуйте IAM roles з мінімальними правами:
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:GetObject"],
+      "Resource": "arn:aws:s3:::specific-bucket/specific-prefix/*"
+    }
+  ]
+}
+        </pre>
+
+        <h3>Статистика serverless-інцидентів</h3>
+        <table>
+          <tr>
+            <th>Тип вразливості</th>
+            <th>% інцидентів</th>
+            <th>Середній вплив</th>
+          </tr>
+          <tr>
+            <td>Overly permissive IAM</td>
+            <td>35%</td>
+            <td>Критичний</td>
+          </tr>
+          <tr>
+            <td>Secrets in code/env</td>
+            <td>25%</td>
+            <td>Високий</td>
+          </tr>
+          <tr>
+            <td>Vulnerable dependencies</td>
+            <td>20%</td>
+            <td>Середній-Високий</td>
+          </tr>
+          <tr>
+            <td>Injection attacks</td>
+            <td>12%</td>
+            <td>Високий</td>
+          </tr>
+          <tr>
+            <td>Insufficient logging</td>
+            <td>8%</td>
+            <td>Середній</td>
+          </tr>
+        </table>
       </section>
 
       <section>
@@ -644,6 +862,129 @@ exports.handler = async (event) => {
           <li>Менший overhead</li>
           <li>Обмеження: тільки JavaScript/WASM</li>
         </ul>
+
+        <!-- Diagram: Isolation Technologies Comparison -->
+        <div class="diagram">
+          <div class="diagram-title">Порівняння технологій ізоляції Serverless</div>
+          <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+            <!-- Firecracker -->
+            <g transform="translate(30, 30)">
+              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="200" height="230" rx="10"/>
+              <text fill="#b45309" x="100" y="25" text-anchor="middle" font-weight="600" font-size="13">Firecracker</text>
+              <text fill="#92400e" x="100" y="45" text-anchor="middle" font-size="10">(AWS Lambda)</text>
+
+              <rect fill="var(--card)" stroke="var(--card-border)" x="15" y="60" width="170" height="40" rx="6"/>
+              <text class="diagram-text-small" x="100" y="75" text-anchor="middle">Function Code</text>
+              <text class="diagram-text-small" x="100" y="90" text-anchor="middle">+ Runtime</text>
+
+              <rect fill="#fcd34d" x="15" y="105" width="170" height="30" rx="4"/>
+              <text fill="#92400e" x="100" y="125" text-anchor="middle" font-size="10">Guest Kernel (Linux)</text>
+
+              <rect fill="#f59e0b" x="15" y="140" width="170" height="30" rx="4"/>
+              <text fill="white" x="100" y="160" text-anchor="middle" font-size="10">microVM (KVM)</text>
+
+              <rect fill="#64748b" x="15" y="175" width="170" height="25" rx="4"/>
+              <text fill="white" x="100" y="192" text-anchor="middle" font-size="10">Host Kernel</text>
+
+              <text fill="#92400e" x="100" y="220" text-anchor="middle" font-size="9">Cold start: ~125ms</text>
+            </g>
+
+            <!-- gVisor -->
+            <g transform="translate(250, 30)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="200" height="230" rx="10"/>
+              <text fill="#1d4ed8" x="100" y="25" text-anchor="middle" font-weight="600" font-size="13">gVisor</text>
+              <text fill="#1e40af" x="100" y="45" text-anchor="middle" font-size="10">(GCP Cloud Run)</text>
+
+              <rect fill="var(--card)" stroke="var(--card-border)" x="15" y="60" width="170" height="40" rx="6"/>
+              <text class="diagram-text-small" x="100" y="75" text-anchor="middle">Application</text>
+              <text class="diagram-text-small" x="100" y="90" text-anchor="middle">+ Container Image</text>
+
+              <rect fill="#93c5fd" x="15" y="105" width="170" height="40" rx="4"/>
+              <text fill="#1e3a8a" x="100" y="120" text-anchor="middle" font-size="10">Sentry</text>
+              <text fill="#1e3a8a" x="100" y="135" text-anchor="middle" font-size="9">(User-space kernel)</text>
+
+              <rect fill="#3b82f6" x="15" y="150" width="170" height="20" rx="4"/>
+              <text fill="white" x="100" y="165" text-anchor="middle" font-size="9">Gofer (FS proxy)</text>
+
+              <rect fill="#64748b" x="15" y="175" width="170" height="25" rx="4"/>
+              <text fill="white" x="100" y="192" text-anchor="middle" font-size="10">Host Kernel</text>
+
+              <text fill="#1e40af" x="100" y="220" text-anchor="middle" font-size="9">Cold start: ~150ms</text>
+            </g>
+
+            <!-- V8 Isolates -->
+            <g transform="translate(470, 30)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="200" height="230" rx="10"/>
+              <text fill="#166534" x="100" y="25" text-anchor="middle" font-weight="600" font-size="13">V8 Isolates</text>
+              <text fill="#14532d" x="100" y="45" text-anchor="middle" font-size="10">(Cloudflare Workers)</text>
+
+              <rect fill="var(--card)" stroke="var(--card-border)" x="15" y="60" width="75" height="50" rx="6"/>
+              <text class="diagram-text-small" x="52" y="85" text-anchor="middle">Worker</text>
+              <text class="diagram-text-small" x="52" y="100" text-anchor="middle">A</text>
+
+              <rect fill="var(--card)" stroke="var(--card-border)" x="110" y="60" width="75" height="50" rx="6"/>
+              <text class="diagram-text-small" x="147" y="85" text-anchor="middle">Worker</text>
+              <text class="diagram-text-small" x="147" y="100" text-anchor="middle">B</text>
+
+              <rect fill="#86efac" x="15" y="115" width="170" height="55" rx="4"/>
+              <text fill="#166534" x="100" y="135" text-anchor="middle" font-size="10">V8 Engine</text>
+              <text fill="#166534" x="100" y="150" text-anchor="middle" font-size="9">+ Isolate Contexts</text>
+              <text fill="#166534" x="100" y="163" text-anchor="middle" font-size="8">(same process)</text>
+
+              <rect fill="#64748b" x="15" y="175" width="170" height="25" rx="4"/>
+              <text fill="white" x="100" y="192" text-anchor="middle" font-size="10">Host Kernel</text>
+
+              <text fill="#14532d" x="100" y="220" text-anchor="middle" font-size="9">Cold start: ~5ms (!)</text>
+            </g>
+          </svg>
+          <div class="diagram-caption">Рис. 5.3. Різні підходи до ізоляції: microVM (найсильніша), user-space kernel, V8 isolates (найшвидший)</div>
+        </div>
+
+        <h3>Вибір технології ізоляції</h3>
+        <table>
+          <tr>
+            <th>Критерій</th>
+            <th>Firecracker</th>
+            <th>gVisor</th>
+            <th>V8 Isolates</th>
+          </tr>
+          <tr>
+            <td><strong>Рівень ізоляції</strong></td>
+            <td>Найвищий (окреме ядро)</td>
+            <td>Високий (user-space kernel)</td>
+            <td>Середній (process isolation)</td>
+          </tr>
+          <tr>
+            <td><strong>Cold start</strong></td>
+            <td>~125ms</td>
+            <td>~150ms</td>
+            <td>~5ms</td>
+          </tr>
+          <tr>
+            <td><strong>Підтримка мов</strong></td>
+            <td>Будь-які</td>
+            <td>Будь-які (Linux)</td>
+            <td>Тільки JS/WASM</td>
+          </tr>
+          <tr>
+            <td><strong>Syscall compatibility</strong></td>
+            <td>100%</td>
+            <td>~70%</td>
+            <td>N/A (Web APIs)</td>
+          </tr>
+          <tr>
+            <td><strong>Memory overhead</strong></td>
+            <td>~5MB</td>
+            <td>~50MB</td>
+            <td>~1MB</td>
+          </tr>
+          <tr>
+            <td><strong>Use case</strong></td>
+            <td>General serverless</td>
+            <td>Container sandboxing</td>
+            <td>Edge computing</td>
+          </tr>
+        </table>
       </section>
 
       <section>
@@ -805,6 +1146,171 @@ exports.handler = async (event, context) => {
           <li>☐ VPC тільки якщо необхідно</li>
           <li>☐ Моніторинг та алерти налаштовані</li>
         </ul>
+
+        <h3>Порівняння serverless-рішень за безпекою</h3>
+        <table>
+          <tr>
+            <th>Аспект безпеки</th>
+            <th>AWS Lambda</th>
+            <th>Azure Functions</th>
+            <th>GCP Cloud Functions</th>
+            <th>Cloudflare Workers</th>
+          </tr>
+          <tr>
+            <td><strong>Ізоляція</strong></td>
+            <td>Firecracker microVM</td>
+            <td>Hyper-V sandbox</td>
+            <td>gVisor</td>
+            <td>V8 Isolates</td>
+          </tr>
+          <tr>
+            <td><strong>IAM</strong></td>
+            <td>IAM Roles, resource policies</td>
+            <td>Managed Identity, RBAC</td>
+            <td>Service Accounts, IAM</td>
+            <td>API tokens, Workers KV</td>
+          </tr>
+          <tr>
+            <td><strong>Secrets</strong></td>
+            <td>Secrets Manager, SSM</td>
+            <td>Key Vault</td>
+            <td>Secret Manager</td>
+            <td>Workers Secrets</td>
+          </tr>
+          <tr>
+            <td><strong>Network</strong></td>
+            <td>VPC, PrivateLink</td>
+            <td>VNet integration</td>
+            <td>VPC Connector</td>
+            <td>N/A (edge)</td>
+          </tr>
+          <tr>
+            <td><strong>Logging</strong></td>
+            <td>CloudWatch, X-Ray</td>
+            <td>Application Insights</td>
+            <td>Cloud Logging, Trace</td>
+            <td>Workers Analytics</td>
+          </tr>
+          <tr>
+            <td><strong>Compliance</strong></td>
+            <td>SOC, PCI, HIPAA, FedRAMP</td>
+            <td>SOC, PCI, HIPAA, FedRAMP</td>
+            <td>SOC, PCI, HIPAA</td>
+            <td>SOC 2, PCI (обмежено)</td>
+          </tr>
+        </table>
+
+        <h3>Приклад безпечної Lambda функції</h3>
+        <pre>
+// secure-lambda-example.js
+const { SecretsManagerClient, GetSecretValueCommand } = require("@aws-sdk/client-secrets-manager");
+const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
+
+// Кешування секретів для warm containers
+let cachedDbCredentials = null;
+
+// Безпечна функція отримання секретів
+async function getDbCredentials() {
+  if (cachedDbCredentials) {
+    return cachedDbCredentials;
+  }
+
+  const client = new SecretsManagerClient({});
+  const command = new GetSecretValueCommand({
+    SecretId: process.env.DB_SECRET_ARN // ARN, не значення!
+  });
+
+  const response = await client.send(command);
+  cachedDbCredentials = JSON.parse(response.SecretString);
+  return cachedDbCredentials;
+}
+
+// Валідація вхідних даних
+function validateInput(event) {
+  const body = JSON.parse(event.body || '{}');
+
+  // Whitelist дозволених полів
+  const allowedFields = ['userId', 'action', 'timestamp'];
+  const sanitized = {};
+
+  for (const field of allowedFields) {
+    if (body[field]) {
+      // Санітизація - тільки alphanumeric та дефіс
+      if (typeof body[field] === 'string') {
+        sanitized[field] = body[field].replace(/[^a-zA-Z0-9-]/g, '');
+      }
+    }
+  }
+
+  // Валідація обов'язкових полів
+  if (!sanitized.userId || sanitized.userId.length > 36) {
+    throw new Error('Invalid userId');
+  }
+
+  return sanitized;
+}
+
+exports.handler = async (event, context) => {
+  const correlationId = event.headers?.['x-correlation-id'] || context.awsRequestId;
+
+  // Structured logging без sensitive data
+  console.log(JSON.stringify({
+    level: 'INFO',
+    correlationId,
+    message: 'Processing request',
+    httpMethod: event.httpMethod,
+    path: event.path,
+    // НЕ логуємо body, headers з токенами!
+  }));
+
+  try {
+    // Валідація
+    const input = validateInput(event);
+
+    // Отримання credentials безпечно
+    const creds = await getDbCredentials();
+
+    // Бізнес-логіка...
+    const dynamoDB = new DynamoDBClient({});
+    await dynamoDB.send(new PutItemCommand({
+      TableName: process.env.TABLE_NAME,
+      Item: {
+        pk: { S: input.userId },
+        action: { S: input.action },
+        timestamp: { N: String(Date.now()) }
+      }
+    }));
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Correlation-Id': correlationId
+      },
+      body: JSON.stringify({ success: true })
+    };
+
+  } catch (error) {
+    console.log(JSON.stringify({
+      level: 'ERROR',
+      correlationId,
+      message: 'Request failed',
+      errorType: error.name,
+      // НЕ логуємо error.message - може містити sensitive data
+    }));
+
+    return {
+      statusCode: error.name === 'ValidationError' ? 400 : 500,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        error: 'Request failed',
+        correlationId // для troubleshooting
+        // НЕ повертаємо stack trace!
+      })
+    };
+  }
+};
+        </pre>
       </section>
 
       <section>

