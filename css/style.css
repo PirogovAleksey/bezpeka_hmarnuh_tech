@@ -673,6 +673,188 @@ a.lecture-card {
   pointer-events: none;
 }
 
+/* --- Diagrams & Figures --- */
+.diagram {
+  margin: 32px 0;
+  padding: 24px;
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-caption {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.diagram-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+/* Architecture diagram with boxes */
+.diagram-box {
+  fill: var(--card);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.diagram-box-alt {
+  fill: var(--accent-light);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.diagram-box-highlight {
+  fill: var(--accent);
+}
+
+.diagram-text {
+  fill: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+}
+
+.diagram-text-small {
+  fill: var(--text-secondary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10px;
+}
+
+.diagram-text-white {
+  fill: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+}
+
+.diagram-text-bold {
+  fill: var(--text);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.diagram-line {
+  stroke: var(--text-secondary);
+  stroke-width: 1.5;
+}
+
+.diagram-arrow {
+  stroke: var(--text-secondary);
+  stroke-width: 1.5;
+  fill: none;
+  marker-end: url(#arrowhead);
+}
+
+.diagram-arrow-accent {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+  marker-end: url(#arrowhead-accent);
+}
+
+/* Service model stack */
+.stack-layer {
+  transition: opacity 0.2s;
+}
+
+.stack-layer:hover {
+  opacity: 0.85;
+}
+
+.layer-iaas { fill: #0ea5e9; }
+.layer-paas { fill: #22c55e; }
+.layer-saas { fill: #f59e0b; }
+.layer-customer { fill: #ef4444; }
+.layer-provider { fill: #8b5cf6; }
+
+html.dark .layer-iaas { fill: #38bdf8; }
+html.dark .layer-paas { fill: #4ade80; }
+html.dark .layer-saas { fill: #fbbf24; }
+html.dark .layer-customer { fill: #f87171; }
+html.dark .layer-provider { fill: #a78bfa; }
+
+/* Responsibility matrix colors */
+.resp-full { fill: var(--accent); }
+.resp-partial { fill: #f59e0b; }
+.resp-none { fill: var(--card); stroke: var(--card-border); }
+
+/* Deployment models */
+.cloud-public { fill: #0ea5e9; }
+.cloud-private { fill: #8b5cf6; }
+.cloud-hybrid { fill: #22c55e; }
+.cloud-community { fill: #f59e0b; }
+
+/* Actor icons in NIST diagram */
+.actor-icon {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.actor-box {
+  fill: var(--card);
+  stroke: var(--card-border);
+  stroke-width: 1.5;
+  rx: 8;
+}
+
+.actor-box-provider {
+  fill: var(--accent-light);
+  stroke: var(--accent);
+  stroke-width: 2;
+  rx: 8;
+}
+
+/* Legend */
+.diagram-legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* Responsive diagrams */
+@media (max-width: 768px) {
+  .diagram {
+    padding: 16px;
+    margin: 24px 0;
+  }
+
+  .diagram-legend {
+    gap: 12px;
+  }
+
+  .legend-item {
+    font-size: 11px;
+  }
+}
+
 /* --- Practicals Page --- */
 .practicals-list {
   display: flex;

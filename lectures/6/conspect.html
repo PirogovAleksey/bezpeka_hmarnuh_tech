@@ -89,6 +89,91 @@
           <li><strong>Transactions:</strong> дані/транзакції блоку</li>
         </ul>
 
+        <!-- Diagram: Blockchain Structure -->
+        <div class="diagram">
+          <div class="diagram-title">Структура блокчейну: ланцюг блоків</div>
+          <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Block 1 -->
+            <g transform="translate(30, 30)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="150" height="140" rx="10"/>
+              <text fill="#1d4ed8" x="75" y="22" text-anchor="middle" font-weight="600" font-size="12">Block N-1</text>
+
+              <rect fill="#bfdbfe" x="10" y="35" width="130" height="20" rx="4"/>
+              <text fill="#1e3a8a" x="75" y="50" text-anchor="middle" font-size="9">Prev Hash: 0x7a3...</text>
+
+              <rect fill="#93c5fd" x="10" y="60" width="130" height="20" rx="4"/>
+              <text fill="#1e3a8a" x="75" y="75" text-anchor="middle" font-size="9">Merkle Root</text>
+
+              <rect fill="#60a5fa" x="10" y="85" width="60" height="18" rx="3"/>
+              <text fill="white" x="40" y="97" text-anchor="middle" font-size="8">Timestamp</text>
+
+              <rect fill="#60a5fa" x="80" y="85" width="60" height="18" rx="3"/>
+              <text fill="white" x="110" y="97" text-anchor="middle" font-size="8">Nonce</text>
+
+              <rect fill="#3b82f6" x="10" y="108" width="130" height="25" rx="4"/>
+              <text fill="white" x="75" y="124" text-anchor="middle" font-size="9">Transactions [...]</text>
+            </g>
+
+            <!-- Arrow 1->2 -->
+            <g transform="translate(185, 85)">
+              <line stroke="#22c55e" stroke-width="3" x1="0" y1="15" x2="50" y2="15" marker-end="url(#arrow-chain)"/>
+              <text fill="#22c55e" x="25" y="8" text-anchor="middle" font-size="8">Hash</text>
+            </g>
+
+            <!-- Block 2 (current) -->
+            <g transform="translate(240, 30)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="3" x="0" y="0" width="150" height="140" rx="10"/>
+              <text fill="#166534" x="75" y="22" text-anchor="middle" font-weight="600" font-size="12">Block N</text>
+
+              <rect fill="#bbf7d0" x="10" y="35" width="130" height="20" rx="4"/>
+              <text fill="#166534" x="75" y="50" text-anchor="middle" font-size="9">Prev Hash: 0xf2b...</text>
+
+              <rect fill="#86efac" x="10" y="60" width="130" height="20" rx="4"/>
+              <text fill="#166534" x="75" y="75" text-anchor="middle" font-size="9">Merkle Root</text>
+
+              <rect fill="#4ade80" x="10" y="85" width="60" height="18" rx="3"/>
+              <text fill="white" x="40" y="97" text-anchor="middle" font-size="8">Timestamp</text>
+
+              <rect fill="#4ade80" x="80" y="85" width="60" height="18" rx="3"/>
+              <text fill="white" x="110" y="97" text-anchor="middle" font-size="8">Nonce</text>
+
+              <rect fill="#22c55e" x="10" y="108" width="130" height="25" rx="4"/>
+              <text fill="white" x="75" y="124" text-anchor="middle" font-size="9">Transactions [...]</text>
+            </g>
+
+            <!-- Arrow 2->3 -->
+            <g transform="translate(395, 85)">
+              <line stroke="#f59e0b" stroke-width="3" x1="0" y1="15" x2="50" y2="15"/>
+              <text fill="#f59e0b" x="25" y="8" text-anchor="middle" font-size="8">Hash</text>
+            </g>
+
+            <!-- Block 3 (next) -->
+            <g transform="translate(450, 30)">
+              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="150" height="140" rx="10"/>
+              <text fill="#b45309" x="75" y="22" text-anchor="middle" font-weight="600" font-size="12">Block N+1</text>
+
+              <rect fill="#fde68a" x="10" y="35" width="130" height="20" rx="4"/>
+              <text fill="#b45309" x="75" y="50" text-anchor="middle" font-size="9">Prev Hash: 0x9c1...</text>
+
+              <rect fill="#fcd34d" x="10" y="60" width="130" height="20" rx="4"/>
+              <text fill="#b45309" x="75" y="75" text-anchor="middle" font-size="9">Merkle Root</text>
+
+              <rect fill="#fbbf24" x="10" y="85" width="60" height="18" rx="3"/>
+              <text fill="white" x="40" y="97" text-anchor="middle" font-size="8">Timestamp</text>
+
+              <rect fill="#fbbf24" x="80" y="85" width="60" height="18" rx="3"/>
+              <text fill="white" x="110" y="97" text-anchor="middle" font-size="8">Nonce</text>
+
+              <rect fill="#f59e0b" x="10" y="108" width="130" height="25" rx="4"/>
+              <text fill="white" x="75" y="124" text-anchor="middle" font-size="9">Transactions [...]</text>
+            </g>
+
+            <!-- Note at bottom -->
+            <text class="diagram-text-small" x="350" y="185" text-anchor="middle">Кожен блок містить хеш попереднього → зміна одного блоку = зміна всіх наступних</text>
+          </svg>
+          <div class="diagram-caption">Рис. 6.1. Структура блокчейну: криптографічний зв'язок між блоками забезпечує незмінність (immutability)</div>
+        </div>
+
         <h3>Криптографічні примітиви</h3>
         <p>Блокчейн базується на кількох криптографічних примітивах:</p>
 

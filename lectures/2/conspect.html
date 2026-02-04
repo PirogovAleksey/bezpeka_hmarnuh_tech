@@ -277,6 +277,59 @@
           <li><strong>Recover (Відновлення):</strong> повернення до нормальної роботи</li>
         </ul>
 
+        <!-- Diagram: NIST CSF 5 Functions -->
+        <div class="diagram">
+          <div class="diagram-title">П'ять функцій NIST Cybersecurity Framework</div>
+          <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- Function boxes -->
+            <g transform="translate(30, 40)">
+              <rect fill="#3b82f6" x="0" y="0" width="110" height="80" rx="10"/>
+              <text fill="white" x="55" y="35" text-anchor="middle" font-weight="600" font-size="14">IDENTIFY</text>
+              <text fill="white" x="55" y="55" text-anchor="middle" font-size="10">Ідентифікація</text>
+              <text fill="white" x="55" y="70" text-anchor="middle" font-size="9" opacity="0.8">Активи, ризики</text>
+            </g>
+
+            <g transform="translate(160, 40)">
+              <rect fill="#22c55e" x="0" y="0" width="110" height="80" rx="10"/>
+              <text fill="white" x="55" y="35" text-anchor="middle" font-weight="600" font-size="14">PROTECT</text>
+              <text fill="white" x="55" y="55" text-anchor="middle" font-size="10">Захист</text>
+              <text fill="white" x="55" y="70" text-anchor="middle" font-size="9" opacity="0.8">Safeguards</text>
+            </g>
+
+            <g transform="translate(290, 40)">
+              <rect fill="#f59e0b" x="0" y="0" width="110" height="80" rx="10"/>
+              <text fill="white" x="55" y="35" text-anchor="middle" font-weight="600" font-size="14">DETECT</text>
+              <text fill="white" x="55" y="55" text-anchor="middle" font-size="10">Виявлення</text>
+              <text fill="white" x="55" y="70" text-anchor="middle" font-size="9" opacity="0.8">Моніторинг</text>
+            </g>
+
+            <g transform="translate(420, 40)">
+              <rect fill="#ef4444" x="0" y="0" width="110" height="80" rx="10"/>
+              <text fill="white" x="55" y="35" text-anchor="middle" font-weight="600" font-size="14">RESPOND</text>
+              <text fill="white" x="55" y="55" text-anchor="middle" font-size="10">Реагування</text>
+              <text fill="white" x="55" y="70" text-anchor="middle" font-size="9" opacity="0.8">Incident Response</text>
+            </g>
+
+            <g transform="translate(550, 40)">
+              <rect fill="#8b5cf6" x="0" y="0" width="110" height="80" rx="10"/>
+              <text fill="white" x="55" y="35" text-anchor="middle" font-weight="600" font-size="14">RECOVER</text>
+              <text fill="white" x="55" y="55" text-anchor="middle" font-size="10">Відновлення</text>
+              <text fill="white" x="55" y="70" text-anchor="middle" font-size="9" opacity="0.8">Business Continuity</text>
+            </g>
+
+            <!-- Arrows between boxes -->
+            <path d="M145 80 L155 80" stroke="var(--text-secondary)" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <path d="M275 80 L285 80" stroke="var(--text-secondary)" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <path d="M405 80 L415 80" stroke="var(--text-secondary)" stroke-width="2" marker-end="url(#arrowhead)"/>
+            <path d="M535 80 L545 80" stroke="var(--text-secondary)" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+            <!-- Cycle arrow at bottom -->
+            <path d="M605 130 Q 350 160 85 130" stroke="var(--text-secondary)" stroke-width="1.5" fill="none" stroke-dasharray="5,5"/>
+            <text class="diagram-text-small" x="350" y="155" text-anchor="middle">Безперервний цикл вдосконалення</text>
+          </svg>
+          <div class="diagram-caption">Рис. 2.1. П'ять основних функцій NIST Cybersecurity Framework утворюють безперервний цикл</div>
+        </div>
+
         <h4>NIST SP 800-53 Rev. 5 — Детальний огляд</h4>
         <p><strong>NIST SP 800-53</strong> "Security and Privacy Controls for Information Systems and Organizations" — найповніший каталог security controls. Версія Rev. 5 містить понад 1000 контролів у 20 сімействах.</p>
 
@@ -574,6 +627,70 @@
         <h3>Процес управління ризиками</h3>
         <p>Типовий процес управління ризиками включає наступні етапи:</p>
 
+        <!-- Diagram: Risk Management Process -->
+        <div class="diagram">
+          <div class="diagram-title">Процес управління ризиками: п'ять етапів</div>
+          <svg viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow-rm" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="var(--accent)"/>
+              </marker>
+            </defs>
+
+            <!-- Step 1 -->
+            <g transform="translate(20, 30)">
+              <circle fill="#3b82f6" cx="45" cy="45" r="45"/>
+              <text fill="white" x="45" y="40" text-anchor="middle" font-weight="600" font-size="24">1</text>
+              <text fill="white" x="45" y="58" text-anchor="middle" font-size="9">Ідентифікація</text>
+            </g>
+
+            <!-- Arrow 1->2 -->
+            <line stroke="var(--accent)" stroke-width="2" x1="115" y1="75" x2="150" y2="75" marker-end="url(#arrow-rm)"/>
+
+            <!-- Step 2 -->
+            <g transform="translate(155, 30)">
+              <circle fill="#22c55e" cx="45" cy="45" r="45"/>
+              <text fill="white" x="45" y="40" text-anchor="middle" font-weight="600" font-size="24">2</text>
+              <text fill="white" x="45" y="58" text-anchor="middle" font-size="9">Аналіз</text>
+            </g>
+
+            <!-- Arrow 2->3 -->
+            <line stroke="var(--accent)" stroke-width="2" x1="250" y1="75" x2="285" y2="75" marker-end="url(#arrow-rm)"/>
+
+            <!-- Step 3 -->
+            <g transform="translate(290, 30)">
+              <circle fill="#f59e0b" cx="45" cy="45" r="45"/>
+              <text fill="white" x="45" y="40" text-anchor="middle" font-weight="600" font-size="24">3</text>
+              <text fill="white" x="45" y="58" text-anchor="middle" font-size="9">Оцінка</text>
+            </g>
+
+            <!-- Arrow 3->4 -->
+            <line stroke="var(--accent)" stroke-width="2" x1="385" y1="75" x2="420" y2="75" marker-end="url(#arrow-rm)"/>
+
+            <!-- Step 4 -->
+            <g transform="translate(425, 30)">
+              <circle fill="#ef4444" cx="45" cy="45" r="45"/>
+              <text fill="white" x="45" y="40" text-anchor="middle" font-weight="600" font-size="24">4</text>
+              <text fill="white" x="45" y="58" text-anchor="middle" font-size="9">Обробка</text>
+            </g>
+
+            <!-- Arrow 4->5 -->
+            <line stroke="var(--accent)" stroke-width="2" x1="520" y1="75" x2="555" y2="75" marker-end="url(#arrow-rm)"/>
+
+            <!-- Step 5 -->
+            <g transform="translate(560, 30)">
+              <circle fill="#8b5cf6" cx="45" cy="45" r="45"/>
+              <text fill="white" x="45" y="40" text-anchor="middle" font-weight="600" font-size="24">5</text>
+              <text fill="white" x="45" y="58" text-anchor="middle" font-size="9">Моніторинг</text>
+            </g>
+
+            <!-- Cycle arrow back -->
+            <path d="M605 130 Q 350 170 65 130" stroke="var(--text-secondary)" stroke-width="1.5" fill="none" stroke-dasharray="5,5" marker-end="url(#arrow-rm)"/>
+            <text class="diagram-text-small" x="350" y="155" text-anchor="middle">Безперервний цикл</text>
+          </svg>
+          <div class="diagram-caption">Рис. 2.3. Циклічний процес управління ризиками в хмарних середовищах</div>
+        </div>
+
         <h4>1. Ідентифікація ризиків</h4>
         <ul>
           <li>Інвентаризація активів (дані, системи, сервіси)</li>
@@ -633,23 +750,96 @@
 
         <h4>FAIR Model — детальна структура</h4>
         <p>FAIR розкладає ризик на ієрархію факторів:</p>
-        <pre><code>Risk
-├── Loss Event Frequency (LEF)
-│   ├── Threat Event Frequency (TEF)
-│   │   ├── Contact Frequency
-│   │   └── Probability of Action
-│   └── Vulnerability (Vuln)
-│       ├── Threat Capability (TCap)
-│       └── Resistance Strength (RS)
-└── Loss Magnitude (LM)
-    ├── Primary Loss
-    │   ├── Productivity
-    │   ├── Response
-    │   ├── Replacement
-    │   └── Fines/Judgments
-    └── Secondary Loss
-        ├── Secondary Loss Event Frequency
-        └── Secondary Loss Magnitude</code></pre>
+
+        <!-- Diagram: FAIR Model Structure -->
+        <div class="diagram">
+          <div class="diagram-title">FAIR Model: ієрархія факторів ризику</div>
+          <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+            <!-- Root: Risk -->
+            <rect fill="#ef4444" x="290" y="10" width="120" height="40" rx="8"/>
+            <text fill="white" x="350" y="35" text-anchor="middle" font-weight="600" font-size="14">RISK</text>
+
+            <!-- Level 1: LEF and LM -->
+            <rect fill="#f59e0b" x="120" y="80" width="180" height="40" rx="8"/>
+            <text fill="white" x="210" y="105" text-anchor="middle" font-weight="500" font-size="12">Loss Event Frequency</text>
+
+            <rect fill="#f59e0b" x="400" y="80" width="180" height="40" rx="8"/>
+            <text fill="white" x="490" y="105" text-anchor="middle" font-weight="500" font-size="12">Loss Magnitude</text>
+
+            <!-- Lines from Risk -->
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="350" y1="50" x2="350" y2="60"/>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="210" y1="60" x2="490" y2="60"/>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="210" y1="60" x2="210" y2="80"/>
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="490" y1="60" x2="490" y2="80"/>
+
+            <!-- Level 2 left: TEF and Vuln -->
+            <rect fill="#22c55e" x="30" y="150" width="150" height="35" rx="6"/>
+            <text fill="white" x="105" y="172" text-anchor="middle" font-size="11">Threat Event Freq (TEF)</text>
+
+            <rect fill="#22c55e" x="210" y="150" width="150" height="35" rx="6"/>
+            <text fill="white" x="285" y="172" text-anchor="middle" font-size="11">Vulnerability</text>
+
+            <!-- Level 2 right: Primary and Secondary Loss -->
+            <rect fill="#22c55e" x="400" y="150" width="130" height="35" rx="6"/>
+            <text fill="white" x="465" y="172" text-anchor="middle" font-size="11">Primary Loss</text>
+
+            <rect fill="#22c55e" x="550" y="150" width="130" height="35" rx="6"/>
+            <text fill="white" x="615" y="172" text-anchor="middle" font-size="11">Secondary Loss</text>
+
+            <!-- Lines Level 1 to 2 -->
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="210" y1="120" x2="210" y2="130"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="105" y1="130" x2="285" y2="130"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="105" y1="130" x2="105" y2="150"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="285" y1="130" x2="285" y2="150"/>
+
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="490" y1="120" x2="490" y2="130"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="465" y1="130" x2="615" y2="130"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="465" y1="130" x2="465" y2="150"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="615" y1="130" x2="615" y2="150"/>
+
+            <!-- Level 3: TEF components -->
+            <rect fill="#3b82f6" x="10" y="210" width="90" height="30" rx="4"/>
+            <text fill="white" x="55" y="230" text-anchor="middle" font-size="9">Contact Freq</text>
+
+            <rect fill="#3b82f6" x="110" y="210" width="90" height="30" rx="4"/>
+            <text fill="white" x="155" y="230" text-anchor="middle" font-size="9">Prob. of Action</text>
+
+            <!-- Level 3: Vuln components -->
+            <rect fill="#3b82f6" x="210" y="210" width="90" height="30" rx="4"/>
+            <text fill="white" x="255" y="230" text-anchor="middle" font-size="9">Threat Cap.</text>
+
+            <rect fill="#3b82f6" x="310" y="210" width="90" height="30" rx="4"/>
+            <text fill="white" x="355" y="230" text-anchor="middle" font-size="9">Resistance</text>
+
+            <!-- Level 3: Primary Loss components -->
+            <rect fill="#3b82f6" x="400" y="210" width="55" height="30" rx="4"/>
+            <text fill="white" x="427" y="230" text-anchor="middle" font-size="8">Produc.</text>
+
+            <rect fill="#3b82f6" x="460" y="210" width="55" height="30" rx="4"/>
+            <text fill="white" x="487" y="230" text-anchor="middle" font-size="8">Response</text>
+
+            <rect fill="#3b82f6" x="400" y="245" width="55" height="30" rx="4"/>
+            <text fill="white" x="427" y="265" text-anchor="middle" font-size="8">Replace</text>
+
+            <rect fill="#3b82f6" x="460" y="245" width="55" height="30" rx="4"/>
+            <text fill="white" x="487" y="265" text-anchor="middle" font-size="8">Fines</text>
+
+            <!-- Lines for Level 3 -->
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="105" y1="185" x2="105" y2="195"/>
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="55" y1="195" x2="155" y2="195"/>
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="55" y1="195" x2="55" y2="210"/>
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="155" y1="195" x2="155" y2="210"/>
+
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="285" y1="185" x2="285" y2="195"/>
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="255" y1="195" x2="355" y2="195"/>
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="255" y1="195" x2="255" y2="210"/>
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="355" y1="195" x2="355" y2="210"/>
+
+            <!-- Formula at bottom -->
+            <text class="diagram-text-bold" x="350" y="305" text-anchor="middle">Risk = LEF × LM</text>
+          </svg>
+          <div class="diagram-caption">Рис. 2.2. FAIR (Factor Analysis of Information Risk) — ієрархічна модель кількісної оцінки ризиків</div>
+        </div>
 
         <p><strong>Приклад розрахунку FAIR:</strong></p>
         <ul>

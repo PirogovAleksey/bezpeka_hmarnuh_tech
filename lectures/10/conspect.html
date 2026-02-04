@@ -124,6 +124,87 @@
         <h3>Data Lifecycle</h3>
         <p>Захист даних на кожному етапі життєвого циклу:</p>
 
+        <!-- Diagram: Data Lifecycle -->
+        <div class="diagram">
+          <div class="diagram-title">Data Lifecycle: захист на кожному етапі</div>
+          <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow-dl" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="var(--accent)"/>
+              </marker>
+            </defs>
+
+            <!-- Stage 1: Create -->
+            <g transform="translate(30, 50)">
+              <circle fill="#3b82f6" cx="40" cy="40" r="35"/>
+              <text fill="white" x="40" y="35" text-anchor="middle" font-weight="600" font-size="10">Create</text>
+              <text fill="white" x="40" y="50" text-anchor="middle" font-size="8">Classify</text>
+            </g>
+
+            <!-- Arrow -->
+            <line stroke="var(--accent)" stroke-width="2" x1="105" y1="90" x2="130" y2="90" marker-end="url(#arrow-dl)"/>
+
+            <!-- Stage 2: Store -->
+            <g transform="translate(135, 50)">
+              <circle fill="#22c55e" cx="40" cy="40" r="35"/>
+              <text fill="white" x="40" y="35" text-anchor="middle" font-weight="600" font-size="10">Store</text>
+              <text fill="white" x="40" y="50" text-anchor="middle" font-size="8">Encrypt</text>
+            </g>
+
+            <!-- Arrow -->
+            <line stroke="var(--accent)" stroke-width="2" x1="210" y1="90" x2="235" y2="90" marker-end="url(#arrow-dl)"/>
+
+            <!-- Stage 3: Use -->
+            <g transform="translate(240, 50)">
+              <circle fill="#f59e0b" cx="40" cy="40" r="35"/>
+              <text fill="white" x="40" y="35" text-anchor="middle" font-weight="600" font-size="10">Use</text>
+              <text fill="white" x="40" y="50" text-anchor="middle" font-size="8">Control</text>
+            </g>
+
+            <!-- Arrow -->
+            <line stroke="var(--accent)" stroke-width="2" x1="315" y1="90" x2="340" y2="90" marker-end="url(#arrow-dl)"/>
+
+            <!-- Stage 4: Share -->
+            <g transform="translate(345, 50)">
+              <circle fill="#8b5cf6" cx="40" cy="40" r="35"/>
+              <text fill="white" x="40" y="35" text-anchor="middle" font-weight="600" font-size="10">Share</text>
+              <text fill="white" x="40" y="50" text-anchor="middle" font-size="8">TLS</text>
+            </g>
+
+            <!-- Arrow -->
+            <line stroke="var(--accent)" stroke-width="2" x1="420" y1="90" x2="445" y2="90" marker-end="url(#arrow-dl)"/>
+
+            <!-- Stage 5: Archive -->
+            <g transform="translate(450, 50)">
+              <circle fill="#ec4899" cx="40" cy="40" r="35"/>
+              <text fill="white" x="40" y="35" text-anchor="middle" font-weight="600" font-size="10">Archive</text>
+              <text fill="white" x="40" y="50" text-anchor="middle" font-size="8">Retain</text>
+            </g>
+
+            <!-- Arrow -->
+            <line stroke="var(--accent)" stroke-width="2" x1="525" y1="90" x2="550" y2="90" marker-end="url(#arrow-dl)"/>
+
+            <!-- Stage 6: Destroy -->
+            <g transform="translate(555, 50)">
+              <circle fill="#ef4444" cx="40" cy="40" r="35"/>
+              <text fill="white" x="40" y="35" text-anchor="middle" font-weight="600" font-size="10">Destroy</text>
+              <text fill="white" x="40" y="50" text-anchor="middle" font-size="8">Shred</text>
+            </g>
+
+            <!-- Labels below -->
+            <text class="diagram-text-small" x="70" y="145" text-anchor="middle">Consent</text>
+            <text class="diagram-text-small" x="175" y="145" text-anchor="middle">At-rest</text>
+            <text class="diagram-text-small" x="280" y="145" text-anchor="middle">Masking</text>
+            <text class="diagram-text-small" x="385" y="145" text-anchor="middle">In-transit</text>
+            <text class="diagram-text-small" x="490" y="145" text-anchor="middle">Compliance</text>
+            <text class="diagram-text-small" x="595" y="145" text-anchor="middle">Crypto-shred</text>
+
+            <!-- Bottom note -->
+            <text class="diagram-text-small" x="350" y="175" text-anchor="middle">Encryption та access control на кожному етапі</text>
+          </svg>
+          <div class="diagram-caption">Рис. 10.1. Життєвий цикл даних: кожен етап потребує відповідних заходів захисту</div>
+        </div>
+
         <p><strong>1. Creation/Collection</strong></p>
         <ul>
           <li>Класифікація при створенні</li>

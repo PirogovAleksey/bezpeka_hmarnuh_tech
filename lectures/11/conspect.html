@@ -142,6 +142,57 @@
 
         <h3>Attack Vectors у хмарі</h3>
 
+        <!-- Diagram: Cloud Attack Vectors -->
+        <div class="diagram">
+          <div class="diagram-title">Основні вектори атак на хмарну інфраструктуру</div>
+          <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- Central cloud target -->
+            <ellipse fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2" cx="350" cy="110" rx="90" ry="55"/>
+            <text fill="var(--accent)" x="350" y="105" text-anchor="middle" font-weight="600" font-size="13">Cloud</text>
+            <text fill="var(--accent)" x="350" y="122" text-anchor="middle" font-size="11">Infrastructure</text>
+
+            <!-- Attack Vector 1: Credentials -->
+            <g transform="translate(30, 30)">
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="0" y="0" width="120" height="60" rx="8"/>
+              <text fill="#dc2626" x="60" y="25" text-anchor="middle" font-weight="600" font-size="10">Credentials</text>
+              <text fill="#dc2626" x="60" y="42" text-anchor="middle" font-size="9">Phishing, Leaks</text>
+              <text fill="#dc2626" x="60" y="55" text-anchor="middle" font-size="9">API Keys</text>
+            </g>
+            <line stroke="#ef4444" stroke-width="2" x1="150" y1="60" x2="265" y2="85" marker-end="url(#arrow-cspm)"/>
+
+            <!-- Attack Vector 2: Misconfiguration -->
+            <g transform="translate(30, 130)">
+              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="120" height="60" rx="8"/>
+              <text fill="#b45309" x="60" y="25" text-anchor="middle" font-weight="600" font-size="10">Misconfiguration</text>
+              <text fill="#b45309" x="60" y="42" text-anchor="middle" font-size="9">Public S3</text>
+              <text fill="#b45309" x="60" y="55" text-anchor="middle" font-size="9">Open Security Groups</text>
+            </g>
+            <line stroke="#f59e0b" stroke-width="2" x1="150" y1="160" x2="265" y2="130" marker-end="url(#arrow-cspm)"/>
+
+            <!-- Attack Vector 3: Vulnerabilities -->
+            <g transform="translate(550, 30)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="120" height="60" rx="8"/>
+              <text fill="#1d4ed8" x="60" y="25" text-anchor="middle" font-weight="600" font-size="10">Vulnerabilities</text>
+              <text fill="#1d4ed8" x="60" y="42" text-anchor="middle" font-size="9">Unpatched, 0-day</text>
+              <text fill="#1d4ed8" x="60" y="55" text-anchor="middle" font-size="9">Log4Shell</text>
+            </g>
+            <line stroke="#3b82f6" stroke-width="2" x1="550" y1="60" x2="435" y2="85" marker-end="url(#arrow-cspm)"/>
+
+            <!-- Attack Vector 4: Supply Chain -->
+            <g transform="translate(550, 130)">
+              <rect fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" x="0" y="0" width="120" height="60" rx="8"/>
+              <text fill="#7c3aed" x="60" y="25" text-anchor="middle" font-weight="600" font-size="10">Supply Chain</text>
+              <text fill="#7c3aed" x="60" y="42" text-anchor="middle" font-size="9">SolarWinds</text>
+              <text fill="#7c3aed" x="60" y="55" text-anchor="middle" font-size="9">Malicious packages</text>
+            </g>
+            <line stroke="#8b5cf6" stroke-width="2" x1="550" y1="160" x2="435" y2="130" marker-end="url(#arrow-cspm)"/>
+
+            <!-- Stats -->
+            <text class="diagram-text-small" x="350" y="200" text-anchor="middle">~80% інцидентів — misconfiguration + credential-based attacks</text>
+          </svg>
+          <div class="diagram-caption">Рис. 11.1. Чотири основні вектори атак на хмарну інфраструктуру за даними CSA та Verizon DBIR</div>
+        </div>
+
         <p><strong>1. Credential-based attacks</strong></p>
         <ul>
           <li>Phishing для cloud console credentials</li>

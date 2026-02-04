@@ -292,6 +292,94 @@
         <h3>Як працює CSPM?</h3>
         <p>Типова архітектура CSPM включає кілька компонентів:</p>
 
+        <!-- Diagram: CSPM Architecture -->
+        <div class="diagram">
+          <div class="diagram-title">Архітектура CSPM: компоненти та потік даних</div>
+          <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow-cspm" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="var(--accent)"/>
+              </marker>
+            </defs>
+
+            <!-- Cloud Providers -->
+            <text class="diagram-text-bold" x="80" y="25" text-anchor="middle">Cloud Providers</text>
+            <rect fill="#fef3c7" stroke="#f59e0b" x="20" y="40" width="120" height="35" rx="6"/>
+            <text fill="#b45309" x="80" y="62" text-anchor="middle" font-size="11">AWS</text>
+            <rect fill="#dbeafe" stroke="#3b82f6" x="20" y="85" width="120" height="35" rx="6"/>
+            <text fill="#1d4ed8" x="80" y="107" text-anchor="middle" font-size="11">Azure</text>
+            <rect fill="#dcfce7" stroke="#22c55e" x="20" y="130" width="120" height="35" rx="6"/>
+            <text fill="#166534" x="80" y="152" text-anchor="middle" font-size="11">GCP</text>
+
+            <!-- Arrows from clouds to CSPM -->
+            <line stroke="var(--accent)" stroke-width="2" x1="145" y1="57" x2="195" y2="90" marker-end="url(#arrow-cspm)"/>
+            <line stroke="var(--accent)" stroke-width="2" x1="145" y1="102" x2="195" y2="102" marker-end="url(#arrow-cspm)"/>
+            <line stroke="var(--accent)" stroke-width="2" x1="145" y1="147" x2="195" y2="114" marker-end="url(#arrow-cspm)"/>
+            <text class="diagram-text-small" x="170" y="75" text-anchor="middle">API</text>
+
+            <!-- CSPM Platform -->
+            <rect fill="var(--card)" stroke="var(--accent)" stroke-width="2" x="200" y="35" width="300" height="200" rx="12"/>
+            <text fill="var(--accent)" x="350" y="55" text-anchor="middle" font-weight="600" font-size="13">CSPM Platform</text>
+
+            <!-- Data Collection -->
+            <rect fill="#e0f2fe" x="215" y="70" width="120" height="40" rx="6"/>
+            <text fill="#0369a1" x="275" y="85" text-anchor="middle" font-size="10">Data Collection</text>
+            <text fill="#0369a1" x="275" y="100" text-anchor="middle" font-size="9">(Agentless API)</text>
+
+            <!-- Normalization -->
+            <rect fill="#f3e8ff" x="215" y="120" width="120" height="40" rx="6"/>
+            <text fill="#7c3aed" x="275" y="135" text-anchor="middle" font-size="10">Normalization</text>
+            <text fill="#7c3aed" x="275" y="150" text-anchor="middle" font-size="9">& Enrichment</text>
+
+            <!-- Policy Engine -->
+            <rect fill="#fef3c7" x="365" y="70" width="120" height="40" rx="6"/>
+            <text fill="#b45309" x="425" y="85" text-anchor="middle" font-size="10">Policy Engine</text>
+            <text fill="#b45309" x="425" y="100" text-anchor="middle" font-size="9">(CIS, NIST, Custom)</text>
+
+            <!-- Risk Analysis -->
+            <rect fill="#fee2e2" x="365" y="120" width="120" height="40" rx="6"/>
+            <text fill="#dc2626" x="425" y="135" text-anchor="middle" font-size="10">Risk Analysis</text>
+            <text fill="#dc2626" x="425" y="150" text-anchor="middle" font-size="9">Attack Path</text>
+
+            <!-- Presentation -->
+            <rect fill="#dcfce7" x="290" y="175" width="120" height="45" rx="6"/>
+            <text fill="#166534" x="350" y="193" text-anchor="middle" font-size="10">Dashboards</text>
+            <text fill="#166534" x="350" y="208" text-anchor="middle" font-size="9">Alerts & Reports</text>
+
+            <!-- Internal arrows -->
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="275" y1="110" x2="275" y2="118"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="335" y1="90" x2="363" y2="90"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="335" y1="140" x2="363" y2="140"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="350" y1="160" x2="350" y2="173"/>
+
+            <!-- Outputs -->
+            <text class="diagram-text-bold" x="600" y="55" text-anchor="middle">Outputs</text>
+
+            <!-- Security Team -->
+            <rect fill="#dbeafe" stroke="#3b82f6" x="530" y="70" width="140" height="35" rx="6"/>
+            <text fill="#1d4ed8" x="600" y="92" text-anchor="middle" font-size="10">Security Team</text>
+
+            <!-- SIEM -->
+            <rect fill="#fce7f3" stroke="#ec4899" x="530" y="115" width="140" height="35" rx="6"/>
+            <text fill="#be185d" x="600" y="137" text-anchor="middle" font-size="10">SIEM / SOAR</text>
+
+            <!-- DevOps -->
+            <rect fill="#dcfce7" stroke="#22c55e" x="530" y="160" width="140" height="35" rx="6"/>
+            <text fill="#166534" x="600" y="182" text-anchor="middle" font-size="10">DevOps (Tickets)</text>
+
+            <!-- Remediation -->
+            <rect fill="#fef3c7" stroke="#f59e0b" x="530" y="205" width="140" height="35" rx="6"/>
+            <text fill="#b45309" x="600" y="227" text-anchor="middle" font-size="10">Auto-Remediation</text>
+
+            <!-- Arrows to outputs -->
+            <line stroke="var(--accent)" stroke-width="2" x1="505" y1="100" x2="525" y2="87" marker-end="url(#arrow-cspm)"/>
+            <line stroke="var(--accent)" stroke-width="2" x1="505" y1="150" x2="525" y2="132" marker-end="url(#arrow-cspm)"/>
+            <line stroke="var(--accent)" stroke-width="2" x1="505" y1="197" x2="525" y2="177" marker-end="url(#arrow-cspm)"/>
+            <line stroke="var(--accent)" stroke-width="2" x1="505" y1="210" x2="525" y2="222" marker-end="url(#arrow-cspm)"/>
+          </svg>
+          <div class="diagram-caption">Рис. 7.1. CSPM збирає конфігурації через API, аналізує їх на відповідність політикам та виявляє ризики</div>
+        </div>
+
         <p><strong>1. Data Collection Layer</strong></p>
         <ul>
           <li><strong>API Integration:</strong> Підключення до cloud provider APIs (AWS, Azure, GCP)</li>

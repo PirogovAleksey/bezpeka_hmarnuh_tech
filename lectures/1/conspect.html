@@ -217,6 +217,75 @@
 
         <p>Ці п'ять характеристик — це не просто технічний опис, це те, що відрізняє справжню хмару від звичайного хостингу чи оренди серверів. Якщо сервіс не має хоча б однієї з цих характеристик — це не зовсім хмара в розумінні NIST.</p>
 
+        <!-- Diagram: 5 Essential Characteristics -->
+        <div class="diagram">
+          <div class="diagram-title">П'ять основних характеристик хмарних обчислень за NIST</div>
+          <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Central cloud icon -->
+            <ellipse fill="var(--accent-light)" cx="350" cy="100" rx="80" ry="50"/>
+            <text class="diagram-text-bold" x="350" y="95" text-anchor="middle">NIST</text>
+            <text class="diagram-text-small" x="350" y="112" text-anchor="middle">Cloud</text>
+
+            <!-- Characteristic 1: On-demand Self-service -->
+            <g transform="translate(50, 30)">
+              <rect class="diagram-box" x="0" y="0" width="120" height="60" rx="8"/>
+              <svg x="45" y="8" width="30" height="30" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2" fill="none">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+              <text class="diagram-text-small" x="60" y="52" text-anchor="middle">Самообслуг.</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="170" y1="60" x2="280" y2="80"/>
+
+            <!-- Characteristic 2: Broad Network Access -->
+            <g transform="translate(50, 115)">
+              <rect class="diagram-box" x="0" y="0" width="120" height="60" rx="8"/>
+              <svg x="45" y="8" width="30" height="30" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2" fill="none">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              <text class="diagram-text-small" x="60" y="52" text-anchor="middle">Мереж. доступ</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="170" y1="145" x2="280" y2="120"/>
+
+            <!-- Characteristic 3: Resource Pooling (top right) -->
+            <g transform="translate(530, 30)">
+              <rect class="diagram-box" x="0" y="0" width="120" height="60" rx="8"/>
+              <svg x="45" y="8" width="30" height="30" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2" fill="none">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+              </svg>
+              <text class="diagram-text-small" x="60" y="52" text-anchor="middle">Пул ресурсів</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="530" y1="60" x2="420" y2="80"/>
+
+            <!-- Characteristic 4: Rapid Elasticity -->
+            <g transform="translate(530, 115)">
+              <rect class="diagram-box" x="0" y="0" width="120" height="60" rx="8"/>
+              <svg x="45" y="8" width="30" height="30" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2" fill="none">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <text class="diagram-text-small" x="60" y="52" text-anchor="middle">Еластичність</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="530" y1="145" x2="420" y2="120"/>
+
+            <!-- Characteristic 5: Measured Service (bottom center) -->
+            <g transform="translate(290, 150)">
+              <rect class="diagram-box" x="0" y="0" width="120" height="45" rx="8"/>
+              <svg x="10" y="10" width="24" height="24" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2" fill="none">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              <text class="diagram-text-small" x="80" y="30" text-anchor="middle">Вимірюваність</text>
+            </g>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" x1="350" y1="150" x2="350" y2="155"/>
+          </svg>
+          <div class="diagram-caption">Рис. 1.5. П'ять основних характеристик хмарних обчислень за визначенням NIST SP 800-145</div>
+        </div>
+
         <h4>1. Самообслуговування на вимогу (On-demand Self-service)</h4>
         <p>Споживач може самостійно замовляти обчислювальні потужності — сервери, сховища, мережі, бази даних — без необхідності телефонувати в службу підтримки чи чекати, поки адміністратор провайдера вручну створить ресурс.</p>
 
@@ -472,6 +541,67 @@
           <li><strong>Auditor</strong> незалежно перевіряє як Provider'а, так і Consumer'а</li>
         </ul>
 
+        <!-- Diagram: NIST Reference Architecture - 5 Actors -->
+        <div class="diagram">
+          <div class="diagram-title">Еталонна архітектура NIST: взаємодія п'яти акторів</div>
+          <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="var(--text-secondary)"/>
+              </marker>
+            </defs>
+
+            <!-- Cloud Provider (center) -->
+            <rect class="actor-box-provider" x="250" y="140" width="200" height="120" rx="12"/>
+            <text class="diagram-text-bold" x="350" y="175" text-anchor="middle">Cloud Provider</text>
+            <text class="diagram-text-small" x="350" y="195" text-anchor="middle">AWS, Azure, GCP</text>
+            <text class="diagram-text-small" x="350" y="215" text-anchor="middle">Надає сервіси IaaS/PaaS/SaaS</text>
+            <text class="diagram-text-small" x="350" y="235" text-anchor="middle">Безпека інфраструктури</text>
+
+            <!-- Cloud Consumer (left) -->
+            <rect class="actor-box" x="20" y="155" width="160" height="90" rx="8"/>
+            <text class="diagram-text-bold" x="100" y="185" text-anchor="middle">Cloud Consumer</text>
+            <text class="diagram-text-small" x="100" y="205" text-anchor="middle">Ваша організація</text>
+            <text class="diagram-text-small" x="100" y="225" text-anchor="middle">Використовує сервіси</text>
+
+            <!-- Arrow: Consumer -> Provider -->
+            <line class="diagram-arrow" x1="180" y1="200" x2="245" y2="200" marker-end="url(#arrowhead)"/>
+            <text class="diagram-text-small" x="212" y="190" text-anchor="middle">Запити</text>
+
+            <!-- Cloud Carrier (bottom) -->
+            <rect class="actor-box" x="250" y="310" width="200" height="70" rx="8"/>
+            <text class="diagram-text-bold" x="350" y="340" text-anchor="middle">Cloud Carrier</text>
+            <text class="diagram-text-small" x="350" y="358" text-anchor="middle">Мережа, ISP, CDN</text>
+
+            <!-- Arrow: Carrier <-> Provider -->
+            <line class="diagram-arrow" x1="350" y1="305" x2="350" y2="265" marker-end="url(#arrowhead)"/>
+            <text class="diagram-text-small" x="385" y="285" text-anchor="start">Транспорт</text>
+
+            <!-- Cloud Broker (right) -->
+            <rect class="actor-box" x="520" y="155" width="160" height="90" rx="8"/>
+            <text class="diagram-text-bold" x="600" y="185" text-anchor="middle">Cloud Broker</text>
+            <text class="diagram-text-small" x="600" y="205" text-anchor="middle">Посередник</text>
+            <text class="diagram-text-small" x="600" y="225" text-anchor="middle">Агрегація сервісів</text>
+
+            <!-- Arrow: Broker <-> Provider -->
+            <line class="diagram-arrow" x1="515" y1="200" x2="455" y2="200" marker-end="url(#arrowhead)"/>
+
+            <!-- Cloud Auditor (top) -->
+            <rect class="actor-box" x="250" y="20" width="200" height="70" rx="8"/>
+            <text class="diagram-text-bold" x="350" y="50" text-anchor="middle">Cloud Auditor</text>
+            <text class="diagram-text-small" x="350" y="68" text-anchor="middle">Незалежна перевірка</text>
+
+            <!-- Dashed lines from Auditor -->
+            <line stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="5,5" x1="300" y1="95" x2="100" y2="150"/>
+            <line stroke="var(--text-secondary)" stroke-width="1.5" stroke-dasharray="5,5" x1="350" y1="95" x2="350" y2="135"/>
+
+            <!-- Labels for audit lines -->
+            <text class="diagram-text-small" x="180" y="115" text-anchor="middle">Аудит</text>
+            <text class="diagram-text-small" x="370" y="115" text-anchor="start">Аудит</text>
+          </svg>
+          <div class="diagram-caption">Рис. 1.1. Концептуальна модель взаємодії акторів хмарної екосистеми за NIST SP 500-292</div>
+        </div>
+
         <p>Розуміння цих ролей допоможе вам краще планувати безпеку: ви будете знати, на кого покладатися в якому питанні, і де ваша власна відповідальність.</p>
       </section>
 
@@ -660,6 +790,91 @@
         <p>SaaS — найпростіша модель з точки зору операцій, але вимагає дисципліни в управлінні доступом та даними.</p>
 
         <h3>Порівняння моделей</h3>
+
+        <!-- Diagram: Service Models Stack -->
+        <div class="diagram">
+          <div class="diagram-title">Моделі обслуговування: розподіл відповідальності</div>
+          <svg viewBox="0 0 700 350" xmlns="http://www.w3.org/2000/svg">
+            <!-- On-Premises Column -->
+            <text class="diagram-text-bold" x="85" y="30" text-anchor="middle">On-Premises</text>
+            <rect class="layer-customer" x="20" y="45" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="85" y="68" text-anchor="middle">Додатки</text>
+            <rect class="layer-customer" x="20" y="85" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="85" y="108" text-anchor="middle">Дані</text>
+            <rect class="layer-customer" x="20" y="125" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="85" y="148" text-anchor="middle">Runtime</text>
+            <rect class="layer-customer" x="20" y="165" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="85" y="188" text-anchor="middle">Middleware</text>
+            <rect class="layer-customer" x="20" y="205" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="85" y="228" text-anchor="middle">ОС</text>
+            <rect class="layer-customer" x="20" y="245" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="85" y="268" text-anchor="middle">Віртуалізація</text>
+            <rect class="layer-customer" x="20" y="285" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="85" y="308" text-anchor="middle">Інфраструктура</text>
+
+            <!-- IaaS Column -->
+            <text class="diagram-text-bold" x="245" y="30" text-anchor="middle">IaaS</text>
+            <rect class="layer-customer" x="180" y="45" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="245" y="68" text-anchor="middle">Додатки</text>
+            <rect class="layer-customer" x="180" y="85" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="245" y="108" text-anchor="middle">Дані</text>
+            <rect class="layer-customer" x="180" y="125" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="245" y="148" text-anchor="middle">Runtime</text>
+            <rect class="layer-customer" x="180" y="165" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="245" y="188" text-anchor="middle">Middleware</text>
+            <rect class="layer-customer" x="180" y="205" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="245" y="228" text-anchor="middle">ОС</text>
+            <rect class="layer-provider" x="180" y="245" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="245" y="268" text-anchor="middle">Віртуалізація</text>
+            <rect class="layer-provider" x="180" y="285" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="245" y="308" text-anchor="middle">Інфраструктура</text>
+
+            <!-- PaaS Column -->
+            <text class="diagram-text-bold" x="405" y="30" text-anchor="middle">PaaS</text>
+            <rect class="layer-customer" x="340" y="45" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="405" y="68" text-anchor="middle">Додатки</text>
+            <rect class="layer-customer" x="340" y="85" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="405" y="108" text-anchor="middle">Дані</text>
+            <rect class="layer-provider" x="340" y="125" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="405" y="148" text-anchor="middle">Runtime</text>
+            <rect class="layer-provider" x="340" y="165" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="405" y="188" text-anchor="middle">Middleware</text>
+            <rect class="layer-provider" x="340" y="205" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="405" y="228" text-anchor="middle">ОС</text>
+            <rect class="layer-provider" x="340" y="245" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="405" y="268" text-anchor="middle">Віртуалізація</text>
+            <rect class="layer-provider" x="340" y="285" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="405" y="308" text-anchor="middle">Інфраструктура</text>
+
+            <!-- SaaS Column -->
+            <text class="diagram-text-bold" x="565" y="30" text-anchor="middle">SaaS</text>
+            <rect class="layer-provider" x="500" y="45" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="565" y="68" text-anchor="middle">Додатки</text>
+            <rect class="layer-customer" x="500" y="85" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="565" y="108" text-anchor="middle">Дані*</text>
+            <rect class="layer-provider" x="500" y="125" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="565" y="148" text-anchor="middle">Runtime</text>
+            <rect class="layer-provider" x="500" y="165" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="565" y="188" text-anchor="middle">Middleware</text>
+            <rect class="layer-provider" x="500" y="205" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="565" y="228" text-anchor="middle">ОС</text>
+            <rect class="layer-provider" x="500" y="245" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="565" y="268" text-anchor="middle">Віртуалізація</text>
+            <rect class="layer-provider" x="500" y="285" width="130" height="35" rx="4"/>
+            <text class="diagram-text-white" x="565" y="308" text-anchor="middle">Інфраструктура</text>
+          </svg>
+          <div class="diagram-legend">
+            <div class="legend-item">
+              <div class="legend-color" style="background: #ef4444;"></div>
+              <span>Відповідальність клієнта</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #8b5cf6;"></div>
+              <span>Відповідальність провайдера</span>
+            </div>
+          </div>
+          <div class="diagram-caption">Рис. 1.2. Стек технологій та розподіл відповідальності в різних моделях обслуговування. *Дані завжди залишаються відповідальністю клієнта</div>
+        </div>
 
         <p>Давайте систематизуємо відмінності:</p>
 
@@ -853,6 +1068,101 @@
         </ul>
 
         <p>Безпекові виклики multi-cloud подібні до гібридної хмари, але посилені: тепер потрібно знати безпеку кількох провайдерів, підтримувати консистентні політики в різних системах з різними інструментами.</p>
+
+        <!-- Diagram: Deployment Models -->
+        <div class="diagram">
+          <div class="diagram-title">Моделі розгортання хмарних обчислень</div>
+          <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+            <!-- Public Cloud -->
+            <g transform="translate(40, 30)">
+              <ellipse class="cloud-public" cx="70" cy="50" rx="70" ry="45" opacity="0.2"/>
+              <ellipse fill="none" stroke="#0ea5e9" stroke-width="2" cx="70" cy="50" rx="70" ry="45"/>
+              <text class="diagram-text-bold" x="70" y="45" text-anchor="middle">Публічна</text>
+              <text class="diagram-text-small" x="70" y="60" text-anchor="middle">AWS, Azure, GCP</text>
+              <!-- Multiple tenant icons -->
+              <circle fill="var(--text-secondary)" cx="40" cy="80" r="6"/>
+              <circle fill="var(--text-secondary)" cx="60" cy="80" r="6"/>
+              <circle fill="var(--text-secondary)" cx="80" cy="80" r="6"/>
+              <circle fill="var(--text-secondary)" cx="100" cy="80" r="6"/>
+              <text class="diagram-text-small" x="70" y="105" text-anchor="middle">Multi-tenant</text>
+            </g>
+
+            <!-- Private Cloud -->
+            <g transform="translate(210, 30)">
+              <ellipse class="cloud-private" cx="70" cy="50" rx="70" ry="45" opacity="0.2"/>
+              <ellipse fill="none" stroke="#8b5cf6" stroke-width="2" cx="70" cy="50" rx="70" ry="45"/>
+              <text class="diagram-text-bold" x="70" y="45" text-anchor="middle">Приватна</text>
+              <text class="diagram-text-small" x="70" y="60" text-anchor="middle">VMware, OpenStack</text>
+              <!-- Single tenant icon -->
+              <rect fill="var(--text-secondary)" x="50" y="72" width="40" height="20" rx="4"/>
+              <text class="diagram-text-small" x="70" y="105" text-anchor="middle">Single-tenant</text>
+            </g>
+
+            <!-- Hybrid Cloud -->
+            <g transform="translate(380, 30)">
+              <ellipse class="cloud-hybrid" cx="70" cy="50" rx="70" ry="45" opacity="0.2"/>
+              <ellipse fill="none" stroke="#22c55e" stroke-width="2" cx="70" cy="50" rx="70" ry="45"/>
+              <text class="diagram-text-bold" x="70" y="40" text-anchor="middle">Гібридна</text>
+              <text class="diagram-text-small" x="70" y="55" text-anchor="middle">Public + Private</text>
+              <!-- Mixed icons -->
+              <circle fill="#0ea5e9" cx="50" cy="75" r="8"/>
+              <rect fill="#8b5cf6" x="70" y="67" width="16" height="16" rx="3"/>
+              <line stroke="var(--text-secondary)" stroke-width="2" x1="58" y1="75" x2="70" y2="75"/>
+              <text class="diagram-text-small" x="70" y="105" text-anchor="middle">Інтегрована</text>
+            </g>
+
+            <!-- Community Cloud -->
+            <g transform="translate(550, 30)">
+              <ellipse class="cloud-community" cx="70" cy="50" rx="70" ry="45" opacity="0.2"/>
+              <ellipse fill="none" stroke="#f59e0b" stroke-width="2" cx="70" cy="50" rx="70" ry="45"/>
+              <text class="diagram-text-bold" x="70" y="45" text-anchor="middle">Громадська</text>
+              <text class="diagram-text-small" x="70" y="60" text-anchor="middle">Спільнота</text>
+              <!-- Group icons -->
+              <circle fill="var(--text-secondary)" cx="50" cy="80" r="6"/>
+              <circle fill="var(--text-secondary)" cx="70" cy="80" r="6"/>
+              <circle fill="var(--text-secondary)" cx="90" cy="80" r="6"/>
+              <text class="diagram-text-small" x="70" y="105" text-anchor="middle">Multi-tenant*</text>
+            </g>
+
+            <!-- Comparison table below -->
+            <line stroke="var(--card-border)" x1="40" y1="160" x2="660" y2="160"/>
+
+            <!-- Headers -->
+            <text class="diagram-text-bold" x="120" y="185" text-anchor="middle">Контроль</text>
+            <text class="diagram-text-bold" x="280" y="185" text-anchor="middle">Вартість</text>
+            <text class="diagram-text-bold" x="440" y="185" text-anchor="middle">Масштабованість</text>
+            <text class="diagram-text-bold" x="600" y="185" text-anchor="middle">Безпека</text>
+
+            <!-- Public row -->
+            <text class="diagram-text" x="40" y="210" fill="#0ea5e9">Публічна:</text>
+            <text class="diagram-text-small" x="120" y="210" text-anchor="middle">Низький</text>
+            <text class="diagram-text-small" x="280" y="210" text-anchor="middle">Найнижча</text>
+            <text class="diagram-text-small" x="440" y="210" text-anchor="middle">Необмежена</text>
+            <text class="diagram-text-small" x="600" y="210" text-anchor="middle">Shared resp.</text>
+
+            <!-- Private row -->
+            <text class="diagram-text" x="40" y="235" fill="#8b5cf6">Приватна:</text>
+            <text class="diagram-text-small" x="120" y="235" text-anchor="middle">Повний</text>
+            <text class="diagram-text-small" x="280" y="235" text-anchor="middle">Найвища</text>
+            <text class="diagram-text-small" x="440" y="235" text-anchor="middle">Обмежена</text>
+            <text class="diagram-text-small" x="600" y="235" text-anchor="middle">Повна відп.</text>
+
+            <!-- Hybrid row -->
+            <text class="diagram-text" x="40" y="260" fill="#22c55e">Гібридна:</text>
+            <text class="diagram-text-small" x="120" y="260" text-anchor="middle">Гнучкий</text>
+            <text class="diagram-text-small" x="280" y="260" text-anchor="middle">Середня</text>
+            <text class="diagram-text-small" x="440" y="260" text-anchor="middle">Гнучка</text>
+            <text class="diagram-text-small" x="600" y="260" text-anchor="middle">Комплексна</text>
+
+            <!-- Community row -->
+            <text class="diagram-text" x="40" y="285" fill="#f59e0b">Громадська:</text>
+            <text class="diagram-text-small" x="120" y="285" text-anchor="middle">Спільний</text>
+            <text class="diagram-text-small" x="280" y="285" text-anchor="middle">Розподілена</text>
+            <text class="diagram-text-small" x="440" y="285" text-anchor="middle">Середня</text>
+            <text class="diagram-text-small" x="600" y="285" text-anchor="middle">Спеціалізована</text>
+          </svg>
+          <div class="diagram-caption">Рис. 1.3. Чотири моделі розгортання хмарних обчислень за NIST та їх ключові характеристики</div>
+        </div>
       </section>
 
       <section>
@@ -886,6 +1196,53 @@
         </ul>
 
         <p>Простіше кажучи: провайдер відповідає за те, що ви не можете контролювати. Ви відповідаєте за те, що ви контролюєте.</p>
+
+        <!-- Diagram: Shared Responsibility Model -->
+        <div class="diagram">
+          <div class="diagram-title">Модель розподілу відповідальності: Security OF vs IN the Cloud</div>
+          <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
+            <!-- Left side - Customer (IN the Cloud) -->
+            <rect fill="var(--card)" stroke="#ef4444" stroke-width="3" x="30" y="30" width="300" height="200" rx="12"/>
+            <text class="diagram-text-bold" x="180" y="55" text-anchor="middle" fill="#ef4444">КЛІЄНТ</text>
+            <text class="diagram-text" x="180" y="75" text-anchor="middle">Security IN the Cloud</text>
+
+            <rect fill="#fecaca" x="50" y="95" width="260" height="28" rx="6"/>
+            <text class="diagram-text" x="180" y="114" text-anchor="middle">Дані клієнта</text>
+
+            <rect fill="#fecaca" x="50" y="128" width="260" height="28" rx="6"/>
+            <text class="diagram-text" x="180" y="147" text-anchor="middle">Додатки, код, конфігурація</text>
+
+            <rect fill="#fecaca" x="50" y="161" width="260" height="28" rx="6"/>
+            <text class="diagram-text" x="180" y="180" text-anchor="middle">IAM, шифрування, мережа</text>
+
+            <rect fill="#fecaca" x="50" y="194" width="126" height="28" rx="6"/>
+            <text class="diagram-text" x="113" y="213" text-anchor="middle">ОС (IaaS)</text>
+            <rect fill="#fca5a5" x="184" y="194" width="126" height="28" rx="6"/>
+            <text class="diagram-text" x="247" y="213" text-anchor="middle">Клієнтська VM</text>
+
+            <!-- Right side - Provider (OF the Cloud) -->
+            <rect fill="var(--card)" stroke="#8b5cf6" stroke-width="3" x="370" y="30" width="300" height="200" rx="12"/>
+            <text class="diagram-text-bold" x="520" y="55" text-anchor="middle" fill="#8b5cf6">ПРОВАЙДЕР</text>
+            <text class="diagram-text" x="520" y="75" text-anchor="middle">Security OF the Cloud</text>
+
+            <rect fill="#ddd6fe" x="390" y="95" width="260" height="28" rx="6"/>
+            <text class="diagram-text" x="520" y="114" text-anchor="middle">Гіпервізор, ізоляція VM</text>
+
+            <rect fill="#ddd6fe" x="390" y="128" width="260" height="28" rx="6"/>
+            <text class="diagram-text" x="520" y="147" text-anchor="middle">Compute, Storage, Network</text>
+
+            <rect fill="#ddd6fe" x="390" y="161" width="260" height="28" rx="6"/>
+            <text class="diagram-text" x="520" y="180" text-anchor="middle">Hardware, firmware</text>
+
+            <rect fill="#ddd6fe" x="390" y="194" width="260" height="28" rx="6"/>
+            <text class="diagram-text" x="520" y="213" text-anchor="middle">Фізична безпека дата-центру</text>
+
+            <!-- Divider line -->
+            <line stroke="var(--text-secondary)" stroke-width="2" stroke-dasharray="8,4" x1="350" y1="50" x2="350" y2="220"/>
+            <text class="diagram-text-small" x="350" y="250" text-anchor="middle">Лінія розподілу залежить від моделі (IaaS/PaaS/SaaS)</text>
+          </svg>
+          <div class="diagram-caption">Рис. 1.4. Візуалізація моделі розподілу відповідальності AWS Shared Responsibility Model</div>
+        </div>
 
         <h3>Як відповідальність змінюється залежно від моделі</h3>
 

@@ -161,6 +161,70 @@
         <h3>6 Rs of Cloud Migration</h3>
         <p>Gartner framework для прийняття рішень про міграцію:</p>
 
+        <!-- Diagram: 6 Rs of Migration -->
+        <div class="diagram">
+          <div class="diagram-title">6 Rs: стратегії міграції в хмару</div>
+          <svg viewBox="0 0 700 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- R1: Rehost -->
+            <g transform="translate(20, 40)">
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="0" y="0" width="95" height="70" rx="8"/>
+              <text fill="#dc2626" x="47" y="25" text-anchor="middle" font-weight="600" font-size="11">Rehost</text>
+              <text fill="#dc2626" x="47" y="42" text-anchor="middle" font-size="9">Lift & Shift</text>
+              <text fill="#dc2626" x="47" y="57" text-anchor="middle" font-size="8">Без змін</text>
+            </g>
+
+            <!-- R2: Replatform -->
+            <g transform="translate(125, 40)">
+              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="95" height="70" rx="8"/>
+              <text fill="#b45309" x="47" y="25" text-anchor="middle" font-weight="600" font-size="11">Replatform</text>
+              <text fill="#b45309" x="47" y="42" text-anchor="middle" font-size="9">Lift & Optimize</text>
+              <text fill="#b45309" x="47" y="57" text-anchor="middle" font-size="8">Managed DB</text>
+            </g>
+
+            <!-- R3: Repurchase -->
+            <g transform="translate(230, 40)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="95" height="70" rx="8"/>
+              <text fill="#166534" x="47" y="25" text-anchor="middle" font-weight="600" font-size="11">Repurchase</text>
+              <text fill="#166534" x="47" y="42" text-anchor="middle" font-size="9">Move to SaaS</text>
+              <text fill="#166534" x="47" y="57" text-anchor="middle" font-size="8">Salesforce</text>
+            </g>
+
+            <!-- R4: Refactor -->
+            <g transform="translate(335, 40)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="95" height="70" rx="8"/>
+              <text fill="#1d4ed8" x="47" y="25" text-anchor="middle" font-weight="600" font-size="11">Refactor</text>
+              <text fill="#1d4ed8" x="47" y="42" text-anchor="middle" font-size="9">Re-architect</text>
+              <text fill="#1d4ed8" x="47" y="57" text-anchor="middle" font-size="8">Cloud-Native</text>
+            </g>
+
+            <!-- R5: Retain -->
+            <g transform="translate(440, 40)">
+              <rect fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" x="0" y="0" width="95" height="70" rx="8"/>
+              <text fill="#7c3aed" x="47" y="25" text-anchor="middle" font-weight="600" font-size="11">Retain</text>
+              <text fill="#7c3aed" x="47" y="42" text-anchor="middle" font-size="9">Keep On-Prem</text>
+              <text fill="#7c3aed" x="47" y="57" text-anchor="middle" font-size="8">Hybrid</text>
+            </g>
+
+            <!-- R6: Retire -->
+            <g transform="translate(545, 40)">
+              <rect fill="#e5e7eb" stroke="#6b7280" stroke-width="2" x="0" y="0" width="95" height="70" rx="8"/>
+              <text fill="#4b5563" x="47" y="25" text-anchor="middle" font-weight="600" font-size="11">Retire</text>
+              <text fill="#4b5563" x="47" y="42" text-anchor="middle" font-size="9">Decommission</text>
+              <text fill="#4b5563" x="47" y="57" text-anchor="middle" font-size="8">End of Life</text>
+            </g>
+
+            <!-- Effort scale -->
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="67" y1="125" x2="593" y2="125"/>
+            <text class="diagram-text-small" x="67" y="140" text-anchor="middle">Менше</text>
+            <text class="diagram-text-small" x="330" y="140" text-anchor="middle">← Зусилля / Зміни →</text>
+            <text class="diagram-text-small" x="593" y="140" text-anchor="middle">Більше</text>
+
+            <!-- Benefit indicator -->
+            <text class="diagram-text-small" x="350" y="165" text-anchor="middle">Refactor дає найкращу безпеку (security by design)</text>
+          </svg>
+          <div class="diagram-caption">Рис. 12.1. Шість стратегій міграції — від простого переносу до повного перепроєктування</div>
+        </div>
+
         <table>
           <thead>
             <tr>
