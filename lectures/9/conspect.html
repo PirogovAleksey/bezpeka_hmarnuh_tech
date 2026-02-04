@@ -528,6 +528,56 @@
         <h3>Adversarial AI</h3>
         <p>Атакуючі також використовують AI та атакують AI-системи:</p>
 
+        <!-- Diagram: Adversarial AI -->
+        <div class="diagram">
+          <div class="diagram-title">Adversarial AI: атаки на ML-системи безпеки</div>
+          <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+            <!-- ML Model in center -->
+            <rect fill="var(--accent-light)" stroke="var(--accent)" stroke-width="2" x="230" y="50" width="140" height="80" rx="10"/>
+            <text fill="var(--accent)" x="300" y="85" text-anchor="middle" font-weight="600" font-size="12">ML Security</text>
+            <text fill="var(--accent)" x="300" y="102" text-anchor="middle" font-size="11">Model</text>
+
+            <!-- Evasion Attack -->
+            <g transform="translate(20, 30)">
+              <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="0" y="0" width="100" height="50" rx="6"/>
+              <text fill="#dc2626" x="50" y="22" text-anchor="middle" font-weight="600" font-size="9">Evasion</text>
+              <text fill="#dc2626" x="50" y="38" text-anchor="middle" font-size="8">Bypass detection</text>
+            </g>
+            <line stroke="#ef4444" stroke-width="2" x1="120" y1="55" x2="225" y2="75" marker-end="url(#adv-arrow)"/>
+
+            <!-- Poisoning Attack -->
+            <g transform="translate(20, 100)">
+              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="100" height="50" rx="6"/>
+              <text fill="#b45309" x="50" y="22" text-anchor="middle" font-weight="600" font-size="9">Poisoning</text>
+              <text fill="#b45309" x="50" y="38" text-anchor="middle" font-size="8">Corrupt training</text>
+            </g>
+            <line stroke="#f59e0b" stroke-width="2" x1="120" y1="125" x2="225" y2="105" marker-end="url(#adv-arrow)"/>
+
+            <!-- Model Stealing -->
+            <g transform="translate(480, 30)">
+              <rect fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" x="0" y="0" width="100" height="50" rx="6"/>
+              <text fill="#7c3aed" x="50" y="22" text-anchor="middle" font-weight="600" font-size="9">Model Stealing</text>
+              <text fill="#7c3aed" x="50" y="38" text-anchor="middle" font-size="8">Extract via queries</text>
+            </g>
+            <line stroke="#8b5cf6" stroke-width="2" x1="375" y1="75" x2="475" y2="55" marker-end="url(#adv-arrow)"/>
+
+            <!-- Prompt Injection -->
+            <g transform="translate(480, 100)">
+              <rect fill="#fce7f3" stroke="#ec4899" stroke-width="2" x="0" y="0" width="100" height="50" rx="6"/>
+              <text fill="#be185d" x="50" y="22" text-anchor="middle" font-weight="600" font-size="9">Prompt Injection</text>
+              <text fill="#be185d" x="50" y="38" text-anchor="middle" font-size="8">Manipulate LLM</text>
+            </g>
+            <line stroke="#ec4899" stroke-width="2" x1="375" y1="105" x2="475" y2="125" marker-end="url(#adv-arrow)"/>
+
+            <defs>
+              <marker id="adv-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+              </marker>
+            </defs>
+          </svg>
+          <div class="diagram-caption">Рис. 9.2. Чотири основні типи adversarial attacks на ML-системи безпеки</div>
+        </div>
+
         <p><strong>AI для атак:</strong></p>
         <ul>
           <li><strong>Automated reconnaissance:</strong> AI-powered scanning та enumeration</li>

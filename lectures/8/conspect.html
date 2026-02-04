@@ -407,6 +407,69 @@ Internet
 [S3 Bucket] Backups (contains credit cards)
         </pre>
 
+        <!-- Diagram: Attack Path Example -->
+        <div class="diagram">
+          <div class="diagram-title">Візуалізація Attack Path: від Internet до даних</div>
+          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="ap-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+              </marker>
+            </defs>
+
+            <!-- Internet -->
+            <circle fill="#fee2e2" stroke="#ef4444" stroke-width="2" cx="50" cy="110" r="35"/>
+            <text fill="#dc2626" x="50" y="105" text-anchor="middle" font-size="10">🌐</text>
+            <text fill="#dc2626" x="50" y="120" text-anchor="middle" font-size="9">Internet</text>
+
+            <!-- ALB -->
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="120" y="85" width="70" height="50" rx="6"/>
+            <text fill="#b45309" x="155" y="105" text-anchor="middle" font-size="9">ALB</text>
+            <text fill="#b45309" x="155" y="118" text-anchor="middle" font-size="8">Public</text>
+
+            <!-- ECS with CVE -->
+            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="220" y="85" width="80" height="50" rx="6"/>
+            <text fill="#dc2626" x="260" y="100" text-anchor="middle" font-size="9">ECS Task</text>
+            <text fill="#dc2626" x="260" y="115" text-anchor="middle" font-size="8">CVE-2024-XXX</text>
+            <text fill="#dc2626" x="260" y="128" text-anchor="middle" font-size="7">Critical!</text>
+
+            <!-- IAM Role -->
+            <rect fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" x="330" y="85" width="80" height="50" rx="6"/>
+            <text fill="#7c3aed" x="370" y="100" text-anchor="middle" font-size="9">IAM Role</text>
+            <text fill="#7c3aed" x="370" y="115" text-anchor="middle" font-size="8">s3:*, rds:*</text>
+            <text fill="#ef4444" x="370" y="128" text-anchor="middle" font-size="7">Overprivileged</text>
+
+            <!-- RDS -->
+            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="440" y="40" width="70" height="45" rx="6"/>
+            <text fill="#1d4ed8" x="475" y="58" text-anchor="middle" font-size="9">RDS</text>
+            <text fill="#1d4ed8" x="475" y="73" text-anchor="middle" font-size="8">PII Data</text>
+
+            <!-- S3 -->
+            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="440" y="130" width="70" height="45" rx="6"/>
+            <text fill="#dc2626" x="475" y="148" text-anchor="middle" font-size="9">S3</text>
+            <text fill="#dc2626" x="475" y="163" text-anchor="middle" font-size="8">Cards</text>
+
+            <!-- Data icon -->
+            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="3" x="540" y="75" width="50" height="70" rx="6"/>
+            <text fill="#dc2626" x="565" y="100" text-anchor="middle" font-size="16">💳</text>
+            <text fill="#dc2626" x="565" y="120" text-anchor="middle" font-size="8">Breach!</text>
+
+            <!-- Arrows -->
+            <line stroke="#ef4444" stroke-width="2" x1="85" y1="110" x2="115" y2="110" marker-end="url(#ap-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="190" y1="110" x2="215" y2="110" marker-end="url(#ap-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="300" y1="110" x2="325" y2="110" marker-end="url(#ap-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="410" y1="95" x2="435" y2="70" marker-end="url(#ap-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="410" y1="125" x2="435" y2="145" marker-end="url(#ap-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="510" y1="62" x2="535" y2="90" marker-end="url(#ap-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="510" y1="152" x2="535" y2="130" marker-end="url(#ap-arrow)"/>
+
+            <!-- Risk label -->
+            <rect fill="#ef4444" x="200" y="180" width="200" height="25" rx="4"/>
+            <text fill="white" x="300" y="197" text-anchor="middle" font-weight="600" font-size="11">CRITICAL ATTACK PATH</text>
+          </svg>
+          <div class="diagram-caption">Рис. 8.2. Attack path visualization: CNAPP показує повний шлях від Internet до критичних даних</div>
+        </div>
+
         <p><strong>CNAPP Risk Assessment:</strong></p>
         <ul>
           <li>Entry point: Internet (high exploitability)</li>
@@ -486,6 +549,50 @@ Internet
           <li><strong>Coverage:</strong> All major clouds</li>
           <li><strong>Notable:</strong> Strong in workload protection</li>
         </ul>
+
+        <h3>Порівняльна таблиця CNAPP-платформ</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Платформа</th>
+              <th>Architecture</th>
+              <th>Strengths</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Wiz</strong></td>
+              <td>100% Agentless</td>
+              <td>Attack paths, speed, UX</td>
+              <td>Fast deployment, visualization</td>
+            </tr>
+            <tr>
+              <td><strong>Prisma Cloud</strong></td>
+              <td>Hybrid</td>
+              <td>Breadth, enterprise</td>
+              <td>Large enterprises, compliance</td>
+            </tr>
+            <tr>
+              <td><strong>Microsoft Defender</strong></td>
+              <td>Hybrid</td>
+              <td>Azure integration, pricing</td>
+              <td>Microsoft shops</td>
+            </tr>
+            <tr>
+              <td><strong>Orca</strong></td>
+              <td>100% Agentless</td>
+              <td>Deep visibility</td>
+              <td>Multi-cloud, no agents</td>
+            </tr>
+            <tr>
+              <td><strong>CrowdStrike</strong></td>
+              <td>Agent-based</td>
+              <td>Runtime, threat intel</td>
+              <td>Workload protection focus</td>
+            </tr>
+          </tbody>
+        </table>
 
         <h3>Критерії вибору CNAPP</h3>
 
