@@ -142,12 +142,35 @@
 
     <section class="slide">
       <h1>Conditional Access</h1>
-      <ul>
-        <li>Різні вимоги залежно від контексту</li>
-        <li><strong>Корп. пристрій + офіс:</strong> SSO достатньо</li>
-        <li><strong>Невідомий пристрій:</strong> вимагати MFA</li>
-        <li><strong>Чутливі дані:</strong> MFA + device compliance</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 120" style="max-width: 500px;">
+          <!-- Context boxes -->
+          <rect x="10" y="10" width="110" height="30" rx="4" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
+          <text x="65" y="30" text-anchor="middle" fill="currentColor" font-size="10">Корп. + офіс</text>
+          <rect x="10" y="50" width="110" height="30" rx="4" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="65" y="70" text-anchor="middle" fill="currentColor" font-size="10">Невідомий пристрій</text>
+          <rect x="10" y="90" width="110" height="30" rx="4" fill="rgba(239, 68, 68, 0.3)" stroke="#ef4444" stroke-width="2"/>
+          <text x="65" y="110" text-anchor="middle" fill="currentColor" font-size="10">Чутливі дані</text>
+          <!-- Arrows -->
+          <path d="M125 25 L175 60" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M125 65 L175 65" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M125 105 L175 70" stroke="currentColor" stroke-width="1.5"/>
+          <!-- Policy Engine -->
+          <rect x="180" y="45" width="80" height="40" rx="4" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <text x="220" y="70" text-anchor="middle" fill="currentColor" font-size="11">Policy</text>
+          <!-- Arrows to results -->
+          <path d="M265 55 L295 30" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M265 65 L295 65" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M265 75 L295 100" stroke="currentColor" stroke-width="1.5"/>
+          <!-- Results -->
+          <rect x="300" y="10" width="90" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="345" y="30" text-anchor="middle" fill="currentColor" font-size="10">SSO достатньо</text>
+          <rect x="300" y="50" width="90" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="345" y="70" text-anchor="middle" fill="currentColor" font-size="10">Вимагати MFA</text>
+          <rect x="300" y="90" width="90" height="30" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <text x="345" y="110" text-anchor="middle" fill="currentColor" font-size="10">MFA + compliance</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
