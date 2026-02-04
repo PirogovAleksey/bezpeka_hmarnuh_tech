@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 6.4 — Застосування блокчейну в кібербезпеці | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../lecture.html?id=6">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 6.4: Застосування блокчейну в кібербезпеці</p>
+    </section>
+
+    <section class="slide">
+      <h1>Незмінний Audit Log</h1>
+      <ul>
+        <li><strong>Проблема:</strong> атакуючі видаляють логи</li>
+        <li><strong>Рішення:</strong> хеші логів у блокчейні</li>
+        <li>Неможливо змінити без виявлення</li>
+        <li><strong>Timestamping:</strong> доказ часу події</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Варіанти Audit Log</h1>
+      <ul>
+        <li><strong>Повне зберігання:</strong> все on-chain (дорого)</li>
+        <li><strong>Хеші:</strong> тільки Merkle root</li>
+        <li><strong>Hybrid:</strong> off-chain + on-chain anchoring</li>
+        <li>Баланс між ціною та безпекою</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>PKI та Certificate Transparency</h1>
+      <ul>
+        <li><strong>DigiNotar (2011):</strong> фейкові сертифікати</li>
+        <li>Централізовані CA — single point of failure</li>
+        <li><strong>Blockchain PKI:</strong> децентралізована видача</li>
+        <li>Автоматичне Certificate Transparency</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Software Supply Chain</h1>
+      <ul>
+        <li><strong>SolarWinds (2020):</strong> malware в оновленнях</li>
+        <li><strong>SBOM:</strong> Bill of Materials у блокчейні</li>
+        <li>Кожна збірка записується з хешем</li>
+        <li>Верифікація походження коду</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>in-toto + Blockchain</h1>
+      <ul>
+        <li>Кожен крок CI/CD підписується</li>
+        <li>Хеші зберігаються в блокчейні</li>
+        <li>Верифікація всього ланцюга</li>
+        <li>Захист від tampering</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Threat Intelligence Sharing</h1>
+      <ul>
+        <li><strong>Проблема:</strong> компанії не діляться</li>
+        <li><strong>Рішення:</strong> анонімний обмін через блокчейн</li>
+        <li>Токени за якісну інформацію</li>
+        <li><strong>PolySwarm:</strong> marketplace для threat detection</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>IoT Security</h1>
+      <ul>
+        <li><strong>Mirai Botnet:</strong> атака через IoT</li>
+        <li><strong>DID для пристроїв:</strong> унікальна ідентичність</li>
+        <li><strong>Смарт-контракти:</strong> access control</li>
+        <li><strong>IOTA:</strong> DAG для IoT</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Обмеження блокчейну</h1>
+      <ul>
+        <li><strong>Scalability:</strong> обмежена пропускна здатність</li>
+        <li><strong>Privacy:</strong> public blockchains прозорі</li>
+        <li><strong>Immutability:</strong> помилки не виправити</li>
+        <li><strong>Complexity:</strong> складність інтеграції</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Коли використовувати?</h1>
+      <ul>
+        <li>☑ Потрібна незмінність</li>
+        <li>☑ Немає довіри між учасниками</li>
+        <li>☑ Децентралізація важлива</li>
+        <li>☒ High-frequency → традиційна БД</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Майбутнє</h1>
+      <ul>
+        <li><strong>Post-Quantum:</strong> нова криптографія</li>
+        <li><strong>Layer 2:</strong> масштабування через Rollups</li>
+        <li><strong>Interoperability:</strong> мости між блокчейнами</li>
+        <li><strong>Enterprise:</strong> Hyperledger, R3 Corda</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Кінець Лекції 6: Блокчейн у розподілених системах безпеки</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../js/slides.js"></script>
+
+</body>
+</html>

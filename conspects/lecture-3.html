@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Конспект лекції 3: Архітектура нульової довіри (Zero Trust) у хмарі.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Конспект лекції 3 — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../lecture.html?id=3" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Конспект</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Лекція 3. Архітектура нульової довіри (Zero Trust) у хмарі</h1>
+      <div class="lecture-info">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+      </div>
+
+      <section>
+        <h2>Вступ</h2>
+        <p>Сьогодні ми поговоримо про одну з найважливіших концепцій сучасної кібербезпеки — архітектуру нульової довіри, або Zero Trust Architecture (ZTA). Ця концепція радикально змінює наше уявлення про те, як потрібно будувати безпеку в сучасних IT-системах, особливо в хмарних середовищах.</p>
+
+        <p>Традиційна модель безпеки, яку ми використовували десятиліттями, базувалася на концепції периметра. Уявіть собі середньовічний замок: високі стіни, рів з водою, підйомний міст. Усе, що всередині стін — безпечне, довірене. Усе, що зовні — потенційно вороже. Саме так працювала корпоративна безпека: firewall на периметрі, VPN для віддаленого доступу, і все, що потрапило всередину мережі, вважалося довіреним.</p>
+
+        <p>Але цей підхід більше не працює. Чому? По-перше, периметр розмився. Співробітники працюють з дому, з кав'ярень, з готелів. Дані зберігаються в хмарі, а не в локальному дата-центрі. Партнери та підрядники потребують доступу до внутрішніх систем. По-друге, атакуючі стали розумнішими. Вони проникають всередину периметра через фішинг, компрометовані облікові записи, zero-day вразливості. І коли вони вже всередині — традиційна модель дає їм карт-бланш на переміщення по мережі.</p>
+
+        <p>Zero Trust пропонує радикально інший підхід: <strong>"Never trust, always verify"</strong> — ніколи не довіряй, завжди перевіряй. Незалежно від того, звідки приходить запит — ззовні чи зсередини мережі — кожен запит має бути автентифікований, авторизований та зашифрований. Кожен.</p>
+
+        <h3>Чому Zero Trust критично важливий для хмари?</h3>
+        <p>У хмарному середовищі концепція периметра втрачає сенс ще більше, ніж в традиційній інфраструктурі. Ваші ресурси розподілені між кількома хмарними провайдерами, різними регіонами, різними сервісами. Ваші користувачі підключаються з будь-якої точки світу. Ваші workloads можуть автоматично масштабуватися, з'являючись і зникаючи за лічені секунди.</p>
+
+        <p>У такому середовищі єдиний спосіб забезпечити безпеку — це перевіряти кожен запит індивідуально, базуючись на контексті: хто запитує, що запитує, звідки, коли, з якого пристрою, і чи відповідає цей запит очікуваній поведінці.</p>
+
+        <h3>Цілі лекції</h3>
+        <p>Після цієї лекції ви зможете:</p>
+        <ul>
+          <li>Пояснити принципи Zero Trust та їх відмінність від традиційної периметрової безпеки</li>
+          <li>Описати основні компоненти архітектури Zero Trust (PEP, PDP, Policy Engine)</li>
+          <li>Розуміти роль Identity Governance та сучасних методів автентифікації в ZTA</li>
+          <li>Застосовувати принципи мікросегментації для захисту хмарних workloads</li>
+          <li>Планувати впровадження Zero Trust у хмарному середовищі</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3.1 Принципи та еволюція Zero Trust</h2>
+
+        <h3>Історія виникнення концепції</h3>
+        <p>Термін "Zero Trust" був вперше введений у 2010 році аналітиком Forrester Research Джоном Кіндервагом (John Kindervag). Він спостерігав, як організації витрачають мільйони на захист периметра, при цьому залишаючи внутрішню мережу практично без захисту. Його ідея була простою, але революційною: що якщо ми перестанемо довіряти всьому, що знаходиться всередині периметра, і почнемо перевіряти кожен запит?</p>
+
+        <p>Ідея не була прийнята одразу. Багато хто вважав її параноїдальною та непрактичною. Але серія гучних зломів змінила думку індустрії:</p>
+
+        <ul>
+          <li><strong>2013 — Target:</strong> Атакуючі проникли через компрометованого підрядника системи кондиціонування, а потім безперешкодно переміщувалися по внутрішній мережі до платіжних систем. Вкрадено дані 40 мільйонів кредитних карток.</li>
+          <li><strong>2014 — Sony Pictures:</strong> Після початкового проникнення атакуючі мали необмежений доступ до всієї внутрішньої мережі протягом місяців.</li>
+          <li><strong>2020 — SolarWinds:</strong> Компрометоване оновлення програмного забезпечення дало атакуючим доступ до внутрішніх мереж тисяч організацій, включаючи урядові агентства США.</li>
+        </ul>
+
+        <p>У 2020 році NIST опублікував <strong>SP 800-207 "Zero Trust Architecture"</strong> — офіційний стандарт, який формалізував принципи та компоненти ZTA. Цей документ став основою для впровадження Zero Trust у федеральних агентствах США та був широко прийнятий комерційним сектором.</p>
+
+        <h3>Основні принципи Zero Trust</h3>
+        <p>NIST SP 800-207 визначає сім ключових принципів Zero Trust:</p>
+
+        <h4>1. Усі джерела даних та обчислювальні сервіси вважаються ресурсами</h4>
+        <p>У традиційній моделі ми захищали сервери та бази даних. У Zero Trust кожен елемент інфраструктури — ресурс, який потребує захисту. Це включає не лише сервери, але й пристрої користувачів, IoT-пристрої, API-endpoints, хмарні сервіси, контейнери, serverless-функції.</p>
+
+        <h4>2. Усі комунікації захищені незалежно від розташування в мережі</h4>
+        <p>Навіть якщо два сервери знаходяться в одній підмережі, комунікація між ними має бути зашифрована та автентифікована. Локальне розташування не надає жодних привілеїв. Цей принцип часто формулюють як "assume breach" — припускайте, що зловмисник вже у вашій мережі.</p>
+
+        <h4>3. Доступ до ресурсів надається на основі сесії</h4>
+        <p>Кожен запит оцінюється індивідуально. Те, що користувач отримав доступ хвилину тому, не означає, що він автоматично отримає доступ зараз. Контекст може змінитися: пристрій може бути компрометований, геолокація може стати підозрілою, поведінка може відхилятися від норми.</p>
+
+        <h4>4. Доступ визначається динамічною політикою</h4>
+        <p>Політика доступу враховує множину факторів: ідентичність користувача та сервісу, стан пристрою, поведінкові патерни, час доби, геолокацію, чутливість даних. Рішення приймається в реальному часі на основі всіх цих факторів.</p>
+
+        <h4>5. Організація моніторить та вимірює безпеку всіх активів</h4>
+        <p>Жоден пристрій не є довіреним за замовчуванням. Організація постійно моніторить стан безпеки всіх пристроїв: чи встановлені патчі, чи активний антивірус, чи є підозріла активність. Ця інформація впливає на рішення про доступ.</p>
+
+        <h4>6. Автентифікація та авторизація динамічні та суворо застосовуються</h4>
+        <p>Автентифікація — це не одноразова подія. Організація постійно переоцінює довіру до суб'єкта протягом сесії. Якщо з'являються ознаки компрометації — сесія може бути припинена або обмежена в реальному часі.</p>
+
+        <h4>7. Організація збирає якомога більше інформації про стан активів та мережі</h4>
+        <p>Дані про мережевий трафік, стан пристроїв, запити на доступ, поведінку користувачів — усе це збирається, аналізується та використовується для покращення безпекових політик. Machine learning допомагає виявляти аномалії та адаптувати політики.</p>
+
+        <h3>Порівняння з традиційним підходом</h3>
+        <table>
+          <tr>
+            <th>Аспект</th>
+            <th>Периметрова безпека</th>
+            <th>Zero Trust</th>
+          </tr>
+          <tr>
+            <td><strong>Модель довіри</strong></td>
+            <td>Trust but verify (довіряй, але перевіряй)</td>
+            <td>Never trust, always verify (ніколи не довіряй)</td>
+          </tr>
+          <tr>
+            <td><strong>Периметр</strong></td>
+            <td>Чітко визначений (firewall, DMZ)</td>
+            <td>Периметр навколо кожного ресурсу</td>
+          </tr>
+          <tr>
+            <td><strong>Внутрішня мережа</strong></td>
+            <td>Довірена зона</td>
+            <td>Така ж небезпечна, як зовнішня</td>
+          </tr>
+          <tr>
+            <td><strong>Авторизація</strong></td>
+            <td>На основі мережевого розташування</td>
+            <td>На основі ідентичності та контексту</td>
+          </tr>
+          <tr>
+            <td><strong>Доступ</strong></td>
+            <td>Широкий після входу в мережу</td>
+            <td>Мінімально необхідний (least privilege)</td>
+          </tr>
+          <tr>
+            <td><strong>Шифрування</strong></td>
+            <td>На периметрі (VPN)</td>
+            <td>End-to-end для всіх комунікацій</td>
+          </tr>
+          <tr>
+            <td><strong>Моніторинг</strong></td>
+            <td>Фокус на периметрі</td>
+            <td>Всеохоплюючий, безперервний</td>
+          </tr>
+        </table>
+
+        <h3>Три стовпи Zero Trust</h3>
+        <p>Для практичного впровадження Zero Trust можна виділити три основні напрямки:</p>
+
+        <p><strong>1. Identity (Ідентичність)</strong></p>
+        <p>Ідентичність — це новий периметр. Замість того, щоб запитувати "звідки приходить цей трафік?", ми запитуємо "хто робить цей запит?". Це включає:</p>
+        <ul>
+          <li>Сильну автентифікацію (MFA, passwordless)</li>
+          <li>Single Sign-On (SSO)</li>
+          <li>Identity Governance (управління життєвим циклом ідентичностей)</li>
+          <li>Privileged Access Management (PAM)</li>
+          <li>Service-to-service автентифікацію</li>
+        </ul>
+
+        <p><strong>2. Device (Пристрої)</strong></p>
+        <p>Стан пристрою впливає на рівень довіри. Керований корпоративний пристрій з актуальними патчами отримає більший доступ, ніж особистий телефон з застарілою ОС. Це включає:</p>
+        <ul>
+          <li>Device posture assessment (оцінка стану пристрою)</li>
+          <li>Mobile Device Management (MDM)</li>
+          <li>Endpoint Detection and Response (EDR)</li>
+          <li>Certificate-based device identity</li>
+        </ul>
+
+        <p><strong>3. Network (Мережа)</strong></p>
+        <p>Мікросегментація замінює плоску внутрішню мережу. Кожен workload ізольований, і трафік між ними контролюється на основі політик. Це включає:</p>
+        <ul>
+          <li>Мікросегментацію</li>
+          <li>Software-Defined Perimeter (SDP)</li>
+          <li>Encrypted communications (mTLS)</li>
+          <li>Network access control на основі ідентичності</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3.2 Компоненти Zero Trust Architecture</h2>
+
+        <h3>Логічна архітектура ZTA за NIST</h3>
+        <p>NIST SP 800-207 визначає логічну архітектуру Zero Trust, яка складається з кількох ключових компонентів. Розуміння цих компонентів критично важливе для проєктування та впровадження ZTA.</p>
+
+        <h4>Policy Engine (PE) — Механізм політик</h4>
+        <p>Policy Engine — це "мозок" системи Zero Trust. Він приймає остаточне рішення про надання або відмову в доступі. PE аналізує вхідні дані з різних джерел:</p>
+        <ul>
+          <li><strong>Subject (суб'єкт):</strong> хто запитує доступ — користувач, сервіс, пристрій</li>
+          <li><strong>Resource (ресурс):</strong> до чого запитується доступ — дані, додаток, сервіс</li>
+          <li><strong>Context (контекст):</strong> час, геолокація, тип мережі, стан пристрою</li>
+          <li><strong>Threat intelligence:</strong> чи є суб'єкт або IP у списках загроз</li>
+          <li><strong>Behavioral analytics:</strong> чи відповідає запит нормальній поведінці</li>
+        </ul>
+
+        <p>На основі цих даних PE консультується з політиками організації та приймає рішення: дозволити, заборонити, або дозволити з умовами (наприклад, вимагати додаткову автентифікацію).</p>
+
+        <h4>Policy Administrator (PA) — Адміністратор політик</h4>
+        <p>Policy Administrator виконує рішення Policy Engine. Якщо PE вирішив дозволити доступ, PA налаштовує шлях комунікації:</p>
+        <ul>
+          <li>Створює сесійні токени або облікові дані</li>
+          <li>Налаштовує Policy Enforcement Point для пропуску трафіку</li>
+          <li>Може вказати часові обмеження для сесії</li>
+          <li>Логує рішення для аудиту</li>
+        </ul>
+
+        <p>Якщо PE вирішив відмовити — PA інструктує PEP заблокувати запит.</p>
+
+        <h4>Policy Enforcement Point (PEP) — Точка застосування політик</h4>
+        <p>PEP — це "двері" до кожного ресурсу. Будь-який запит до захищеного ресурсу має пройти через PEP. PEP виконує наступні функції:</p>
+        <ul>
+          <li>Перехоплює всі запити до ресурсу</li>
+          <li>Передає інформацію про запит до PA/PE для рішення</li>
+          <li>Застосовує рішення: пропускає або блокує трафік</li>
+          <li>Може виконувати шифрування/дешифрування трафіку</li>
+          <li>Логує всі спроби доступу</li>
+        </ul>
+
+        <p>У хмарному середовищі PEP може бути реалізований як:</p>
+        <ul>
+          <li>API Gateway</li>
+          <li>Service Mesh sidecar (Envoy, Istio)</li>
+          <li>Cloud-native proxy (AWS PrivateLink, Azure Private Endpoint)</li>
+          <li>ZTNA connector (Zscaler, Cloudflare Access)</li>
+        </ul>
+
+        <h3>Допоміжні компоненти</h3>
+
+        <h4>Continuous Diagnostics and Mitigation (CDM) System</h4>
+        <p>Система CDM збирає інформацію про стан безпеки активів організації:</p>
+        <ul>
+          <li>Інвентаризація всіх пристроїв та програмного забезпечення</li>
+          <li>Стан патчів та оновлень</li>
+          <li>Конфігурації безпеки</li>
+          <li>Виявлені вразливості</li>
+        </ul>
+        <p>Ця інформація передається до Policy Engine для прийняття рішень. Наприклад, якщо CDM повідомляє, що пристрій користувача не має критичного патча, PE може обмежити доступ до чутливих ресурсів.</p>
+
+        <h4>Industry Compliance</h4>
+        <p>Компонент, який забезпечує відповідність регуляторним вимогам:</p>
+        <ul>
+          <li>PCI DSS для платіжних даних</li>
+          <li>HIPAA для медичних даних</li>
+          <li>GDPR для персональних даних</li>
+          <li>SOC 2 для сервіс-провайдерів</li>
+        </ul>
+        <p>Політики доступу можуть автоматично враховувати compliance-вимоги: наприклад, доступ до даних, що підпадають під GDPR, може бути обмежений за геолокацією.</p>
+
+        <h4>Threat Intelligence</h4>
+        <p>Зовнішні та внутрішні джерела інформації про загрози:</p>
+        <ul>
+          <li>Списки шкідливих IP-адрес та доменів</li>
+          <li>Індикатори компрометації (IoC)</li>
+          <li>Інформація про активні кампанії атак</li>
+          <li>Вразливості нульового дня</li>
+        </ul>
+        <p>Якщо запит приходить з IP, який асоціюється з ботнетом, PE може автоматично заблокувати його.</p>
+
+        <h4>Security Information and Event Management (SIEM)</h4>
+        <p>SIEM збирає та аналізує логи з усіх компонентів:</p>
+        <ul>
+          <li>Рішення про доступ від PE</li>
+          <li>Спроби доступу на PEP</li>
+          <li>Автентифікаційні події</li>
+          <li>Мережевий трафік</li>
+        </ul>
+        <p>Аналітика в SIEM може виявити патерни атак та надати інформацію для покращення політик.</p>
+
+        <h4>Data Access Policy</h4>
+        <p>Політики, специфічні для даних:</p>
+        <ul>
+          <li>Класифікація даних (public, internal, confidential, restricted)</li>
+          <li>Правила доступу на основі класифікації</li>
+          <li>Data Loss Prevention (DLP) правила</li>
+          <li>Шифрування на рівні даних</li>
+        </ul>
+
+        <h3>Identity Provider (IdP) та Identity Governance</h3>
+        <p>Identity Provider — критично важливий компонент ZTA, адже ідентичність є основою для прийняття рішень про доступ.</p>
+
+        <h4>Функції IdP у Zero Trust</h4>
+        <ul>
+          <li><strong>Автентифікація:</strong> Підтвердження, що користувач є тим, за кого себе видає</li>
+          <li><strong>Федерація:</strong> Довіра до ідентичностей з інших організацій</li>
+          <li><strong>Token issuance:</strong> Видача токенів (SAML, OIDC, OAuth) для доступу до ресурсів</li>
+          <li><strong>Session management:</strong> Управління сесіями та їх валідація</li>
+        </ul>
+
+        <h4>Multi-Factor Authentication (MFA)</h4>
+        <p>MFA — обов'язковий компонент Zero Trust. Одного пароля недостатньо. Фактори автентифікації:</p>
+        <ul>
+          <li><strong>Something you know:</strong> пароль, PIN</li>
+          <li><strong>Something you have:</strong> телефон, hardware token (YubiKey)</li>
+          <li><strong>Something you are:</strong> біометрія (відбиток пальця, Face ID)</li>
+          <li><strong>Somewhere you are:</strong> геолокація</li>
+          <li><strong>Something you do:</strong> поведінкова біометрія (як ви друкуєте)</li>
+        </ul>
+
+        <p>Сучасний тренд — <strong>passwordless authentication</strong>: замість пароля використовується комбінація пристрою та біометрії (FIDO2/WebAuthn).</p>
+
+        <h4>Conditional Access</h4>
+        <p>Conditional Access — це механізм, який дозволяє застосовувати різні вимоги автентифікації залежно від контексту:</p>
+        <ul>
+          <li>Запит з корпоративного пристрою з офісу → достатньо SSO</li>
+          <li>Запит з невідомого пристрою → вимагати MFA</li>
+          <li>Запит до фінансових даних → вимагати MFA + device compliance</li>
+          <li>Запит з країни з високим ризиком → заблокувати або вимагати додаткову верифікацію</li>
+        </ul>
+
+        <h3>Service-to-Service Identity</h3>
+        <p>Zero Trust стосується не лише людей. Сервіси також повинні автентифікуватися один до одного.</p>
+
+        <h4>Service Accounts</h4>
+        <p>Традиційний підхід — сервісні акаунти з паролями. Проблеми:</p>
+        <ul>
+          <li>Паролі потрібно зберігати в коді або конфігурації</li>
+          <li>Ротація паролів складна</li>
+          <li>Важко відстежити, який сервіс використовує акаунт</li>
+        </ul>
+
+        <h4>Workload Identity</h4>
+        <p>Сучасний підхід — workload identity:</p>
+        <ul>
+          <li><strong>AWS:</strong> IAM Roles for Service Accounts (IRSA)</li>
+          <li><strong>Azure:</strong> Managed Identities</li>
+          <li><strong>GCP:</strong> Workload Identity</li>
+          <li><strong>Kubernetes:</strong> Service Account Tokens, SPIFFE/SPIRE</li>
+        </ul>
+        <p>Workload отримує ідентичність автоматично, без збереження секретів у коді. Це значно зменшує ризик витоку облікових даних.</p>
+
+        <h4>SPIFFE/SPIRE</h4>
+        <p><strong>SPIFFE</strong> (Secure Production Identity Framework for Everyone) — відкритий стандарт для ідентичності workloads. <strong>SPIRE</strong> — його імплементація.</p>
+        <p>Кожен workload отримує SVID (SPIFFE Verifiable Identity Document) — криптографічно підписану ідентичність. Це дозволяє workloads автентифікуватися один до одного без shared secrets.</p>
+      </section>
+
+      <section>
+        <h2>3.3 Мікросегментація мережі</h2>
+
+        <h3>Що таке мікросегментація?</h3>
+        <p>Мікросегментація — це техніка мережевої безпеки, яка розділяє мережу на маленькі ізольовані сегменти, кожен зі своїми політиками безпеки. На відміну від традиційної сегментації на рівні VLAN, мікросегментація працює на рівні окремих workloads.</p>
+
+        <p>Уявіть традиційну мережу як великий відкритий офіс — кожен може підійти до кожного. Мікросегментація перетворює це на систему окремих кабінетів з контрольованим доступом до кожного.</p>
+
+        <h4>Чому мікросегментація важлива?</h4>
+        <ul>
+          <li><strong>Обмеження lateral movement:</strong> Якщо атакуючий компрометує один workload, він не може легко переміститися до інших</li>
+          <li><strong>Зменшення blast radius:</strong> Наслідки інциденту обмежені одним сегментом</li>
+          <li><strong>Compliance:</strong> Ізоляція чутливих даних від решти інфраструктури</li>
+          <li><strong>Видимість:</strong> Краще розуміння трафіку між компонентами</li>
+        </ul>
+
+        <h3>Підходи до мікросегментації</h3>
+
+        <h4>1. Network-based мікросегментація</h4>
+        <p>Використовує мережеві засоби для ізоляції:</p>
+        <ul>
+          <li><strong>VLANs та ACLs:</strong> Традиційний підхід, але складний для масштабування</li>
+          <li><strong>Software-Defined Networking (SDN):</strong> Програмне управління мережею (VMware NSX, Cisco ACI)</li>
+          <li><strong>Cloud Security Groups:</strong> AWS Security Groups, Azure NSGs, GCP Firewall Rules</li>
+        </ul>
+
+        <h4>2. Host-based мікросегментація</h4>
+        <p>Політики застосовуються на самих хостах:</p>
+        <ul>
+          <li>Host-based firewalls (iptables, Windows Firewall)</li>
+          <li>Endpoint agents (Illumio, Guardicore)</li>
+          <li>Kubernetes Network Policies</li>
+        </ul>
+
+        <h4>3. Application-based мікросегментація</h4>
+        <p>Політики на рівні додатків:</p>
+        <ul>
+          <li>Service Mesh (Istio, Linkerd, Consul Connect)</li>
+          <li>Application-layer firewalls</li>
+          <li>API Gateways</li>
+        </ul>
+
+        <h3>Мікросегментація в Kubernetes</h3>
+        <p>Kubernetes надає потужні інструменти для мікросегментації:</p>
+
+        <h4>Network Policies</h4>
+        <p>Kubernetes Network Policies дозволяють визначити, який трафік дозволено між pods:</p>
+        <pre>
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8080
+        </pre>
+        <p>Ця політика дозволяє трафік до pods з міткою "app: backend" тільки від pods з міткою "app: frontend" на порт 8080. Весь інший вхідний трафік блокується.</p>
+
+        <h4>Service Mesh</h4>
+        <p>Service Mesh, як Istio, надає ще потужніші можливості:</p>
+        <ul>
+          <li><strong>mTLS:</strong> Автоматичне взаємне TLS-шифрування між усіма сервісами</li>
+          <li><strong>Authorization Policies:</strong> Політики на основі ідентичності сервісу</li>
+          <li><strong>Traffic management:</strong> Контроль трафіку на рівні L7</li>
+          <li><strong>Observability:</strong> Детальна видимість трафіку</li>
+        </ul>
+
+        <pre>
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: backend-policy
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/frontend"]
+    to:
+    - operation:
+        methods: ["GET", "POST"]
+        paths: ["/api/*"]
+        </pre>
+        <p>Ця політика Istio дозволяє тільки сервісу з service account "frontend" виконувати GET та POST запити до шляхів "/api/*" на backend.</p>
+
+        <h3>Мікросегментація в хмарі</h3>
+
+        <h4>AWS</h4>
+        <ul>
+          <li><strong>Security Groups:</strong> Stateful firewall на рівні EC2 instances</li>
+          <li><strong>Network ACLs:</strong> Stateless firewall на рівні subnet</li>
+          <li><strong>VPC Endpoints:</strong> Private connectivity до AWS сервісів</li>
+          <li><strong>AWS PrivateLink:</strong> Private connectivity між VPCs та сервісами</li>
+        </ul>
+
+        <h4>Azure</h4>
+        <ul>
+          <li><strong>Network Security Groups (NSG):</strong> Firewall правила для subnets та NICs</li>
+          <li><strong>Application Security Groups (ASG):</strong> Логічне групування VM для правил</li>
+          <li><strong>Azure Firewall:</strong> Managed cloud firewall</li>
+          <li><strong>Private Endpoints:</strong> Private connectivity до Azure сервісів</li>
+        </ul>
+
+        <h4>GCP</h4>
+        <ul>
+          <li><strong>VPC Firewall Rules:</strong> Firewall на рівні VPC з тегами</li>
+          <li><strong>Hierarchical Firewall Policies:</strong> Централізоване управління firewall</li>
+          <li><strong>Private Google Access:</strong> Private connectivity до Google сервісів</li>
+          <li><strong>VPC Service Controls:</strong> Security perimeter для GCP сервісів</li>
+        </ul>
+
+        <h3>Best Practices мікросегментації</h3>
+
+        <h4>1. Почніть з моніторингу</h4>
+        <p>Перш ніж сегментувати, зрозумійте поточні потоки трафіку. Використовуйте flow logs, network monitoring для побудови карти залежностей.</p>
+
+        <h4>2. Default Deny</h4>
+        <p>Застосуйте політику "заборонено все, що явно не дозволено". Це фундаментальний принцип Zero Trust.</p>
+
+        <h4>3. Least Privilege</h4>
+        <p>Дозволяйте тільки той трафік, який необхідний для роботи. Не відкривайте весь діапазон портів "на всякий випадок".</p>
+
+        <h4>4. Сегментація за чутливістю даних</h4>
+        <p>Workloads, що обробляють чутливі дані (PII, фінансові дані), мають бути в окремих сегментах з посиленим контролем.</p>
+
+        <h4>5. Automation</h4>
+        <p>Ручне управління тисячами правил неможливе. Використовуйте Infrastructure as Code (Terraform, Pulumi) та policy-as-code.</p>
+
+        <h4>6. Continuous Validation</h4>
+        <p>Регулярно перевіряйте, що політики працюють як очікується. Використовуйте інструменти для тестування network policies.</p>
+      </section>
+
+      <section>
+        <h2>3.4 Впровадження Zero Trust у хмарі</h2>
+
+        <h3>Етапи впровадження</h3>
+        <p>Впровадження Zero Trust — це не проєкт на кілька тижнів, а стратегічна трансформація, яка може тривати роки. CISA (Cybersecurity and Infrastructure Security Agency) рекомендує поетапний підхід:</p>
+
+        <h4>Етап 1: Ідентифікація та інвентаризація</h4>
+        <ul>
+          <li>Інвентаризація всіх активів: користувачі, пристрої, додатки, дані</li>
+          <li>Класифікація даних за чутливістю</li>
+          <li>Mapping критичних бізнес-процесів та їхніх залежностей</li>
+          <li>Ідентифікація "protect surfaces" — критичних активів, які потрібно захистити насамперед</li>
+        </ul>
+
+        <h4>Етап 2: Картографування потоків</h4>
+        <ul>
+          <li>Документування всіх потоків даних та мережевого трафіку</li>
+          <li>Розуміння, хто потребує доступу до чого</li>
+          <li>Виявлення застарілих або непотрібних доступів</li>
+          <li>Ідентифікація потенційних точок для PEP</li>
+        </ul>
+
+        <h4>Етап 3: Архітектура та дизайн</h4>
+        <ul>
+          <li>Вибір компонентів (IdP, PEP, SIEM)</li>
+          <li>Проєктування політик на основі принципу least privilege</li>
+          <li>Планування мікросегментації</li>
+          <li>Інтеграція з існуючою інфраструктурою</li>
+        </ul>
+
+        <h4>Етап 4: Пілотне впровадження</h4>
+        <ul>
+          <li>Вибір обмеженого scope для пілота</li>
+          <li>Впровадження у режимі моніторингу (alert-only)</li>
+          <li>Збір зворотного зв'язку від користувачів</li>
+          <li>Ітеративне покращення політик</li>
+        </ul>
+
+        <h4>Етап 5: Розширення та enforcement</h4>
+        <ul>
+          <li>Поступове розширення на інші системи</li>
+          <li>Перехід від alert-only до enforcement mode</li>
+          <li>Автоматизація процесів</li>
+          <li>Безперервний моніторинг та оптимізація</li>
+        </ul>
+
+        <h3>Zero Trust в AWS</h3>
+        <p>AWS пропонує набір сервісів для побудови ZTA:</p>
+
+        <h4>Identity</h4>
+        <ul>
+          <li><strong>AWS IAM:</strong> Управління ідентичностями та доступом</li>
+          <li><strong>AWS IAM Identity Center (SSO):</strong> Централізований SSO</li>
+          <li><strong>AWS Organizations:</strong> Централізоване управління акаунтами</li>
+          <li><strong>Amazon Cognito:</strong> Identity для кінцевих користувачів</li>
+        </ul>
+
+        <h4>Network</h4>
+        <ul>
+          <li><strong>Security Groups:</strong> Instance-level firewall</li>
+          <li><strong>VPC:</strong> Ізольовані мережеві середовища</li>
+          <li><strong>AWS PrivateLink:</strong> Private connectivity</li>
+          <li><strong>AWS Network Firewall:</strong> Managed firewall service</li>
+        </ul>
+
+        <h4>Application</h4>
+        <ul>
+          <li><strong>AWS Verified Access:</strong> Zero Trust application access</li>
+          <li><strong>AWS WAF:</strong> Web Application Firewall</li>
+          <li><strong>Amazon API Gateway:</strong> API management з автентифікацією</li>
+        </ul>
+
+        <h4>Data</h4>
+        <ul>
+          <li><strong>AWS KMS:</strong> Управління ключами шифрування</li>
+          <li><strong>AWS Secrets Manager:</strong> Управління секретами</li>
+          <li><strong>Amazon Macie:</strong> Виявлення чутливих даних</li>
+        </ul>
+
+        <h3>Zero Trust в Azure</h3>
+        <p>Microsoft активно просуває Zero Trust і має зрілий набір інструментів:</p>
+
+        <h4>Identity</h4>
+        <ul>
+          <li><strong>Microsoft Entra ID (Azure AD):</strong> Cloud-native IdP</li>
+          <li><strong>Conditional Access:</strong> Policy-based access control</li>
+          <li><strong>Privileged Identity Management (PIM):</strong> Just-in-time privileged access</li>
+          <li><strong>Entra Verified ID:</strong> Decentralized identity</li>
+        </ul>
+
+        <h4>Device</h4>
+        <ul>
+          <li><strong>Microsoft Intune:</strong> MDM/MAM</li>
+          <li><strong>Microsoft Defender for Endpoint:</strong> EDR</li>
+          <li><strong>Entra Device Registration:</strong> Device identity</li>
+        </ul>
+
+        <h4>Network</h4>
+        <ul>
+          <li><strong>Azure Firewall:</strong> Managed cloud firewall</li>
+          <li><strong>NSG/ASG:</strong> Network security groups</li>
+          <li><strong>Azure Private Link:</strong> Private connectivity</li>
+          <li><strong>Azure Front Door:</strong> Global load balancer з WAF</li>
+        </ul>
+
+        <h3>Zero Trust в GCP</h3>
+        <p>Google розробила концепцію BeyondCorp ще до того, як термін "Zero Trust" став популярним:</p>
+
+        <h4>BeyondCorp Enterprise</h4>
+        <ul>
+          <li><strong>Identity-Aware Proxy (IAP):</strong> Zero Trust access до додатків</li>
+          <li><strong>Access Context Manager:</strong> Conditional access policies</li>
+          <li><strong>Endpoint Verification:</strong> Device posture assessment</li>
+          <li><strong>BeyondCorp Enterprise:</strong> Повне рішення Zero Trust</li>
+        </ul>
+
+        <h4>Інші компоненти</h4>
+        <ul>
+          <li><strong>Cloud Identity:</strong> IdP для Google Cloud</li>
+          <li><strong>VPC Service Controls:</strong> Security perimeters</li>
+          <li><strong>Binary Authorization:</strong> Container image verification</li>
+        </ul>
+
+        <h3>Реальні кейси впровадження</h3>
+
+        <h4>Google BeyondCorp</h4>
+        <p>Google — один з піонерів Zero Trust. Після атаки Operation Aurora у 2009 році компанія розпочала внутрішній проєкт BeyondCorp. Ключові елементи:</p>
+        <ul>
+          <li>Доступ до внутрішніх ресурсів без VPN</li>
+          <li>Рішення на основі пристрою, користувача та контексту</li>
+          <li>Всі внутрішні додатки доступні через public URLs</li>
+          <li>Безперервна оцінка довіри протягом сесії</li>
+        </ul>
+        <p>Результат: покращена безпека, кращий user experience, можливість працювати з будь-якого місця без VPN.</p>
+
+        <h4>Netflix</h4>
+        <p>Netflix впровадив "Zero Trust Security Model" для своєї AWS-інфраструктури:</p>
+        <ul>
+          <li>Кожен мікросервіс має унікальну ідентичність</li>
+          <li>mTLS між усіма сервісами</li>
+          <li>Fine-grained access control на рівні API</li>
+          <li>Автоматизоване управління сертифікатами (Lemur)</li>
+        </ul>
+
+        <h4>Приклад впровадження для середньої компанії</h4>
+        <p>Типовий план для компанії на 500-1000 співробітників:</p>
+        <ol>
+          <li><strong>Квартал 1:</strong> Впровадження MFA для всіх користувачів, SSO для cloud-додатків</li>
+          <li><strong>Квартал 2:</strong> Conditional Access для критичних додатків, device compliance policies</li>
+          <li><strong>Квартал 3:</strong> Мікросегментація cloud workloads, ZTNA для legacy-додатків</li>
+          <li><strong>Квартал 4:</strong> Service-to-service mTLS, automated policy enforcement</li>
+          <li><strong>Рік 2+:</strong> Continuous improvement, ML-based anomaly detection</li>
+        </ol>
+
+        <h3>Виклики та помилки при впровадженні</h3>
+
+        <h4>Типові помилки</h4>
+        <ul>
+          <li><strong>Спроба зробити все одразу:</strong> Zero Trust — марафон, не спринт. Поетапний підхід критичний.</li>
+          <li><strong>Ігнорування user experience:</strong> Якщо безпека заважає працювати, користувачі знайдуть способи її обійти.</li>
+          <li><strong>Недостатній моніторинг:</strong> Без видимості ви не знаєте, чи працюють ваші політики.</li>
+          <li><strong>Забути про legacy-системи:</strong> Старі системи часто найбільш вразливі та потребують уваги.</li>
+          <li><strong>Відсутність підтримки керівництва:</strong> Zero Trust потребує бюджету та організаційних змін.</li>
+        </ul>
+
+        <h4>Ключові фактори успіху</h4>
+        <ul>
+          <li><strong>Executive sponsorship:</strong> Підтримка на рівні C-level</li>
+          <li><strong>Cross-functional team:</strong> Security, IT, DevOps, бізнес</li>
+          <li><strong>Clear metrics:</strong> Вимірювання прогресу (% покритих додатків, зменшення інцидентів)</li>
+          <li><strong>User education:</strong> Пояснення "чому" допомагає adoption</li>
+          <li><strong>Iterative approach:</strong> Швидкі ітерації та навчання на помилках</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Висновки</h2>
+        <p>Zero Trust Architecture — це не продукт, який можна купити, і не проєкт, який можна завершити. Це філософія безпеки та безперервний процес удосконалення.</p>
+
+        <h3>Ключові тези</h3>
+        <ul>
+          <li><strong>"Never trust, always verify"</strong> — кожен запит перевіряється незалежно від джерела</li>
+          <li><strong>Ідентичність — новий периметр:</strong> рішення базуються на "хто", а не "звідки"</li>
+          <li><strong>Мінімальні привілеї:</strong> доступ тільки до того, що потрібно, і тільки коли потрібно</li>
+          <li><strong>Assume breach:</strong> проєктуйте так, ніби зловмисник вже всередині</li>
+          <li><strong>Безперервний моніторинг:</strong> довіра оцінюється постійно, не одноразово</li>
+        </ul>
+
+        <h3>Наступні кроки</h3>
+        <p>Для початку впровадження Zero Trust у вашій організації:</p>
+        <ol>
+          <li>Проведіть аудит поточного стану: активи, ідентичності, потоки даних</li>
+          <li>Впровадьте MFA для всіх користувачів — це найбільш ефективний "quick win"</li>
+          <li>Класифікуйте дані та визначте "protect surfaces"</li>
+          <li>Почніть з пілота на некритичній системі</li>
+          <li>Вимірюйте, навчайтеся, ітеруйте</li>
+        </ol>
+
+        <h3>Рекомендована література</h3>
+        <ul>
+          <li><strong>NIST SP 800-207:</strong> Zero Trust Architecture — офіційний стандарт</li>
+          <li><strong>CISA Zero Trust Maturity Model:</strong> Практичний гайд для оцінки зрілості</li>
+          <li><strong>Google BeyondCorp Papers:</strong> Серія статей про впровадження в Google</li>
+          <li><strong>Forrester Zero Trust eXtended (ZTX):</strong> Розширена модель Zero Trust</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Питання для самоперевірки</h2>
+        <ol>
+          <li>Чим Zero Trust відрізняється від традиційної периметрової безпеки?</li>
+          <li>Назвіть та поясніть сім принципів Zero Trust за NIST.</li>
+          <li>Яку роль виконують Policy Engine, Policy Administrator та Policy Enforcement Point?</li>
+          <li>Чому MFA є обов'язковим компонентом Zero Trust?</li>
+          <li>Що таке мікросегментація і як вона підтримує принципи Zero Trust?</li>
+          <li>Як реалізувати автентифікацію service-to-service у хмарному середовищі?</li>
+          <li>Назвіть основні етапи впровадження Zero Trust в організації.</li>
+          <li>Які типові помилки при впровадженні Zero Trust?</li>
+        </ol>
+      </section>
+
+    </article>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../js/main.js"></script>
+
+</body>
+</html>

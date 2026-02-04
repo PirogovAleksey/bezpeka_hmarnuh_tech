@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 4.2 — Безпека Docker | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../lecture.html?id=4">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 4.2: Безпека Docker</p>
+    </section>
+
+    <section class="slide">
+      <h1>Контейнери vs VM</h1>
+      <ul>
+        <li><strong>VM:</strong> повна ОС, GB, хвилини запуску</li>
+        <li><strong>Контейнери:</strong> спільне ядро, MB, секунди</li>
+        <li>Контейнери — слабша ізоляція!</li>
+        <li>Більша поверхня атаки</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Механізми ізоляції Docker</h1>
+      <ul>
+        <li><strong>Namespaces:</strong> процеси, мережа, файлова система</li>
+        <li><strong>Cgroups:</strong> ліміти CPU, пам'яті, I/O</li>
+        <li><strong>Union FS:</strong> layered filesystem</li>
+        <li>Усе це — механізми Linux kernel</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Загроза: Вразливі образи</h1>
+      <ul>
+        <li>Застарілі пакети з CVE</li>
+        <li>Malware в публічних образах</li>
+        <li><strong>2018:</strong> 17 шкідливих образів на Docker Hub</li>
+        <li><strong>Захист:</strong> сканування (Trivy, Snyk)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Загроза: Container Escape</h1>
+      <ul>
+        <li><strong>CVE-2019-5736 (runc):</strong> перезапис бінарника</li>
+        <li><strong>CVE-2020-15257:</strong> доступ до host filesystem</li>
+        <li>Спільне ядро = ризик escape</li>
+        <li><strong>Захист:</strong> оновлення, без privileged</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Загроза: Misconfiguration</h1>
+      <ul>
+        <li><strong>Privileged mode:</strong> повні права root на хості</li>
+        <li><strong>Docker socket:</strong> /var/run/docker.sock</li>
+        <li><strong>Sensitive mounts:</strong> /, /etc, /var</li>
+        <li><strong>Running as root</strong> всередині контейнера</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Безпека образів</h1>
+      <ul>
+        <li><strong>Мінімальні образи:</strong> Alpine, Distroless</li>
+        <li><strong>Конкретні версії:</strong> не :latest</li>
+        <li><strong>Сканування:</strong> Trivy, Docker Scout, Snyk</li>
+        <li><strong>Підписування:</strong> Cosign, Docker Content Trust</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Безпечний Dockerfile</h1>
+      <ul>
+        <li><strong>Multi-stage builds:</strong> без build tools у фіналі</li>
+        <li><strong>USER:</strong> non-root користувач</li>
+        <li><strong>Не COPY секрети</strong> — залишаться в layers</li>
+        <li><strong>.dockerignore:</strong> виключіть зайве</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Runtime Security</h1>
+      <ul>
+        <li><strong>--cap-drop=ALL:</strong> видаліть capabilities</li>
+        <li><strong>--read-only:</strong> immutable filesystem</li>
+        <li><strong>--no-new-privileges:</strong> без ескалації</li>
+        <li><strong>--memory, --cpus:</strong> resource limits</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Управління секретами</h1>
+      <ul>
+        <li><strong>НЕ</strong> в environment variables (для критичних)</li>
+        <li><strong>НЕ</strong> в Dockerfile</li>
+        <li><strong>Docker Secrets:</strong> для Swarm</li>
+        <li><strong>Vault, AWS Secrets Manager:</strong> зовнішні</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна тема: Безпека Kubernetes</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../js/slides.js"></script>
+
+</body>
+</html>

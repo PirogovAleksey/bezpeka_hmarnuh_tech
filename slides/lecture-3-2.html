@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 3.2 — Компоненти ZTA та Identity | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../lecture.html?id=3">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 3.2: Компоненти ZTA та Identity Governance</p>
+    </section>
+
+    <section class="slide">
+      <h1>Логічна архітектура ZTA (NIST)</h1>
+      <ul>
+        <li><strong>Policy Engine (PE):</strong> приймає рішення</li>
+        <li><strong>Policy Administrator (PA):</strong> виконує рішення</li>
+        <li><strong>Policy Enforcement Point (PEP):</strong> застосовує політики</li>
+        <li>Взаємодіють для кожного запиту на доступ</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Policy Engine (PE)</h1>
+      <ul>
+        <li>"Мозок" системи Zero Trust</li>
+        <li><strong>Аналізує:</strong> суб'єкт, ресурс, контекст</li>
+        <li><strong>Консультується:</strong> threat intelligence, SIEM, CDM</li>
+        <li><strong>Рішення:</strong> дозволити / відмовити / умовно</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Policy Administrator (PA)</h1>
+      <ul>
+        <li>Виконує рішення Policy Engine</li>
+        <li>Створює сесійні токени/облікові дані</li>
+        <li>Налаштовує PEP для пропуску/блокування</li>
+        <li>Логує рішення для аудиту</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Policy Enforcement Point (PEP)</h1>
+      <ul>
+        <li>"Двері" до кожного ресурсу</li>
+        <li><strong>Перехоплює</strong> всі запити</li>
+        <li><strong>Застосовує</strong> рішення PA</li>
+        <li><strong>Реалізація:</strong> API Gateway, Service Mesh, ZTNA</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Допоміжні компоненти</h1>
+      <ul>
+        <li><strong>CDM:</strong> стан безпеки пристроїв</li>
+        <li><strong>Threat Intelligence:</strong> інформація про загрози</li>
+        <li><strong>SIEM:</strong> збір та аналіз логів</li>
+        <li><strong>Data Access Policy:</strong> класифікація даних</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Identity — новий периметр</h1>
+      <ul>
+        <li>Замість "звідки?" → "хто?"</li>
+        <li><strong>Автентифікація:</strong> підтвердження ідентичності</li>
+        <li><strong>Авторизація:</strong> перевірка прав</li>
+        <li><strong>IdP:</strong> Identity Provider як центр</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Multi-Factor Authentication (MFA)</h1>
+      <ul>
+        <li><strong>Something you know:</strong> пароль, PIN</li>
+        <li><strong>Something you have:</strong> телефон, YubiKey</li>
+        <li><strong>Something you are:</strong> біометрія</li>
+        <li><strong>Тренд:</strong> Passwordless (FIDO2/WebAuthn)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Conditional Access</h1>
+      <ul>
+        <li>Різні вимоги залежно від контексту</li>
+        <li><strong>Корп. пристрій + офіс:</strong> SSO достатньо</li>
+        <li><strong>Невідомий пристрій:</strong> вимагати MFA</li>
+        <li><strong>Чутливі дані:</strong> MFA + device compliance</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Service-to-Service Identity</h1>
+      <ul>
+        <li>Сервіси теж автентифікуються!</li>
+        <li><strong>Workload Identity:</strong> AWS IRSA, Azure Managed Identity</li>
+        <li><strong>SPIFFE/SPIRE:</strong> стандарт ідентичності workloads</li>
+        <li>Без збереження секретів у коді</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна тема: Мікросегментація мережі</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../js/slides.js"></script>
+
+</body>
+</html>

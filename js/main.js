@@ -17,3 +17,27 @@ if (localStorage.getItem('theme') === 'dark') {
   document.getElementById('theme-icon').innerHTML = sunIcon;
   document.getElementById('theme-label').textContent = 'Світла тема';
 }
+
+// Reusable footer component
+function renderFooter() {
+  const footer = document.getElementById('footer');
+  if (footer) {
+    footer.innerHTML = `
+      <div class="footer-content">
+        <div>
+          <strong>Безпека хмарних технологій</strong><br>
+          Викладач: Пирогов Олексій Олександрович<br>
+          <a href="mailto:oleksii.pyrohov@uzhnu.edu.ua">oleksii.pyrohov@uzhnu.edu.ua</a>
+        </div>
+        <div class="footer-right">
+          Кафедра твердотільної електроніки та інформаційної безпеки (ТЕІБ)<br>
+          Ужгородський національний університет<br>
+          <a href="https://teib.info/" target="_blank" rel="noopener">teib.info</a>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// Render footer on page load
+document.addEventListener('DOMContentLoaded', renderFooter);

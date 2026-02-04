@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Конспект лекції 4: Безпека віртуалізації та контейнеризації.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Конспект лекції 4 — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../lecture.html?id=4" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Конспект</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Лекція 4. Безпека віртуалізації та контейнеризації</h1>
+      <div class="lecture-info">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+      </div>
+
+      <section>
+        <h2>Вступ</h2>
+        <p>Сьогодні ми поговоримо про технології, які лежать в основі хмарних обчислень — віртуалізацію та контейнеризацію. Без цих технологій хмара в її сучасному вигляді просто не існувала б. Але разом із потужними можливостями вони приносять і специфічні безпекові виклики.</p>
+
+        <p>Віртуалізація дозволяє запускати кілька операційних систем на одному фізичному сервері. Контейнеризація йде далі — вона дозволяє ізолювати окремі додатки та їхні залежності. Обидві технології критично залежать від правильної конфігурації для забезпечення безпеки.</p>
+
+        <p>У цій лекції ми розглянемо загрози для гіпервізорів та віртуальних машин, детально вивчимо безпеку Docker та Kubernetes, а також познайомимося з категорією інструментів CWPP (Cloud Workload Protection Platform), які допомагають захищати робочі навантаження в хмарі.</p>
+
+        <h3>Чому це важливо?</h3>
+        <p>Статистика показує, що більшість інцидентів безпеки в хмарі пов'язані не з вразливостями самих технологій, а з неправильною конфігурацією. Неправильно налаштований Docker container, занадто широкі права в Kubernetes, незахищений гіпервізор — все це створює вектори атаки, які активно експлуатуються зловмисниками.</p>
+
+        <h3>Цілі лекції</h3>
+        <p>Після цієї лекції ви зможете:</p>
+        <ul>
+          <li>Пояснити архітектуру та типи гіпервізорів, їхні безпекові особливості</li>
+          <li>Ідентифікувати основні загрози для віртуалізованих середовищ (VM escape, side-channel attacks)</li>
+          <li>Застосовувати best practices безпеки Docker: захист образів, Dockerfile, runtime</li>
+          <li>Налаштовувати безпеку Kubernetes: RBAC, Network Policies, Pod Security Standards</li>
+          <li>Розуміти роль та можливості CWPP у захисті хмарних workloads</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4.1 Безпека віртуалізації</h2>
+
+        <h3>Що таке віртуалізація?</h3>
+        <p>Віртуалізація — це технологія, яка дозволяє створювати віртуальні версії фізичних ресурсів: серверів, сховищ, мереж. У контексті хмарних обчислень найчастіше мова йде про серверну віртуалізацію — можливість запускати кілька віртуальних машин (VM) на одному фізичному сервері.</p>
+
+        <p>Ключовий компонент віртуалізації — <strong>гіпервізор</strong> (hypervisor), також відомий як Virtual Machine Monitor (VMM). Гіпервізор — це програмне забезпечення, яке керує віртуальними машинами та розподіляє фізичні ресурси між ними.</p>
+
+        <h3>Типи гіпервізорів</h3>
+
+        <h4>Тип 1: Bare-metal гіпервізори</h4>
+        <p>Встановлюються безпосередньо на апаратне забезпечення, без операційної системи-посередника:</p>
+        <ul>
+          <li><strong>VMware ESXi</strong> — найпопулярніший enterprise-гіпервізор</li>
+          <li><strong>Microsoft Hyper-V</strong> — вбудований у Windows Server</li>
+          <li><strong>Xen</strong> — open-source, використовується AWS</li>
+          <li><strong>KVM</strong> — вбудований у ядро Linux, використовується GCP</li>
+        </ul>
+        <p><strong>Переваги:</strong> вища продуктивність, менша поверхня атаки (немає host OS).</p>
+
+        <h4>Тип 2: Hosted гіпервізори</h4>
+        <p>Працюють поверх звичайної операційної системи:</p>
+        <ul>
+          <li><strong>VMware Workstation/Fusion</strong></li>
+          <li><strong>Oracle VirtualBox</strong></li>
+          <li><strong>Parallels Desktop</strong></li>
+        </ul>
+        <p><strong>Використання:</strong> переважно для розробки та тестування, не для production.</p>
+
+        <h3>Загрози для віртуалізованих середовищ</h3>
+
+        <h4>VM Escape (Втеча з VM)</h4>
+        <p>Найнебезпечніша загроза — це можливість атакуючого "вирватися" з віртуальної машини та отримати доступ до гіпервізора або інших VM на тому ж хості.</p>
+
+        <p><strong>Історичні приклади:</strong></p>
+        <ul>
+          <li><strong>CVE-2017-4902 (VMware):</strong> вразливість у SVGA-драйвері дозволяла VM escape</li>
+          <li><strong>VENOM (CVE-2015-3456):</strong> вразливість у віртуальному floppy-контролері QEMU, що впливала на Xen та KVM</li>
+          <li><strong>Cloudburst:</strong> одна з перших демонстрацій VM escape на VMware</li>
+        </ul>
+
+        <p><strong>Захист:</strong></p>
+        <ul>
+          <li>Регулярне оновлення гіпервізора та VM tools</li>
+          <li>Мінімізація віртуального hardware (відключення непотрібних пристроїв)</li>
+          <li>Використання nested virtualization з обережністю</li>
+        </ul>
+
+        <h4>Side-Channel Attacks</h4>
+        <p>Атаки, які експлуатують спільне використання фізичних ресурсів (CPU cache, пам'ять) різними VM:</p>
+
+        <ul>
+          <li><strong>Spectre/Meltdown (2018):</strong> Вразливості в процесорах Intel/AMD, що дозволяли читати пам'ять інших процесів та VM через speculative execution</li>
+          <li><strong>L1TF (L1 Terminal Fault):</strong> Дозволяла читати дані з L1 cache інших VM</li>
+          <li><strong>MDS (Microarchitectural Data Sampling):</strong> Сімейство атак на буфери процесора</li>
+        </ul>
+
+        <p><strong>Захист:</strong></p>
+        <ul>
+          <li>Оновлення мікрокоду процесора та патчі ОС</li>
+          <li>Для критичних workloads — dedicated hosts (без multi-tenancy)</li>
+          <li>Моніторинг Hyper-Threading налаштувань</li>
+        </ul>
+
+        <h4>Hyperjacking</h4>
+        <p>Атака, при якій зловмисник встановлює шкідливий гіпервізор під легітимну систему:</p>
+        <ul>
+          <li>Оригінальна ОС стає "гостем" без її відома</li>
+          <li>Атакуючий отримує повний контроль над системою</li>
+          <li><strong>Blue Pill</strong> — концептуальний rootkit на базі AMD-V</li>
+        </ul>
+
+        <p><strong>Захист:</strong></p>
+        <ul>
+          <li>Secure Boot та UEFI</li>
+          <li>TPM (Trusted Platform Module)</li>
+          <li>Attestation механізми</li>
+        </ul>
+
+        <h4>Resource Exhaustion (Noisy Neighbor)</h4>
+        <p>Одна VM споживає непропорційно багато ресурсів, впливаючи на інші VM на тому ж хості:</p>
+        <ul>
+          <li>CPU starvation</li>
+          <li>Memory pressure</li>
+          <li>I/O contention</li>
+          <li>Network bandwidth exhaustion</li>
+        </ul>
+
+        <p><strong>Захист:</strong></p>
+        <ul>
+          <li>Resource quotas та limits</li>
+          <li>Quality of Service (QoS) політики</li>
+          <li>Proper capacity planning</li>
+        </ul>
+
+        <h3>Best Practices безпеки віртуалізації</h3>
+
+        <h4>Захист гіпервізора</h4>
+        <ul>
+          <li><strong>Мінімальна інсталяція:</strong> тільки необхідні компоненти</li>
+          <li><strong>Окрема management network:</strong> ізоляція управління від production-трафіку</li>
+          <li><strong>Сильна автентифікація:</strong> MFA для доступу до management console</li>
+          <li><strong>Регулярні оновлення:</strong> патчі безпеки без затримок</li>
+          <li><strong>Logging та monitoring:</strong> централізований збір логів</li>
+        </ul>
+
+        <h4>Захист віртуальних машин</h4>
+        <ul>
+          <li><strong>Hardening:</strong> CIS Benchmarks для guest OS</li>
+          <li><strong>Encrypted VMs:</strong> шифрування дисків VM</li>
+          <li><strong>Snapshot management:</strong> безпечне зберігання та видалення</li>
+          <li><strong>VM templates:</strong> стандартизовані захищені образи</li>
+        </ul>
+
+        <h4>Network security</h4>
+        <ul>
+          <li><strong>Virtual switches:</strong> ізоляція мережевого трафіку</li>
+          <li><strong>VLAN tagging:</strong> сегментація на рівні мережі</li>
+          <li><strong>Distributed firewalls:</strong> мікросегментація (NSX, ACI)</li>
+        </ul>
+
+        <table>
+          <tr>
+            <th>Загроза</th>
+            <th>Вплив</th>
+            <th>Основний захист</th>
+          </tr>
+          <tr>
+            <td>VM Escape</td>
+            <td>Критичний — доступ до гіпервізора</td>
+            <td>Патчі, мінімальний hardware</td>
+          </tr>
+          <tr>
+            <td>Side-Channel</td>
+            <td>Високий — витік даних</td>
+            <td>Мікрокод, dedicated hosts</td>
+          </tr>
+          <tr>
+            <td>Hyperjacking</td>
+            <td>Критичний — повний контроль</td>
+            <td>Secure Boot, TPM</td>
+          </tr>
+          <tr>
+            <td>Noisy Neighbor</td>
+            <td>Середній — DoS</td>
+            <td>Resource limits, QoS</td>
+          </tr>
+        </table>
+      </section>
+
+      <section>
+        <h2>4.2 Безпека Docker</h2>
+
+        <h3>Що таке контейнеризація?</h3>
+        <p>Контейнеризація — це легка форма віртуалізації на рівні операційної системи. На відміну від VM, контейнери не емулюють повну операційну систему — вони використовують ядро хост-системи, ізолюючи лише простір користувача (userspace).</p>
+
+        <p><strong>Docker</strong> — найпопулярніша платформа контейнеризації, яка стала де-факто стандартом. Docker використовує механізми ядра Linux для ізоляції:</p>
+        <ul>
+          <li><strong>Namespaces:</strong> ізоляція процесів, мережі, файлової системи, користувачів</li>
+          <li><strong>Cgroups (Control Groups):</strong> обмеження ресурсів (CPU, пам'ять, I/O)</li>
+          <li><strong>Union File Systems:</strong> layered file system для ефективного зберігання</li>
+        </ul>
+
+        <h3>Контейнери vs Віртуальні машини</h3>
+        <table>
+          <tr>
+            <th>Аспект</th>
+            <th>Віртуальні машини</th>
+            <th>Контейнери</th>
+          </tr>
+          <tr>
+            <td>Ізоляція</td>
+            <td>Повна (окреме ядро)</td>
+            <td>Process-level (спільне ядро)</td>
+          </tr>
+          <tr>
+            <td>Розмір</td>
+            <td>GB (повна ОС)</td>
+            <td>MB (тільки app + deps)</td>
+          </tr>
+          <tr>
+            <td>Запуск</td>
+            <td>Хвилини</td>
+            <td>Секунди</td>
+          </tr>
+          <tr>
+            <td>Overhead</td>
+            <td>Значний</td>
+            <td>Мінімальний</td>
+          </tr>
+          <tr>
+            <td>Безпека</td>
+            <td>Сильніша ізоляція</td>
+            <td>Більша поверхня атаки</td>
+          </tr>
+        </table>
+
+        <h3>Загрози безпеці Docker</h3>
+
+        <h4>1. Вразливі базові образи</h4>
+        <p>Контейнери будуються з базових образів, які можуть містити вразливості:</p>
+        <ul>
+          <li>Застарілі пакети з відомими CVE</li>
+          <li>Malware в публічних образах</li>
+          <li>Typosquatting — образи зі схожими назвами</li>
+        </ul>
+
+        <p><strong>Приклад:</strong> У 2018 році було виявлено 17 шкідливих образів на Docker Hub, які майнили криптовалюту. Вони були завантажені мільйони разів.</p>
+
+        <h4>2. Container Escape</h4>
+        <p>Аналог VM escape, але для контейнерів. Оскільки контейнери використовують спільне ядро, вразливість у ядрі може дозволити "втечу":</p>
+        <ul>
+          <li><strong>CVE-2019-5736 (runc):</strong> критична вразливість, що дозволяла перезаписати бінарник runc з контейнера</li>
+          <li><strong>CVE-2020-15257:</strong> вразливість у containerd, що дозволяла доступ до host filesystem</li>
+          <li><strong>Dirty COW (CVE-2016-5195):</strong> privilege escalation через вразливість ядра</li>
+        </ul>
+
+        <h4>3. Misconfiguration</h4>
+        <p>Найчастіша причина інцидентів — неправильна конфігурація:</p>
+        <ul>
+          <li><strong>Privileged containers:</strong> контейнер з повними правами root на хості</li>
+          <li><strong>Exposed Docker socket:</strong> доступ до /var/run/docker.sock дає повний контроль</li>
+          <li><strong>Sensitive mounts:</strong> монтування критичних директорій хоста</li>
+          <li><strong>Running as root:</strong> процеси всередині контейнера від root</li>
+        </ul>
+
+        <h4>4. Secrets Exposure</h4>
+        <p>Витік секретів через образи та конфігурацію:</p>
+        <ul>
+          <li>API ключі в environment variables</li>
+          <li>Паролі в Dockerfile (залишаються в layer history)</li>
+          <li>Сертифікати та приватні ключі в образах</li>
+        </ul>
+
+        <h3>Best Practices безпеки Docker</h3>
+
+        <h4>Безпека образів</h4>
+        <pre>
+# Погано
+FROM ubuntu:latest
+
+# Краще — конкретна версія
+FROM ubuntu:22.04
+
+# Найкраще — мінімальний образ
+FROM alpine:3.18
+# або distroless
+FROM gcr.io/distroless/java17-debian11
+        </pre>
+
+        <ul>
+          <li><strong>Використовуйте мінімальні базові образи:</strong> Alpine, Distroless, scratch</li>
+          <li><strong>Скануйте образи на вразливості:</strong> Trivy, Snyk, Clair, Docker Scout</li>
+          <li><strong>Підписуйте образи:</strong> Docker Content Trust, Sigstore/Cosign</li>
+          <li><strong>Використовуйте приватний registry:</strong> з контролем доступу</li>
+        </ul>
+
+        <h4>Безпечний Dockerfile</h4>
+        <pre>
+# Multi-stage build для зменшення розміру та видалення build tools
+FROM golang:1.21 AS builder
+WORKDIR /app
+COPY . .
+RUN CGO_ENABLED=0 go build -o myapp
+
+FROM alpine:3.18
+# Створюємо non-root користувача
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+COPY --from=builder /app/myapp /myapp
+# Не використовуємо latest
+# Вказуємо конкретні версії пакетів
+ENTRYPOINT ["/myapp"]
+        </pre>
+
+        <ul>
+          <li><strong>Multi-stage builds:</strong> фінальний образ без build tools</li>
+          <li><strong>Non-root user:</strong> USER інструкція в Dockerfile</li>
+          <li><strong>Мінімізуйте layers:</strong> об'єднуйте RUN команди</li>
+          <li><strong>Не копіюйте секрети:</strong> використовуйте build secrets або runtime injection</li>
+          <li><strong>.dockerignore:</strong> виключіть непотрібні файли</li>
+        </ul>
+
+        <h4>Runtime Security</h4>
+        <pre>
+# Запуск з обмеженнями
+docker run \
+  --read-only \
+  --cap-drop=ALL \
+  --cap-add=NET_BIND_SERVICE \
+  --security-opt=no-new-privileges:true \
+  --memory=512m \
+  --cpus=1 \
+  --user 1000:1000 \
+  myimage
+        </pre>
+
+        <ul>
+          <li><strong>Drop capabilities:</strong> --cap-drop=ALL, додавайте тільки потрібні</li>
+          <li><strong>Read-only filesystem:</strong> --read-only</li>
+          <li><strong>No new privileges:</strong> --security-opt=no-new-privileges</li>
+          <li><strong>Resource limits:</strong> --memory, --cpus</li>
+          <li><strong>Seccomp profiles:</strong> обмеження системних викликів</li>
+          <li><strong>AppArmor/SELinux:</strong> mandatory access control</li>
+        </ul>
+
+        <h4>Управління секретами</h4>
+        <ul>
+          <li><strong>Docker Secrets:</strong> для Docker Swarm</li>
+          <li><strong>Environment variables:</strong> тільки для некритичних налаштувань</li>
+          <li><strong>External secret managers:</strong> HashiCorp Vault, AWS Secrets Manager</li>
+          <li><strong>Kubernetes Secrets:</strong> з encryption at rest</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4.3 Безпека Kubernetes</h2>
+
+        <h3>Архітектура Kubernetes</h3>
+        <p>Kubernetes (K8s) — це платформа оркестрації контейнерів, яка автоматизує розгортання, масштабування та управління контейнеризованими додатками. Розуміння архітектури критичне для розуміння безпеки.</p>
+
+        <h4>Control Plane (Master)</h4>
+        <ul>
+          <li><strong>API Server:</strong> центральний компонент, через який проходять усі запити</li>
+          <li><strong>etcd:</strong> розподілене сховище конфігурації кластера</li>
+          <li><strong>Scheduler:</strong> розміщує pods на nodes</li>
+          <li><strong>Controller Manager:</strong> керує контролерами (ReplicaSet, Deployment, etc.)</li>
+        </ul>
+
+        <h4>Worker Nodes</h4>
+        <ul>
+          <li><strong>Kubelet:</strong> агент, що запускає pods на node</li>
+          <li><strong>Container Runtime:</strong> Docker, containerd, CRI-O</li>
+          <li><strong>Kube-proxy:</strong> мережева маршрутизація</li>
+        </ul>
+
+        <h3>Загрози безпеці Kubernetes</h3>
+
+        <h4>1. Exposed API Server</h4>
+        <p>API Server — головна ціль атакуючих. Якщо він доступний без автентифікації:</p>
+        <ul>
+          <li>Повний контроль над кластером</li>
+          <li>Можливість запускати довільні контейнери</li>
+          <li>Доступ до секретів та конфігурації</li>
+        </ul>
+
+        <p><strong>Приклад:</strong> Tesla (2018) — криптомайнери в Kubernetes через відкритий dashboard.</p>
+
+        <h4>2. Compromised etcd</h4>
+        <p>etcd зберігає всю конфігурацію кластера, включаючи Secrets:</p>
+        <ul>
+          <li>Secrets зберігаються в base64 (не шифровані за замовчуванням)</li>
+          <li>Доступ до etcd = доступ до всіх секретів</li>
+        </ul>
+
+        <h4>3. Pod Security Issues</h4>
+        <ul>
+          <li>Privileged pods</li>
+          <li>Host namespace sharing (hostPID, hostNetwork)</li>
+          <li>Sensitive volume mounts</li>
+          <li>Running as root</li>
+        </ul>
+
+        <h4>4. RBAC Misconfiguration</h4>
+        <ul>
+          <li>Занадто широкі права (cluster-admin для всіх)</li>
+          <li>Wildcard permissions (*)</li>
+          <li>Default service accounts з надмірними правами</li>
+        </ul>
+
+        <h3>Механізми безпеки Kubernetes</h3>
+
+        <h4>RBAC (Role-Based Access Control)</h4>
+        <p>RBAC контролює, хто може виконувати які дії в кластері:</p>
+
+        <pre>
+# Role — права в межах namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: production
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+
+---
+# RoleBinding — прив'язка Role до користувача
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: production
+subjects:
+- kind: User
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+        </pre>
+
+        <p><strong>Best Practices RBAC:</strong></p>
+        <ul>
+          <li>Principle of least privilege</li>
+          <li>Namespace isolation</li>
+          <li>Уникайте ClusterRole з широкими правами</li>
+          <li>Регулярний аудит прав</li>
+        </ul>
+
+        <h4>Network Policies</h4>
+        <p>Network Policies контролюють мережевий трафік між pods:</p>
+
+        <pre>
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all-ingress
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: frontend
+    ports:
+    - protocol: TCP
+      port: 8080
+        </pre>
+
+        <p><strong>Важливо:</strong> Network Policies потребують CNI plugin, що їх підтримує (Calico, Cilium, Weave Net).</p>
+
+        <h4>Pod Security Standards (PSS)</h4>
+        <p>Pod Security Standards визначають три рівні безпеки:</p>
+
+        <ul>
+          <li><strong>Privileged:</strong> необмежений (для system workloads)</li>
+          <li><strong>Baseline:</strong> мінімальні обмеження (запобігає очевидним ескалаціям)</li>
+          <li><strong>Restricted:</strong> суворі обмеження (найкращі практики)</li>
+        </ul>
+
+        <pre>
+# Застосування через namespace labels
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/warn: restricted
+        </pre>
+
+        <h4>Secrets Management</h4>
+        <pre>
+# Увімкнення encryption at rest для etcd
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              secret: <base64-encoded-key>
+      - identity: {}
+        </pre>
+
+        <p><strong>Кращі практики:</strong></p>
+        <ul>
+          <li>Encryption at rest для etcd</li>
+          <li>External secret management (Vault, Sealed Secrets, External Secrets Operator)</li>
+          <li>Не зберігайте секрети в Git</li>
+          <li>Ротація секретів</li>
+        </ul>
+
+        <h4>Admission Controllers</h4>
+        <p>Admission Controllers перехоплюють запити до API Server і можуть валідувати або модифікувати їх:</p>
+        <ul>
+          <li><strong>PodSecurity:</strong> застосування Pod Security Standards</li>
+          <li><strong>OPA Gatekeeper:</strong> policy-as-code</li>
+          <li><strong>Kyverno:</strong> Kubernetes-native policies</li>
+        </ul>
+
+        <h3>Kubernetes Security Checklist</h3>
+        <ul>
+          <li>API Server доступний тільки з приватної мережі</li>
+          <li>RBAC увімкнено, мінімальні права</li>
+          <li>Network Policies для всіх namespaces</li>
+          <li>Pod Security Standards: Restricted для production</li>
+          <li>etcd зашифрований та ізольований</li>
+          <li>Secrets зашифровані at rest</li>
+          <li>Audit logging увімкнено</li>
+          <li>Container images скануються</li>
+          <li>Service accounts з мінімальними правами</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4.4 CWPP та захист Runtime</h2>
+
+        <h3>Що таке CWPP?</h3>
+        <p><strong>Cloud Workload Protection Platform (CWPP)</strong> — це категорія security-рішень, визначена Gartner, яка фокусується на захисті серверних workloads у хмарних, гібридних та on-premises середовищах.</p>
+
+        <p>CWPP еволюціонувала з традиційних endpoint protection рішень, адаптуючись до специфіки хмарних та контейнерних середовищ.</p>
+
+        <h3>Ключові можливості CWPP</h3>
+
+        <h4>1. Vulnerability Management</h4>
+        <ul>
+          <li>Сканування образів контейнерів на вразливості</li>
+          <li>Сканування VM та хостів</li>
+          <li>Пріоритизація на основі exploitability та контексту</li>
+          <li>Інтеграція з CI/CD для shift-left</li>
+        </ul>
+
+        <h4>2. Runtime Protection</h4>
+        <ul>
+          <li>Виявлення аномальної поведінки процесів</li>
+          <li>Захист від malware та cryptominers</li>
+          <li>File integrity monitoring</li>
+          <li>Network anomaly detection</li>
+        </ul>
+
+        <h4>3. Compliance & Configuration</h4>
+        <ul>
+          <li>Перевірка конфігурації на відповідність benchmarks (CIS)</li>
+          <li>Compliance reporting (PCI DSS, HIPAA, SOC 2)</li>
+          <li>Infrastructure as Code scanning</li>
+        </ul>
+
+        <h4>4. Network Security</h4>
+        <ul>
+          <li>Візуалізація мережевих потоків</li>
+          <li>Мікросегментація</li>
+          <li>Firewall policies</li>
+        </ul>
+
+        <h3>Runtime Security</h3>
+        <p>Runtime security фокусується на захисті workloads під час їх виконання. Це критично, оскільки багато атак відбуваються саме в runtime, коли системи вже розгорнуті.</p>
+
+        <h4>Підходи до Runtime Security</h4>
+
+        <p><strong>1. System Call Monitoring</strong></p>
+        <p>Моніторинг системних викликів дозволяє виявити підозрілу активність:</p>
+        <ul>
+          <li>Несподівані process executions (reverse shell)</li>
+          <li>File access anomalies</li>
+          <li>Network connections</li>
+        </ul>
+
+        <p><strong>Інструменти:</strong></p>
+        <ul>
+          <li><strong>Falco:</strong> Open-source runtime security від Sysdig, CNCF project</li>
+          <li><strong>Tetragon:</strong> eBPF-based security observability від Cilium</li>
+          <li><strong>Tracee:</strong> eBPF-based runtime security від Aqua</li>
+        </ul>
+
+        <p><strong>Приклад Falco rule:</strong></p>
+        <pre>
+- rule: Terminal shell in container
+  desc: Detect a shell opened in a container
+  condition: >
+    spawned_process and container and
+    shell_procs and proc.tty != 0
+  output: >
+    Shell opened in container
+    (user=%user.name container=%container.name shell=%proc.name)
+  priority: WARNING
+  tags: [container, shell]
+        </pre>
+
+        <p><strong>2. eBPF-based Security</strong></p>
+        <p>eBPF (extended Berkeley Packet Filter) — це технологія, яка дозволяє запускати sandboxed програми в ядрі Linux без модифікації ядра:</p>
+        <ul>
+          <li>Низький overhead</li>
+          <li>Глибока видимість (kernel-level)</li>
+          <li>Можливість enforcement</li>
+        </ul>
+
+        <p><strong>3. Image Signing & Verification</strong></p>
+        <p>Перевірка, що запускаються тільки довірені образи:</p>
+        <ul>
+          <li><strong>Sigstore/Cosign:</strong> підписування та верифікація образів</li>
+          <li><strong>Kubernetes admission controller:</strong> блокування непідписаних образів</li>
+          <li><strong>Binary Authorization (GCP):</strong> native image verification</li>
+        </ul>
+
+        <h3>Популярні CWPP рішення</h3>
+
+        <h4>Commercial</h4>
+        <ul>
+          <li><strong>Palo Alto Prisma Cloud:</strong> повнофункціональна CNAPP платформа</li>
+          <li><strong>CrowdStrike Falcon:</strong> EDR + CWPP</li>
+          <li><strong>Aqua Security:</strong> фокус на контейнери та Kubernetes</li>
+          <li><strong>Sysdig:</strong> monitoring + security</li>
+          <li><strong>Wiz:</strong> agentless CNAPP</li>
+        </ul>
+
+        <h4>Open Source</h4>
+        <ul>
+          <li><strong>Falco:</strong> runtime threat detection</li>
+          <li><strong>Trivy:</strong> vulnerability scanning</li>
+          <li><strong>Checkov:</strong> IaC scanning</li>
+          <li><strong>Kube-bench:</strong> CIS Kubernetes benchmarks</li>
+          <li><strong>Kubescape:</strong> Kubernetes security scanning</li>
+        </ul>
+
+        <h3>CWPP у хмарних провайдерах</h3>
+
+        <h4>AWS</h4>
+        <ul>
+          <li><strong>Amazon Inspector:</strong> vulnerability scanning</li>
+          <li><strong>Amazon GuardDuty:</strong> threat detection для EKS</li>
+          <li><strong>AWS Security Hub:</strong> централізований security dashboard</li>
+        </ul>
+
+        <h4>Azure</h4>
+        <ul>
+          <li><strong>Microsoft Defender for Cloud:</strong> CSPM + CWPP</li>
+          <li><strong>Defender for Containers:</strong> специфічний для контейнерів</li>
+        </ul>
+
+        <h4>GCP</h4>
+        <ul>
+          <li><strong>Security Command Center:</strong> security management</li>
+          <li><strong>Container Threat Detection:</strong> runtime protection</li>
+          <li><strong>Binary Authorization:</strong> image verification</li>
+        </ul>
+
+        <h3>Інтеграція в DevSecOps Pipeline</h3>
+        <pre>
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│    Code     │ ──► │    Build    │ ──► │   Deploy    │ ──► │   Runtime   │
+└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+      │                   │                   │                   │
+      ▼                   ▼                   ▼                   ▼
+  SAST/SCA          Image Scan         Admission          Runtime
+  (Snyk,            (Trivy,            Control            Protection
+  Semgrep)          Clair)             (OPA, Kyverno)     (Falco)
+        </pre>
+
+        <ul>
+          <li><strong>Shift Left:</strong> виявляйте проблеми якомога раніше</li>
+          <li><strong>Automate:</strong> інтегруйте security checks у CI/CD</li>
+          <li><strong>Fail builds:</strong> блокуйте deployment при критичних проблемах</li>
+          <li><strong>Monitor continuously:</strong> runtime захист як останній рубіж</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Висновки</h2>
+        <p>Віртуалізація та контейнеризація — це основа сучасних хмарних обчислень. Але ці технології приносять специфічні безпекові виклики, які потребують уваги.</p>
+
+        <h3>Ключові тези</h3>
+        <ul>
+          <li><strong>Гіпервізор — критичний компонент:</strong> його компрометація впливає на всі VM</li>
+          <li><strong>Контейнери не є VM:</strong> слабша ізоляція вимагає додаткових заходів</li>
+          <li><strong>Misconfiguration — головний ворог:</strong> більшість інцидентів через неправильні налаштування</li>
+          <li><strong>Defense in depth:</strong> кілька рівнів захисту (image scanning + runtime + network)</li>
+          <li><strong>Shift left:</strong> виявляйте проблеми на етапі розробки, а не в production</li>
+        </ul>
+
+        <h3>Практичні рекомендації</h3>
+        <ol>
+          <li>Використовуйте мінімальні базові образи</li>
+          <li>Скануйте образи на вразливості в CI/CD</li>
+          <li>Запускайте контейнери від non-root користувача</li>
+          <li>Застосовуйте Network Policies в Kubernetes</li>
+          <li>Увімкніть Pod Security Standards: Restricted</li>
+          <li>Шифруйте Secrets at rest</li>
+          <li>Впровадьте runtime monitoring (Falco)</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Питання для самоперевірки</h2>
+        <ol>
+          <li>Чим відрізняються гіпервізори типу 1 та типу 2?</li>
+          <li>Що таке VM escape і як від нього захиститися?</li>
+          <li>Які механізми ядра Linux використовує Docker для ізоляції?</li>
+          <li>Чому не варто запускати контейнери в privileged mode?</li>
+          <li>Як працює RBAC в Kubernetes? Чим відрізняються Role та ClusterRole?</li>
+          <li>Що таке Pod Security Standards і які рівні вони визначають?</li>
+          <li>Яку роль відіграє CWPP у захисті хмарних workloads?</li>
+          <li>Як eBPF використовується для runtime security?</li>
+        </ol>
+      </section>
+
+    </article>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../js/main.js"></script>
+
+</body>
+</html>
