@@ -201,8 +201,85 @@
           <li>Використовується для light clients</li>
         </ul>
 
+        <h3>Merkle Trees — структура даних</h3>
+        <p>Merkle Tree (дерево Меркла) — це фундаментальна структура даних, яка дозволяє ефективно та безпечно верифікувати великі набори даних.</p>
+
+        <!-- Diagram: Merkle Tree -->
+        <div class="diagram">
+          <div class="diagram-title">Структура Merkle Tree</div>
+          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+            <!-- Root -->
+            <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="250" y="10" width="100" height="35" rx="6"/>
+            <text fill="#166534" x="300" y="33" text-anchor="middle" font-size="10" font-weight="600">Merkle Root</text>
+            <text fill="#166534" x="300" y="53" text-anchor="middle" font-size="8">H(AB + CD)</text>
+
+            <!-- Level 2 -->
+            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="120" y="70" width="90" height="35" rx="6"/>
+            <text fill="#1d4ed8" x="165" y="93" text-anchor="middle" font-size="10">H(AB)</text>
+
+            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="390" y="70" width="90" height="35" rx="6"/>
+            <text fill="#1d4ed8" x="435" y="93" text-anchor="middle" font-size="10">H(CD)</text>
+
+            <!-- Level 3 -->
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="50" y="130" width="70" height="35" rx="6"/>
+            <text fill="#b45309" x="85" y="153" text-anchor="middle" font-size="10">H(A)</text>
+
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="150" y="130" width="70" height="35" rx="6"/>
+            <text fill="#b45309" x="185" y="153" text-anchor="middle" font-size="10">H(B)</text>
+
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="380" y="130" width="70" height="35" rx="6"/>
+            <text fill="#b45309" x="415" y="153" text-anchor="middle" font-size="10">H(C)</text>
+
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="480" y="130" width="70" height="35" rx="6"/>
+            <text fill="#b45309" x="515" y="153" text-anchor="middle" font-size="10">H(D)</text>
+
+            <!-- Data blocks -->
+            <rect fill="var(--card)" stroke="var(--card-border)" x="50" y="180" width="70" height="25" rx="4"/>
+            <text class="diagram-text-small" x="85" y="197" text-anchor="middle">TX A</text>
+
+            <rect fill="var(--card)" stroke="var(--card-border)" x="150" y="180" width="70" height="25" rx="4"/>
+            <text class="diagram-text-small" x="185" y="197" text-anchor="middle">TX B</text>
+
+            <rect fill="var(--card)" stroke="var(--card-border)" x="380" y="180" width="70" height="25" rx="4"/>
+            <text class="diagram-text-small" x="415" y="197" text-anchor="middle">TX C</text>
+
+            <rect fill="var(--card)" stroke="var(--card-border)" x="480" y="180" width="70" height="25" rx="4"/>
+            <text class="diagram-text-small" x="515" y="197" text-anchor="middle">TX D</text>
+
+            <!-- Connecting lines -->
+            <line stroke="var(--text-secondary)" x1="250" y1="27" x2="210" y2="70"/>
+            <line stroke="var(--text-secondary)" x1="350" y1="27" x2="390" y2="70"/>
+            <line stroke="var(--text-secondary)" x1="120" y1="87" x2="85" y2="130"/>
+            <line stroke="var(--text-secondary)" x1="210" y1="87" x2="185" y2="130"/>
+            <line stroke="var(--text-secondary)" x1="390" y1="87" x2="415" y2="130"/>
+            <line stroke="var(--text-secondary)" x1="480" y1="87" x2="515" y2="130"/>
+            <line stroke="var(--text-secondary)" x1="85" y1="165" x2="85" y2="180"/>
+            <line stroke="var(--text-secondary)" x1="185" y1="165" x2="185" y2="180"/>
+            <line stroke="var(--text-secondary)" x1="415" y1="165" x2="415" y2="180"/>
+            <line stroke="var(--text-secondary)" x1="515" y1="165" x2="515" y2="180"/>
+          </svg>
+          <div class="diagram-caption">Рис. 6.2. Merkle Tree: бінарне дерево хешів дозволяє верифікувати окремі транзакції за O(log n)</div>
+        </div>
+
+        <h4>Переваги Merkle Trees</h4>
+        <ul>
+          <li><strong>Ефективна верифікація:</strong> O(log n) замість O(n)</li>
+          <li><strong>Merkle Proof:</strong> доказ включення без завантаження всіх даних</li>
+          <li><strong>Light Clients:</strong> SPV (Simplified Payment Verification) в Bitcoin</li>
+          <li><strong>State Management:</strong> Patricia Merkle Trie в Ethereum</li>
+        </ul>
+
+        <h4>Практичний приклад: Merkle Proof</h4>
+        <p>Щоб довести, що транзакція B включена в блок, потрібно надати:</p>
+        <ol>
+          <li>Хеш транзакції H(B)</li>
+          <li>H(A) — для обчислення H(AB)</li>
+          <li>H(CD) — для обчислення Merkle Root</li>
+        </ol>
+        <p>Верифікатор обчислює: H(H(A) + H(B)) → H(AB), потім H(H(AB) + H(CD)) → Merkle Root. Якщо результат співпадає з відомим Merkle Root — транзакція дійсно в блоці.</p>
+
         <h3>Механізми консенсусу</h3>
-        <p>Консенсус — процес узгодження стану мережі між усіма учасниками.</p>
+        <p>Консенсус — процес узгодження стану мережі між усіма учасниками. Це фундаментальна проблема розподілених систем, відома як "проблема візантійських генералів".</p>
 
         <h4>Proof of Work (PoW)</h4>
         <ul>
@@ -224,10 +301,56 @@
 
         <h4>Інші механізми</h4>
         <ul>
-          <li><strong>Delegated PoS (DPoS):</strong> голосування за делегатів</li>
-          <li><strong>Proof of Authority (PoA):</strong> відомі валідатори</li>
+          <li><strong>Delegated PoS (DPoS):</strong> голосування за делегатів (EOS, Tron)</li>
+          <li><strong>Proof of Authority (PoA):</strong> відомі валідатори (приватні мережі)</li>
           <li><strong>PBFT:</strong> Byzantine Fault Tolerant для permissioned мереж</li>
+          <li><strong>Proof of History (PoH):</strong> криптографічний годинник (Solana)</li>
+          <li><strong>Proof of Space:</strong> використання дискового простору (Chia)</li>
         </ul>
+
+        <h4>Порівняння консенсусних механізмів</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Механізм</th>
+              <th>TPS</th>
+              <th>Енергія</th>
+              <th>Децентралізація</th>
+              <th>Фіналізація</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>PoW</strong></td>
+              <td>~7</td>
+              <td>Висока</td>
+              <td>Висока</td>
+              <td>~60 хв</td>
+            </tr>
+            <tr>
+              <td><strong>PoS</strong></td>
+              <td>~100K*</td>
+              <td>Низька</td>
+              <td>Середня</td>
+              <td>~12 хв</td>
+            </tr>
+            <tr>
+              <td><strong>DPoS</strong></td>
+              <td>~10K</td>
+              <td>Низька</td>
+              <td>Низька</td>
+              <td>~3 сек</td>
+            </tr>
+            <tr>
+              <td><strong>PBFT</strong></td>
+              <td>~1K</td>
+              <td>Низька</td>
+              <td>Низька</td>
+              <td>Миттєва</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><em>* з sharding</em></p>
 
         <h3>Типи блокчейнів</h3>
         <table>
@@ -321,11 +444,59 @@ did:key:z6Mkf5...</code></pre>
         <h3>Verifiable Credentials (VCs)</h3>
         <p>Verifiable Credentials — цифрові посвідчення з криптографічним доказом:</p>
 
+        <!-- Diagram: VC Flow -->
+        <div class="diagram">
+          <div class="diagram-title">Verifiable Credentials: потік видачі та верифікації</div>
+          <svg viewBox="0 0 650 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="vc-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="var(--text-secondary)"/>
+              </marker>
+            </defs>
+
+            <!-- Issuer -->
+            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="30" y="60" width="120" height="80" rx="10"/>
+            <text fill="#1d4ed8" x="90" y="90" text-anchor="middle" font-weight="600" font-size="12">Issuer</text>
+            <text fill="#1d4ed8" x="90" y="108" text-anchor="middle" font-size="9">(Університет,</text>
+            <text fill="#1d4ed8" x="90" y="120" text-anchor="middle" font-size="9">Держава)</text>
+
+            <!-- Holder -->
+            <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="265" y="60" width="120" height="80" rx="10"/>
+            <text fill="#166534" x="325" y="90" text-anchor="middle" font-weight="600" font-size="12">Holder</text>
+            <text fill="#166534" x="325" y="108" text-anchor="middle" font-size="9">(Користувач +</text>
+            <text fill="#166534" x="325" y="120" text-anchor="middle" font-size="9">Wallet)</text>
+
+            <!-- Verifier -->
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="500" y="60" width="120" height="80" rx="10"/>
+            <text fill="#b45309" x="560" y="90" text-anchor="middle" font-weight="600" font-size="12">Verifier</text>
+            <text fill="#b45309" x="560" y="108" text-anchor="middle" font-size="9">(Роботодавець,</text>
+            <text fill="#b45309" x="560" y="120" text-anchor="middle" font-size="9">Сервіс)</text>
+
+            <!-- Blockchain/Registry at bottom -->
+            <rect fill="var(--card)" stroke="var(--card-border)" x="200" y="165" width="250" height="30" rx="6"/>
+            <text class="diagram-text-small" x="325" y="184" text-anchor="middle">Blockchain / Verifiable Data Registry</text>
+
+            <!-- Arrows -->
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="150" y1="85" x2="260" y2="85" marker-end="url(#vc-arrow)"/>
+            <text class="diagram-text-small" x="205" y="78" text-anchor="middle">1. Issue VC</text>
+
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="390" y1="100" x2="495" y2="100" marker-end="url(#vc-arrow)"/>
+            <text class="diagram-text-small" x="442" y="93" text-anchor="middle">2. Present VC</text>
+
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="560" y1="145" x2="450" y2="165" marker-end="url(#vc-arrow)"/>
+            <text class="diagram-text-small" x="520" y="158" text-anchor="middle">3. Verify</text>
+
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="90" y1="145" x2="200" y2="165" marker-end="url(#vc-arrow)"/>
+            <text class="diagram-text-small" x="130" y="158" text-anchor="middle">Register DID</text>
+          </svg>
+          <div class="diagram-caption">Рис. 6.3. Трикутник довіри: Issuer видає, Holder зберігає, Verifier перевіряє через блокчейн</div>
+        </div>
+
         <h4>Учасники</h4>
         <ul>
-          <li><strong>Issuer:</strong> видає credential (університет, держава)</li>
-          <li><strong>Holder:</strong> зберігає у своєму wallet</li>
-          <li><strong>Verifier:</strong> перевіряє автентичність</li>
+          <li><strong>Issuer:</strong> видає credential (університет, держава, роботодавець)</li>
+          <li><strong>Holder:</strong> зберігає credentials у своєму digital wallet</li>
+          <li><strong>Verifier:</strong> перевіряє автентичність без звернення до Issuer</li>
         </ul>
 
         <h4>Структура VC</h4>
@@ -402,13 +573,20 @@ did:key:z6Mkf5...</code></pre>
         <h3>Вразливості смарт-контрактів</h3>
 
         <h4>Reentrancy Attack</h4>
-        <p>Атака повторного входу — найвідоміша вразливість:</p>
-        <ul>
-          <li>Контракт викликає зовнішній контракт</li>
-          <li>Зовнішній контракт повторно входить до оригінального</li>
-          <li>Стан ще не оновлений → повторне зняття коштів</li>
-          <li><strong>The DAO Hack (2016):</strong> $60M втрачено</li>
-        </ul>
+        <p>Атака повторного входу — найвідоміша та найруйнівніша вразливість смарт-контрактів:</p>
+
+        <div class="warning-box">
+          <strong>The DAO Hack (2016):</strong> Атакуючий викрав $60 мільйонів ETH через reentrancy вразливість. Це призвело до hard fork Ethereum та створення Ethereum Classic. Подія назавжди змінила підхід до безпеки смарт-контрактів.
+        </div>
+
+        <p><strong>Механізм атаки:</strong></p>
+        <ol>
+          <li>Атакуючий викликає функцію withdraw()</li>
+          <li>Контракт відправляє ETH атакуючому</li>
+          <li>Fallback-функція атакуючого повторно викликає withdraw()</li>
+          <li>Оскільки баланс ще не оновлено — кошти знову відправляються</li>
+          <li>Цикл повторюється, поки не вичерпається газ або баланс</li>
+        </ol>
 
         <pre><code>// Вразливий код
 function withdraw() {
@@ -585,13 +763,70 @@ function withdraw() {
           <strong>Порада:</strong> Блокчейн доцільний коли потрібна незмінність, децентралізація та відсутність довіри між учасниками. Для більшості задач традиційні бази даних ефективніші.
         </div>
 
-        <h3>Майбутнє блокчейну в безпеці</h3>
+        <h3>Реальні кейси застосування</h3>
+
+        <h4>IBM Food Trust</h4>
         <ul>
-          <li><strong>Post-Quantum Cryptography:</strong> підготовка до квантових комп'ютерів</li>
-          <li><strong>Layer 2 Solutions:</strong> масштабування через Rollups</li>
-          <li><strong>Interoperability:</strong> мости між блокчейнами</li>
-          <li><strong>Regulatory Clarity:</strong> стандарти та регулювання</li>
-          <li><strong>Enterprise Adoption:</strong> зростання Hyperledger, R3 Corda</li>
+          <li><strong>Проблема:</strong> відстеження походження продуктів для безпеки харчування</li>
+          <li><strong>Рішення:</strong> Hyperledger Fabric для supply chain tracking</li>
+          <li><strong>Результат:</strong> час відстеження від 7 днів до 2.2 секунди</li>
+          <li><strong>Учасники:</strong> Walmart, Nestlé, Dole, Carrefour</li>
+        </ul>
+
+        <h4>De Beers Tracr</h4>
+        <ul>
+          <li><strong>Проблема:</strong> відстеження діамантів для запобігання "кривавим діамантам"</li>
+          <li><strong>Рішення:</strong> блокчейн для трекінгу від шахти до магазину</li>
+          <li><strong>Результат:</strong> прозорість та етичність supply chain</li>
+        </ul>
+
+        <h4>Estonia e-Governance</h4>
+        <ul>
+          <li>Найбільш оцифрована країна світу</li>
+          <li><strong>KSI Blockchain:</strong> захист державних реєстрів</li>
+          <li>Медичні записи, земельний кадастр, бізнес-реєстр</li>
+          <li>Timestamping для незаперечності записів</li>
+        </ul>
+
+        <h4>COVID-19 Vaccine Passports</h4>
+        <ul>
+          <li><strong>EU Digital COVID Certificate:</strong> не блокчейн, але Verifiable Credentials</li>
+          <li><strong>IBM/Salesforce:</strong> блокчейн-based рішення для США</li>
+          <li>Приватність: мінімальне розкриття даних</li>
+        </ul>
+
+        <h3>Майбутнє блокчейну в безпеці</h3>
+
+        <h4>Post-Quantum Cryptography</h4>
+        <p>Квантові комп'ютери загрожують сучасній криптографії:</p>
+        <ul>
+          <li><strong>ECDSA під загрозою:</strong> алгоритм Шора може зламати</li>
+          <li><strong>Рішення:</strong> lattice-based, hash-based криптографія</li>
+          <li><strong>NIST PQC:</strong> стандартизація post-quantum алгоритмів</li>
+          <li><strong>Ethereum:</strong> дослідження переходу на PQ-safe криптографію</li>
+        </ul>
+
+        <h4>Layer 2 та масштабування</h4>
+        <ul>
+          <li><strong>Rollups:</strong> виконання off-chain, верифікація on-chain</li>
+          <li><strong>Optimistic Rollups:</strong> Arbitrum, Optimism</li>
+          <li><strong>ZK-Rollups:</strong> zkSync, StarkNet, Polygon zkEVM</li>
+          <li>Мільйони TPS зі збереженням безпеки L1</li>
+        </ul>
+
+        <h4>Interoperability</h4>
+        <ul>
+          <li><strong>Cross-chain bridges:</strong> передача активів між блокчейнами</li>
+          <li><strong>Проблеми:</strong> численні хаки bridges ($2B+ у 2022)</li>
+          <li><strong>Рішення:</strong> Cosmos IBC, Polkadot XCM, LayerZero</li>
+        </ul>
+
+        <h4>Enterprise Adoption</h4>
+        <ul>
+          <li><strong>Hyperledger:</strong> Fabric, Besu, Iroha для enterprise</li>
+          <li><strong>R3 Corda:</strong> фінансові інституції</li>
+          <li><strong>Quorum:</strong> ConsenSys fork Ethereum для бізнесу</li>
+          <li>Зростання приватних та consortium блокчейнів</li>
         </ul>
       </section>
 
