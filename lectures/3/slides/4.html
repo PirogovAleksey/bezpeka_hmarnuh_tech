@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 3.4 — Впровадження ZTA | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=3">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 3.4: Впровадження Zero Trust у хмарі</p>
+    </section>
+
+    <section class="slide">
+      <h1>Zero Trust — це подорож</h1>
+      <ul>
+        <li>Не проєкт, а стратегічна трансформація</li>
+        <li>Роки, не тижні</li>
+        <li><strong>Поетапний підхід:</strong> не все одразу</li>
+        <li><strong>Ітеративний:</strong> вчитися на помилках</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Етапи впровадження (CISA)</h1>
+      <ul>
+        <li><strong>1. Ідентифікація:</strong> інвентаризація активів</li>
+        <li><strong>2. Картографування:</strong> потоки даних</li>
+        <li><strong>3. Архітектура:</strong> вибір компонентів</li>
+        <li><strong>4. Пілот:</strong> обмежений scope</li>
+        <li><strong>5. Розширення:</strong> enforcement mode</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Quick Wins: Почніть з цього</h1>
+      <ul>
+        <li><strong>MFA для всіх:</strong> найефективніший захист</li>
+        <li><strong>SSO:</strong> централізована автентифікація</li>
+        <li><strong>Conditional Access:</strong> базові політики</li>
+        <li><strong>Інвентаризація:</strong> знати, що захищаєте</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Zero Trust в AWS</h1>
+      <ul>
+        <li><strong>Identity:</strong> IAM, IAM Identity Center, Cognito</li>
+        <li><strong>Network:</strong> Security Groups, VPC, PrivateLink</li>
+        <li><strong>Access:</strong> Verified Access, WAF, API Gateway</li>
+        <li><strong>Data:</strong> KMS, Secrets Manager, Macie</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Zero Trust в Azure</h1>
+      <ul>
+        <li><strong>Identity:</strong> Entra ID, Conditional Access, PIM</li>
+        <li><strong>Device:</strong> Intune, Defender for Endpoint</li>
+        <li><strong>Network:</strong> Azure Firewall, NSG, Private Link</li>
+        <li><strong>Перевага:</strong> глибока інтеграція Microsoft 365</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Zero Trust в GCP: BeyondCorp</h1>
+      <ul>
+        <li><strong>Identity-Aware Proxy (IAP):</strong> доступ до додатків</li>
+        <li><strong>Access Context Manager:</strong> conditional policies</li>
+        <li><strong>Endpoint Verification:</strong> device posture</li>
+        <li><strong>VPC Service Controls:</strong> data perimeters</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Реальні кейси</h1>
+      <ul>
+        <li><strong>Google BeyondCorp:</strong> після Operation Aurora (2009)</li>
+        <li><strong>Netflix:</strong> mTLS між усіма мікросервісами</li>
+        <li><strong>US Government:</strong> Executive Order 2021</li>
+        <li><strong>Спільне:</strong> роки на впровадження</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Типові помилки</h1>
+      <ul>
+        <li><strong>Все одразу:</strong> Zero Trust — марафон</li>
+        <li><strong>User experience:</strong> якщо заважає — обійдуть</li>
+        <li><strong>Legacy:</strong> старі системи теж потребують захисту</li>
+        <li><strong>Моніторинг:</strong> без видимості — без контролю</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Ключові фактори успіху</h1>
+      <ul>
+        <li><strong>Executive sponsorship:</strong> підтримка керівництва</li>
+        <li><strong>Cross-functional team:</strong> Security + IT + DevOps</li>
+        <li><strong>Clear metrics:</strong> вимірювання прогресу</li>
+        <li><strong>User education:</strong> пояснювати "чому"</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Рекомендована література</h1>
+      <ul>
+        <li><strong>NIST SP 800-207:</strong> Zero Trust Architecture</li>
+        <li><strong>CISA Zero Trust Maturity Model</strong></li>
+        <li><strong>Google BeyondCorp Papers</strong></li>
+        <li><strong>Forrester ZTX Framework</strong></li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Дякую за увагу!</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

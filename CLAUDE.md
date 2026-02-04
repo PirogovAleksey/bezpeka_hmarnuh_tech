@@ -28,12 +28,19 @@
 │   ├── main.js         # Перемикач теми для сайту
 │   └── slides.js       # Навігація слайдів + тема
 │
-├── conspects/          # HTML конспекти лекцій
-│   └── lecture-N.html
+├── lectures/           # Матеріали лекцій (конспекти + слайди)
+│   ├── 1/
+│   │   ├── conspect.html
+│   │   └── slides/
+│   │       └── 1.html, 2.html, ... 6.html
+│   ├── 2/
+│   │   ├── conspect.html
+│   │   └── slides/
+│   │       └── 1.html, 2.html, 3.html, 4.html
+│   └── ... (3-6)
 │
-├── slides/             # HTML презентації
-│   ├── template.html   # Шаблон для нових презентацій
-│   └── lecture-N-M.html
+├── templates/
+│   └── slide.html      # Шаблон для нових презентацій
 │
 ├── data/               # JSON дані для генератора
 │   └── example.json    # Приклад формату
@@ -48,7 +55,7 @@
 ## Генерація слайдів
 
 ### Варіант 1: Вручну
-Скопіюй `slides/template.html`, заміни плейсхолдери:
+Скопіюй `templates/slide.html` в `lectures/N/slides/M.html`, заміни плейсхолдери:
 - `{{LECTURE_ID}}` — номер лекції
 - `{{TOPIC_TITLE}}` — заголовок в title
 - `{{TOPIC_SUBTITLE}}` — підзаголовок на титульному слайді
@@ -63,7 +70,7 @@ node scripts/generate-slides.js data/lecture-N.json
 Формат JSON:
 ```json
 {
-  "outputFile": "lecture-2-1.html",
+  "outputFile": "1.html",
   "lectureId": 2,
   "topicTitle": "Тема 2.1 — Назва",
   "topicSubtitle": "Тема 2.1: Підзаголовок",
@@ -80,6 +87,8 @@ node scripts/generate-slides.js data/lecture-N.json
   ]
 }
 ```
+
+Файли зберігаються в `lectures/{lectureId}/slides/{outputFile}`.
 
 ## Конвенції коду
 
@@ -135,7 +144,7 @@ node scripts/generate-slides.js data/lecture-N.json
 
 ## Готовий контент
 
-- ✅ Лекція 1: конспект + 6 презентацій
+- ✅ Лекції 1-6: конспекти + презентації
 - ✅ 60 тем семінарських занять
-- ⏳ Лекції 2-12: в розробці
+- ⏳ Лекції 7-12: в розробці
 - ⏳ Тести: структура готова, функціонал в розробці

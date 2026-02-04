@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 2.2 — Управління ризиками | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=2">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 2.2: Управління ризиками в хмарі</p>
+    </section>
+
+    <section class="slide">
+      <h1>Що таке ризик?</h1>
+      <ul>
+        <li><strong>Ризик = Ймовірність × Вплив</strong></li>
+        <li><strong>Загроза:</strong> потенційна причина інциденту</li>
+        <li><strong>Вразливість:</strong> слабкість системи</li>
+        <li><strong>Контроль:</strong> захід для зменшення ризику</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Специфічні ризики хмари</h1>
+      <ul>
+        <li><strong>Втрата контролю:</strong> дані поза вашим дата-центром</li>
+        <li><strong>Multi-tenancy:</strong> "сусіди" на тому ж hardware</li>
+        <li><strong>Vendor lock-in:</strong> залежність від провайдера</li>
+        <li><strong>Data sovereignty:</strong> різні юрисдикції</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>CSA Top Threats 2024</h1>
+      <ul>
+        <li><strong>#1:</strong> Misconfiguration</li>
+        <li><strong>#2:</strong> IAM failures</li>
+        <li><strong>#3:</strong> Insecure APIs</li>
+        <li><strong>#4:</strong> Limited security strategy</li>
+        <li><strong>#5:</strong> Insecure development</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Процес управління ризиками</h1>
+      <ul>
+        <li><strong>1. Ідентифікація:</strong> активи, загрози, вразливості</li>
+        <li><strong>2. Аналіз:</strong> якісний або кількісний</li>
+        <li><strong>3. Оцінка:</strong> пріоритезація</li>
+        <li><strong>4. Обробка:</strong> avoid, mitigate, transfer, accept</li>
+        <li><strong>5. Моніторинг:</strong> регулярний перегляд</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Обробка ризиків</h1>
+      <ul>
+        <li><strong>Avoid:</strong> не робити ризикову діяльність</li>
+        <li><strong>Mitigate:</strong> впровадити контролі</li>
+        <li><strong>Transfer:</strong> страхування, контракт</li>
+        <li><strong>Accept:</strong> свідоме прийняття</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>NIST Risk Management Framework</h1>
+      <ul>
+        <li><strong>Prepare:</strong> підготовка</li>
+        <li><strong>Categorize:</strong> категоризація систем</li>
+        <li><strong>Select:</strong> вибір контролів</li>
+        <li><strong>Implement:</strong> впровадження</li>
+        <li><strong>Assess → Authorize → Monitor</strong></li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>FAIR Model</h1>
+      <ul>
+        <li>Factor Analysis of Information Risk</li>
+        <li>Кількісна модель оцінки</li>
+        <li>Фінансова оцінка ризику</li>
+        <li>Monte Carlo симуляції</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Оцінка провайдера</h1>
+      <ul>
+        <li><strong>CSA CAIQ:</strong> стандартна анкета</li>
+        <li><strong>SOC 2 Report:</strong> незалежний аудит</li>
+        <li><strong>Penetration test results</strong></li>
+        <li><strong>Incident history:</strong> публічні інциденти</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Risk Register</h1>
+      <ul>
+        <li>Документ з усіма ідентифікованими ризиками</li>
+        <li>Ймовірність, вплив, рейтинг</li>
+        <li>Owner, status, mitigation plan</li>
+        <li>Регулярний перегляд та оновлення</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна тема: SLA та контрактні аспекти</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

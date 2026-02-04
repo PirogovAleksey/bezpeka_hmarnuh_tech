@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Читаємо шаблон
-const templatePath = path.join(__dirname, '..', 'slides', 'template.html');
+const templatePath = path.join(__dirname, '..', 'templates', 'slide.html');
 const template = fs.readFileSync(templatePath, 'utf-8');
 
 // Генерація HTML для одного слайду
@@ -82,13 +82,21 @@ function main() {
   // Генеруємо всі презентації з файлу
   if (data.presentations) {
     for (const pres of data.presentations) {
-      const outputPath = path.join(__dirname, '..', 'slides', pres.outputFile);
+      const outputDir = path.join(__dirname, '..', 'lectures', String(pres.lectureId), 'slides');
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+      }
+      const outputPath = path.join(outputDir, pres.outputFile);
       generatePresentation(pres, outputPath);
     }
   } else {
     // Один файл
-    const outputFile = data.outputFile || `lecture-${data.lectureId}-generated.html`;
-    const outputPath = path.join(__dirname, '..', 'slides', outputFile);
+    const outputDir = path.join(__dirname, '..', 'lectures', String(data.lectureId), 'slides');
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+    const outputFile = data.outputFile || `${data.slideNumber || 'generated'}.html`;
+    const outputPath = path.join(outputDir, outputFile);
     generatePresentation(data, outputPath);
   }
 
