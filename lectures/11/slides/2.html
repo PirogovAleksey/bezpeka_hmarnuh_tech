@@ -40,13 +40,37 @@
 
     <section class="slide">
       <h1>Capital One — Attack Chain</h1>
-      <ul>
-        <li><strong>1.</strong> WAF з overly permissive IAM role</li>
-        <li><strong>2.</strong> SSRF → доступ до IMDS (169.254.169.254)</li>
-        <li><strong>3.</strong> Отримання temporary credentials</li>
-        <li><strong>4.</strong> List S3 buckets через IAM role</li>
-        <li><strong>5.</strong> Download конфіденційних даних</li>
-      </ul>
+      <div class="slide-timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1</div>
+          <div class="timeline-text">WAF SSRF</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2</div>
+          <div class="timeline-text">IMDS</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">3</div>
+          <div class="timeline-text">Credentials</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">4</div>
+          <div class="timeline-text">S3 List</div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">5</div>
+          <div class="timeline-text">Exfiltrate</div>
+        </div>
+      </div>
     </section>
 
     <section class="slide">

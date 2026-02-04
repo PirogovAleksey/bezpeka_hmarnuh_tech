@@ -29,13 +29,24 @@
 
     <section class="slide">
       <h1>Anomaly Detection</h1>
-      <ul>
-        <li>Навчити модель "нормальної" поведінки</li>
-        <li>Виявляти відхилення від норми</li>
-        <li><strong>Point:</strong> Spike in traffic</li>
-        <li><strong>Contextual:</strong> Login at 3 AM</li>
-        <li><strong>Collective:</strong> Slow data exfiltration</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>Point</h3>
+          <p>Spike in traffic</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <h3>Contextual</h3>
+          <p>Login at 3 AM</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Collective</h3>
+          <p>Slow exfiltration</p>
+        </div>
+      </div>
+      <p style="text-align: center; margin-top: 1rem;">Навчити модель "нормальної" поведінки → виявляти відхилення</p>
     </section>
 
     <section class="slide">
@@ -81,12 +92,28 @@
 
     <section class="slide">
       <h1>Cloud ML Services</h1>
-      <ul>
-        <li><strong>AWS GuardDuty:</strong> ML threat detection</li>
-        <li><strong>Amazon Macie:</strong> Sensitive data в S3</li>
-        <li><strong>Azure Sentinel:</strong> UEBA, Fusion correlation</li>
-        <li><strong>Google Chronicle:</strong> Security analytics</li>
-      </ul>
+      <div class="slide-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="color: #ff9900;"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h3>AWS GuardDuty</h3>
+          <p>ML threat detection</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="color: #ff9900;"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+          <h3>Amazon Macie</h3>
+          <p>Sensitive data в S3</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="color: #0078d4;"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></div>
+          <h3>Azure Sentinel</h3>
+          <p>UEBA, Fusion</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon" style="color: #4285f4;"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Chronicle</h3>
+          <p>Security analytics</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">

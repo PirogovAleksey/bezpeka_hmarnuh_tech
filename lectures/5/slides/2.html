@@ -59,12 +59,38 @@
 
     <section class="slide">
       <h1>Event Injection</h1>
-      <ul>
-        <li>Шкідливі дані через event source</li>
-        <li><strong>S3:</strong> filename з командами</li>
-        <li><strong>SQS:</strong> payload injection</li>
-        <li><strong>DynamoDB:</strong> NoSQL injection</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 140" style="max-width: 480px;">
+          <defs>
+            <marker id="arrowhead5" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="currentColor"/>
+            </marker>
+          </defs>
+          <!-- Event Sources -->
+          <rect x="10" y="15" width="80" height="30" rx="4" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <text x="50" y="35" text-anchor="middle" fill="currentColor" font-size="11">S3</text>
+          <rect x="10" y="55" width="80" height="30" rx="4" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <text x="50" y="75" text-anchor="middle" fill="currentColor" font-size="11">SQS</text>
+          <rect x="10" y="95" width="80" height="30" rx="4" fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <text x="50" y="115" text-anchor="middle" fill="currentColor" font-size="11">DynamoDB</text>
+          <!-- Arrows to Lambda -->
+          <line x1="95" y1="30" x2="155" y2="70" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead5)"/>
+          <line x1="95" y1="70" x2="155" y2="70" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead5)"/>
+          <line x1="95" y1="110" x2="155" y2="70" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead5)"/>
+          <!-- Malicious payload label -->
+          <text x="125" y="50" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="bold">malicious</text>
+          <!-- Lambda -->
+          <rect x="160" y="45" width="80" height="50" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+          <text x="200" y="75" text-anchor="middle" fill="currentColor" font-size="11">Lambda</text>
+          <!-- Arrow to backend -->
+          <line x1="245" y1="70" x2="295" y2="70" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead5)"/>
+          <!-- Backend -->
+          <rect x="300" y="45" width="90" height="50" rx="4" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444" stroke-width="2"/>
+          <text x="345" y="67" text-anchor="middle" fill="currentColor" font-size="10">Command</text>
+          <text x="345" y="82" text-anchor="middle" fill="currentColor" font-size="10">Execution</text>
+        </svg>
+      </div>
+      <p style="text-align: center; font-size: 0.9em;"><strong>Захист:</strong> валідація input, parameterized queries</p>
     </section>
 
     <section class="slide">
@@ -129,12 +155,24 @@
 
     <section class="slide">
       <h1>Таблиця загроз</h1>
-      <ul>
-        <li><strong>Injection:</strong> критичний — валідація</li>
-        <li><strong>Overprivilege:</strong> високий — least privilege</li>
-        <li><strong>Dependencies:</strong> високий — SCA</li>
-        <li><strong>DoW:</strong> середній — rate limits</li>
-      </ul>
+      <div class="slide-grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="slide-grid-item" style="border-left: 4px solid #ef4444;">
+          <h3>Injection</h3>
+          <p><strong style="color: #ef4444;">Критичний</strong> — валідація</p>
+        </div>
+        <div class="slide-grid-item" style="border-left: 4px solid #f97316;">
+          <h3>Overprivilege</h3>
+          <p><strong style="color: #f97316;">Високий</strong> — least privilege</p>
+        </div>
+        <div class="slide-grid-item" style="border-left: 4px solid #f97316;">
+          <h3>Dependencies</h3>
+          <p><strong style="color: #f97316;">Високий</strong> — SCA</p>
+        </div>
+        <div class="slide-grid-item" style="border-left: 4px solid #eab308;">
+          <h3>DoW</h3>
+          <p><strong style="color: #eab308;">Середній</strong> — rate limits</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
