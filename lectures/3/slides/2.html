@@ -29,12 +29,44 @@
 
     <section class="slide">
       <h1>Логічна архітектура ZTA (NIST)</h1>
-      <ul>
-        <li><strong>Policy Engine (PE):</strong> приймає рішення</li>
-        <li><strong>Policy Administrator (PA):</strong> виконує рішення</li>
-        <li><strong>Policy Enforcement Point (PEP):</strong> застосовує політики</li>
-        <li>Взаємодіють для кожного запиту на доступ</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 400 150" width="400" height="150">
+          <!-- Subject -->
+          <rect x="10" y="55" width="70" height="40" rx="6" class="diagram-box"/>
+          <text x="45" y="80" text-anchor="middle" class="diagram-text-small">Subject</text>
+
+          <!-- PEP -->
+          <rect x="110" y="55" width="70" height="40" rx="6" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="145" y="80" text-anchor="middle" class="diagram-text-small">PEP</text>
+
+          <!-- PDP (PE + PA) -->
+          <rect x="110" y="5" width="180" height="35" rx="6" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="200" y="28" text-anchor="middle" class="diagram-text-small">PDP (PE + PA)</text>
+
+          <!-- Resource -->
+          <rect x="220" y="55" width="70" height="40" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="255" y="80" text-anchor="middle" class="diagram-text-small">Resource</text>
+
+          <!-- Data Sources -->
+          <rect x="320" y="20" width="70" height="75" rx="6" class="diagram-box"/>
+          <text x="355" y="40" text-anchor="middle" class="diagram-text-small">Data</text>
+          <text x="355" y="55" text-anchor="middle" class="diagram-text-small">Sources</text>
+          <text x="355" y="75" text-anchor="middle" class="diagram-text-small" fill="#64748b">CDM, SIEM</text>
+
+          <!-- Arrows -->
+          <path d="M80,75 L105,75" stroke="#38bdf8" stroke-width="2" marker-end="url(#ztaarr)"/>
+          <path d="M145,55 L145,42 L170,42" stroke="#fbbf24" stroke-width="2"/>
+          <path d="M230,42 L255,42 L255,50" stroke="#4ade80" stroke-width="2"/>
+          <path d="M185,75 L215,75" stroke="#4ade80" stroke-width="2" marker-end="url(#ztaarr)"/>
+          <path d="M295,22 L315,22" stroke="#64748b" stroke-width="1" stroke-dasharray="4,2"/>
+
+          <defs>
+            <marker id="ztaarr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">
@@ -89,12 +121,23 @@
 
     <section class="slide">
       <h1>Multi-Factor Authentication (MFA)</h1>
-      <ul>
-        <li><strong>Something you know:</strong> пароль, PIN</li>
-        <li><strong>Something you have:</strong> телефон, YubiKey</li>
-        <li><strong>Something you are:</strong> біометрія</li>
-        <li><strong>Тренд:</strong> Passwordless (FIDO2/WebAuthn)</li>
-      </ul>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Know</h3>
+          <p>Пароль, PIN</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <h3>Have</h3>
+          <p>Телефон, YubiKey</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>Are</h3>
+          <p>Біометрія</p>
+        </div>
+      </div>
     </section>
 
     <section class="slide">
