@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 12.1 — Ринок хмарної безпеки | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=12">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 12.1: Ринок хмарної безпеки</p>
+    </section>
+
+    <section class="slide">
+      <h1>Розмір ринку</h1>
+      <ul>
+        <li><strong>2023:</strong> $40.8 млрд глобально</li>
+        <li><strong>2028:</strong> $77.5 млрд (прогноз)</li>
+        <li><strong>CAGR:</strong> 13.7% річного зростання</li>
+        <li>Драйвери: cloud adoption, compliance, threats</li>
+        <li>Один з найшвидше зростаючих IT сегментів</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Основні сегменти</h1>
+      <ul>
+        <li><strong>CSPM/CNAPP:</strong> ~20% (Wiz, Palo Alto, Orca)</li>
+        <li><strong>Cloud IAM:</strong> ~18% (Okta, CyberArk)</li>
+        <li><strong>CASB:</strong> ~15% (Netskope, Zscaler)</li>
+        <li><strong>Cloud SIEM/XDR:</strong> ~15% (Splunk, Microsoft)</li>
+        <li><strong>CWPP:</strong> ~12% (CrowdStrike, SentinelOne)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Cloud-Native Vendors</h1>
+      <ul>
+        <li><strong>Wiz:</strong> $10B valuation, agentless CNAPP</li>
+        <li><strong>Orca:</strong> SideScanning, unified platform</li>
+        <li><strong>Lacework:</strong> Anomaly-based, Polygraph</li>
+        <li><strong>Aqua:</strong> Container-first, shift-left</li>
+        <li><strong>Snyk:</strong> Developer security leader</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Enterprise Vendors</h1>
+      <ul>
+        <li><strong>Palo Alto:</strong> Prisma Cloud (acquired RedLock)</li>
+        <li><strong>CrowdStrike:</strong> Falcon Cloud Security</li>
+        <li><strong>Microsoft:</strong> Defender for Cloud</li>
+        <li><strong>Check Point:</strong> CloudGuard</li>
+        <li><strong>Trend Micro:</strong> Cloud One</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Тренди 2024-2025</h1>
+      <ul>
+        <li><strong>Consolidation:</strong> CNAPP absorbing point tools</li>
+        <li><strong>AI Integration:</strong> LLMs для triage, remediation</li>
+        <li><strong>Shift-Left:</strong> Security в CI/CD</li>
+        <li><strong>Identity-First:</strong> CIEM як критичний компонент</li>
+        <li><strong>Platform Engineering:</strong> Security as product</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна тема: Стратегії міграції в хмару</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

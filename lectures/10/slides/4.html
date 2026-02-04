@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 10.4 — HSM, Confidential Computing, Compliance | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=10">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 10.4: HSM, Confidential Computing, Compliance</p>
+    </section>
+
+    <section class="slide">
+      <h1>Hardware Security Modules (HSM)</h1>
+      <ul>
+        <li>Dedicated hardware для crypto operations</li>
+        <li>Keys ніколи не покидають HSM</li>
+        <li>FIPS 140-2 Level 3 certification</li>
+        <li><strong>AWS CloudHSM, Azure Dedicated HSM, GCP HSM</strong></li>
+        <li>Use cases: PKI, PCI compliance, code signing</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Confidential Computing</h1>
+      <ul>
+        <li>Encryption In-Use — захист під час processing</li>
+        <li><strong>Intel SGX:</strong> Secure Enclaves</li>
+        <li><strong>AMD SEV:</strong> Encrypted Virtualization</li>
+        <li><strong>Cloud:</strong> Azure Confidential VMs, GCP Confidential</li>
+        <li>Use: Multi-party computation, data collaboration</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Data Loss Prevention (DLP)</h1>
+      <ul>
+        <li>Content inspection: PII, PCI, PHI detection</li>
+        <li>Context analysis: who, where, how</li>
+        <li>Policy enforcement: block, alert, encrypt</li>
+        <li><strong>Google Cloud DLP, Amazon Macie, Microsoft Purview</strong></li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Data Masking & Tokenization</h1>
+      <ul>
+        <li><strong>Masking:</strong> Replace з fake but realistic</li>
+        <li>Static (copy) vs Dynamic (on-the-fly)</li>
+        <li><strong>Tokenization:</strong> Replace з token, original in vault</li>
+        <li>No mathematical relationship</li>
+        <li>Often for PCI compliance</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Compliance Requirements</h1>
+      <ul>
+        <li><strong>GDPR:</strong> Encryption, pseudonymization, right to erasure</li>
+        <li><strong>PCI DSS:</strong> Encrypt stored cards, TLS, HSM for keys</li>
+        <li><strong>HIPAA:</strong> Encryption recommended, breach safe harbor</li>
+        <li><strong>Data Residency:</strong> In-country storage requirements</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Ключові висновки</h1>
+      <ul>
+        <li>Classification first — знати що захищати</li>
+        <li>Encryption everywhere: rest, transit, use</li>
+        <li>Key management критичний</li>
+        <li>Envelope encryption — стандарт cloud</li>
+        <li>HSM для high assurance</li>
+        <li>Defense in depth — encryption один шар</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна лекція: Аналіз реальних інцидентів хмарної безпеки</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

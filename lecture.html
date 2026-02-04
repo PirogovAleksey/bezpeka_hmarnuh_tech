@@ -274,12 +274,126 @@
           { id: '6-4', title: 'Тема 6.4 — Застосування в кібербезпеці', desc: 'Audit logs, PKI, supply chain' }
         ]
       },
-      7: { title: 'Управління станом безпеки та конфігураціями (CSPM)', available: false },
-      8: { title: 'Комплексний захист додатків (CNAPP)', available: false },
-      9: { title: 'ШІ та машинне навчання в хмарній безпеці', available: false },
-      10: { title: 'Захист даних та криптографія у хмарі', available: false },
-      11: { title: 'Актуальні загрози та аналіз реальних інцидентів', available: false },
-      12: { title: 'Ринок хмарної безпеки та стратегія впровадження', available: false }
+      7: {
+        title: 'Cloud Security Posture Management (CSPM)',
+        available: true,
+        description: `
+          <p>У цій лекції ми розглянемо CSPM — категорію інструментів для автоматичного виявлення misconfigurations, порушень compliance та безпекових ризиків у хмарних середовищах. 65-70% хмарних інцидентів пов'язані з misconfigurations.</p>
+          <p>Ви дізнаєтесь про типові misconfigurations та їх наслідки, ключові функції CSPM (asset discovery, configuration assessment, risk prioritization), архітектуру CSPM-рішень та огляд інструментів — від native (AWS Config, Azure Defender) до third-party (Wiz, Prisma Cloud) та open source (Prowler).</p>
+        `,
+        topics: [
+          { title: 'Проблема Cloud Misconfiguration', desc: 'Типові помилки конфігурації, реальні кейси (Capital One, Twitch)' },
+          { title: 'Основні функції CSPM', desc: 'Asset discovery, configuration assessment, compliance monitoring' },
+          { title: 'Архітектура та інтеграція', desc: 'API integration, policy engine, CI/CD shift-left' },
+          { title: 'Інструменти та практика', desc: 'Native tools, Wiz, Prisma Cloud, Prowler, впровадження' }
+        ],
+        slides: [
+          { id: '7-1', title: 'Тема 7.1 — Проблема Misconfiguration', desc: 'Типові помилки, статистика, реальні кейси' },
+          { id: '7-2', title: 'Тема 7.2 — Основні функції CSPM', desc: 'Discovery, assessment, prioritization, remediation' },
+          { id: '7-3', title: 'Тема 7.3 — Архітектура CSPM', desc: 'Компоненти, deployment, інтеграції' },
+          { id: '7-4', title: 'Тема 7.4 — Інструменти CSPM', desc: 'Native, third-party, open source, впровадження' }
+        ]
+      },
+      8: {
+        title: 'Cloud-Native Application Protection Platform (CNAPP)',
+        available: true,
+        description: `
+          <p>У цій лекції ми розглянемо CNAPP — концепцію об'єднання всіх аспектів захисту cloud-native додатків в єдину платформу. CNAPP вирішує проблему "tool sprawl" — надмірної кількості ізольованих інструментів безпеки.</p>
+          <p>Ви дізнаєтесь про компоненти CNAPP (CSPM, CWPP, CIEM, DSPM), attack path analysis, graph-based підхід до risk prioritization, огляд ринку (Wiz, Prisma Cloud, Orca) та стратегії впровадження.</p>
+        `,
+        topics: [
+          { title: 'Від Point Solutions до CNAPP', desc: 'Еволюція cloud security, tool sprawl, Gartner визначення' },
+          { title: 'Компоненти CNAPP', desc: 'CSPM, CWPP, CIEM, Container Security, IaC, DSPM' },
+          { title: 'Attack Path Analysis', desc: 'Graph-based approach, risk scoring, prioritization' },
+          { title: 'Ринок та впровадження', desc: 'Wiz, Prisma Cloud, Orca, критерії вибору, best practices' }
+        ],
+        slides: [
+          { id: '8-1', title: 'Тема 8.1 — Від Point Solutions до CNAPP', desc: 'Еволюція, tool sprawl, визначення CNAPP' },
+          { id: '8-2', title: 'Тема 8.2 — Компоненти CNAPP', desc: 'CSPM, CWPP, CIEM, DSPM, інтеграція' },
+          { id: '8-3', title: 'Тема 8.3 — Attack Path Analysis', desc: 'Graph-based, risk scoring, prioritization' },
+          { id: '8-4', title: 'Тема 8.4 — Ринок CNAPP', desc: 'Vendors, критерії вибору, впровадження' }
+        ]
+      },
+      9: {
+        title: 'Штучний інтелект та машинне навчання в хмарній безпеці',
+        available: true,
+        description: `
+          <p>У цій лекції ми розглянемо застосування AI та ML у хмарній безпеці — від виявлення загроз до автоматизації response. AI вирішує проблему масштабу: людина не може аналізувати мільйони подій щодня.</p>
+          <p>Ви дізнаєтесь про anomaly detection та UEBA, ML-based threat detection (GuardDuty, Sentinel), Security Copilots (LLMs), автоматизацію через SOAR, а також виклики: adversarial AI, explainability, data quality.</p>
+        `,
+        topics: [
+          { title: 'Основи AI/ML для безпеки', desc: 'Supervised/unsupervised learning, ML pipeline, metrics' },
+          { title: 'AI для виявлення загроз', desc: 'Anomaly detection, UEBA, malware detection, cloud ML services' },
+          { title: 'AI для автоматизації', desc: 'Alert triage, SOAR, Security Copilots, vulnerability prioritization' },
+          { title: 'Виклики та ризики', desc: 'Adversarial AI, explainability, data quality, майбутнє' }
+        ],
+        slides: [
+          { id: '9-1', title: 'Тема 9.1 — Основи AI/ML', desc: 'ML types, pipeline, metrics для security' },
+          { id: '9-2', title: 'Тема 9.2 — Виявлення загроз', desc: 'Anomaly detection, UEBA, cloud ML services' },
+          { id: '9-3', title: 'Тема 9.3 — Автоматизація', desc: 'Alert triage, SOAR, LLM copilots' },
+          { id: '9-4', title: 'Тема 9.4 — Виклики AI', desc: 'Adversarial, explainability, майбутнє' }
+        ]
+      },
+      10: {
+        title: 'Захист даних та криптографія у хмарі',
+        available: true,
+        description: `
+          <p>У цій лекції ми розглянемо повний спектр захисту даних у хмарі — від класифікації до advanced криптографії. Криптографія є фундаментом конфіденційності та цілісності даних у хмарному середовищі.</p>
+          <p>Ви дізнаєтесь про encryption at-rest та in-transit, envelope encryption та cloud KMS, Hardware Security Modules (HSM), BYOK/HYOK, confidential computing, а також compliance вимоги GDPR, PCI DSS, HIPAA.</p>
+        `,
+        topics: [
+          { title: 'Основи захисту даних', desc: 'Класифікація, data lifecycle, shared responsibility' },
+          { title: 'Криптографія та шифрування', desc: 'Symmetric/asymmetric, at-rest, in-transit, TLS' },
+          { title: 'Key Management', desc: 'Cloud KMS, envelope encryption, key rotation, BYOK' },
+          { title: 'Advanced технології', desc: 'HSM, confidential computing, DLP, compliance' }
+        ],
+        slides: [
+          { id: '10-1', title: 'Тема 10.1 — Основи захисту даних', desc: 'Класифікація, lifecycle, три стани даних' },
+          { id: '10-2', title: 'Тема 10.2 — Криптографія', desc: 'Symmetric, asymmetric, at-rest, in-transit' },
+          { id: '10-3', title: 'Тема 10.3 — Key Management', desc: 'KMS, envelope encryption, rotation, BYOK' },
+          { id: '10-4', title: 'Тема 10.4 — HSM та Compliance', desc: 'HSM, confidential computing, GDPR, PCI' }
+        ]
+      },
+      11: {
+        title: 'Актуальні загрози та аналіз реальних інцидентів',
+        available: true,
+        description: `
+          <p>У цій лекції ми розглянемо актуальний ландшафт загроз хмарної безпеки та детально проаналізуємо реальні інциденти. Вивчення чужих помилок — найефективніший спосіб покращити власну безпеку без болісного досвіду breach.</p>
+          <p>Ви дізнаєтесь про CSA Top Threats 2024, детально розберете Capital One (SSRF + IAM), SolarWinds (supply chain), Log4Shell (JNDI RCE), а також Twitch, Uber, LastPass та MOVEit. Для кожного інциденту: attack chain, root cause та lessons learned.</p>
+        `,
+        topics: [
+          { title: 'Cloud Threat Landscape', desc: 'CSA Top Threats, вектори атак, threat actors, статистика' },
+          { title: 'Capital One та SolarWinds', desc: 'SSRF, IMDS exploitation, supply chain attack, APT29' },
+          { title: 'Log4Shell та інші інциденти', desc: 'CVE-2021-44228, JNDI RCE, Twitch, Uber, LastPass' },
+          { title: 'Уроки та Incident Response', desc: 'Спільні патерни, IR framework, cloud-specific actions' }
+        ],
+        slides: [
+          { id: '11-1', title: 'Тема 11.1 — Cloud Threat Landscape', desc: 'CSA Top Threats, вектори атак, статистика' },
+          { id: '11-2', title: 'Тема 11.2 — Capital One та SolarWinds', desc: 'SSRF, IMDS, supply chain attacks' },
+          { id: '11-3', title: 'Тема 11.3 — Log4Shell та інші', desc: 'CVE-2021-44228, Twitch, Uber, LastPass' },
+          { id: '11-4', title: 'Тема 11.4 — Уроки та IR', desc: 'Патерни, IR framework, automation' }
+        ]
+      },
+      12: {
+        title: 'Ринок хмарної безпеки та стратегія впровадження',
+        available: true,
+        description: `
+          <p>У фінальній лекції курсу ми розглянемо ринок хмарної безпеки, стратегії міграції та побудову програми безпеки. Це практична лекція про те, як застосувати знання з попередніх лекцій у реальних проєктах.</p>
+          <p>Ви дізнаєтесь про ключових вендорів (Wiz, Palo Alto, CrowdStrike), 6 Rs міграції, Landing Zones, побудову security team, DevSecOps pipeline, vendor evaluation та тренди майбутнього (AI, quantum-safe crypto, platform engineering).</p>
+        `,
+        topics: [
+          { title: 'Ринок хмарної безпеки', desc: 'Розмір ринку, сегменти, ключові вендори, тренди 2024-2025' },
+          { title: 'Стратегії міграції', desc: '6 Rs, Security-First Framework, Landing Zones' },
+          { title: 'Програма безпеки та DevSecOps', desc: 'Team structure, metrics, CI/CD security, shift-left' },
+          { title: 'Vendor Selection та майбутнє', desc: 'Evaluation framework, build vs buy, emerging trends' }
+        ],
+        slides: [
+          { id: '12-1', title: 'Тема 12.1 — Ринок хмарної безпеки', desc: 'Розмір, сегменти, вендори, тренди' },
+          { id: '12-2', title: 'Тема 12.2 — Стратегії міграції', desc: '6 Rs, Landing Zones, frameworks' },
+          { id: '12-3', title: 'Тема 12.3 — Програма безпеки', desc: 'Team, metrics, DevSecOps pipeline' },
+          { id: '12-4', title: 'Тема 12.4 — Vendor та майбутнє', desc: 'Evaluation, trends, підсумки курсу' }
+        ]
+      }
     };
 
     (function() {

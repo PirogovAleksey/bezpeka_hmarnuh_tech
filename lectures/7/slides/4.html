@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 7.4 — Інструменти CSPM | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=7">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 7.4: Інструменти та практика CSPM</p>
+    </section>
+
+    <section class="slide">
+      <h1>Native Cloud Tools</h1>
+      <ul>
+        <li><strong>AWS:</strong> Config, Security Hub, Trusted Advisor</li>
+        <li><strong>Azure:</strong> Defender for Cloud, Azure Policy</li>
+        <li><strong>GCP:</strong> Security Command Center</li>
+        <li>Глибока інтеграція, включені у вартість</li>
+        <li>Обмеження: single-cloud only</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Third-Party Leaders</h1>
+      <ul>
+        <li><strong>Prisma Cloud:</strong> Comprehensive, multi-cloud, Gartner leader</li>
+        <li><strong>Wiz:</strong> Attack path analysis, graph-based, $10B+ startup</li>
+        <li><strong>Orca:</strong> SideScanning, agentless</li>
+        <li><strong>Lacework:</strong> Behavior-based anomaly detection</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Open Source Options</h1>
+      <ul>
+        <li><strong>Prowler:</strong> AWS/Azure/GCP, CIS Benchmarks, CLI</li>
+        <li><strong>CloudSploit:</strong> Multi-cloud scanning</li>
+        <li><strong>Steampipe:</strong> SQL interface до cloud APIs</li>
+        <li><strong>Checkov:</strong> IaC scanning (Terraform, K8s)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Порівняння підходів</h1>
+      <ul>
+        <li><strong>Native:</strong> Безкоштовно, single-cloud, базовий функціонал</li>
+        <li><strong>Third-Party:</strong> $$$, multi-cloud, advanced features</li>
+        <li><strong>Open Source:</strong> Безкоштовно, потребує налаштування</li>
+        <li>Вибір залежить від масштабу та бюджету</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Стратегія впровадження</h1>
+      <ul>
+        <li><strong>Фаза 1:</strong> Assessment — inventory, requirements</li>
+        <li><strong>Фаза 2:</strong> Pilot — POC у non-prod</li>
+        <li><strong>Фаза 3:</strong> Rollout — production, workflows</li>
+        <li><strong>Фаза 4:</strong> Optimization — tuning, automation</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Best Practices</h1>
+      <ul>
+        <li><strong>Visibility first:</strong> Inventory перед enforcement</li>
+        <li><strong>Prioritize:</strong> Critical + public exposure + production</li>
+        <li><strong>Enable DevOps:</strong> Self-service, clear guidance</li>
+        <li><strong>Automate carefully:</strong> Low-risk спочатку</li>
+        <li><strong>Measure:</strong> MTTD, MTTR, compliance score</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>CSPM → CNAPP</h1>
+      <ul>
+        <li><strong>CNAPP</strong> = CSPM + CWPP + CIEM + DSPM</li>
+        <li>Correlated findings: повна картина ризику</li>
+        <li>Single pane of glass</li>
+        <li>Gartner: 75% нових CSPM буде CNAPP до 2025</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Ключові висновки</h1>
+      <ul>
+        <li>Misconfigurations — #1 причина хмарних інцидентів</li>
+        <li>CSPM автоматизує detection та remediation</li>
+        <li>Вибір tool: native → third-party → open source</li>
+        <li>Інтеграція з DevOps критична для успіху</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна лекція: CNAPP — комплексний захист cloud-native додатків</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

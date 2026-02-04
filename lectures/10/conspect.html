@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Конспект лекції 10: Захист даних та криптографія у хмарі — encryption, key management, data protection.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Конспект лекції 10 — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../../index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../../lecture.html?id=10" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Конспект</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Лекція 10. Захист даних та криптографія у хмарі</h1>
+      <div class="lecture-info">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+      </div>
+
+      <section>
+        <h2>Вступ</h2>
+        <p>Дані — це найцінніший актив більшості організацій. У хмарному середовищі захист даних набуває особливого значення, оскільки дані зберігаються на інфраструктурі третьої сторони та передаються через публічні мережі. Криптографія є фундаментальним інструментом для забезпечення конфіденційності та цілісності даних у хмарі.</p>
+
+        <p>У цій лекції ми розглянемо повний спектр питань захисту даних у хмарі — від класифікації та lifecycle management до advanced криптографічних технологій, таких як HSM, envelope encryption та confidential computing.</p>
+
+        <h3>Чому захист даних у хмарі особливий?</h3>
+        <ul>
+          <li><strong>Multi-tenancy:</strong> Дані різних клієнтів на спільній інфраструктурі</li>
+          <li><strong>Data residency:</strong> Дані можуть зберігатися в різних юрисдикціях</li>
+          <li><strong>Provider access:</strong> Технічна можливість доступу провайдера до даних</li>
+          <li><strong>Network exposure:</strong> Дані передаються через публічні мережі</li>
+          <li><strong>Compliance:</strong> GDPR, HIPAA, PCI DSS мають специфічні вимоги</li>
+        </ul>
+
+        <h3>Цілі лекції</h3>
+        <p>Після цієї лекції ви зможете:</p>
+        <ul>
+          <li>Класифікувати дані та визначати відповідні заходи захисту</li>
+          <li>Пояснити принципи encryption at-rest та in-transit</li>
+          <li>Описати стратегії key management у хмарі</li>
+          <li>Розуміти advanced криптографічні технології (HSM, envelope encryption, BYOK)</li>
+          <li>Впроваджувати комплексну стратегію захисту даних</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10.1 Основи захисту даних у хмарі</h2>
+
+        <h3>Класифікація даних</h3>
+        <p>Не всі дані однаково цінні. Класифікація допомагає визначити відповідний рівень захисту:</p>
+
+        <p><strong>Типові рівні класифікації:</strong></p>
+        <ul>
+          <li><strong>Public:</strong> Інформація для вільного поширення (маркетингові матеріали)</li>
+          <li><strong>Internal:</strong> Внутрішня інформація, не для публікації</li>
+          <li><strong>Confidential:</strong> Конфіденційна бізнес-інформація</li>
+          <li><strong>Restricted/Secret:</strong> Найвищий рівень захисту (PII, фінансові дані)</li>
+        </ul>
+
+        <p><strong>Категорії sensitive data:</strong></p>
+        <ul>
+          <li><strong>PII (Personally Identifiable Information):</strong> Ім'я, email, телефон, адреса</li>
+          <li><strong>PHI (Protected Health Information):</strong> Медичні записи (HIPAA)</li>
+          <li><strong>PCI (Payment Card Information):</strong> Номери карток, CVV</li>
+          <li><strong>Credentials:</strong> Паролі, API keys, tokens</li>
+          <li><strong>Intellectual Property:</strong> Вихідний код, патенти, trade secrets</li>
+        </ul>
+
+        <h3>Data Lifecycle</h3>
+        <p>Захист даних на кожному етапі життєвого циклу:</p>
+
+        <p><strong>1. Creation/Collection</strong></p>
+        <ul>
+          <li>Класифікація при створенні</li>
+          <li>Мінімізація збору (collect only what's needed)</li>
+          <li>Consent management для PII</li>
+        </ul>
+
+        <p><strong>2. Storage</strong></p>
+        <ul>
+          <li>Encryption at-rest</li>
+          <li>Access controls</li>
+          <li>Data residency compliance</li>
+        </ul>
+
+        <p><strong>3. Use/Processing</strong></p>
+        <ul>
+          <li>Access logging</li>
+          <li>Data masking для non-production</li>
+          <li>Encryption in-use (confidential computing)</li>
+        </ul>
+
+        <p><strong>4. Sharing/Transfer</strong></p>
+        <ul>
+          <li>Encryption in-transit</li>
+          <li>Secure APIs</li>
+          <li>Data sharing agreements</li>
+        </ul>
+
+        <p><strong>5. Archival</strong></p>
+        <ul>
+          <li>Long-term encryption</li>
+          <li>Key management для archived data</li>
+          <li>Compliance retention</li>
+        </ul>
+
+        <p><strong>6. Destruction</strong></p>
+        <ul>
+          <li>Secure deletion</li>
+          <li>Crypto-shredding (знищення ключів)</li>
+          <li>Certificate of destruction</li>
+        </ul>
+
+        <h3>Shared Responsibility для даних</h3>
+        <p>У контексті Shared Responsibility Model:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Відповідальність</th>
+              <th>Provider</th>
+              <th>Customer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Physical security</td>
+              <td>✓</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Infrastructure encryption</td>
+              <td>✓</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Data classification</td>
+              <td></td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td>Data encryption (customer data)</td>
+              <td></td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td>Access management</td>
+              <td></td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td>Key management</td>
+              <td>Shared</td>
+              <td>Shared</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>10.2 Криптографія: основи</h2>
+
+        <h3>Симетричне шифрування</h3>
+        <p>Один ключ для шифрування та дешифрування:</p>
+
+        <p><strong>Алгоритми:</strong></p>
+        <ul>
+          <li><strong>AES (Advanced Encryption Standard):</strong> Стандарт для symmetric encryption, AES-256 рекомендований</li>
+          <li><strong>ChaCha20:</strong> Швидший за AES на деяких платформах</li>
+        </ul>
+
+        <p><strong>Переваги:</strong> Швидкість, ефективність для великих обсягів даних</p>
+        <p><strong>Недоліки:</strong> Проблема обміну ключами (key distribution)</p>
+
+        <h3>Асиметричне шифрування</h3>
+        <p>Пара ключів: public (для шифрування) та private (для дешифрування):</p>
+
+        <p><strong>Алгоритми:</strong></p>
+        <ul>
+          <li><strong>RSA:</strong> Класичний, широко підтримуваний (RSA-2048, RSA-4096)</li>
+          <li><strong>ECDSA/ECDH:</strong> Elliptic Curve, менші ключі при тій самій безпеці</li>
+        </ul>
+
+        <p><strong>Переваги:</strong> Вирішує проблему key distribution</p>
+        <p><strong>Недоліки:</strong> Повільніший за symmetric, не підходить для великих обсягів</p>
+
+        <h3>Hybrid Encryption</h3>
+        <p>Комбінація symmetric та asymmetric:</p>
+        <ol>
+          <li>Генерується random symmetric key (Data Encryption Key, DEK)</li>
+          <li>Дані шифруються DEK (symmetric, швидко)</li>
+          <li>DEK шифрується public key (asymmetric)</li>
+          <li>Encrypted DEK зберігається разом з encrypted data</li>
+        </ol>
+        <p>Це основа envelope encryption, який використовується в cloud KMS.</p>
+
+        <h3>Хеш-функції</h3>
+        <p>Односторонні функції для integrity verification:</p>
+        <ul>
+          <li><strong>SHA-256:</strong> Стандарт для integrity checks</li>
+          <li><strong>SHA-3:</strong> Новіший стандарт</li>
+          <li><strong>HMAC:</strong> Keyed hashing для authentication</li>
+        </ul>
+
+        <p><strong>Застосування:</strong> Password hashing, digital signatures, data integrity.</p>
+
+        <h3>Digital Signatures</h3>
+        <p>Підтвердження автентичності та integrity:</p>
+        <ol>
+          <li>Hash від даних</li>
+          <li>Hash шифрується private key → signature</li>
+          <li>Recipient дешифрує signature public key, порівнює hash</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>10.3 Encryption At-Rest</h2>
+
+        <h3>Що таке encryption at-rest?</h3>
+        <p>Шифрування даних, що зберігаються на носіях (диски, SSD, object storage).</p>
+
+        <p><strong>Захищає від:</strong></p>
+        <ul>
+          <li>Physical theft of storage media</li>
+          <li>Unauthorized access to storage</li>
+          <li>Data remnants після deletion</li>
+        </ul>
+
+        <p><strong>НЕ захищає від:</strong></p>
+        <ul>
+          <li>Compromised credentials</li>
+          <li>Application-level vulnerabilities</li>
+          <li>Insider threats з authorized access</li>
+        </ul>
+
+        <h3>Рівні encryption at-rest</h3>
+
+        <p><strong>1. Storage-level encryption</strong></p>
+        <ul>
+          <li>Encryption на рівні storage service</li>
+          <li>Transparent для applications</li>
+          <li>Приклад: AWS S3 default encryption, Azure Storage Service Encryption</li>
+        </ul>
+
+        <p><strong>2. Volume-level encryption</strong></p>
+        <ul>
+          <li>Encryption цілого disk volume</li>
+          <li>Приклад: AWS EBS encryption, Azure Disk Encryption</li>
+        </ul>
+
+        <p><strong>3. Database-level encryption</strong></p>
+        <ul>
+          <li>TDE (Transparent Data Encryption)</li>
+          <li>Column-level encryption</li>
+          <li>Приклад: RDS encryption, Azure SQL TDE</li>
+        </ul>
+
+        <p><strong>4. Application-level encryption</strong></p>
+        <ul>
+          <li>Encryption у application code</li>
+          <li>Найвищий контроль, але складніша реалізація</li>
+          <li>Client-side encryption</li>
+        </ul>
+
+        <h3>Cloud Provider Default Encryption</h3>
+
+        <p><strong>AWS:</strong></p>
+        <ul>
+          <li>S3: Default encryption (SSE-S3, SSE-KMS, SSE-C)</li>
+          <li>EBS: Optional encryption (default можна увімкнути)</li>
+          <li>RDS: Optional encryption at creation time</li>
+        </ul>
+
+        <p><strong>Azure:</strong></p>
+        <ul>
+          <li>Storage: SSE enabled by default (256-bit AES)</li>
+          <li>Managed Disks: Encryption by default</li>
+          <li>Azure SQL: TDE enabled by default</li>
+        </ul>
+
+        <p><strong>GCP:</strong></p>
+        <ul>
+          <li>All data encrypted by default (Google-managed keys)</li>
+          <li>Customer-managed encryption keys (CMEK) optional</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10.4 Encryption In-Transit</h2>
+
+        <h3>Що таке encryption in-transit?</h3>
+        <p>Шифрування даних під час передачі через мережу.</p>
+
+        <p><strong>Захищає від:</strong></p>
+        <ul>
+          <li>Man-in-the-middle attacks</li>
+          <li>Network eavesdropping</li>
+          <li>Data interception</li>
+        </ul>
+
+        <h3>TLS (Transport Layer Security)</h3>
+        <p>Основний протокол для encryption in-transit:</p>
+
+        <p><strong>Версії:</strong></p>
+        <ul>
+          <li><strong>TLS 1.2:</strong> Мінімально рекомендована версія</li>
+          <li><strong>TLS 1.3:</strong> Найновіша, швидша, безпечніша</li>
+          <li><strong>SSL, TLS 1.0, 1.1:</strong> Deprecated, не використовувати</li>
+        </ul>
+
+        <p><strong>Cipher Suites:</strong></p>
+        <ul>
+          <li>Комбінація алгоритмів для key exchange, encryption, authentication</li>
+          <li>Рекомендовано: ECDHE для key exchange, AES-GCM для encryption</li>
+          <li>Уникати: RC4, DES, MD5</li>
+        </ul>
+
+        <h3>Certificate Management</h3>
+        <p>TLS потребує сертифікати для authentication:</p>
+
+        <p><strong>Cloud certificate services:</strong></p>
+        <ul>
+          <li><strong>AWS Certificate Manager (ACM):</strong> Free public certificates, auto-renewal</li>
+          <li><strong>Azure Key Vault Certificates:</strong> Certificate lifecycle management</li>
+          <li><strong>GCP Certificate Manager:</strong> Managed SSL certificates</li>
+        </ul>
+
+        <p><strong>Best practices:</strong></p>
+        <ul>
+          <li>Automate certificate renewal</li>
+          <li>Monitor certificate expiration</li>
+          <li>Use managed certificates where possible</li>
+        </ul>
+
+        <h3>Internal Traffic Encryption</h3>
+        <p>Шифрування east-west traffic всередині cloud:</p>
+
+        <ul>
+          <li><strong>Service Mesh (Istio, Linkerd):</strong> mTLS між services</li>
+          <li><strong>VPC encryption:</strong> AWS VPC traffic encryption</li>
+          <li><strong>Database connections:</strong> TLS для database connections</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10.5 Key Management</h2>
+
+        <h3>Чому key management критичний?</h3>
+        <p>Encryption без proper key management — це false sense of security:</p>
+        <ul>
+          <li>Компрометація ключа = компрометація всіх даних</li>
+          <li>Втрата ключа = втрата доступу до даних</li>
+          <li>Key rotation необхідний для long-term security</li>
+        </ul>
+
+        <h3>Cloud Key Management Services (KMS)</h3>
+
+        <p><strong>AWS KMS:</strong></p>
+        <ul>
+          <li>Managed service для створення та управління ключами</li>
+          <li>Integration з 100+ AWS services</li>
+          <li>Automatic key rotation (annual)</li>
+          <li>CloudTrail logging всіх key operations</li>
+          <li>Types: AWS-managed, Customer-managed, Custom key stores</li>
+        </ul>
+
+        <p><strong>Azure Key Vault:</strong></p>
+        <ul>
+          <li>Keys, secrets, certificates management</li>
+          <li>HSM-backed keys available</li>
+          <li>Soft-delete та purge protection</li>
+          <li>Access policies та RBAC</li>
+        </ul>
+
+        <p><strong>Google Cloud KMS:</strong></p>
+        <ul>
+          <li>Hierarchical key management</li>
+          <li>Automatic та manual rotation</li>
+          <li>HSM та software protection levels</li>
+          <li>External Key Manager (EKM) support</li>
+        </ul>
+
+        <h3>Envelope Encryption</h3>
+        <p>Стандартний pattern для cloud encryption:</p>
+
+        <p><strong>Як працює:</strong></p>
+        <ol>
+          <li><strong>Data Encryption Key (DEK):</strong> Random key для шифрування даних</li>
+          <li><strong>Key Encryption Key (KEK):</strong> Master key в KMS для шифрування DEK</li>
+          <li>Дані шифруються DEK</li>
+          <li>DEK шифрується KEK → Encrypted DEK</li>
+          <li>Encrypted DEK зберігається разом з encrypted data</li>
+        </ol>
+
+        <p><strong>Переваги:</strong></p>
+        <ul>
+          <li>Master key ніколи не покидає KMS</li>
+          <li>Efficient: великі дані шифруються швидким symmetric key</li>
+          <li>Scalable: кожен об'єкт може мати унікальний DEK</li>
+          <li>Key rotation: достатньо rotate KEK</li>
+        </ul>
+
+        <h3>Key Rotation</h3>
+        <p>Регулярна заміна ключів для зменшення ризику:</p>
+
+        <p><strong>Automatic rotation:</strong></p>
+        <ul>
+          <li>AWS KMS: Automatic annual rotation для customer-managed keys</li>
+          <li>Новий key material, старий зберігається для decryption</li>
+        </ul>
+
+        <p><strong>Manual rotation:</strong></p>
+        <ul>
+          <li>Створення нового key</li>
+          <li>Re-encryption даних новим key</li>
+          <li>Deprecation старого key</li>
+        </ul>
+
+        <p><strong>Best practices:</strong></p>
+        <ul>
+          <li>Rotate keys annually minimum</li>
+          <li>Immediate rotation при suspected compromise</li>
+          <li>Automate rotation where possible</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10.6 Advanced Криптографічні технології</h2>
+
+        <h3>Hardware Security Modules (HSM)</h3>
+        <p>Dedicated hardware для криптографічних операцій:</p>
+
+        <p><strong>Характеристики:</strong></p>
+        <ul>
+          <li>Tamper-resistant hardware</li>
+          <li>Keys ніколи не покидають HSM</li>
+          <li>FIPS 140-2 Level 3 certification</li>
+          <li>High-assurance key protection</li>
+        </ul>
+
+        <p><strong>Cloud HSM services:</strong></p>
+        <ul>
+          <li><strong>AWS CloudHSM:</strong> Dedicated HSM instances</li>
+          <li><strong>Azure Dedicated HSM:</strong> Single-tenant HSM</li>
+          <li><strong>GCP Cloud HSM:</strong> HSM-backed keys in Cloud KMS</li>
+        </ul>
+
+        <p><strong>Use cases:</strong></p>
+        <ul>
+          <li>Regulatory compliance (PCI DSS, HIPAA)</li>
+          <li>PKI та certificate authorities</li>
+          <li>Database encryption keys</li>
+          <li>Code signing</li>
+        </ul>
+
+        <h3>BYOK (Bring Your Own Key)</h3>
+        <p>Використання власних ключів у cloud KMS:</p>
+
+        <p><strong>Як працює:</strong></p>
+        <ol>
+          <li>Генерація ключа на власному HSM</li>
+          <li>Wrapping ключа для transfer</li>
+          <li>Import в cloud KMS</li>
+          <li>Використання для encryption</li>
+        </ol>
+
+        <p><strong>Переваги:</strong></p>
+        <ul>
+          <li>Повний контроль над key generation</li>
+          <li>Compliance requirements</li>
+          <li>Key escrow outside cloud</li>
+        </ul>
+
+        <p><strong>Обмеження:</strong></p>
+        <ul>
+          <li>Складніший management</li>
+          <li>Не всі features KMS доступні</li>
+          <li>Customer responsibility для key backup</li>
+        </ul>
+
+        <h3>HYOK (Hold Your Own Key)</h3>
+        <p>Ключі залишаються повністю під контролем клієнта:</p>
+        <ul>
+          <li>External Key Manager</li>
+          <li>Cloud service запитує key від external KMS</li>
+          <li>Приклад: GCP External Key Manager, Azure Key Vault Managed HSM</li>
+        </ul>
+
+        <h3>Confidential Computing</h3>
+        <p>Захист даних під час processing (encryption in-use):</p>
+
+        <p><strong>Технології:</strong></p>
+        <ul>
+          <li><strong>Intel SGX:</strong> Secure Enclaves</li>
+          <li><strong>AMD SEV:</strong> Secure Encrypted Virtualization</li>
+          <li><strong>ARM TrustZone:</strong> Trusted Execution Environment</li>
+        </ul>
+
+        <p><strong>Cloud offerings:</strong></p>
+        <ul>
+          <li><strong>Azure Confidential Computing:</strong> DCsv2/DCsv3 VMs</li>
+          <li><strong>GCP Confidential VMs:</strong> AMD SEV</li>
+          <li><strong>AWS Nitro Enclaves:</strong> Isolated compute</li>
+        </ul>
+
+        <p><strong>Use cases:</strong></p>
+        <ul>
+          <li>Multi-party computation</li>
+          <li>Secure data collaboration</li>
+          <li>Protecting data from cloud provider</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10.7 Data Protection Practices</h2>
+
+        <h3>Data Loss Prevention (DLP)</h3>
+        <p>Запобігання витоку sensitive data:</p>
+
+        <p><strong>Capabilities:</strong></p>
+        <ul>
+          <li>Content inspection: Виявлення PII, PCI, PHI у даних</li>
+          <li>Context analysis: Хто, куди, як передає дані</li>
+          <li>Policy enforcement: Block, alert, encrypt</li>
+        </ul>
+
+        <p><strong>Cloud DLP services:</strong></p>
+        <ul>
+          <li><strong>Google Cloud DLP:</strong> Content inspection та de-identification</li>
+          <li><strong>Amazon Macie:</strong> ML-based data discovery в S3</li>
+          <li><strong>Microsoft Purview:</strong> Unified data governance</li>
+        </ul>
+
+        <h3>Data Masking та Tokenization</h3>
+
+        <p><strong>Data Masking:</strong></p>
+        <ul>
+          <li>Заміна sensitive data на fictional але realistic data</li>
+          <li>Для non-production environments</li>
+          <li>Static masking (copy) vs dynamic masking (on-the-fly)</li>
+        </ul>
+
+        <p><strong>Tokenization:</strong></p>
+        <ul>
+          <li>Заміна sensitive data на token</li>
+          <li>Original data зберігається в secure vault</li>
+          <li>Token не має mathematical relationship до original</li>
+          <li>Часто для PCI compliance</li>
+        </ul>
+
+        <h3>Access Controls</h3>
+
+        <p><strong>Identity-based access:</strong></p>
+        <ul>
+          <li>IAM policies для data access</li>
+          <li>Least privilege principle</li>
+          <li>Regular access reviews</li>
+        </ul>
+
+        <p><strong>Resource-based policies:</strong></p>
+        <ul>
+          <li>S3 bucket policies</li>
+          <li>Database access controls</li>
+          <li>Network-level restrictions</li>
+        </ul>
+
+        <p><strong>Attribute-based access (ABAC):</strong></p>
+        <ul>
+          <li>Access based on tags, classifications</li>
+          <li>Dynamic policies</li>
+          <li>Fine-grained control</li>
+        </ul>
+
+        <h3>Backup та Recovery</h3>
+
+        <p><strong>Backup encryption:</strong></p>
+        <ul>
+          <li>Backups повинні бути encrypted</li>
+          <li>Key management для backup keys</li>
+          <li>Cross-region backup considerations</li>
+        </ul>
+
+        <p><strong>Recovery testing:</strong></p>
+        <ul>
+          <li>Regular restore tests</li>
+          <li>Key availability для decryption</li>
+          <li>RTO/RPO validation</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>10.8 Compliance та Data Protection</h2>
+
+        <h3>GDPR Requirements</h3>
+        <ul>
+          <li><strong>Encryption:</strong> "Appropriate technical measures"</li>
+          <li><strong>Pseudonymization:</strong> Processing без identification</li>
+          <li><strong>Right to erasure:</strong> Crypto-shredding як option</li>
+          <li><strong>Data portability:</strong> Export encrypted data</li>
+          <li><strong>Breach notification:</strong> 72-hour requirement</li>
+        </ul>
+
+        <h3>PCI DSS Requirements</h3>
+        <ul>
+          <li><strong>Requirement 3:</strong> Protect stored cardholder data (encryption)</li>
+          <li><strong>Requirement 4:</strong> Encrypt transmission (TLS)</li>
+          <li><strong>Key management:</strong> Specific requirements для crypto keys</li>
+          <li><strong>HSM:</strong> Often required для key storage</li>
+        </ul>
+
+        <h3>HIPAA Requirements</h3>
+        <ul>
+          <li><strong>Encryption addressable:</strong> Not mandatory but strongly recommended</li>
+          <li><strong>Safe harbor:</strong> Breach notification exception якщо data encrypted</li>
+          <li><strong>Access controls:</strong> Technical safeguards required</li>
+        </ul>
+
+        <h3>Data Residency</h3>
+        <ul>
+          <li>Деякі jurisdictions вимагають data to stay in-country</li>
+          <li>Cloud provider region selection</li>
+          <li>Encryption keys residency considerations</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Висновки</h2>
+        <p>Захист даних у хмарі потребує комплексного підходу, що включає classification, encryption на всіх рівнях, та robust key management. Ключові висновки:</p>
+
+        <ul>
+          <li><strong>Classification first:</strong> Не можна захистити те, що не класифіковано</li>
+          <li><strong>Encryption everywhere:</strong> At-rest, in-transit, in-use</li>
+          <li><strong>Key management критичний:</strong> Encryption без proper key management — ілюзія безпеки</li>
+          <li><strong>Envelope encryption:</strong> Стандартний pattern для cloud</li>
+          <li><strong>Cloud KMS:</strong> Використовуйте managed services для key management</li>
+          <li><strong>HSM для high assurance:</strong> Коли compliance або risk вимагають</li>
+          <li><strong>Defense in depth:</strong> Encryption — один шар, не єдиний захист</li>
+        </ul>
+
+        <h3>Практичні рекомендації</h3>
+        <ol>
+          <li>Класифікуйте дані перед migration в cloud</li>
+          <li>Enable default encryption для всіх storage services</li>
+          <li>Use TLS 1.2+ для всіх connections</li>
+          <li>Implement envelope encryption через cloud KMS</li>
+          <li>Enable automatic key rotation</li>
+          <li>Monitor key usage через audit logs</li>
+          <li>Test backup restoration включаючи key availability</li>
+        </ol>
+
+        <p>У наступній лекції ми розглянемо реальні інциденти хмарної безпеки — що пішло не так, які уроки можна винести, та як запобігти подібним інцидентам.</p>
+      </section>
+
+      <section>
+        <h2>Контрольні питання</h2>
+        <ol>
+          <li>Чим відрізняється encryption at-rest від encryption in-transit?</li>
+          <li>Що таке envelope encryption і чому він використовується в cloud?</li>
+          <li>Поясніть різницю між BYOK та HYOK.</li>
+          <li>Які переваги та недоліки використання HSM?</li>
+          <li>Що таке confidential computing і які проблеми воно вирішує?</li>
+          <li>Як key rotation підвищує безпеку?</li>
+          <li>Які вимоги до encryption має GDPR та PCI DSS?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Додаткові матеріали</h2>
+        <ul>
+          <li><strong>AWS KMS Best Practices:</strong> <a href="https://docs.aws.amazon.com/kms/latest/developerguide/best-practices.html" target="_blank">docs.aws.amazon.com/kms</a></li>
+          <li><strong>Azure Encryption Overview:</strong> <a href="https://docs.microsoft.com/en-us/azure/security/fundamentals/encryption-overview" target="_blank">docs.microsoft.com</a></li>
+          <li><strong>Google Cloud Encryption:</strong> <a href="https://cloud.google.com/security/encryption" target="_blank">cloud.google.com/security/encryption</a></li>
+          <li><strong>NIST Cryptographic Standards:</strong> <a href="https://csrc.nist.gov/projects/cryptographic-standards-and-guidelines" target="_blank">csrc.nist.gov</a></li>
+          <li><strong>Confidential Computing Consortium:</strong> <a href="https://confidentialcomputing.io/" target="_blank">confidentialcomputing.io</a></li>
+        </ul>
+      </section>
+
+    </article>
+
+    <div class="lecture-nav-bottom">
+      <a href="../../lecture.html?id=9" class="nav-btn">← Попередня лекція</a>
+      <a href="../../lecture.html?id=11" class="nav-btn">Наступна лекція →</a>
+    </div>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../../js/main.js"></script>
+
+</body>
+</html>

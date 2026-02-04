@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 9.2 — AI для виявлення загроз | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=9">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 9.2: AI для виявлення загроз</p>
+    </section>
+
+    <section class="slide">
+      <h1>Anomaly Detection</h1>
+      <ul>
+        <li>Навчити модель "нормальної" поведінки</li>
+        <li>Виявляти відхилення від норми</li>
+        <li><strong>Point:</strong> Spike in traffic</li>
+        <li><strong>Contextual:</strong> Login at 3 AM</li>
+        <li><strong>Collective:</strong> Slow data exfiltration</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Алгоритми Anomaly Detection</h1>
+      <ul>
+        <li><strong>Isolation Forest:</strong> Швидкий, high-dimensional</li>
+        <li><strong>One-Class SVM:</strong> Класичний підхід</li>
+        <li><strong>Autoencoders:</strong> Neural network, reconstruction error</li>
+        <li><strong>LSTM:</strong> Для time-series sequences</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>UEBA — User Behavior Analytics</h1>
+      <ul>
+        <li><strong>Login patterns:</strong> Час, location, device</li>
+        <li><strong>Data access:</strong> Що, скільки, коли</li>
+        <li><strong>Network:</strong> Connections, data transfer</li>
+        <li>Use cases: Insider threat, compromised account, privilege abuse</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Network Traffic Analysis</h1>
+      <ul>
+        <li><strong>DDoS:</strong> Abnormal traffic patterns</li>
+        <li><strong>Lateral movement:</strong> Unusual east-west traffic</li>
+        <li><strong>C2 communication:</strong> Command-and-control detection</li>
+        <li><strong>Exfiltration:</strong> Unusual outbound flows</li>
+        <li>Challenge: Encrypted traffic, dynamic IPs</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>ML-based Malware Detection</h1>
+      <ul>
+        <li><strong>Static:</strong> File structure, strings, imports</li>
+        <li><strong>Dynamic:</strong> Behavior при виконанні</li>
+        <li><strong>Hybrid:</strong> Static + Dynamic</li>
+        <li>Переваги: Zero-day, polymorphic, faster detection</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Cloud ML Services</h1>
+      <ul>
+        <li><strong>AWS GuardDuty:</strong> ML threat detection</li>
+        <li><strong>Amazon Macie:</strong> Sensitive data в S3</li>
+        <li><strong>Azure Sentinel:</strong> UEBA, Fusion correlation</li>
+        <li><strong>Google Chronicle:</strong> Security analytics</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна тема: AI для автоматизації Security Operations</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

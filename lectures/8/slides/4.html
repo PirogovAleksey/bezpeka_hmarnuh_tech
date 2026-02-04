@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 8.4 — Ринок CNAPP | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=8">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 8.4: Ринок CNAPP та впровадження</p>
+    </section>
+
+    <section class="slide">
+      <h1>Gartner Magic Quadrant Leaders</h1>
+      <ul>
+        <li><strong>Wiz:</strong> Agentless, graph-based, $10B+ startup</li>
+        <li><strong>Prisma Cloud:</strong> Most comprehensive, enterprise</li>
+        <li><strong>Microsoft Defender:</strong> Azure-native, M365 integration</li>
+        <li><strong>CrowdStrike:</strong> EDR heritage, threat intel</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Інші ключові гравці</h1>
+      <ul>
+        <li><strong>Orca:</strong> SideScanning, 100% agentless</li>
+        <li><strong>Lacework:</strong> Behavior-based anomaly detection</li>
+        <li><strong>Aqua:</strong> Container-focused, open source (Trivy)</li>
+        <li><strong>Sysdig:</strong> Runtime security, Falco</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Критерії вибору</h1>
+      <ul>
+        <li><strong>Coverage:</strong> Які clouds, K8s, serverless?</li>
+        <li><strong>Deployment:</strong> Agentless vs agent?</li>
+        <li><strong>Depth:</strong> CSPM, CWPP, CIEM sophistication?</li>
+        <li><strong>Attack paths:</strong> Якість risk prioritization?</li>
+        <li><strong>Integrations:</strong> SIEM, SOAR, CI/CD, ticketing?</li>
+        <li><strong>TCO:</strong> Pricing model, implementation cost?</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Фази впровадження</h1>
+      <ul>
+        <li><strong>Assessment:</strong> 2-4 тижні — inventory, requirements</li>
+        <li><strong>POC:</strong> 3-4 тижні — vendor evaluation</li>
+        <li><strong>Deployment:</strong> 4-6 тижнів — production rollout</li>
+        <li><strong>Operations:</strong> Ongoing — optimization, metrics</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Best Practices</h1>
+      <ul>
+        <li><strong>Visibility first:</strong> Не enforcement одразу</li>
+        <li><strong>Attack paths focus:</strong> 10 paths > 1000 findings</li>
+        <li><strong>Enable DevOps:</strong> Self-service, clear guidance</li>
+        <li><strong>Shift-left:</strong> CI/CD integration early</li>
+        <li><strong>Measure:</strong> MTTD, MTTR, coverage</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Майбутнє CNAPP</h1>
+      <ul>
+        <li><strong>AI/ML:</strong> Intelligent prioritization</li>
+        <li><strong>Runtime:</strong> eBPF, real-time behavior</li>
+        <li><strong>AppSec:</strong> SAST/DAST, API security integration</li>
+        <li><strong>Multi-cloud native:</strong> Cross-cloud attack paths</li>
+        <li>Gartner: 60% enterprises → CNAPP до 2026</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Ключові висновки</h1>
+      <ul>
+        <li>CNAPP = Consolidation of cloud security tools</li>
+        <li>Attack path analysis — головна диференціація</li>
+        <li>Context + correlation > isolated findings</li>
+        <li>Dev + Sec + Ops — єдина платформа для всіх</li>
+        <li>Market is maturing — CNAPP стає стандартом</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна лекція: AI та Machine Learning у хмарній безпеці</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

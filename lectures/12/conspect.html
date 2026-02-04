@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Лекція 12: Ринок хмарної безпеки та стратегія впровадження. Курс безпеки хмарних технологій.">
+  <title>Лекція 12 — Ринок хмарної безпеки та стратегія впровадження</title>
+  <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../../index.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../../lecture.html?id=12" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Лекція 12 з 12</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Ринок хмарної безпеки та стратегія впровадження</h1>
+      <p class="lecture-meta">Модуль 2: Моніторинг, захист даних, реагування • Фінальна лекція</p>
+
+      <section>
+        <h2>12.1. Огляд ринку хмарної безпеки</h2>
+
+        <h3>Розмір та динаміка ринку</h3>
+        <p>Ринок хмарної безпеки є одним із найдинамічніших сегментів кібербезпеки:</p>
+
+        <ul>
+          <li><strong>2023:</strong> $40.8 млрд глобально</li>
+          <li><strong>2028 (прогноз):</strong> $77.5 млрд</li>
+          <li><strong>CAGR:</strong> 13.7% річного зростання</li>
+          <li><strong>Драйвери:</strong> Cloud adoption, remote work, compliance, sophisticated threats</li>
+        </ul>
+
+        <h3>Основні сегменти ринку</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Сегмент</th>
+              <th>Частка ринку</th>
+              <th>Ключові гравці</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CASB</td>
+              <td>~15%</td>
+              <td>Netskope, Zscaler, Microsoft</td>
+            </tr>
+            <tr>
+              <td>CSPM/CNAPP</td>
+              <td>~20%</td>
+              <td>Wiz, Palo Alto, Orca</td>
+            </tr>
+            <tr>
+              <td>Cloud IAM</td>
+              <td>~18%</td>
+              <td>Okta, Microsoft, CyberArk</td>
+            </tr>
+            <tr>
+              <td>CWPP</td>
+              <td>~12%</td>
+              <td>CrowdStrike, SentinelOne</td>
+            </tr>
+            <tr>
+              <td>Cloud SIEM/XDR</td>
+              <td>~15%</td>
+              <td>Splunk, Microsoft, Elastic</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Ключові вендори</h3>
+
+        <h4>Cloud-Native Security Platforms</h4>
+        <ul>
+          <li><strong>Wiz:</strong> Найшвидше зростаюча компанія ($10B valuation за 2 роки), agentless CNAPP</li>
+          <li><strong>Orca Security:</strong> SideScanning technology, unified platform</li>
+          <li><strong>Lacework:</strong> Anomaly-based detection, Polygraph data platform</li>
+          <li><strong>Aqua Security:</strong> Container-first, shift-left focus</li>
+        </ul>
+
+        <h4>Enterprise Security Vendors</h4>
+        <ul>
+          <li><strong>Palo Alto Networks:</strong> Prisma Cloud (acquired RedLock, Bridgecrew)</li>
+          <li><strong>CrowdStrike:</strong> Falcon Cloud Security, endpoint-to-cloud</li>
+          <li><strong>Microsoft:</strong> Defender for Cloud, native Azure integration</li>
+          <li><strong>Check Point:</strong> CloudGuard, comprehensive security</li>
+        </ul>
+
+        <h4>Specialized Players</h4>
+        <ul>
+          <li><strong>Snyk:</strong> Developer security, SCA leader</li>
+          <li><strong>HashiCorp:</strong> Vault, Terraform (IaC security)</li>
+          <li><strong>Datadog:</strong> Observability + security convergence</li>
+          <li><strong>Tenable:</strong> Cloud exposure management</li>
+        </ul>
+
+        <h3>Тренди ринку 2024-2025</h3>
+        <ul>
+          <li><strong>Consolidation:</strong> CNAPP platforms absorbing point solutions</li>
+          <li><strong>AI Integration:</strong> LLMs для triage, remediation guidance</li>
+          <li><strong>Shift-Left Dominance:</strong> Security в CI/CD pipeline</li>
+          <li><strong>Identity-First:</strong> CIEM як критичний компонент</li>
+          <li><strong>Platform Engineering:</strong> Security as internal product</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12.2. Стратегії міграції в хмару</h2>
+
+        <h3>6 Rs of Cloud Migration</h3>
+        <p>Gartner framework для прийняття рішень про міграцію:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Стратегія</th>
+              <th>Опис</th>
+              <th>Security Implications</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Rehost</strong></td>
+              <td>Lift-and-shift без змін</td>
+              <td>Legacy vulnerabilities переносяться, потрібен CWPP</td>
+            </tr>
+            <tr>
+              <td><strong>Replatform</strong></td>
+              <td>Lift-and-shift з оптимізацією</td>
+              <td>Можливість впровадити managed services</td>
+            </tr>
+            <tr>
+              <td><strong>Repurchase</strong></td>
+              <td>Перехід на SaaS</td>
+              <td>Shared responsibility, CASB потрібен</td>
+            </tr>
+            <tr>
+              <td><strong>Refactor</strong></td>
+              <td>Re-architect для cloud-native</td>
+              <td>Найкращий момент для security by design</td>
+            </tr>
+            <tr>
+              <td><strong>Retain</strong></td>
+              <td>Залишити on-premises</td>
+              <td>Hybrid security, connectivity</td>
+            </tr>
+            <tr>
+              <td><strong>Retire</strong></td>
+              <td>Вивести з експлуатації</td>
+              <td>Data disposal, decommissioning</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Security-First Migration Framework</h3>
+
+        <h4>Phase 1: Assessment (2-4 тижні)</h4>
+        <ul>
+          <li>Inventory існуючих workloads та data classification</li>
+          <li>Current security posture assessment</li>
+          <li>Compliance requirements mapping</li>
+          <li>Risk assessment для кожного workload</li>
+          <li>Gap analysis: current vs target state</li>
+        </ul>
+
+        <h4>Phase 2: Planning (4-8 тижнів)</h4>
+        <ul>
+          <li>Target architecture design з security controls</li>
+          <li>Identity та access management strategy</li>
+          <li>Network segmentation plan</li>
+          <li>Data protection requirements</li>
+          <li>Incident response procedures</li>
+          <li>Tool selection та vendor evaluation</li>
+        </ul>
+
+        <h4>Phase 3: Foundation (4-6 тижнів)</h4>
+        <ul>
+          <li>Landing zone setup з security baseline</li>
+          <li>IAM structure (OUs, accounts, roles)</li>
+          <li>Network topology (VPCs, subnets, peering)</li>
+          <li>Logging та monitoring infrastructure</li>
+          <li>Security tooling deployment (CSPM, SIEM)</li>
+        </ul>
+
+        <h4>Phase 4: Migration (ongoing)</h4>
+        <ul>
+          <li>Workload migration в waves</li>
+          <li>Security validation для кожної wave</li>
+          <li>Configuration verification</li>
+          <li>Testing та validation</li>
+          <li>Documentation update</li>
+        </ul>
+
+        <h4>Phase 5: Optimization (continuous)</h4>
+        <ul>
+          <li>Security posture improvement</li>
+          <li>Cost optimization</li>
+          <li>Automation enhancement</li>
+          <li>Compliance continuous monitoring</li>
+        </ul>
+
+        <h3>Landing Zone Security</h3>
+        <p>Landing zone — це pre-configured cloud environment з baseline security:</p>
+
+        <h4>AWS Control Tower</h4>
+        <ul>
+          <li>Multi-account strategy з Organizations</li>
+          <li>Guardrails (preventive та detective)</li>
+          <li>Account Factory для standardized accounts</li>
+          <li>Centralized logging до Log Archive account</li>
+        </ul>
+
+        <h4>Azure Landing Zones</h4>
+        <ul>
+          <li>Management groups hierarchy</li>
+          <li>Azure Policy для governance</li>
+          <li>Hub-spoke network topology</li>
+          <li>Centralized security з Defender for Cloud</li>
+        </ul>
+
+        <h4>GCP Landing Zone</h4>
+        <ul>
+          <li>Resource hierarchy (org, folders, projects)</li>
+          <li>Organization policies</li>
+          <li>Shared VPC for networking</li>
+          <li>Security Command Center</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12.3. Побудова програми хмарної безпеки</h2>
+
+        <h3>Cloud Security Program Framework</h3>
+        <p>Структурований підхід до побудови security capabilities:</p>
+
+        <h4>Governance Layer</h4>
+        <ul>
+          <li><strong>Policies:</strong> Cloud security policy, acceptable use, data classification</li>
+          <li><strong>Standards:</strong> Configuration baselines, encryption standards</li>
+          <li><strong>Procedures:</strong> Incident response, change management</li>
+          <li><strong>Roles:</strong> CISO, Cloud Security Architect, SecOps team</li>
+        </ul>
+
+        <h4>Control Layer</h4>
+        <ul>
+          <li><strong>Preventive:</strong> IAM, network segmentation, encryption</li>
+          <li><strong>Detective:</strong> CSPM, SIEM, anomaly detection</li>
+          <li><strong>Corrective:</strong> Auto-remediation, incident response</li>
+        </ul>
+
+        <h4>Operations Layer</h4>
+        <ul>
+          <li><strong>Monitoring:</strong> 24/7 SOC, alert management</li>
+          <li><strong>Response:</strong> Incident handling, forensics</li>
+          <li><strong>Maintenance:</strong> Patching, configuration management</li>
+        </ul>
+
+        <h3>Security Team Structure</h3>
+
+        <h4>Централізована модель</h4>
+        <ul>
+          <li>Dedicated cloud security team</li>
+          <li>Pros: Consistency, expertise concentration</li>
+          <li>Cons: Bottleneck, slower delivery</li>
+          <li>Best for: Smaller organizations, regulated industries</li>
+        </ul>
+
+        <h4>Федеративна модель</h4>
+        <ul>
+          <li>Security champions в кожній team</li>
+          <li>Pros: Scalability, faster delivery</li>
+          <li>Cons: Inconsistency, skill gaps</li>
+          <li>Best for: Large organizations, DevOps culture</li>
+        </ul>
+
+        <h4>Гібридна модель (рекомендована)</h4>
+        <ul>
+          <li>Central team для strategy, tooling, governance</li>
+          <li>Embedded security engineers в product teams</li>
+          <li>Security champions program</li>
+          <li>Platform team для security automation</li>
+        </ul>
+
+        <h3>Key Roles</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th>Responsibilities</th>
+              <th>Skills</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cloud Security Architect</td>
+              <td>Design, standards, review</td>
+              <td>Cloud platforms, security frameworks</td>
+            </tr>
+            <tr>
+              <td>Cloud Security Engineer</td>
+              <td>Implementation, automation</td>
+              <td>IaC, scripting, cloud APIs</td>
+            </tr>
+            <tr>
+              <td>Cloud SecOps Analyst</td>
+              <td>Monitoring, incident response</td>
+              <td>SIEM, forensics, threat hunting</td>
+            </tr>
+            <tr>
+              <td>DevSecOps Engineer</td>
+              <td>CI/CD security, shift-left</td>
+              <td>Pipeline tools, SAST/DAST</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Metrics та KPIs</h3>
+
+        <h4>Security Posture Metrics</h4>
+        <ul>
+          <li><strong>MTTD:</strong> Mean Time to Detect (target: &lt;24 hours)</li>
+          <li><strong>MTTR:</strong> Mean Time to Remediate (target: critical &lt;4 hours)</li>
+          <li><strong>Misconfiguration rate:</strong> % of resources non-compliant</li>
+          <li><strong>Vulnerability density:</strong> Critical/high vulns per 1000 resources</li>
+        </ul>
+
+        <h4>Operational Metrics</h4>
+        <ul>
+          <li><strong>Alert volume:</strong> Total alerts, false positive rate</li>
+          <li><strong>Coverage:</strong> % of assets monitored</li>
+          <li><strong>Automation rate:</strong> % of remediations automated</li>
+          <li><strong>Compliance score:</strong> % compliant з frameworks</li>
+        </ul>
+
+        <h4>Business Metrics</h4>
+        <ul>
+          <li><strong>Security incidents:</strong> Count, severity, impact</li>
+          <li><strong>Audit findings:</strong> Open findings, remediation time</li>
+          <li><strong>Developer friction:</strong> Security-related deployment blocks</li>
+          <li><strong>Cost efficiency:</strong> Security spend per workload</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12.4. DevSecOps та Shift-Left</h2>
+
+        <h3>DevSecOps Principles</h3>
+        <p>Інтеграція безпеки в DevOps lifecycle:</p>
+
+        <ul>
+          <li><strong>Shift-Left:</strong> Security testing якомога раніше</li>
+          <li><strong>Automation:</strong> Security as code, policy as code</li>
+          <li><strong>Collaboration:</strong> Dev + Sec + Ops working together</li>
+          <li><strong>Continuous:</strong> Security в кожному commit, не тільки перед release</li>
+          <li><strong>Feedback:</strong> Fast feedback loops для developers</li>
+        </ul>
+
+        <h3>Secure CI/CD Pipeline</h3>
+
+        <h4>Pre-Commit</h4>
+        <ul>
+          <li>IDE security plugins (Snyk, SonarLint)</li>
+          <li>Pre-commit hooks (secrets detection)</li>
+          <li>Local SAST scanning</li>
+        </ul>
+
+        <h4>Commit/Build</h4>
+        <ul>
+          <li><strong>SAST:</strong> SonarQube, Checkmarx, Semgrep</li>
+          <li><strong>SCA:</strong> Snyk, Dependabot, OWASP Dependency-Check</li>
+          <li><strong>Secrets:</strong> GitLeaks, TruffleHog, git-secrets</li>
+          <li><strong>IaC:</strong> Checkov, tfsec, KICS</li>
+        </ul>
+
+        <h4>Test</h4>
+        <ul>
+          <li><strong>DAST:</strong> OWASP ZAP, Burp Suite</li>
+          <li><strong>Container:</strong> Trivy, Grype, Clair</li>
+          <li><strong>API:</strong> Postman security tests</li>
+        </ul>
+
+        <h4>Deploy</h4>
+        <ul>
+          <li>Policy gates (OPA, Kyverno)</li>
+          <li>Deployment verification</li>
+          <li>Configuration validation</li>
+        </ul>
+
+        <h4>Runtime</h4>
+        <ul>
+          <li>CWPP, runtime protection</li>
+          <li>CSPM continuous scanning</li>
+          <li>Threat detection</li>
+        </ul>
+
+        <h3>Infrastructure as Code Security</h3>
+
+        <h4>Terraform Security</h4>
+        <pre><code># Example: Checkov scan
+checkov -d ./terraform --framework terraform
+
+# tfsec scan
+tfsec ./terraform
+
+# Terraform Sentinel policy
+policy "require-encryption" {
+  enforcement_level = "hard-mandatory"
+}
+</code></pre>
+
+        <h4>Common IaC Misconfigurations</h4>
+        <ul>
+          <li>S3 buckets without encryption</li>
+          <li>Security groups with 0.0.0.0/0</li>
+          <li>IAM policies з wildcard permissions</li>
+          <li>Unencrypted databases</li>
+          <li>Missing logging configuration</li>
+        </ul>
+
+        <h3>Security Champions Program</h3>
+        <p>Scaling security через developers:</p>
+
+        <ul>
+          <li><strong>Selection:</strong> Volunteers з кожної team</li>
+          <li><strong>Training:</strong> Security fundamentals, cloud security, secure coding</li>
+          <li><strong>Responsibilities:</strong> Security reviews, threat modeling, team training</li>
+          <li><strong>Recognition:</strong> Badges, career path, community</li>
+          <li><strong>Support:</strong> Regular meetings, Slack channel, office hours</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12.5. Vendor Selection та Tool Evaluation</h2>
+
+        <h3>Evaluation Framework</h3>
+
+        <h4>Functional Requirements</h4>
+        <ul>
+          <li>Cloud coverage (AWS, Azure, GCP, multi-cloud)</li>
+          <li>Asset discovery completeness</li>
+          <li>Detection capabilities та accuracy</li>
+          <li>Remediation guidance та automation</li>
+          <li>Compliance frameworks supported</li>
+          <li>Integration capabilities</li>
+        </ul>
+
+        <h4>Non-Functional Requirements</h4>
+        <ul>
+          <li><strong>Performance:</strong> Scan frequency, alert latency</li>
+          <li><strong>Scalability:</strong> Accounts, resources, users</li>
+          <li><strong>Reliability:</strong> Uptime SLA, data retention</li>
+          <li><strong>Security:</strong> SOC 2, data handling, encryption</li>
+        </ul>
+
+        <h4>Operational Considerations</h4>
+        <ul>
+          <li>Deployment model (SaaS, self-hosted)</li>
+          <li>Agent vs agentless</li>
+          <li>Implementation effort</li>
+          <li>Ongoing maintenance</li>
+          <li>Support quality</li>
+        </ul>
+
+        <h4>Commercial Terms</h4>
+        <ul>
+          <li>Pricing model (per resource, per user, flat)</li>
+          <li>Contract flexibility</li>
+          <li>Vendor viability та roadmap</li>
+          <li>Total cost of ownership</li>
+        </ul>
+
+        <h3>Proof of Concept Process</h3>
+
+        <h4>POC Planning (1 week)</h4>
+        <ul>
+          <li>Define success criteria</li>
+          <li>Select test environment</li>
+          <li>Identify stakeholders</li>
+          <li>Create evaluation scorecard</li>
+        </ul>
+
+        <h4>POC Execution (2-4 weeks)</h4>
+        <ul>
+          <li>Deploy in test environment</li>
+          <li>Configure policies та integrations</li>
+          <li>Run through test scenarios</li>
+          <li>Document findings, issues</li>
+        </ul>
+
+        <h4>POC Evaluation (1 week)</h4>
+        <ul>
+          <li>Score against criteria</li>
+          <li>Compare vendors</li>
+          <li>Calculate TCO</li>
+          <li>Make recommendation</li>
+        </ul>
+
+        <h3>Build vs Buy Decision</h3>
+
+        <h4>When to Buy</h4>
+        <ul>
+          <li>Commodity capability (CSPM, vulnerability scanning)</li>
+          <li>Rapid deployment needed</li>
+          <li>Limited internal resources</li>
+          <li>Compliance requirements</li>
+        </ul>
+
+        <h4>When to Build</h4>
+        <ul>
+          <li>Unique requirements</li>
+          <li>Deep integration needs</li>
+          <li>Competitive advantage</li>
+          <li>Strong engineering team</li>
+        </ul>
+
+        <h4>Hybrid Approach</h4>
+        <ul>
+          <li>Buy platform, customize policies</li>
+          <li>Buy detection, build response automation</li>
+          <li>Open source + commercial support</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12.6. Майбутнє хмарної безпеки</h2>
+
+        <h3>Emerging Trends</h3>
+
+        <h4>AI-Native Security</h4>
+        <ul>
+          <li>LLMs для alert triage та investigation</li>
+          <li>AI-generated remediation code</li>
+          <li>Natural language policy definition</li>
+          <li>Autonomous threat response</li>
+          <li>Challenge: Adversarial AI, trust</li>
+        </ul>
+
+        <h4>Platform Engineering</h4>
+        <ul>
+          <li>Internal Developer Platform (IDP)</li>
+          <li>Security as self-service</li>
+          <li>Golden paths з built-in security</li>
+          <li>Reduced cognitive load для developers</li>
+        </ul>
+
+        <h4>Zero Trust Maturity</h4>
+        <ul>
+          <li>Від network-centric до identity-centric</li>
+          <li>Continuous verification</li>
+          <li>Microsegmentation everywhere</li>
+          <li>Context-aware access</li>
+        </ul>
+
+        <h4>Supply Chain Security</h4>
+        <ul>
+          <li>SBOM (Software Bill of Materials) стандартизація</li>
+          <li>Sigstore для signing artifacts</li>
+          <li>SLSA framework adoption</li>
+          <li>Provenance verification</li>
+        </ul>
+
+        <h4>Quantum-Safe Cryptography</h4>
+        <ul>
+          <li>NIST post-quantum standards (2024)</li>
+          <li>Crypto-agility planning</li>
+          <li>Harvest now, decrypt later threats</li>
+          <li>Cloud provider quantum-safe options</li>
+        </ul>
+
+        <h3>Skill Development</h3>
+
+        <h4>Certifications</h4>
+        <ul>
+          <li><strong>Cloud:</strong> AWS Security Specialty, Azure Security Engineer, GCP Security</li>
+          <li><strong>General:</strong> CCSP, CCSK, CISSP</li>
+          <li><strong>Technical:</strong> CKS (Kubernetes), HashiCorp Vault</li>
+        </ul>
+
+        <h4>Hands-On Learning</h4>
+        <ul>
+          <li>Cloud security labs (A Cloud Guru, Cybrary)</li>
+          <li>CTF challenges (flAWS, CloudGoat)</li>
+          <li>Personal cloud projects</li>
+          <li>Open source contributions</li>
+        </ul>
+
+        <h4>Community</h4>
+        <ul>
+          <li>Cloud Security Alliance (CSA)</li>
+          <li>OWASP Cloud Security</li>
+          <li>fwd:cloudsec conference</li>
+          <li>Twitter/LinkedIn cloud security community</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>12.7. Підсумки курсу</h2>
+
+        <h3>Ключові концепції</h3>
+        <p>За цей курс ми розглянули:</p>
+
+        <ul>
+          <li><strong>Foundations:</strong> NIST архітектура, моделі (IaaS/PaaS/SaaS), Shared Responsibility</li>
+          <li><strong>Governance:</strong> Стандарти (ISO, NIST), управління ризиками, compliance</li>
+          <li><strong>Architecture:</strong> Zero Trust, мікросегментація, identity-first</li>
+          <li><strong>Workload Security:</strong> VM, containers, serverless, CWPP</li>
+          <li><strong>Emerging Tech:</strong> Blockchain для security, AI/ML threat detection</li>
+          <li><strong>Posture Management:</strong> CSPM, CNAPP, attack path analysis</li>
+          <li><strong>Data Protection:</strong> Encryption, KMS, HSM, DLP</li>
+          <li><strong>Incident Response:</strong> Real incidents, lessons learned, IR framework</li>
+        </ul>
+
+        <h3>Action Items</h3>
+        <p>Що робити далі:</p>
+
+        <ol>
+          <li><strong>Assess:</strong> Оцініть поточний security posture вашої організації</li>
+          <li><strong>Plan:</strong> Розробіть roadmap покращення</li>
+          <li><strong>Learn:</strong> Отримайте cloud security certification</li>
+          <li><strong>Practice:</strong> Hands-on labs, CTF challenges</li>
+          <li><strong>Community:</strong> Приєднайтесь до security community</li>
+          <li><strong>Stay Updated:</strong> Follow trends, threat intelligence</li>
+        </ol>
+
+        <h3>Final Thoughts</h3>
+        <blockquote>
+          <p>"Security is not a product, but a process." — Bruce Schneier</p>
+        </blockquote>
+
+        <p>Хмарна безпека — це безперервна подорож, а не пункт призначення. Технології змінюються, загрози еволюціонують, але фундаментальні принципи залишаються:</p>
+
+        <ul>
+          <li><strong>Defense in Depth:</strong> Багато шарів захисту</li>
+          <li><strong>Least Privilege:</strong> Мінімальні необхідні права</li>
+          <li><strong>Assume Breach:</strong> Готуйтесь до компрометації</li>
+          <li><strong>Continuous Improvement:</strong> Постійно вчіться та адаптуйтесь</li>
+        </ul>
+
+        <p>Дякую за проходження курсу "Безпека хмарних технологій"!</p>
+      </section>
+
+    </article>
+
+    <div class="lecture-nav-bottom">
+      <a href="../../lecture.html?id=11" class="nav-btn">← Попередня лекція</a>
+      <a href="../../index.html" class="nav-btn">До списку лекцій</a>
+    </div>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../../js/main.js"></script>
+
+</body>
+</html>

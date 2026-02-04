@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 9.4 — Виклики AI в безпеці | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=9">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 9.4: Виклики та ризики AI в безпеці</p>
+    </section>
+
+    <section class="slide">
+      <h1>Adversarial AI — Атаки</h1>
+      <ul>
+        <li><strong>Reconnaissance:</strong> AI-powered scanning</li>
+        <li><strong>Phishing:</strong> LLM-generated emails</li>
+        <li><strong>Deepfakes:</strong> Voice/video social engineering</li>
+        <li><strong>Malware:</strong> AI-assisted evasive malware</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Adversarial AI — На ML</h1>
+      <ul>
+        <li><strong>Evasion:</strong> Модифікація input для bypass</li>
+        <li><strong>Poisoning:</strong> Corrupting training data</li>
+        <li><strong>Model stealing:</strong> Extraction через queries</li>
+        <li><strong>Prompt injection:</strong> Маніпуляція LLM</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Explainability (XAI)</h1>
+      <ul>
+        <li>Чому модель вважає це malicious?</li>
+        <li>Analyst потребує пояснення</li>
+        <li>Compliance та audit вимоги</li>
+        <li><strong>Tools:</strong> LIME, SHAP, Attention</li>
+        <li>Black box не acceptable</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Data Challenges</h1>
+      <ul>
+        <li><strong>Insufficient:</strong> Мало прикладів rare attacks</li>
+        <li><strong>Imbalanced:</strong> 99.9% normal, 0.1% malicious</li>
+        <li><strong>Label quality:</strong> Wrong labels = bad model</li>
+        <li><strong>Concept drift:</strong> Patterns змінюються</li>
+        <li><strong>Bias:</strong> Historical bias in data</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Red Flags у AI Security</h1>
+      <ul>
+        <li><strong>"100% detection"</strong> — нереалістично</li>
+        <li><strong>"No false positives"</strong> — неможливо</li>
+        <li><strong>No explainability</strong> — pure black box</li>
+        <li><strong>"Set and forget"</strong> — потребує maintenance</li>
+        <li><strong>Vague "AI-powered"</strong> — без деталей</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Майбутнє AI в Security</h1>
+      <ul>
+        <li><strong>Autonomous SOC:</strong> Мінімальний human intervention</li>
+        <li><strong>Generative AI:</strong> LLMs як standard tools</li>
+        <li><strong>Federated Learning:</strong> Privacy-preserving ML</li>
+        <li><strong>AI vs AI:</strong> Defensive vs offensive arms race</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Ключові висновки</h1>
+      <ul>
+        <li>AI — інструмент, не magic</li>
+        <li>Anomaly detection — killer app</li>
+        <li>Human-in-the-loop essential</li>
+        <li>Data quality критична</li>
+        <li>Adversarial threats реальні</li>
+        <li>Explainability matters</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна лекція: Захист даних та криптографія у хмарі</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

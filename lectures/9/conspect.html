@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Конспект лекції 9: Штучний інтелект та машинне навчання в хмарній безпеці — AI-driven security operations.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Конспект лекції 9 — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../../index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../../lecture.html?id=9" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Конспект</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Лекція 9. Штучний інтелект та машинне навчання в хмарній безпеці</h1>
+      <div class="lecture-info">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+      </div>
+
+      <section>
+        <h2>Вступ</h2>
+        <p>Штучний інтелект (AI) та машинне навчання (ML) трансформують кібербезпеку так само радикально, як вони змінюють інші галузі. У хмарній безпеці AI/ML вирішують фундаментальну проблему масштабу: людина фізично не може аналізувати мільйони подій безпеки щодня, але алгоритми можуть.</p>
+
+        <p>У цій лекції ми розглянемо, як AI та ML застосовуються в хмарній безпеці — від виявлення загроз до автоматизації response. Ми також обговоримо виклики та ризики, пов'язані з AI, включаючи adversarial attacks та проблеми пояснюваності.</p>
+
+        <h3>Чому AI/ML критично важливі для хмарної безпеки?</h3>
+        <p>Проблема масштабу в хмарі:</p>
+        <ul>
+          <li><strong>Volume:</strong> Типова enterprise хмара генерує терабайти логів щодня</li>
+          <li><strong>Velocity:</strong> Тисячі змін конфігурації на годину</li>
+          <li><strong>Variety:</strong> Сотні різних типів ресурсів та подій</li>
+          <li><strong>Shortage:</strong> Глобальний дефіцит 3.5+ млн security professionals</li>
+        </ul>
+
+        <p>Традиційні підходи (rule-based detection) не справляються:</p>
+        <ul>
+          <li>Правила швидко застарівають</li>
+          <li>Атакуючі адаптуються до відомих сигнатур</li>
+          <li>Високий рівень false positives</li>
+          <li>Неможливість виявити novel attacks</li>
+        </ul>
+
+        <h3>Цілі лекції</h3>
+        <p>Після цієї лекції ви зможете:</p>
+        <ul>
+          <li>Пояснити основні концепції AI/ML у контексті кібербезпеки</li>
+          <li>Описати застосування ML для threat detection та anomaly detection</li>
+          <li>Розуміти роль AI в автоматизації security operations</li>
+          <li>Оцінювати ризики та обмеження AI-based security solutions</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9.1 Основи AI/ML для безпеки</h2>
+
+        <h3>Ключові терміни</h3>
+        <p><strong>Artificial Intelligence (AI)</strong> — широка область комп'ютерних наук, що займається створенням систем, здатних виконувати завдання, які зазвичай вимагають людського інтелекту.</p>
+
+        <p><strong>Machine Learning (ML)</strong> — підмножина AI, де системи навчаються з даних без явного програмування правил.</p>
+
+        <p><strong>Deep Learning (DL)</strong> — підмножина ML з використанням нейронних мереж з багатьма шарами.</p>
+
+        <p><strong>Generative AI</strong> — AI, що створює новий контент (текст, код, зображення). Приклади: GPT-4, Claude.</p>
+
+        <h3>Типи машинного навчання</h3>
+
+        <p><strong>1. Supervised Learning (навчання з учителем)</strong></p>
+        <ul>
+          <li>Навчання на labeled data (вхід → відома відповідь)</li>
+          <li><strong>Classification:</strong> Malware vs benign, spam vs legitimate</li>
+          <li><strong>Regression:</strong> Risk scoring</li>
+          <li>Потребує великих labeled datasets</li>
+          <li>Приклад: Класифікація мережевого трафіку як normal/malicious</li>
+        </ul>
+
+        <p><strong>2. Unsupervised Learning (навчання без учителя)</strong></p>
+        <ul>
+          <li>Навчання на unlabeled data, пошук patterns</li>
+          <li><strong>Clustering:</strong> Групування схожої поведінки</li>
+          <li><strong>Anomaly Detection:</strong> Виявлення відхилень від норми</li>
+          <li>Не потребує labeled data</li>
+          <li>Приклад: Виявлення аномальної user behavior</li>
+        </ul>
+
+        <p><strong>3. Reinforcement Learning (навчання з підкріпленням)</strong></p>
+        <ul>
+          <li>Agent навчається через trial-and-error</li>
+          <li>Rewards за правильні дії, penalties за помилки</li>
+          <li>Застосування: Adaptive security policies, automated response</li>
+          <li>Приклад: Автоматичне налаштування firewall rules</li>
+        </ul>
+
+        <h3>ML Pipeline для безпеки</h3>
+        <p>Типовий процес розробки ML-моделі для security:</p>
+
+        <p><strong>1. Data Collection</strong></p>
+        <ul>
+          <li>Збір логів, мережевого трафіку, системних подій</li>
+          <li>Cloud: CloudTrail, VPC Flow Logs, Azure Activity Log</li>
+          <li>Endpoints: EDR telemetry</li>
+          <li>Challenges: Volume, privacy, data quality</li>
+        </ul>
+
+        <p><strong>2. Feature Engineering</strong></p>
+        <ul>
+          <li>Вибір та створення relevant features</li>
+          <li>Приклади: Login frequency, data transfer volume, time patterns</li>
+          <li>Domain expertise критичний</li>
+        </ul>
+
+        <p><strong>3. Model Training</strong></p>
+        <ul>
+          <li>Вибір алгоритму (Random Forest, Neural Network, etc.)</li>
+          <li>Training/validation/test splits</li>
+          <li>Hyperparameter tuning</li>
+        </ul>
+
+        <p><strong>4. Evaluation</strong></p>
+        <ul>
+          <li><strong>Precision:</strong> Частка true positives серед всіх positive predictions</li>
+          <li><strong>Recall:</strong> Частка виявлених threats серед всіх реальних threats</li>
+          <li><strong>F1 Score:</strong> Harmonic mean of precision та recall</li>
+          <li>False Positive Rate критичний для security (alert fatigue)</li>
+        </ul>
+
+        <p><strong>5. Deployment & Monitoring</strong></p>
+        <ul>
+          <li>Production deployment</li>
+          <li>Continuous monitoring for model drift</li>
+          <li>Retraining pipeline</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9.2 AI для виявлення загроз</h2>
+
+        <h3>Anomaly Detection</h3>
+        <p>Anomaly detection — один з найпоширеніших use cases ML у безпеці. Ідея: навчити модель "нормальної" поведінки, потім виявляти відхилення.</p>
+
+        <p><strong>Типи anomalies:</strong></p>
+        <ul>
+          <li><strong>Point anomalies:</strong> Одна точка різко відрізняється (spike in traffic)</li>
+          <li><strong>Contextual anomalies:</strong> Нормальна подія в ненормальному контексті (login at 3 AM)</li>
+          <li><strong>Collective anomalies:</strong> Група подій разом є anomaly (slow data exfiltration)</li>
+        </ul>
+
+        <p><strong>Алгоритми для anomaly detection:</strong></p>
+        <ul>
+          <li><strong>Isolation Forest:</strong> Швидкий, ефективний для high-dimensional data</li>
+          <li><strong>One-Class SVM:</strong> Класичний підхід</li>
+          <li><strong>Autoencoders:</strong> Neural network-based, reconstruction error як anomaly score</li>
+          <li><strong>LSTM:</strong> Для time-series data (sequence of events)</li>
+        </ul>
+
+        <h3>User and Entity Behavior Analytics (UEBA)</h3>
+        <p>UEBA застосовує ML для аналізу поведінки користувачів та entities (devices, applications):</p>
+
+        <p><strong>Що аналізується:</strong></p>
+        <ul>
+          <li>Login patterns: час, location, device</li>
+          <li>Data access patterns: що, скільки, коли</li>
+          <li>Network behavior: connections, data transfer</li>
+          <li>Application usage: які apps, як часто</li>
+        </ul>
+
+        <p><strong>Типові use cases:</strong></p>
+        <ul>
+          <li><strong>Insider threat:</strong> Співробітник починає копіювати велику кількість файлів</li>
+          <li><strong>Compromised account:</strong> Login з незвичної локації + abnormal behavior</li>
+          <li><strong>Privilege abuse:</strong> Admin account використовується для нетипових операцій</li>
+          <li><strong>Data exfiltration:</strong> Незвичні patterns передачі даних</li>
+        </ul>
+
+        <p><strong>Cloud-specific UEBA:</strong></p>
+        <ul>
+          <li>AWS GuardDuty: ML-based threat detection для AWS</li>
+          <li>Azure Sentinel: UEBA capabilities built-in</li>
+          <li>Google Chronicle: Security analytics з ML</li>
+        </ul>
+
+        <h3>Network Traffic Analysis</h3>
+        <p>ML для аналізу мережевого трафіку в хмарі:</p>
+
+        <p><strong>Use cases:</strong></p>
+        <ul>
+          <li><strong>DDoS detection:</strong> Виявлення abnormal traffic patterns</li>
+          <li><strong>Lateral movement:</strong> Незвичні east-west communications</li>
+          <li><strong>C2 communication:</strong> Виявлення command-and-control traffic</li>
+          <li><strong>Data exfiltration:</strong> Unusual outbound data flows</li>
+        </ul>
+
+        <p><strong>Challenges в cloud:</strong></p>
+        <ul>
+          <li>Encrypted traffic (TLS) — можна аналізувати metadata</li>
+          <li>Dynamic IPs та ephemeral resources</li>
+          <li>Multi-cloud та hybrid environments</li>
+        </ul>
+
+        <h3>Malware Detection</h3>
+        <p>ML для виявлення malware замість signature-based detection:</p>
+
+        <p><strong>Підходи:</strong></p>
+        <ul>
+          <li><strong>Static analysis:</strong> Аналіз файлу без виконання (features: file structure, strings, imports)</li>
+          <li><strong>Dynamic analysis:</strong> Аналіз behavior при виконанні (API calls, file operations, network)</li>
+          <li><strong>Hybrid:</strong> Комбінація static + dynamic</li>
+        </ul>
+
+        <p><strong>Переваги ML над signatures:</strong></p>
+        <ul>
+          <li>Виявлення zero-day malware</li>
+          <li>Resilience до polymorphic malware</li>
+          <li>Faster time-to-detection</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9.3 AI для автоматизації Security Operations</h2>
+
+        <h3>Intelligent Alert Triage</h3>
+        <p>Одна з найбільших проблем SOC — alert fatigue. ML допомагає:</p>
+
+        <p><strong>Alert Prioritization:</strong></p>
+        <ul>
+          <li>ML-based scoring на основі історичних даних</li>
+          <li>Які alerts зазвичай є true positives?</li>
+          <li>Context enrichment: asset criticality, user risk score</li>
+        </ul>
+
+        <p><strong>Alert Correlation:</strong></p>
+        <ul>
+          <li>Групування related alerts в incidents</li>
+          <li>Kill chain mapping</li>
+          <li>Зменшення duplicate/redundant alerts</li>
+        </ul>
+
+        <p><strong>False Positive Reduction:</strong></p>
+        <ul>
+          <li>Learning від analyst feedback</li>
+          <li>Auto-closing known false positives</li>
+          <li>Continuous model improvement</li>
+        </ul>
+
+        <h3>Automated Response (SOAR)</h3>
+        <p>Security Orchestration, Automation and Response з AI-enhancement:</p>
+
+        <p><strong>Типові automated actions:</strong></p>
+        <ul>
+          <li>Isolate compromised instance</li>
+          <li>Block malicious IP in security groups</li>
+          <li>Revoke suspicious IAM session</li>
+          <li>Trigger forensic data collection</li>
+        </ul>
+
+        <p><strong>AI enhancement:</strong></p>
+        <ul>
+          <li>Dynamic playbook selection based on incident type</li>
+          <li>Confidence-based automation (high confidence = auto-remediate)</li>
+          <li>Learning from analyst actions for new playbooks</li>
+        </ul>
+
+        <h3>Security Copilots</h3>
+        <p>Generative AI (LLMs) як асистенти для security analysts:</p>
+
+        <p><strong>Microsoft Security Copilot:</strong></p>
+        <ul>
+          <li>Natural language interface до security tools</li>
+          <li>"Summarize this incident"</li>
+          <li>"What actions should I take?"</li>
+          <li>"Generate a report for this investigation"</li>
+        </ul>
+
+        <p><strong>Use cases для LLMs в security:</strong></p>
+        <ul>
+          <li><strong>Alert summarization:</strong> Перетворення raw alerts в human-readable summaries</li>
+          <li><strong>Investigation assistance:</strong> Рекомендації наступних кроків</li>
+          <li><strong>Report generation:</strong> Автоматичні incident reports</li>
+          <li><strong>Query generation:</strong> Natural language → KQL/SQL queries</li>
+          <li><strong>Code analysis:</strong> Пояснення malicious scripts</li>
+        </ul>
+
+        <p><strong>Challenges LLMs в security:</strong></p>
+        <ul>
+          <li>Hallucinations — генерація неправдивої інформації</li>
+          <li>Data privacy — що відправляється в cloud LLM?</li>
+          <li>Prompt injection attacks</li>
+          <li>Over-reliance на AI recommendations</li>
+        </ul>
+
+        <h3>Vulnerability Prioritization</h3>
+        <p>ML для пріоритезації vulnerabilities beyond CVSS:</p>
+
+        <p><strong>Традиційний підхід:</strong></p>
+        <ul>
+          <li>CVSS score (Critical/High/Medium/Low)</li>
+          <li>Проблема: Тисячі Critical/High, неможливо виправити всі</li>
+        </ul>
+
+        <p><strong>ML-enhanced prioritization:</strong></p>
+        <ul>
+          <li>Exploit Prediction Scoring System (EPSS)</li>
+          <li>Threat intelligence integration</li>
+          <li>Asset context (internet-facing? production?)</li>
+          <li>Attack path analysis</li>
+        </ul>
+
+        <p><strong>Результат:</strong> Фокус на vulnerabilities, які реально будуть exploited.</p>
+      </section>
+
+      <section>
+        <h2>9.4 AI/ML у Cloud Security Tools</h2>
+
+        <h3>AWS Security Services з ML</h3>
+
+        <p><strong>Amazon GuardDuty:</strong></p>
+        <ul>
+          <li>ML-based threat detection</li>
+          <li>Аналізує CloudTrail, VPC Flow Logs, DNS logs</li>
+          <li>Виявляє: compromised instances, reconnaissance, credential theft</li>
+          <li>Anomaly detection для API calls</li>
+        </ul>
+
+        <p><strong>Amazon Macie:</strong></p>
+        <ul>
+          <li>ML для виявлення sensitive data в S3</li>
+          <li>PII, PHI, financial data classification</li>
+          <li>Anomaly detection для data access patterns</li>
+        </ul>
+
+        <p><strong>Amazon Detective:</strong></p>
+        <ul>
+          <li>Graph analysis для security investigations</li>
+          <li>ML-based entity behavior profiling</li>
+          <li>Automated finding analysis</li>
+        </ul>
+
+        <h3>Azure Security Services з ML</h3>
+
+        <p><strong>Microsoft Defender for Cloud:</strong></p>
+        <ul>
+          <li>ML-based threat protection</li>
+          <li>Adaptive application controls</li>
+          <li>Just-in-time VM access recommendations</li>
+        </ul>
+
+        <p><strong>Microsoft Sentinel:</strong></p>
+        <ul>
+          <li>Cloud-native SIEM з built-in ML</li>
+          <li>UEBA capabilities</li>
+          <li>Fusion — ML-based alert correlation</li>
+          <li>Anomaly detection rules</li>
+        </ul>
+
+        <p><strong>Microsoft Security Copilot:</strong></p>
+        <ul>
+          <li>GPT-4 based security assistant</li>
+          <li>Integration з Microsoft security products</li>
+          <li>Natural language security operations</li>
+        </ul>
+
+        <h3>Google Cloud Security з ML</h3>
+
+        <p><strong>Security Command Center:</strong></p>
+        <ul>
+          <li>ML-enhanced threat detection</li>
+          <li>Virtual Machine Threat Detection (VMTD)</li>
+          <li>Container Threat Detection</li>
+        </ul>
+
+        <p><strong>Chronicle:</strong></p>
+        <ul>
+          <li>Google-scale security analytics</li>
+          <li>ML for threat detection та investigation</li>
+          <li>Gemini integration для natural language</li>
+        </ul>
+
+        <h3>Third-Party AI-Native Security</h3>
+
+        <p><strong>Darktrace:</strong></p>
+        <ul>
+          <li>Self-learning AI для network security</li>
+          <li>"Enterprise Immune System" concept</li>
+          <li>Autonomous response capabilities</li>
+        </ul>
+
+        <p><strong>Vectra AI:</strong></p>
+        <ul>
+          <li>AI-driven threat detection та response</li>
+          <li>Focus на attacker behaviors</li>
+          <li>Cloud, network, identity coverage</li>
+        </ul>
+
+        <p><strong>SentinelOne:</strong></p>
+        <ul>
+          <li>AI-powered endpoint protection</li>
+          <li>Behavioral AI для malware detection</li>
+          <li>Automated response та remediation</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9.5 Виклики та ризики AI в безпеці</h2>
+
+        <h3>Adversarial AI</h3>
+        <p>Атакуючі також використовують AI та атакують AI-системи:</p>
+
+        <p><strong>AI для атак:</strong></p>
+        <ul>
+          <li><strong>Automated reconnaissance:</strong> AI-powered scanning та enumeration</li>
+          <li><strong>Phishing:</strong> LLM-generated convincing phishing emails</li>
+          <li><strong>Deepfakes:</strong> Voice/video для social engineering</li>
+          <li><strong>Malware generation:</strong> AI-assisted creation of evasive malware</li>
+          <li><strong>Password attacks:</strong> ML-based password guessing</li>
+        </ul>
+
+        <p><strong>Adversarial attacks на ML:</strong></p>
+        <ul>
+          <li><strong>Evasion attacks:</strong> Модифікація input для bypass detection</li>
+          <li><strong>Poisoning attacks:</strong> Corrupting training data</li>
+          <li><strong>Model stealing:</strong> Витягування trained model через queries</li>
+          <li><strong>Prompt injection:</strong> Маніпуляція LLM через crafted inputs</li>
+        </ul>
+
+        <h3>Explainability (XAI)</h3>
+        <p>Проблема "чорного ящика" в ML:</p>
+
+        <ul>
+          <li>Чому модель вважає цю активність malicious?</li>
+          <li>Analyst потребує пояснення для investigation</li>
+          <li>Compliance та audit вимоги</li>
+          <li>Legal implications (GDPR right to explanation)</li>
+        </ul>
+
+        <p><strong>Підходи до XAI:</strong></p>
+        <ul>
+          <li><strong>LIME:</strong> Local Interpretable Model-agnostic Explanations</li>
+          <li><strong>SHAP:</strong> SHapley Additive exPlanations</li>
+          <li><strong>Attention mechanisms:</strong> Для neural networks</li>
+          <li><strong>Rule extraction:</strong> Extracting rules from trained models</li>
+        </ul>
+
+        <h3>Data Quality та Bias</h3>
+        <p>ML модель тільки така хороша, як її дані:</p>
+
+        <ul>
+          <li><strong>Insufficient data:</strong> Для rare attacks мало прикладів</li>
+          <li><strong>Imbalanced data:</strong> 99.9% normal, 0.1% malicious</li>
+          <li><strong>Label quality:</strong> Неправильні labels = погана модель</li>
+          <li><strong>Concept drift:</strong> Patterns змінюються з часом</li>
+          <li><strong>Bias:</strong> Historical bias у training data</li>
+        </ul>
+
+        <h3>Operational Challenges</h3>
+
+        <p><strong>False Positives vs False Negatives trade-off:</strong></p>
+        <ul>
+          <li>High sensitivity = більше FP, alert fatigue</li>
+          <li>Low sensitivity = пропущені attacks</li>
+          <li>Tuning для конкретного environment</li>
+        </ul>
+
+        <p><strong>Model maintenance:</strong></p>
+        <ul>
+          <li>Regular retraining required</li>
+          <li>Monitoring for model degradation</li>
+          <li>A/B testing for model updates</li>
+        </ul>
+
+        <p><strong>Skills gap:</strong></p>
+        <ul>
+          <li>Security teams не завжди мають ML expertise</li>
+          <li>Data science teams не завжди розуміють security</li>
+          <li>Need for cross-functional collaboration</li>
+        </ul>
+
+        <h3>Security AI Red Flags</h3>
+        <p>На що звертати увагу при оцінці AI security solutions:</p>
+
+        <ul>
+          <li><strong>"100% detection rate"</strong> — нереалістично</li>
+          <li><strong>"No false positives"</strong> — impossible</li>
+          <li><strong>No explainability</strong> — pure black box</li>
+          <li><strong>"Set and forget"</strong> — ML потребує maintenance</li>
+          <li><strong>Vague "AI-powered"</strong> — без деталей implementation</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>9.6 Майбутнє AI в хмарній безпеці</h2>
+
+        <h3>Тренди</h3>
+
+        <p><strong>1. Autonomous Security Operations</strong></p>
+        <ul>
+          <li>AI-driven SOC з мінімальним human intervention</li>
+          <li>Automated threat hunting</li>
+          <li>Self-healing infrastructure</li>
+        </ul>
+
+        <p><strong>2. Generative AI Integration</strong></p>
+        <ul>
+          <li>LLMs як standard security tools</li>
+          <li>Natural language security interfaces</li>
+          <li>Automated documentation та reporting</li>
+        </ul>
+
+        <p><strong>3. Federated Learning</strong></p>
+        <ul>
+          <li>Collaborative ML без sharing raw data</li>
+          <li>Privacy-preserving threat intelligence</li>
+          <li>Industry-wide ML models</li>
+        </ul>
+
+        <p><strong>4. AI vs AI</strong></p>
+        <ul>
+          <li>Defensive AI vs offensive AI arms race</li>
+          <li>Adversarial robustness як standard requirement</li>
+          <li>AI-powered deception та honeypots</li>
+        </ul>
+
+        <h3>Recommendations</h3>
+
+        <p><strong>Для Security Teams:</strong></p>
+        <ol>
+          <li>Розуміти basics ML — не потрібно бути data scientist</li>
+          <li>Оцінювати AI claims критично</li>
+          <li>Вимагати explainability від vendors</li>
+          <li>Планувати для model maintenance</li>
+          <li>Combine AI з human expertise</li>
+        </ol>
+
+        <p><strong>Для Organizations:</strong></p>
+        <ol>
+          <li>Start з high-value use cases (alert triage)</li>
+          <li>Invest в data quality</li>
+          <li>Build cross-functional teams (security + data science)</li>
+          <li>Develop AI governance framework</li>
+          <li>Monitor for adversarial threats to AI</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Висновки</h2>
+        <p>AI та ML стали невід'ємною частиною хмарної безпеки, вирішуючи проблему масштабу, яку неможливо вирішити традиційними методами. Ключові висновки:</p>
+
+        <ul>
+          <li><strong>AI — не magic:</strong> Це інструмент з конкретними capabilities та limitations</li>
+          <li><strong>Anomaly detection — killer app:</strong> Найуспішніше застосування ML в security</li>
+          <li><strong>Human-in-the-loop:</strong> AI augments, не replaces security professionals</li>
+          <li><strong>Data quality critical:</strong> Garbage in, garbage out</li>
+          <li><strong>Adversarial threats real:</strong> AI systems теж можуть бути атаковані</li>
+          <li><strong>Explainability matters:</strong> Black box не acceptable для security decisions</li>
+          <li><strong>Continuous improvement:</strong> ML models потребують ongoing maintenance</li>
+        </ul>
+
+        <p>У наступній лекції ми розглянемо захист даних та криптографію у хмарі — як забезпечити confidentiality та integrity даних у хмарних середовищах.</p>
+      </section>
+
+      <section>
+        <h2>Контрольні питання</h2>
+        <ol>
+          <li>Чим відрізняються supervised та unsupervised learning у контексті security?</li>
+          <li>Що таке UEBA і які типи загроз він виявляє?</li>
+          <li>Як ML допомагає вирішити проблему alert fatigue?</li>
+          <li>Що таке adversarial attacks на ML моделі?</li>
+          <li>Чому explainability важлива для AI в security?</li>
+          <li>Які cloud-native сервіси використовують ML для threat detection?</li>
+          <li>Як Generative AI (LLMs) застосовується в security operations?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Додаткові матеріали</h2>
+        <ul>
+          <li><strong>MITRE ATLAS:</strong> Adversarial Threat Landscape for AI Systems — <a href="https://atlas.mitre.org/" target="_blank">atlas.mitre.org</a></li>
+          <li><strong>AWS GuardDuty Documentation:</strong> <a href="https://docs.aws.amazon.com/guardduty/" target="_blank">docs.aws.amazon.com/guardduty</a></li>
+          <li><strong>Microsoft Security Copilot:</strong> <a href="https://www.microsoft.com/security/business/ai-machine-learning/microsoft-security-copilot" target="_blank">microsoft.com/security-copilot</a></li>
+          <li><strong>NIST AI Risk Management Framework:</strong> <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank">nist.gov/ai-rmf</a></li>
+          <li><strong>Google Chronicle Security Operations:</strong> <a href="https://cloud.google.com/chronicle" target="_blank">cloud.google.com/chronicle</a></li>
+        </ul>
+      </section>
+
+    </article>
+
+    <div class="lecture-nav-bottom">
+      <a href="../../lecture.html?id=8" class="nav-btn">← Попередня лекція</a>
+      <a href="../../lecture.html?id=10" class="nav-btn">Наступна лекція →</a>
+    </div>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../../js/main.js"></script>
+
+</body>
+</html>

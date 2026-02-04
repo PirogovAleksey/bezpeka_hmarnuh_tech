@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Конспект лекції 8: Cloud-Native Application Protection Platform (CNAPP) — комплексний захист cloud-native додатків.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Конспект лекції 8 — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../../index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../../lecture.html?id=8" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Конспект</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Лекція 8. Cloud-Native Application Protection Platform (CNAPP)</h1>
+      <div class="lecture-info">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+      </div>
+
+      <section>
+        <h2>Вступ</h2>
+        <p>У попередній лекції ми детально розглянули CSPM — інструменти для управління станом безпеки хмарних конфігурацій. Однак CSPM — лише один з компонентів комплексної хмарної безпеки. Сьогодні ми розглянемо <strong>CNAPP (Cloud-Native Application Protection Platform)</strong> — концепцію об'єднання всіх аспектів захисту cloud-native додатків в єдину платформу.</p>
+
+        <p>Gartner ввів термін CNAPP у 2021 році, визнавши, що організації стикаються з "tool sprawl" — надмірною кількістю ізольованих інструментів безпеки, які не взаємодіють між собою. CNAPP — це відповідь на цю проблему: єдина платформа, яка захищає весь lifecycle cloud-native додатків.</p>
+
+        <h3>Чому виникла потреба в CNAPP?</h3>
+        <p>Еволюція хмарної безпеки створила кілька окремих категорій інструментів:</p>
+        <ul>
+          <li><strong>CSPM:</strong> Configuration та compliance для IaaS</li>
+          <li><strong>CWPP:</strong> Захист workloads (VMs, containers, serverless)</li>
+          <li><strong>CIEM:</strong> Identity та entitlement management</li>
+          <li><strong>Container Security:</strong> Image scanning, runtime protection</li>
+          <li><strong>IaC Security:</strong> Сканування Terraform, CloudFormation</li>
+        </ul>
+
+        <p>Проблема в тому, що ці інструменти працювали ізольовано. Security team отримувала тисячі alerts з різних систем без можливості зрозуміти реальний ризик. CNAPP об'єднує ці компоненти, забезпечуючи:</p>
+        <ul>
+          <li><strong>Correlated context:</strong> Зв'язок між misconfiguration, vulnerability та excessive permissions</li>
+          <li><strong>Attack path analysis:</strong> Розуміння, як атакуючий може досягти критичних активів</li>
+          <li><strong>Unified prioritization:</strong> Фокус на реальних ризиках, а не окремих findings</li>
+          <li><strong>Single pane of glass:</strong> Одна консоль для всієї cloud security</li>
+        </ul>
+
+        <h3>Цілі лекції</h3>
+        <p>Після цієї лекції ви зможете:</p>
+        <ul>
+          <li>Пояснити концепцію CNAPP та її відмінність від point solutions</li>
+          <li>Описати компоненти CNAPP та їх взаємодію</li>
+          <li>Розуміти attack path analysis та risk correlation</li>
+          <li>Оцінювати CNAPP-рішення для організації</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8.1 Від Point Solutions до CNAPP</h2>
+
+        <h3>Історія розвитку хмарної безпеки</h3>
+        <p>Еволюція cloud security tools відображає еволюцію самих хмарних технологій:</p>
+
+        <p><strong>Фаза 1: Lift-and-Shift (2010-2015)</strong></p>
+        <ul>
+          <li>Міграція традиційних додатків в хмару</li>
+          <li>Security tools: адаптовані on-premise рішення</li>
+          <li>Фокус на VM security, network firewalls</li>
+        </ul>
+
+        <p><strong>Фаза 2: Cloud-Native Emergence (2015-2019)</strong></p>
+        <ul>
+          <li>Kubernetes, Docker, serverless набирають популярність</li>
+          <li>Нові категорії: Container Security, CSPM, CWPP</li>
+          <li>Кожна проблема — окремий tool</li>
+        </ul>
+
+        <p><strong>Фаза 3: Tool Sprawl Crisis (2019-2021)</strong></p>
+        <ul>
+          <li>Середня enterprise організація: 10-15 cloud security tools</li>
+          <li>Тисячі alerts без контексту та prioritization</li>
+          <li>Integration challenges, alert fatigue</li>
+        </ul>
+
+        <p><strong>Фаза 4: Consolidation/CNAPP (2021+)</strong></p>
+        <ul>
+          <li>Gartner вводить термін CNAPP</li>
+          <li>Vendors об'єднують point solutions</li>
+          <li>Фокус на correlated risk та attack paths</li>
+        </ul>
+
+        <h3>Визначення CNAPP за Gartner</h3>
+        <p>Gartner визначає CNAPP як "unified, tightly integrated set of security and compliance capabilities designed to protect cloud-native infrastructure and applications across development and production".</p>
+
+        <p><strong>Ключові характеристики CNAPP:</strong></p>
+        <ul>
+          <li><strong>Unified:</strong> Єдина платформа замість набору point solutions</li>
+          <li><strong>Tightly integrated:</strong> Компоненти працюють разом, обмінюються контекстом</li>
+          <li><strong>Dev + Production:</strong> Захист на всіх етапах lifecycle</li>
+          <li><strong>Cloud-native focus:</strong> Специально для containers, serverless, IaC</li>
+        </ul>
+
+        <h3>Проблема ізольованих інструментів</h3>
+        <p>Чому point solutions недостатньо? Розглянемо приклад:</p>
+
+        <p><strong>Сценарій:</strong> Публічна S3 bucket з sensitive data</p>
+        <ul>
+          <li><strong>CSPM</strong> знаходить: "S3 bucket is public" — Medium severity</li>
+          <li><strong>DSPM</strong> знаходить: "Bucket contains PII data" — High severity</li>
+          <li><strong>CIEM</strong> знаходить: "Lambda has access to bucket" — Low severity</li>
+          <li><strong>CWPP</strong> знаходить: "Lambda has vulnerability CVE-XXX" — Medium severity</li>
+        </ul>
+
+        <p>Кожен tool бачить свою частину картини. Але реальний ризик — це <strong>attack path</strong>:</p>
+        <p><em>Internet → Vulnerable Lambda → IAM role → Public S3 → PII data breach</em></p>
+
+        <p>CNAPP об'єднує ці findings і показує: "Critical: Exploitable path to PII data".</p>
+      </section>
+
+      <section>
+        <h2>8.2 Компоненти CNAPP</h2>
+
+        <h3>Основні компоненти</h3>
+
+        <p><strong>1. CSPM (Cloud Security Posture Management)</strong></p>
+        <p>Ми детально розглядали в попередній лекції. У контексті CNAPP:</p>
+        <ul>
+          <li>Configuration assessment для cloud infrastructure</li>
+          <li>Compliance monitoring (CIS, SOC 2, PCI DSS)</li>
+          <li>Asset inventory та visibility</li>
+          <li>Інтеграція з іншими компонентами для context enrichment</li>
+        </ul>
+
+        <p><strong>2. CWPP (Cloud Workload Protection Platform)</strong></p>
+        <p>Захист робочих навантажень — VMs, containers, serverless:</p>
+        <ul>
+          <li><strong>Vulnerability Management:</strong> Сканування images та workloads на CVEs</li>
+          <li><strong>Runtime Protection:</strong> Моніторинг behavior, anomaly detection</li>
+          <li><strong>Malware Detection:</strong> Антивірус для cloud workloads</li>
+          <li><strong>File Integrity Monitoring:</strong> Виявлення змін у файловій системі</li>
+          <li><strong>Network Security:</strong> Microsegmentation, traffic analysis</li>
+        </ul>
+
+        <p><strong>3. CIEM (Cloud Infrastructure Entitlement Management)</strong></p>
+        <p>Управління ідентифікацією та правами доступу:</p>
+        <ul>
+          <li><strong>Permission Analysis:</strong> Хто має доступ до чого</li>
+          <li><strong>Least Privilege:</strong> Виявлення excessive permissions</li>
+          <li><strong>Unused Access:</strong> Права, які не використовуються</li>
+          <li><strong>Cross-account Access:</strong> Mapping доступу між accounts</li>
+          <li><strong>Service Account Security:</strong> Non-human identities</li>
+        </ul>
+
+        <p><strong>4. Container Security</strong></p>
+        <p>Специфічний захист для контейнерів та Kubernetes:</p>
+        <ul>
+          <li><strong>Image Scanning:</strong> Vulnerabilities, malware, secrets у images</li>
+          <li><strong>Registry Security:</strong> Захист container registries</li>
+          <li><strong>Kubernetes Security:</strong> RBAC, Network Policies, Pod Security</li>
+          <li><strong>Runtime Protection:</strong> Container behavior monitoring</li>
+        </ul>
+
+        <p><strong>5. IaC Security (Shift-Left)</strong></p>
+        <p>Безпека Infrastructure as Code:</p>
+        <ul>
+          <li><strong>IaC Scanning:</strong> Terraform, CloudFormation, Pulumi</li>
+          <li><strong>Policy as Code:</strong> OPA/Rego, Sentinel</li>
+          <li><strong>CI/CD Integration:</strong> Pre-deployment checks</li>
+          <li><strong>Drift Detection:</strong> Різниця між IaC та deployed resources</li>
+        </ul>
+
+        <p><strong>6. DSPM (Data Security Posture Management)</strong></p>
+        <p>Захист даних у хмарі:</p>
+        <ul>
+          <li><strong>Data Discovery:</strong> Автоматичне виявлення sensitive data</li>
+          <li><strong>Data Classification:</strong> PII, PHI, PCI, secrets</li>
+          <li><strong>Data Flow Analysis:</strong> Куди переміщуються дані</li>
+          <li><strong>Encryption Status:</strong> At-rest та in-transit</li>
+        </ul>
+
+        <h3>Інтеграція компонентів</h3>
+        <p>Сила CNAPP — у взаємодії компонентів:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Компонент A</th>
+              <th>+ Компонент B</th>
+              <th>= Результат</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CSPM (public bucket)</td>
+              <td>DSPM (contains PII)</td>
+              <td>Critical data exposure</td>
+            </tr>
+            <tr>
+              <td>CWPP (vulnerable image)</td>
+              <td>CIEM (internet-facing)</td>
+              <td>Exploitable from internet</td>
+            </tr>
+            <tr>
+              <td>Container (CVE)</td>
+              <td>CIEM (admin IAM role)</td>
+              <td>Privilege escalation path</td>
+            </tr>
+            <tr>
+              <td>IaC (misconfiguration)</td>
+              <td>CSPM (deployed)</td>
+              <td>Drift alert</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>8.3 Attack Path Analysis</h2>
+
+        <h3>Що таке Attack Path?</h3>
+        <p>Attack path — це послідовність кроків, які атакуючий може виконати для досягнення цілі (наприклад, доступу до sensitive data або компрометації критичної системи).</p>
+
+        <p><strong>Приклад attack path:</strong></p>
+        <ol>
+          <li><strong>Initial Access:</strong> Publicly exposed Lambda function з вразливістю</li>
+          <li><strong>Execution:</strong> Експлуатація CVE для виконання коду</li>
+          <li><strong>Privilege Escalation:</strong> Lambda role має надмірні permissions</li>
+          <li><strong>Lateral Movement:</strong> Доступ до RDS через IAM role</li>
+          <li><strong>Data Exfiltration:</strong> Копіювання даних з бази</li>
+        </ol>
+
+        <h3>Graph-based Approach</h3>
+        <p>Сучасні CNAPP використовують graph databases для моделювання cloud environments:</p>
+
+        <p><strong>Nodes (вершини):</strong></p>
+        <ul>
+          <li>Resources: VMs, containers, databases, storage</li>
+          <li>Identities: Users, roles, service accounts</li>
+          <li>Network: VPCs, subnets, security groups</li>
+          <li>Data: Data stores, data flows</li>
+        </ul>
+
+        <p><strong>Edges (зв'язки):</strong></p>
+        <ul>
+          <li>Network connectivity</li>
+          <li>IAM permissions</li>
+          <li>Data access</li>
+          <li>Trust relationships</li>
+        </ul>
+
+        <p>Алгоритми graph traversal знаходять шляхи від entry points (internet-facing resources) до crown jewels (critical data/systems).</p>
+
+        <h3>Risk Scoring та Prioritization</h3>
+        <p>CNAPP пріоритезує findings на основі:</p>
+
+        <p><strong>Exploitability factors:</strong></p>
+        <ul>
+          <li>Чи є публічний доступ? (Internet exposure)</li>
+          <li>Чи є known exploit для вразливості?</li>
+          <li>Чи потрібна автентифікація?</li>
+          <li>Складність експлуатації (CVSS metrics)</li>
+        </ul>
+
+        <p><strong>Impact factors:</strong></p>
+        <ul>
+          <li>Які дані можуть бути скомпрометовані?</li>
+          <li>Яка business criticality системи?</li>
+          <li>Regulatory implications (PCI, HIPAA)?</li>
+          <li>Blast radius — що ще буде затронуто?</li>
+        </ul>
+
+        <p><strong>Combined Risk = Exploitability × Impact</strong></p>
+
+        <h3>Приклад Attack Path Analysis</h3>
+
+        <p><strong>Scenario: E-commerce application на AWS</strong></p>
+
+        <p>CNAPP виявляє attack path:</p>
+        <pre>
+Internet
+    ↓
+[ALB] Public Load Balancer
+    ↓
+[ECS Task] Container з CVE-2024-XXXX (Critical)
+    ↓
+[IAM Role] ecs-task-role (має s3:*, rds:*)
+    ↓
+[RDS] Customer database (PII)
+    ↓
+[S3 Bucket] Backups (contains credit cards)
+        </pre>
+
+        <p><strong>CNAPP Risk Assessment:</strong></p>
+        <ul>
+          <li>Entry point: Internet (high exploitability)</li>
+          <li>Vulnerability: Critical CVE з public exploit</li>
+          <li>IAM: Excessive permissions (s3:*, rds:*)</li>
+          <li>Data: PII + payment card data (high impact)</li>
+          <li><strong>Combined Score: Critical — requires immediate action</strong></li>
+        </ul>
+
+        <p><strong>Порівняння з point solutions:</strong></p>
+        <ul>
+          <li>CWPP: "Container has critical CVE" — одне finding серед тисяч</li>
+          <li>CIEM: "Role has excessive permissions" — немає контексту чи використовується</li>
+          <li>CSPM: "Bucket allows cross-account access" — здається безпечним</li>
+          <li>CNAPP: "Critical attack path to customer data" — чіткий пріоритет</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8.4 CNAPP: Ринок та інструменти</h2>
+
+        <h3>Gartner Magic Quadrant</h3>
+        <p>Gartner оцінює CNAPP vendors за двома осями:</p>
+        <ul>
+          <li><strong>Ability to Execute:</strong> Product, sales, market responsiveness</li>
+          <li><strong>Completeness of Vision:</strong> Strategy, innovation, market understanding</li>
+        </ul>
+
+        <p><strong>Leaders (2024):</strong> Wiz, Palo Alto (Prisma Cloud), Microsoft, CrowdStrike</p>
+        <p><strong>Challengers:</strong> Orca, Lacework, Aqua, Sysdig</p>
+        <p><strong>Visionaries:</strong> Emerging vendors з innovative approaches</p>
+        <p><strong>Niche Players:</strong> Specialized solutions</p>
+
+        <h3>Огляд ключових платформ</h3>
+
+        <p><strong>Wiz</strong></p>
+        <ul>
+          <li><strong>Differentiation:</strong> Agentless, graph-based, attack path focus</li>
+          <li><strong>Architecture:</strong> API-only, snapshot scanning</li>
+          <li><strong>Strengths:</strong> Speed of deployment, visualization, risk prioritization</li>
+          <li><strong>Coverage:</strong> AWS, Azure, GCP, OCI, Alibaba, Kubernetes</li>
+          <li><strong>Notable:</strong> Fastest-growing security startup ($10B+ valuation)</li>
+        </ul>
+
+        <p><strong>Palo Alto Prisma Cloud</strong></p>
+        <ul>
+          <li><strong>Differentiation:</strong> Most comprehensive, enterprise features</li>
+          <li><strong>Architecture:</strong> Agent + agentless hybrid</li>
+          <li><strong>Strengths:</strong> Breadth of capabilities, compliance, enterprise support</li>
+          <li><strong>Coverage:</strong> All major clouds + on-prem Kubernetes</li>
+          <li><strong>Notable:</strong> Built through acquisitions (Twistlock, Bridgecrew, etc.)</li>
+        </ul>
+
+        <p><strong>Microsoft Defender for Cloud</strong></p>
+        <ul>
+          <li><strong>Differentiation:</strong> Native Azure integration, Microsoft ecosystem</li>
+          <li><strong>Architecture:</strong> Agent-based + agentless options</li>
+          <li><strong>Strengths:</strong> Azure depth, Microsoft 365 integration, pricing</li>
+          <li><strong>Coverage:</strong> Azure-first, AWS/GCP support</li>
+          <li><strong>Notable:</strong> Included in many Microsoft licensing agreements</li>
+        </ul>
+
+        <p><strong>Orca Security</strong></p>
+        <ul>
+          <li><strong>Differentiation:</strong> SideScanning (snapshot-based), no agents</li>
+          <li><strong>Architecture:</strong> 100% agentless</li>
+          <li><strong>Strengths:</strong> Deep visibility without agents, unified platform</li>
+          <li><strong>Coverage:</strong> AWS, Azure, GCP, Alibaba</li>
+          <li><strong>Notable:</strong> Pioneer of agentless cloud security</li>
+        </ul>
+
+        <p><strong>CrowdStrike Falcon Cloud Security</strong></p>
+        <ul>
+          <li><strong>Differentiation:</strong> EDR heritage, threat intelligence</li>
+          <li><strong>Architecture:</strong> Agent-based (Falcon sensor)</li>
+          <li><strong>Strengths:</strong> Runtime protection, threat detection, XDR integration</li>
+          <li><strong>Coverage:</strong> All major clouds</li>
+          <li><strong>Notable:</strong> Strong in workload protection</li>
+        </ul>
+
+        <h3>Критерії вибору CNAPP</h3>
+
+        <p><strong>1. Coverage</strong></p>
+        <ul>
+          <li>Які cloud providers використовуєте?</li>
+          <li>Kubernetes (managed vs self-hosted)?</li>
+          <li>Serverless workloads?</li>
+          <li>On-premises components?</li>
+        </ul>
+
+        <p><strong>2. Deployment Model</strong></p>
+        <ul>
+          <li>Agentless vs agent-based vs hybrid?</li>
+          <li>Impact на performance?</li>
+          <li>Regulatory requirements (data residency)?</li>
+        </ul>
+
+        <p><strong>3. Component Depth</strong></p>
+        <ul>
+          <li>CSPM: Наскільки глибокі configuration checks?</li>
+          <li>CWPP: Runtime protection capabilities?</li>
+          <li>CIEM: Identity analysis sophistication?</li>
+          <li>Shift-left: IaC та CI/CD integration?</li>
+        </ul>
+
+        <p><strong>4. Risk Prioritization</strong></p>
+        <ul>
+          <li>Attack path analysis quality?</li>
+          <li>Context awareness (data sensitivity, business criticality)?</li>
+          <li>False positive rates?</li>
+        </ul>
+
+        <p><strong>5. Integrations</strong></p>
+        <ul>
+          <li>SIEM/SOAR integration?</li>
+          <li>Ticketing systems (Jira, ServiceNow)?</li>
+          <li>CI/CD pipelines?</li>
+          <li>API for custom integrations?</li>
+        </ul>
+
+        <p><strong>6. Total Cost of Ownership</strong></p>
+        <ul>
+          <li>Pricing model (per workload, per asset, per user)?</li>
+          <li>Implementation та training costs?</li>
+          <li>Ongoing operational overhead?</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8.5 Впровадження CNAPP</h2>
+
+        <h3>Стратегія впровадження</h3>
+
+        <p><strong>Фаза 1: Assessment та Planning (2-4 тижні)</strong></p>
+        <ul>
+          <li>Inventory поточних security tools</li>
+          <li>Gap analysis: що покриваємо, що ні</li>
+          <li>Stakeholder alignment (Security, DevOps, Compliance)</li>
+          <li>Requirements gathering</li>
+          <li>Vendor shortlist (2-3 candidates)</li>
+        </ul>
+
+        <p><strong>Фаза 2: Proof of Concept (3-4 тижні)</strong></p>
+        <ul>
+          <li>POC з 1-2 vendors</li>
+          <li>Підключення до subset of environment</li>
+          <li>Evaluation criteria scoring</li>
+          <li>Technical та business decision</li>
+        </ul>
+
+        <p><strong>Фаза 3: Initial Deployment (4-6 тижнів)</strong></p>
+        <ul>
+          <li>Production deployment</li>
+          <li>Поступове підключення cloud accounts</li>
+          <li>Baseline assessment</li>
+          <li>Initial remediation priorities</li>
+        </ul>
+
+        <p><strong>Фаза 4: Operationalization (ongoing)</strong></p>
+        <ul>
+          <li>Integration з existing workflows</li>
+          <li>Alerting та escalation configuration</li>
+          <li>Shift-left integration (CI/CD)</li>
+          <li>Metrics та reporting</li>
+          <li>Continuous improvement</li>
+        </ul>
+
+        <h3>Best Practices</h3>
+
+        <p><strong>1. Start with visibility, not enforcement</strong></p>
+        <p>Спочатку зрозумійте поточний стан. Не блокуйте deployments одразу.</p>
+
+        <p><strong>2. Focus on attack paths, not individual findings</strong></p>
+        <p>10 critical attack paths важливіші за 1000 isolated findings.</p>
+
+        <p><strong>3. Enable DevOps self-service</strong></p>
+        <ul>
+          <li>Developer dashboards</li>
+          <li>Clear remediation guidance</li>
+          <li>IDE integrations</li>
+          <li>Pre-commit hooks</li>
+        </ul>
+
+        <p><strong>4. Integrate early in SDLC</strong></p>
+        <p>Shift-left: знаходьте проблеми до deployment, а не після.</p>
+
+        <p><strong>5. Consolidate tools gradually</strong></p>
+        <p>Не відключайте existing tools одразу. Parallel running, потім migration.</p>
+
+        <p><strong>6. Measure what matters</strong></p>
+        <ul>
+          <li>Critical attack paths resolved</li>
+          <li>Mean Time to Detect (MTTD)</li>
+          <li>Mean Time to Remediate (MTTR)</li>
+          <li>Coverage (% of assets protected)</li>
+        </ul>
+
+        <h3>Типові помилки</h3>
+        <ul>
+          <li><strong>Boiling the ocean:</strong> Намагання виправити все одразу</li>
+          <li><strong>Alert fatigue:</strong> Надто багато alerts без prioritization</li>
+          <li><strong>Siloed implementation:</strong> Security team працює окремо</li>
+          <li><strong>Ignoring shift-left:</strong> Тільки runtime, без CI/CD</li>
+          <li><strong>Underestimating change management:</strong> Tool — лише частина рішення</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>8.6 Майбутнє CNAPP</h2>
+
+        <h3>Тренди розвитку</h3>
+
+        <p><strong>1. AI/ML Integration</strong></p>
+        <ul>
+          <li>Intelligent prioritization</li>
+          <li>Automated remediation recommendations</li>
+          <li>Anomaly detection</li>
+          <li>Natural language queries</li>
+        </ul>
+
+        <p><strong>2. Runtime Context</strong></p>
+        <ul>
+          <li>eBPF-based monitoring</li>
+          <li>Real-time behavior analysis</li>
+          <li>Combining posture + runtime signals</li>
+        </ul>
+
+        <p><strong>3. Application Security Integration</strong></p>
+        <ul>
+          <li>SAST/DAST integration</li>
+          <li>API security</li>
+          <li>Software composition analysis (SCA)</li>
+          <li>Code-to-cloud traceability</li>
+        </ul>
+
+        <p><strong>4. Multi-cloud Native</strong></p>
+        <ul>
+          <li>True multi-cloud (не окремі modules)</li>
+          <li>Cross-cloud attack paths</li>
+          <li>Unified policies across clouds</li>
+        </ul>
+
+        <p><strong>5. Platform Engineering Integration</strong></p>
+        <ul>
+          <li>Internal Developer Platforms (IDP)</li>
+          <li>Security as a service for developers</li>
+          <li>Self-service security guardrails</li>
+        </ul>
+
+        <h3>Gartner Predictions</h3>
+        <ul>
+          <li>До 2025: 75% нових CSPM purchases будуть частиною CNAPP</li>
+          <li>До 2026: 60% enterprises матимуть consolidated CNAPP</li>
+          <li>До 2027: CNAPP стане default для cloud security</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Висновки</h2>
+        <p>CNAPP представляє фундаментальну зміну в підході до хмарної безпеки — від набору ізольованих інструментів до єдиної інтегрованої платформи. Ключові висновки:</p>
+
+        <ul>
+          <li><strong>Consolidation is key:</strong> Point solutions створюють tool sprawl та alert fatigue</li>
+          <li><strong>Context matters:</strong> Correlated findings важливіші за isolated alerts</li>
+          <li><strong>Attack paths — це пріоритет:</strong> Фокус на реальних ризиках, а не окремих findings</li>
+          <li><strong>Dev + Sec + Ops:</strong> CNAPP має підтримувати всі три команди</li>
+          <li><strong>Shift-left essential:</strong> Безпека на всіх етапах lifecycle</li>
+          <li><strong>Market is maturing:</strong> CNAPP стає стандартом для enterprise</li>
+        </ul>
+
+        <h3>Практичні рекомендації</h3>
+        <ol>
+          <li>Проведіть audit поточних cloud security tools</li>
+          <li>Визначте gaps у покритті (CSPM, CWPP, CIEM, etc.)</li>
+          <li>Оцініть readiness для consolidation</li>
+          <li>Створіть shortlist CNAPP vendors</li>
+          <li>Проведіть POC з фокусом на attack path analysis</li>
+          <li>Плануйте поступову migration, не big bang</li>
+        </ol>
+
+        <p>У наступній лекції ми розглянемо застосування AI та Machine Learning у хмарній безпеці — як ці технології трансформують detection та response.</p>
+      </section>
+
+      <section>
+        <h2>Контрольні питання</h2>
+        <ol>
+          <li>Що таке CNAPP і чому виникла потреба в цій категорії?</li>
+          <li>Назвіть основні компоненти CNAPP та їх функції.</li>
+          <li>Що таке attack path analysis і чому він важливий?</li>
+          <li>Чим відрізняється CNAPP від набору point solutions?</li>
+          <li>Які критерії важливі при виборі CNAPP-платформи?</li>
+          <li>Опишіть типові фази впровадження CNAPP.</li>
+          <li>Які тренди визначатимуть майбутнє CNAPP?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Додаткові матеріали</h2>
+        <ul>
+          <li><strong>Gartner Market Guide for CNAPP:</strong> Analyst report on CNAPP market</li>
+          <li><strong>CNCF Cloud Native Security Whitepaper:</strong> <a href="https://github.com/cncf/tag-security" target="_blank">github.com/cncf/tag-security</a></li>
+          <li><strong>Wiz Academy:</strong> <a href="https://www.wiz.io/academy" target="_blank">wiz.io/academy</a></li>
+          <li><strong>Prisma Cloud Documentation:</strong> <a href="https://docs.paloaltonetworks.com/prisma/prisma-cloud" target="_blank">docs.paloaltonetworks.com</a></li>
+          <li><strong>Microsoft Defender for Cloud:</strong> <a href="https://docs.microsoft.com/en-us/azure/defender-for-cloud/" target="_blank">docs.microsoft.com</a></li>
+        </ul>
+      </section>
+
+    </article>
+
+    <div class="lecture-nav-bottom">
+      <a href="../../lecture.html?id=7" class="nav-btn">← Попередня лекція</a>
+      <a href="../../lecture.html?id=9" class="nav-btn">Наступна лекція →</a>
+    </div>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../../js/main.js"></script>
+
+</body>
+</html>

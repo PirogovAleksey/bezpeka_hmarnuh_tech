@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 10.1 — Основи захисту даних | Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../css/slides.css">
+</head>
+<body>
+
+  <div class="top-controls">
+    <a href="../../../lecture.html?id=10">
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      До лекції
+    </a>
+    <button onclick="toggleTheme()">
+      <span id="theme-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+      <span id="theme-label">Світла</span>
+    </button>
+  </div>
+
+  <div class="slide-deck">
+    <section class="slide active">
+      <h1>Безпека хмарних технологій</h1>
+      <p>Тема 10.1: Основи захисту даних у хмарі</p>
+    </section>
+
+    <section class="slide">
+      <h1>Чому захист даних особливий у хмарі?</h1>
+      <ul>
+        <li><strong>Multi-tenancy:</strong> Спільна інфраструктура</li>
+        <li><strong>Data residency:</strong> Різні юрисдикції</li>
+        <li><strong>Provider access:</strong> Технічна можливість доступу</li>
+        <li><strong>Network exposure:</strong> Публічні мережі</li>
+        <li><strong>Compliance:</strong> GDPR, HIPAA, PCI DSS</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Класифікація даних</h1>
+      <ul>
+        <li><strong>Public:</strong> Для вільного поширення</li>
+        <li><strong>Internal:</strong> Внутрішня інформація</li>
+        <li><strong>Confidential:</strong> Бізнес-конфіденційна</li>
+        <li><strong>Restricted:</strong> Найвищий захист (PII, фінанси)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Типи Sensitive Data</h1>
+      <ul>
+        <li><strong>PII:</strong> Ім'я, email, телефон, адреса</li>
+        <li><strong>PHI:</strong> Медичні записи (HIPAA)</li>
+        <li><strong>PCI:</strong> Номери карток, CVV</li>
+        <li><strong>Credentials:</strong> Паролі, API keys, tokens</li>
+        <li><strong>IP:</strong> Код, патенти, trade secrets</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Data Lifecycle</h1>
+      <ul>
+        <li><strong>Creation:</strong> Класифікація, мінімізація збору</li>
+        <li><strong>Storage:</strong> Encryption at-rest, access controls</li>
+        <li><strong>Use:</strong> Logging, masking, encryption in-use</li>
+        <li><strong>Sharing:</strong> Encryption in-transit, secure APIs</li>
+        <li><strong>Archival:</strong> Long-term encryption, key management</li>
+        <li><strong>Destruction:</strong> Secure deletion, crypto-shredding</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Shared Responsibility для даних</h1>
+      <ul>
+        <li><strong>Provider:</strong> Physical security, infrastructure encryption</li>
+        <li><strong>Customer:</strong> Data classification, encryption, access</li>
+        <li><strong>Shared:</strong> Key management</li>
+        <li>Customer завжди відповідальний за свої дані!</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Три стани даних</h1>
+      <ul>
+        <li><strong>At-Rest:</strong> На диску, в storage</li>
+        <li><strong>In-Transit:</strong> Під час передачі мережею</li>
+        <li><strong>In-Use:</strong> В пам'яті, під час обробки</li>
+        <li>Кожен стан потребує окремого захисту</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Питання?</h1>
+      <p>Наступна тема: Криптографія та шифрування</p>
+    </section>
+  </div>
+
+  <div class="slide-counter" id="counter"></div>
+  <div class="slide-progress" id="progress"></div>
+
+  <div class="controls">
+    <button onclick="prev()">&#8592;</button>
+    <button onclick="next()">&#8594;</button>
+  </div>
+
+  <script src="../../../js/slides.js"></script>
+
+</body>
+</html>

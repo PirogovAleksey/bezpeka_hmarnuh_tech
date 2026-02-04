@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Конспект лекції 7: Cloud Security Posture Management (CSPM) — управління станом безпеки хмарних середовищ.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Конспект лекції 7 — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="../../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav>
+      <a href="../../index.html" class="active">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
+        Лекції
+      </a>
+      <a href="../../practicals.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        Семінари
+      </a>
+      <a href="../../tests.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Тести
+      </a>
+      <a href="../../materials.html">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+        Матеріали
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="lecture-nav-top">
+      <a href="../../lecture.html?id=7" class="back-link">← Назад до лекції</a>
+      <span class="lecture-badge">Конспект</span>
+    </div>
+
+    <article class="lecture-content">
+      <h1>Лекція 7. Cloud Security Posture Management (CSPM)</h1>
+      <div class="lecture-info">
+        <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
+      </div>
+
+      <section>
+        <h2>Вступ</h2>
+        <p>У попередніх лекціях ми розглядали різні аспекти хмарної безпеки: від базової архітектури NIST до специфічних технологій — контейнерів, serverless, блокчейну. Сьогодні ми переходимо до практичного питання: як забезпечити безпеку всієї хмарної інфраструктури в масштабі?</p>
+
+        <p>Типова enterprise-організація використовує сотні хмарних сервісів, тисячі віртуальних машин, десятки тисяч об'єктів зберігання даних. Як переконатися, що всі вони правильно налаштовані? Що жоден S3 bucket не є публічним? Що всі security groups обмежують доступ? Що encryption увімкнено скрізь? Відповідь — <strong>CSPM (Cloud Security Posture Management)</strong>.</p>
+
+        <p>CSPM — це категорія інструментів, які автоматично виявляють misconfigurations, порушення compliance та безпекові ризики в хмарних середовищах. Gartner визначає CSPM як критичний компонент хмарної безпеки, і за їхніми прогнозами, до 2025 року 60% підприємств використовуватимуть CSPM-рішення.</p>
+
+        <h3>Чому CSPM став необхідністю?</h3>
+        <p>Статистика красномовна:</p>
+        <ul>
+          <li><strong>65-70% інцидентів</strong> у хмарі пов'язані з misconfigurations (Gartner, 2023)</li>
+          <li><strong>Capital One breach (2019)</strong> — misconfigured WAF дозволив доступ до 100+ млн записів</li>
+          <li><strong>Microsoft Power Apps (2021)</strong> — публічні API без автентифікації, 38 млн записів</li>
+          <li><strong>Середній час виявлення</strong> misconfiguration без CSPM — 197 днів</li>
+        </ul>
+
+        <h3>Цілі лекції</h3>
+        <p>Після цієї лекції ви зможете:</p>
+        <ul>
+          <li>Пояснити роль CSPM у загальній стратегії хмарної безпеки</li>
+          <li>Описати ключові функції та можливості CSPM-інструментів</li>
+          <li>Порівняти native та third-party CSPM-рішення</li>
+          <li>Розробити стратегію впровадження CSPM в організації</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7.1 Проблема Cloud Misconfiguration</h2>
+
+        <h3>Що таке misconfiguration?</h3>
+        <p>Cloud misconfiguration — це неправильне налаштування хмарних ресурсів, яке створює безпекові вразливості. На відміну від software vulnerabilities, misconfigurations є результатом людських помилок або недостатнього розуміння безпекових наслідків конфігурацій.</p>
+
+        <p><strong>Типові приклади misconfigurations:</strong></p>
+        <ul>
+          <li><strong>Storage:</strong> Публічний доступ до S3 buckets, Azure Blob containers без автентифікації</li>
+          <li><strong>Network:</strong> Security groups з 0.0.0.0/0, відкриті порти SSH/RDP до інтернету</li>
+          <li><strong>Identity:</strong> Надмірні IAM permissions, відсутність MFA для привілейованих акаунтів</li>
+          <li><strong>Encryption:</strong> Незашифровані EBS volumes, бази даних без TLS</li>
+          <li><strong>Logging:</strong> Вимкнений CloudTrail, відсутність аудит-логів</li>
+        </ul>
+
+        <h3>Чому misconfigurations трапляються?</h3>
+        <p>Причини помилкових конфігурацій системні:</p>
+
+        <p><strong>1. Складність хмарних платформ:</strong></p>
+        <ul>
+          <li>AWS має 200+ сервісів, кожен з десятками параметрів конфігурації</li>
+          <li>Документація часто неповна щодо безпекових наслідків</li>
+          <li>Default settings часто оптимізовані для зручності, не для безпеки</li>
+        </ul>
+
+        <p><strong>2. Швидкість DevOps:</strong></p>
+        <ul>
+          <li>Розробники деплоять інфраструктуру без security review</li>
+          <li>Infrastructure as Code (IaC) масштабує як хороші практики, так і помилки</li>
+          <li>Тиск на швидкість доставки vs security due diligence</li>
+        </ul>
+
+        <p><strong>3. Розрив навичок:</strong></p>
+        <ul>
+          <li>DevOps-інженери не завжди мають security background</li>
+          <li>Security teams не встигають за швидкістю змін в інфраструктурі</li>
+          <li>Shared responsibility model створює зони невизначеності</li>
+        </ul>
+
+        <h3>Реальні кейси misconfigurations</h3>
+
+        <p><strong>Capital One (2019):</strong></p>
+        <ul>
+          <li>Misconfigured WAF дозволив SSRF-атаку</li>
+          <li>Викрадено дані 100+ млн клієнтів</li>
+          <li>Штраф $80 млн від OCC</li>
+          <li>Root cause: надмірні IAM permissions для WAF role</li>
+        </ul>
+
+        <p><strong>Twitch (2021):</strong></p>
+        <ul>
+          <li>Misconfigured server дозволив доступ до internal Git repository</li>
+          <li>Витік 125 GB вихідного коду та внутрішніх даних</li>
+          <li>Включав інформацію про виплати стрімерам</li>
+        </ul>
+
+        <p><strong>Facebook (2019):</strong></p>
+        <ul>
+          <li>540 млн записів у публічно доступних S3 buckets</li>
+          <li>Дані зберігалися third-party розробниками</li>
+          <li>Демонструє ризики supply chain misconfigurations</li>
+        </ul>
+
+        <h3>Еволюція підходів до виявлення</h3>
+        <p>Як організації намагалися вирішити проблему до CSPM:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Підхід</th>
+              <th>Опис</th>
+              <th>Обмеження</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Manual audits</td>
+              <td>Періодичні перевірки вручну</td>
+              <td>Не масштабується, застаріває миттєво</td>
+            </tr>
+            <tr>
+              <td>Scripts</td>
+              <td>Власні скрипти перевірки (Python, Bash)</td>
+              <td>Важко підтримувати, неповне покриття</td>
+            </tr>
+            <tr>
+              <td>Cloud-native tools</td>
+              <td>AWS Config, Azure Policy</td>
+              <td>Single-cloud, обмежена візуалізація</td>
+            </tr>
+            <tr>
+              <td>CSPM</td>
+              <td>Спеціалізовані платформи</td>
+              <td>Комплексне рішення</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>7.2 Основні функції CSPM</h2>
+
+        <h3>Визначення CSPM</h3>
+        <p>За Gartner, CSPM — це категорія продуктів безпеки, які:</p>
+        <ul>
+          <li>Автоматично оцінюють хмарні конфігурації проти best practices та compliance frameworks</li>
+          <li>Забезпечують візуалізацію хмарних активів та їх взаємозв'язків</li>
+          <li>Виявляють ризики та пріоритезують їх для remediation</li>
+          <li>Автоматизують або спрощують виправлення misconfigurations</li>
+        </ul>
+
+        <h3>Ключові функції</h3>
+
+        <p><strong>1. Asset Discovery & Inventory</strong></p>
+        <p>CSPM автоматично виявляє всі хмарні ресурси:</p>
+        <ul>
+          <li>Compute: VMs, containers, serverless functions</li>
+          <li>Storage: Object storage, block storage, databases</li>
+          <li>Network: VPCs, subnets, security groups, load balancers</li>
+          <li>Identity: IAM users, roles, policies, service accounts</li>
+          <li>Services: Managed services (RDS, Lambda, etc.)</li>
+        </ul>
+        <p>Inventory оновлюється в реальному часі через API polling або event-driven mechanisms.</p>
+
+        <p><strong>2. Configuration Assessment</strong></p>
+        <p>Перевірка конфігурацій проти:</p>
+        <ul>
+          <li><strong>CIS Benchmarks:</strong> Center for Internet Security публікує детальні benchmarks для AWS, Azure, GCP</li>
+          <li><strong>Cloud provider best practices:</strong> AWS Well-Architected, Azure Security Benchmark</li>
+          <li><strong>Custom policies:</strong> Організаційні стандарти безпеки</li>
+          <li><strong>Compliance frameworks:</strong> PCI DSS, HIPAA, SOC 2, GDPR</li>
+        </ul>
+
+        <p><strong>3. Risk Prioritization</strong></p>
+        <p>Не всі misconfigurations однаково критичні. CSPM пріоритезує на основі:</p>
+        <ul>
+          <li><strong>Severity:</strong> Потенційний вплив (public exposure vs internal misconfiguration)</li>
+          <li><strong>Exploitability:</strong> Наскільки легко експлуатувати</li>
+          <li><strong>Asset criticality:</strong> Важливість ресурсу для бізнесу</li>
+          <li><strong>Attack path analysis:</strong> Чи є шлях від misconfiguration до критичних даних</li>
+        </ul>
+
+        <p><strong>4. Compliance Monitoring</strong></p>
+        <p>Безперервний моніторинг відповідності:</p>
+        <ul>
+          <li>Real-time compliance dashboards</li>
+          <li>Automated compliance reports для аудиторів</li>
+          <li>Gap analysis: що потрібно виправити для compliance</li>
+          <li>Evidence collection для audit trails</li>
+        </ul>
+
+        <p><strong>5. Remediation</strong></p>
+        <p>Варіанти виправлення misconfigurations:</p>
+        <ul>
+          <li><strong>Manual guidance:</strong> Детальні інструкції для операторів</li>
+          <li><strong>Semi-automated:</strong> Згенеровані CLI commands або IaC patches</li>
+          <li><strong>Fully automated:</strong> Auto-remediation за визначеними правилами</li>
+          <li><strong>Preventive:</strong> Інтеграція з CI/CD для блокування небезпечних deployments</li>
+        </ul>
+
+        <h3>Додаткові можливості сучасних CSPM</h3>
+
+        <p><strong>Identity Security (CIEM):</strong></p>
+        <ul>
+          <li>Аналіз IAM permissions та виявлення excessive privileges</li>
+          <li>Unused permissions analysis</li>
+          <li>Cross-account access mapping</li>
+          <li>Service account security</li>
+        </ul>
+
+        <p><strong>Data Security (DSPM):</strong></p>
+        <ul>
+          <li>Виявлення sensitive data у хмарних storage</li>
+          <li>Data classification</li>
+          <li>Encryption status monitoring</li>
+          <li>Data flow analysis</li>
+        </ul>
+
+        <p><strong>Network Security:</strong></p>
+        <ul>
+          <li>Network topology visualization</li>
+          <li>Exposure analysis (що доступно з інтернету)</li>
+          <li>Traffic flow analysis</li>
+          <li>Microsegmentation recommendations</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7.3 Архітектура CSPM-рішень</h2>
+
+        <h3>Як працює CSPM?</h3>
+        <p>Типова архітектура CSPM включає кілька компонентів:</p>
+
+        <p><strong>1. Data Collection Layer</strong></p>
+        <ul>
+          <li><strong>API Integration:</strong> Підключення до cloud provider APIs (AWS, Azure, GCP)</li>
+          <li><strong>Read-only access:</strong> CSPM потребує лише читання конфігурацій</li>
+          <li><strong>Event-driven updates:</strong> Підписка на CloudTrail, Azure Activity Log для real-time updates</li>
+          <li><strong>Agentless:</strong> Більшість CSPM не вимагають встановлення агентів</li>
+        </ul>
+
+        <p><strong>2. Normalization & Enrichment</strong></p>
+        <ul>
+          <li>Приведення даних з різних хмар до єдиної моделі</li>
+          <li>Збагачення контекстом (asset tags, business owners)</li>
+          <li>Побудова графу залежностей між ресурсами</li>
+        </ul>
+
+        <p><strong>3. Policy Engine</strong></p>
+        <ul>
+          <li>Бібліотека правил (policies) для перевірки</li>
+          <li>Підтримка стандартних frameworks (CIS, NIST)</li>
+          <li>Custom policy creation (часто через OPA/Rego або proprietary DSL)</li>
+          <li>Policy versioning та testing</li>
+        </ul>
+
+        <p><strong>4. Risk Analysis Engine</strong></p>
+        <ul>
+          <li>Оцінка severity кожного finding</li>
+          <li>Attack path analysis: моделювання можливих атак</li>
+          <li>Blast radius calculation: що буде скомпрометовано</li>
+          <li>Risk scoring та trending</li>
+        </ul>
+
+        <p><strong>5. Presentation Layer</strong></p>
+        <ul>
+          <li>Dashboards для різних аудиторій (executives, security, DevOps)</li>
+          <li>Alerts та notifications</li>
+          <li>Reports та exports</li>
+          <li>API для інтеграцій</li>
+        </ul>
+
+        <h3>Deployment моделі</h3>
+
+        <p><strong>SaaS (найпоширеніша):</strong></p>
+        <ul>
+          <li>Vendor хостить платформу</li>
+          <li>Швидкий deployment (години, не тижні)</li>
+          <li>Automatic updates</li>
+          <li>Питання: чи довіряєте ви vendor'у доступ до метаданих вашої інфраструктури?</li>
+        </ul>
+
+        <p><strong>Self-hosted:</strong></p>
+        <ul>
+          <li>Deployment у власній інфраструктурі</li>
+          <li>Повний контроль над даними</li>
+          <li>Складніший maintenance</li>
+          <li>Приклади: Prowler, CloudSploit (open source)</li>
+        </ul>
+
+        <h3>Інтеграції</h3>
+
+        <p><strong>CI/CD Pipeline (Shift-Left):</strong></p>
+        <ul>
+          <li>Сканування IaC templates (Terraform, CloudFormation) до deployment</li>
+          <li>Policy-as-Code: ті самі правила для runtime і pre-deployment</li>
+          <li>Pull request checks: блокування PR з misconfigurations</li>
+        </ul>
+
+        <p><strong>SIEM/SOAR:</strong></p>
+        <ul>
+          <li>Forwarding alerts до SIEM (Splunk, Sentinel)</li>
+          <li>Triggering SOAR playbooks для auto-remediation</li>
+          <li>Correlation з іншими security events</li>
+        </ul>
+
+        <p><strong>Ticketing Systems:</strong></p>
+        <ul>
+          <li>Auto-creation tickets у Jira, ServiceNow</li>
+          <li>Assignment до відповідних teams</li>
+          <li>SLA tracking для remediation</li>
+        </ul>
+
+        <p><strong>Communication:</strong></p>
+        <ul>
+          <li>Slack/Teams notifications</li>
+          <li>Email alerts</li>
+          <li>PagerDuty для critical findings</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7.4 CSPM-інструменти: огляд ринку</h2>
+
+        <h3>Native Cloud Provider Tools</h3>
+
+        <p><strong>AWS:</strong></p>
+        <ul>
+          <li><strong>AWS Config:</strong> Базовий CSPM, configuration recording, managed rules</li>
+          <li><strong>AWS Security Hub:</strong> Агрегація findings, CIS benchmarks, integration point</li>
+          <li><strong>AWS Trusted Advisor:</strong> Best practices recommendations</li>
+          <li><strong>IAM Access Analyzer:</strong> External access analysis</li>
+        </ul>
+
+        <p><strong>Azure:</strong></p>
+        <ul>
+          <li><strong>Microsoft Defender for Cloud:</strong> Comprehensive CSPM + CWPP</li>
+          <li><strong>Azure Policy:</strong> Policy enforcement, compliance dashboards</li>
+          <li><strong>Azure Security Center:</strong> Security recommendations, Secure Score</li>
+        </ul>
+
+        <p><strong>GCP:</strong></p>
+        <ul>
+          <li><strong>Security Command Center:</strong> Asset inventory, vulnerability findings</li>
+          <li><strong>Policy Intelligence:</strong> IAM recommendations</li>
+          <li><strong>Cloud Asset Inventory:</strong> Resource tracking</li>
+        </ul>
+
+        <p><strong>Переваги native tools:</strong></p>
+        <ul>
+          <li>Глибока інтеграція з платформою</li>
+          <li>Часто включені в базову вартість або недорогі</li>
+          <li>Швидкий старт</li>
+        </ul>
+
+        <p><strong>Недоліки native tools:</strong></p>
+        <ul>
+          <li>Single-cloud: потрібні окремі tools для кожної хмари</li>
+          <li>Обмежена візуалізація та reporting</li>
+          <li>Менш sophisticated risk analysis</li>
+        </ul>
+
+        <h3>Third-Party CSPM Platforms</h3>
+
+        <p><strong>Palo Alto Prisma Cloud:</strong></p>
+        <ul>
+          <li>Один з лідерів ринку (Gartner Magic Quadrant)</li>
+          <li>Comprehensive: CSPM + CWPP + CIEM + DSPM</li>
+          <li>Multi-cloud: AWS, Azure, GCP, OCI, Alibaba</li>
+          <li>Code Security: IaC scanning, SCA</li>
+        </ul>
+
+        <p><strong>Wiz:</strong></p>
+        <ul>
+          <li>Agentless, graph-based approach</li>
+          <li>Attack path analysis — ключова диференціація</li>
+          <li>Швидкий deployment (хвилини)</li>
+          <li>Unicorn startup ($10B+ valuation)</li>
+        </ul>
+
+        <p><strong>Orca Security:</strong></p>
+        <ul>
+          <li>SideScanning technology — сканування без агентів через snapshots</li>
+          <li>Unified platform: CSPM + CWPP + vulnerability management</li>
+          <li>Context-aware prioritization</li>
+        </ul>
+
+        <p><strong>Lacework:</strong></p>
+        <ul>
+          <li>Behavior-based anomaly detection</li>
+          <li>Polygraph — візуалізація behavior patterns</li>
+          <li>Strong в runtime security</li>
+        </ul>
+
+        <p><strong>Aqua Security:</strong></p>
+        <ul>
+          <li>Фокус на container та Kubernetes security</li>
+          <li>CSPM як частина Cloud Native Security Platform</li>
+          <li>Strong open source presence (Trivy, Tracee)</li>
+        </ul>
+
+        <h3>Open Source Options</h3>
+
+        <p><strong>Prowler:</strong></p>
+        <ul>
+          <li>AWS, Azure, GCP security assessments</li>
+          <li>CIS Benchmarks, PCI-DSS, HIPAA checks</li>
+          <li>CLI tool, легко інтегрувати в CI/CD</li>
+          <li>Активна community</li>
+        </ul>
+
+        <p><strong>CloudSploit (Aqua):</strong></p>
+        <ul>
+          <li>Multi-cloud security scanning</li>
+          <li>Extensive plugin system</li>
+          <li>Безкоштовний tier у hosted версії</li>
+        </ul>
+
+        <p><strong>Steampipe:</strong></p>
+        <ul>
+          <li>SQL interface до cloud APIs</li>
+          <li>Compliance frameworks як SQL queries</li>
+          <li>Extensible через plugins</li>
+        </ul>
+
+        <h3>Порівняння підходів</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Критерій</th>
+              <th>Native Tools</th>
+              <th>Third-Party</th>
+              <th>Open Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Вартість</td>
+              <td>Низька/включена</td>
+              <td>Висока ($$$)</td>
+              <td>Безкоштовно</td>
+            </tr>
+            <tr>
+              <td>Multi-cloud</td>
+              <td>Ні</td>
+              <td>Так</td>
+              <td>Обмежено</td>
+            </tr>
+            <tr>
+              <td>Deployment</td>
+              <td>Швидкий</td>
+              <td>Швидкий</td>
+              <td>Потребує налаштування</td>
+            </tr>
+            <tr>
+              <td>Функціональність</td>
+              <td>Базова</td>
+              <td>Розширена</td>
+              <td>Залежить від tool</td>
+            </tr>
+            <tr>
+              <td>Support</td>
+              <td>Включений</td>
+              <td>Enterprise</td>
+              <td>Community</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>7.5 Впровадження CSPM</h2>
+
+        <h3>Стратегія впровадження</h3>
+
+        <p><strong>Фаза 1: Assessment (1-2 тижні)</strong></p>
+        <ul>
+          <li>Inventory поточних хмарних середовищ</li>
+          <li>Визначення compliance requirements</li>
+          <li>Stakeholder mapping (Security, DevOps, Compliance)</li>
+          <li>Evaluation criteria для вибору tool</li>
+        </ul>
+
+        <p><strong>Фаза 2: Pilot (2-4 тижні)</strong></p>
+        <ul>
+          <li>Вибір 1-2 tools для POC</li>
+          <li>Підключення до non-production середовища</li>
+          <li>Оцінка findings та false positives</li>
+          <li>Тестування інтеграцій</li>
+        </ul>
+
+        <p><strong>Фаза 3: Rollout (4-8 тижнів)</strong></p>
+        <ul>
+          <li>Поступове підключення production accounts</li>
+          <li>Налаштування alerting thresholds</li>
+          <li>Визначення remediation workflows</li>
+          <li>Training для teams</li>
+        </ul>
+
+        <p><strong>Фаза 4: Optimization (ongoing)</strong></p>
+        <ul>
+          <li>Tuning policies для зменшення noise</li>
+          <li>Автоматизація remediation</li>
+          <li>Metrics та reporting</li>
+          <li>Continuous improvement</li>
+        </ul>
+
+        <h3>Best Practices</h3>
+
+        <p><strong>1. Start with visibility:</strong></p>
+        <p>Спочатку inventory та visibility, потім enforcement. Не можна захистити те, про що не знаєш.</p>
+
+        <p><strong>2. Prioritize ruthlessly:</strong></p>
+        <p>Типовий CSPM scan знаходить тисячі findings. Focus на:</p>
+        <ul>
+          <li>Critical severity</li>
+          <li>Public exposure</li>
+          <li>Production environments</li>
+          <li>Regulated data</li>
+        </ul>
+
+        <p><strong>3. Enable DevOps:</strong></p>
+        <p>CSPM має допомагати, а не блокувати. Надайте self-service:</p>
+        <ul>
+          <li>Developer dashboards</li>
+          <li>Clear remediation guidance</li>
+          <li>Pre-commit hooks для IaC</li>
+        </ul>
+
+        <p><strong>4. Automate carefully:</strong></p>
+        <p>Auto-remediation потужна, але небезпечна:</p>
+        <ul>
+          <li>Почніть з low-risk auto-remediation (tags, encryption)</li>
+          <li>Manual approval для network/IAM changes</li>
+          <li>Extensive testing у non-prod</li>
+        </ul>
+
+        <p><strong>5. Measure progress:</strong></p>
+        <p>KPIs для CSPM program:</p>
+        <ul>
+          <li>Mean Time to Detect (MTTD) misconfigurations</li>
+          <li>Mean Time to Remediate (MTTR)</li>
+          <li>Compliance score trending</li>
+          <li>Critical findings over time</li>
+        </ul>
+
+        <h3>Типові помилки</h3>
+        <ul>
+          <li><strong>Alert fatigue:</strong> Надто багато alerts без prioritization</li>
+          <li><strong>Lack of ownership:</strong> Findings без відповідальних за remediation</li>
+          <li><strong>Siloed approach:</strong> Security team працює окремо від DevOps</li>
+          <li><strong>One-time scan:</strong> CSPM вимагає continuous monitoring, не одноразовий audit</li>
+          <li><strong>Ignoring context:</strong> Не всі findings рівні — враховуйте business context</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>7.6 CSPM у контексті CNAPP</h2>
+
+        <h3>Що таке CNAPP?</h3>
+        <p>CNAPP (Cloud-Native Application Protection Platform) — це еволюція та конвергенція кількох категорій:</p>
+        <ul>
+          <li><strong>CSPM:</strong> Configuration та compliance</li>
+          <li><strong>CWPP:</strong> Workload protection (containers, VMs, serverless)</li>
+          <li><strong>CIEM:</strong> Identity & entitlement management</li>
+          <li><strong>DSPM:</strong> Data security posture</li>
+        </ul>
+
+        <p>Gartner прогнозує, що до 2025 року 75% нових CSPM закупівель будуть частиною CNAPP-платформ.</p>
+
+        <h3>Переваги unified approach</h3>
+        <ul>
+          <li><strong>Correlated findings:</strong> Misconfiguration + vulnerability + excessive permissions = attack path</li>
+          <li><strong>Single pane of glass:</strong> Один dashboard для всієї cloud security</li>
+          <li><strong>Reduced tool sprawl:</strong> Менше інтеграцій, менше complexity</li>
+          <li><strong>Consistent policies:</strong> Одні правила для всіх аспектів</li>
+        </ul>
+
+        <h3>Майбутнє CSPM</h3>
+        <p>Тренди розвитку:</p>
+        <ul>
+          <li><strong>AI/ML:</strong> Intelligent prioritization, anomaly detection, auto-remediation</li>
+          <li><strong>Attack path analysis:</strong> Від окремих findings до розуміння реальних ризиків</li>
+          <li><strong>Shift-left:</strong> Deeper integration з development lifecycle</li>
+          <li><strong>Runtime context:</strong> Combination з runtime signals для accurate prioritization</li>
+          <li><strong>Multi-cloud native:</strong> Справжня підтримка hybrid та multi-cloud</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Висновки</h2>
+        <p>CSPM став необхідним компонентом хмарної безпеки через масштаб та складність сучасних хмарних середовищ. Ключові висновки:</p>
+
+        <ul>
+          <li><strong>Misconfigurations — #1 причина</strong> хмарних інцидентів. CSPM автоматизує їх виявлення.</li>
+          <li><strong>Visibility first:</strong> Не можна захистити те, про що не знаєш. CSPM забезпечує повний inventory.</li>
+          <li><strong>Continuous monitoring:</strong> Конфігурації змінюються постійно. CSPM забезпечує real-time visibility.</li>
+          <li><strong>Prioritization критична:</strong> Тисячі findings — фокус на critical та exploitable.</li>
+          <li><strong>Integration з DevOps:</strong> Shift-left та self-service для розробників.</li>
+          <li><strong>CNAPP — майбутнє:</strong> CSPM конвергує з CWPP, CIEM у єдині платформи.</li>
+        </ul>
+
+        <h3>Практичні рекомендації</h3>
+        <ol>
+          <li>Оцініть поточний стан: які tools вже використовуються?</li>
+          <li>Визначте compliance requirements: які frameworks обов'язкові?</li>
+          <li>Почніть з native tools: AWS Config, Azure Defender, GCP SCC</li>
+          <li>Оцініть third-party для multi-cloud або advanced features</li>
+          <li>Інтегруйте з CI/CD для shift-left</li>
+          <li>Визначте ownership та remediation SLAs</li>
+          <li>Вимірюйте progress через metrics</li>
+        </ol>
+
+        <p>У наступній лекції ми розглянемо CNAPP детальніше — як об'єднати CSPM, CWPP та інші компоненти в єдину стратегію захисту cloud-native додатків.</p>
+      </section>
+
+      <section>
+        <h2>Контрольні питання</h2>
+        <ol>
+          <li>Чому misconfigurations є найпоширенішою причиною хмарних інцидентів?</li>
+          <li>Назвіть п'ять ключових функцій CSPM-рішень.</li>
+          <li>Чим відрізняються native cloud security tools від third-party CSPM?</li>
+          <li>Що таке attack path analysis і чому він важливий?</li>
+          <li>Які фази включає типова стратегія впровадження CSPM?</li>
+          <li>Що таке CNAPP і як CSPM вписується в цю концепцію?</li>
+          <li>Які KPIs можна використовувати для оцінки ефективності CSPM program?</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Додаткові матеріали</h2>
+        <ul>
+          <li><strong>CIS Benchmarks:</strong> <a href="https://www.cisecurity.org/cis-benchmarks" target="_blank">cisecurity.org/cis-benchmarks</a></li>
+          <li><strong>CSA Cloud Controls Matrix:</strong> <a href="https://cloudsecurityalliance.org/research/cloud-controls-matrix" target="_blank">cloudsecurityalliance.org/ccm</a></li>
+          <li><strong>Gartner CNAPP Market Guide:</strong> Analyst report on CNAPP landscape</li>
+          <li><strong>AWS Security Hub User Guide:</strong> <a href="https://docs.aws.amazon.com/securityhub/" target="_blank">docs.aws.amazon.com/securityhub</a></li>
+          <li><strong>Prowler (Open Source CSPM):</strong> <a href="https://github.com/prowler-cloud/prowler" target="_blank">github.com/prowler-cloud/prowler</a></li>
+        </ul>
+      </section>
+
+    </article>
+
+    <div class="lecture-nav-bottom">
+      <a href="../../lecture.html?id=6" class="nav-btn">← Попередня лекція</a>
+      <a href="../../lecture.html?id=8" class="nav-btn">Наступна лекція →</a>
+    </div>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script src="../../js/main.js"></script>
+
+</body>
+</html>
