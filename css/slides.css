@@ -554,6 +554,11 @@ body.light .slide-stat {
   margin-top: 0.5rem;
 }
 
+/* Stat inside grid — smaller size */
+.slide-grid-item .slide-stat {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
 /* --- Reduce motion --- */
 @media (prefers-reduced-motion: reduce) {
   .slide.active h1,

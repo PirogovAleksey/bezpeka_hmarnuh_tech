@@ -53,8 +53,8 @@
       <ul>
         <li>Надмірні привілеї</li>
         <li>Відсутність MFA</li>
-        <li>Shared credentials</li>
-        <li>Hardcoded ключі в коді</li>
+        <li>Спільні облікові дані (Shared credentials)</li>
+        <li>Жорстко закодовані (Hardcoded) ключі в коді</li>
         <li>Застарілі акаунти</li>
       </ul>
     </section>
@@ -62,10 +62,10 @@
     <section class="slide">
       <h1>#3 Небезпечні API</h1>
       <ul>
-        <li>Broken authentication</li>
-        <li>Excessive data exposure</li>
-        <li>No rate limiting</li>
-        <li>Injection вразливості</li>
+        <li>Зламана автентифікація (Broken authentication)</li>
+        <li>Надмірне розкриття даних (Excessive data exposure)</li>
+        <li>Відсутність обмеження запитів (No rate limiting)</li>
+        <li>Ін'єкції (Injection) вразливості</li>
         <li>OWASP API Security Top 10</li>
       </ul>
     </section>
@@ -74,7 +74,7 @@
       <h1>#4 Компрометація акаунтів</h1>
       <ul>
         <li><strong>Phishing</strong> — найпоширеніший вектор</li>
-        <li>Credential stuffing</li>
+        <li>Підбір облікових даних (Credential stuffing)</li>
         <li>Витік ключів у GitHub</li>
         <li>Malware / keyloggers</li>
         <li><strong>MFA — критичний захист</strong></li>
@@ -87,7 +87,7 @@
         <li><strong>Зловмисні</strong> — крадіжка даних, саботаж</li>
         <li><strong>Недбалі</strong> — помилки конфігурації</li>
         <li><strong>Compromised</strong> — викрадені credentials</li>
-        <li>Principle of Least Privilege</li>
+        <li>Принцип мінімальних привілеїв (Least Privilege)</li>
         <li>Моніторинг привілейованих дій</li>
       </ul>
     </section>
@@ -171,9 +171,9 @@
       <h1>Кейс: Log4Shell (2021)</h1>
       <ul>
         <li>CVE-2021-44228 — критична вразливість</li>
-        <li>Remote Code Execution</li>
+        <li>Віддалене виконання коду (Remote Code Execution)</li>
         <li>Мільйони Java-додатків вразливі</li>
-        <li><strong>Supply chain</strong> — залежності мають вразливості</li>
+        <li><strong>Ланцюг постачання (Supply chain)</strong> — залежності мають вразливості</li>
         <li>SCA (Software Composition Analysis)</li>
       </ul>
     </section>
@@ -182,10 +182,10 @@
       <h1>Як захищатися</h1>
       <ul>
         <li><strong>CSPM</strong> — автоматичне сканування конфігурацій</li>
-        <li><strong>IAM гігієна</strong> — least privilege, MFA, аудит</li>
-        <li><strong>Secrets management</strong> — ніякого hardcoding</li>
-        <li><strong>Infrastructure as Code</strong> — версіонування, review</li>
-        <li><strong>Continuous monitoring</strong> — виявлення аномалій</li>
+        <li><strong>IAM гігієна</strong> — мінімальних привілеїв (least privilege), MFA, аудит</li>
+        <li><strong>Управління секретами (Secrets management)</strong> — ніякого hardcoding</li>
+        <li><strong>Інфраструктура як код (Infrastructure as Code)</strong> — версіонування, review</li>
+        <li><strong>Безперервний моніторинг (Continuous monitoring)</strong> — виявлення аномалій</li>
       </ul>
     </section>
 

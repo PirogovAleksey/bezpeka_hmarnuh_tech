@@ -118,7 +118,7 @@
     </section>
 
     <section class="slide">
-      <h1>RBAC Best Practices</h1>
+      <h1>RBAC — Найкращі практики (Best Practices)</h1>
       <ul>
         <li>Уникайте wildcard (*) permissions</li>
         <li>Не давайте cluster-admin без потреби</li>
@@ -131,7 +131,7 @@
       <h1>Network Policies</h1>
       <ul>
         <li>Контроль трафіку між pods</li>
-        <li><strong>Default deny:</strong> все заборонено</li>
+        <li><strong>Заборона за замовчуванням (Default Deny):</strong> все заборонено</li>
         <li>Явно дозволяйте потрібний трафік</li>
         <li><strong>CNI:</strong> Calico, Cilium, Weave</li>
       </ul>
@@ -151,7 +151,7 @@
       <h1>Secrets Management</h1>
       <ul>
         <li>За замовчуванням — base64 (не шифровані!)</li>
-        <li><strong>Encryption at rest:</strong> для etcd</li>
+        <li><strong>Шифрування у стані спокою (at rest):</strong> для etcd</li>
         <li><strong>External:</strong> Vault, Sealed Secrets</li>
         <li>Не commit секрети в Git!</li>
       </ul>
@@ -172,14 +172,14 @@
       <ul>
         <li>API Server — тільки приватна мережа</li>
         <li>RBAC — мінімальні права</li>
-        <li>Network Policies — default deny</li>
+        <li>Network Policies — заборона за замовчуванням (Default Deny)</li>
         <li>PSS: Restricted для production</li>
       </ul>
     </section>
 
     <section class="slide">
       <h1>Питання?</h1>
-      <p>Наступна тема: CWPP та Runtime Security</p>
+      <p>Наступна тема: CWPP та безпека середовища виконання (Runtime Security)</p>
     </section>
   </div>
 

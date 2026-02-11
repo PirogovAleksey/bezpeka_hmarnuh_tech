@@ -27,18 +27,44 @@ if (localStorage.getItem('slides-theme') === 'light') {
   updateThemeButton(true);
 }
 
+// Seamless navigation between slide files
+function getSlideFileNumber() {
+  const match = window.location.pathname.match(/\/(\d+)\.html$/);
+  return match ? parseInt(match[1]) : null;
+}
+
+function goToSlideFile(fileNum, startFromLast) {
+  const url = fileNum + '.html' + (startFromLast ? '#last' : '');
+  fetch(fileNum + '.html', { method: 'HEAD' })
+    .then(function(res) {
+      if (res.ok) window.location.href = url;
+    })
+    .catch(function() {});
+}
+
 function show(index) {
+  if (index < 0 || index >= slides.length) return;
   slides[current].classList.remove('active');
-  current = (index + slides.length) % slides.length;
+  current = index;
   slides[current].classList.add('active');
   updateProgress();
 }
 
 function next() {
+  if (current >= slides.length - 1) {
+    var fileNum = getSlideFileNumber();
+    if (fileNum) goToSlideFile(fileNum + 1, false);
+    return;
+  }
   show(current + 1);
 }
 
 function prev() {
+  if (current <= 0) {
+    var fileNum = getSlideFileNumber();
+    if (fileNum && fileNum > 1) goToSlideFile(fileNum - 1, true);
+    return;
+  }
   show(current - 1);
 }
 
@@ -58,5 +84,12 @@ document.addEventListener('keydown', (e) => {
     prev();
   }
 });
+
+// Start at last slide if coming from next presentation via prev
+if (window.location.hash === '#last') {
+  current = slides.length - 1;
+  slides[0].classList.remove('active');
+  slides[current].classList.add('active');
+}
 
 updateProgress();
