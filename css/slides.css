@@ -360,6 +360,26 @@ body.light .slide-diagram .diagram-text-accent {
   fill: #0284c7;
 }
 
+.slide-diagram .diagram-text-green {
+  fill: #4ade80;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+}
+
+body.light .slide-diagram .diagram-text-green {
+  fill: #16a34a;
+}
+
+.slide-diagram .diagram-text-yellow {
+  fill: #fbbf24;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+}
+
+body.light .slide-diagram .diagram-text-yellow {
+  fill: #b45309;
+}
+
 .slide-diagram .diagram-text-muted {
   fill: #475569;
   font-family: 'Plus Jakarta Sans', sans-serif;
