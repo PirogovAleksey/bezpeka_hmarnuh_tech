@@ -96,7 +96,7 @@
           <rect x="10" y="100" width="260" height="80" rx="14" class="diagram-box"/>
           <text x="140" y="126" text-anchor="middle" font-size="17" class="diagram-text-accent">Measured Service</text>
           <text x="140" y="146" text-anchor="middle" font-size="13" class="diagram-text-small">Вимірюваний сервіс</text>
-          <text x="140" y="166" text-anchor="middle" font-size="11" class="diagram-text-muted">Pay-as-you-go, моніторинг</text>
+          <text x="140" y="166" text-anchor="middle" font-size="11" class="diagram-text-muted">Оплата за використання (Pay-as-you-go), моніторинг</text>
           <line x1="270" y1="140" x2="382" y2="222" stroke="#38bdf8" stroke-width="2"/>
 
           <!-- Broad Network Access (top-right) -->
@@ -110,7 +110,7 @@
           <rect x="10" y="320" width="260" height="80" rx="14" class="diagram-box"/>
           <text x="140" y="346" text-anchor="middle" font-size="17" class="diagram-text-accent">Resource Pooling</text>
           <text x="140" y="366" text-anchor="middle" font-size="13" class="diagram-text-small">Пул ресурсів</text>
-          <text x="140" y="386" text-anchor="middle" font-size="11" class="diagram-text-muted">Спільні ресурси, multi-tenancy</text>
+          <text x="140" y="386" text-anchor="middle" font-size="11" class="diagram-text-muted">Спільні ресурси, багатоорендність (multi-tenancy)</text>
           <line x1="270" y1="360" x2="382" y2="278" stroke="#38bdf8" stroke-width="2"/>
 
           <!-- Rapid Elasticity (bottom-right) -->
@@ -124,7 +124,7 @@
     </section>
 
     <section class="slide">
-      <h1>On-demand Self-service</h1>
+      <h1>Самообслуговування на вимогу (On-demand Self-service)</h1>
       <ul>
         <li>Самостійне замовлення ресурсів</li>
         <li>Без участі персоналу провайдера</li>
@@ -134,7 +134,7 @@
     </section>
 
     <section class="slide">
-      <h1>Broad Network Access</h1>
+      <h1>Широкий мережевий доступ (Broad Network Access)</h1>
       <ul>
         <li>Доступ з будь-якого пристрою</li>
         <li>Стандартні протоколи (HTTPS, API)</li>
@@ -144,29 +144,29 @@
     </section>
 
     <section class="slide">
-      <h1>Resource Pooling (Multi-tenancy)</h1>
+      <h1>Пул ресурсів (Resource Pooling)</h1>
       <ul>
         <li>Спільні ресурси для багатьох клієнтів</li>
         <li>Динамічне призначення</li>
-        <li><strong>Безпека:</strong> Side-channel атаки, "шумний сусід (noisy neighbor)"</li>
+        <li><strong>Безпека:</strong> Атаки через побічні канали (Side-channel), "шумний сусід (noisy neighbor)"</li>
         <li><strong>Рішення:</strong> Сильна ізоляція tenant'ів</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Rapid Elasticity</h1>
+      <h1>Швидка еластичність (Rapid Elasticity)</h1>
       <ul>
         <li>Автоматичне масштабування</li>
         <li>Відповідно до навантаження</li>
         <li><strong>Безпека:</strong> Нові точки входу при масштабуванні</li>
-        <li><strong>Рішення:</strong> Автоматизовані Security Groups</li>
+        <li><strong>Рішення:</strong> Автоматизовані групи безпеки (Security Groups)</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Measured Service</h1>
+      <h1>Вимірюваний сервіс (Measured Service)</h1>
       <ul>
-        <li>Pay-as-you-go оплата</li>
+        <li>Оплата за використання (Pay-as-you-go)</li>
         <li>Моніторинг використання</li>
         <li><strong>Безпека:</strong> Виявлення аномалій (криптоджекінг (cryptojacking))</li>
         <li><strong>Ризик:</strong> Витік метаданих</li>
