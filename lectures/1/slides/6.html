@@ -105,39 +105,71 @@
     <section class="slide">
       <h1>Capital One — як це сталося</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 450 180" width="450" height="180">
-          <!-- Attack flow boxes -->
-          <rect x="10" y="70" width="70" height="45" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
-          <text x="45" y="90" text-anchor="middle" class="diagram-text-small">SSRF</text>
-          <text x="45" y="105" text-anchor="middle" class="diagram-text-small">атака</text>
+        <svg viewBox="0 0 850 200" width="850" height="200">
+          <!-- Step circles -->
+          <circle cx="80" cy="20" r="14" fill="#ef4444"/>
+          <text x="80" y="26" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">1</text>
 
-          <rect x="100" y="70" width="70" height="45" rx="6" class="diagram-box"/>
-          <text x="135" y="90" text-anchor="middle" class="diagram-text-small">WAF</text>
-          <text x="135" y="105" text-anchor="middle" class="diagram-text-small">(вразл.)</text>
+          <circle cx="240" cy="20" r="14" fill="#f97316"/>
+          <text x="240" y="26" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">2</text>
 
-          <rect x="190" y="70" width="70" height="45" rx="6" class="diagram-box"/>
-          <text x="225" y="90" text-anchor="middle" class="diagram-text-small">Metadata</text>
-          <text x="225" y="105" text-anchor="middle" class="diagram-text-small">169.254.*</text>
+          <circle cx="400" cy="20" r="14" fill="#eab308"/>
+          <text x="400" y="26" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">3</text>
 
-          <rect x="280" y="70" width="70" height="45" rx="6" class="diagram-box"/>
-          <text x="315" y="90" text-anchor="middle" class="diagram-text-small">IAM</text>
-          <text x="315" y="105" text-anchor="middle" class="diagram-text-small">Creds</text>
+          <circle cx="560" cy="20" r="14" fill="#6366f1"/>
+          <text x="560" y="26" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">4</text>
 
-          <rect x="370" y="70" width="70" height="45" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
-          <text x="405" y="90" text-anchor="middle" class="diagram-text-small">S3</text>
-          <text x="405" y="105" text-anchor="middle" class="diagram-text-small">Дані!</text>
+          <circle cx="720" cy="20" r="14" fill="#ef4444"/>
+          <text x="720" y="26" text-anchor="middle" font-size="13" fill="white" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">5</text>
 
-          <!-- Arrows -->
-          <path d="M80,92 L95,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
-          <path d="M170,92 L185,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
-          <path d="M260,92 L275,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
-          <path d="M350,92 L365,92" stroke="#ef4444" stroke-width="2" marker-end="url(#redarrow)"/>
+          <!-- Dashed lines between circles -->
+          <line x1="94" y1="20" x2="226" y2="20" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="254" y1="20" x2="386" y2="20" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="414" y1="20" x2="546" y2="20" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
+          <line x1="574" y1="20" x2="706" y2="20" stroke="#475569" stroke-width="1" stroke-dasharray="4,3"/>
 
-          <!-- Labels -->
-          <text x="225" y="145" text-anchor="middle" class="diagram-text-small">Ланцюжок атаки: 5 кроків до breach</text>
+          <!-- Box 1: SSRF -->
+          <rect x="10" y="50" width="140" height="75" rx="10" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="2"/>
+          <text x="80" y="80" text-anchor="middle" font-size="17" fill="#ef4444" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">SSRF атака</text>
+          <text x="80" y="105" text-anchor="middle" font-size="12" class="diagram-text-small" font-family="'Plus Jakarta Sans', sans-serif">Підроблений запит</text>
+
+          <!-- Arrow 1→2 -->
+          <path d="M150,87 L165,87" stroke="#ef4444" stroke-width="2" marker-end="url(#coarrow)"/>
+
+          <!-- Box 2: WAF -->
+          <rect x="170" y="50" width="140" height="75" rx="10" fill="rgba(249, 115, 22, 0.12)" stroke="#f97316" stroke-width="2"/>
+          <text x="240" y="80" text-anchor="middle" font-size="17" fill="#f97316" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">WAF обхід</text>
+          <text x="240" y="105" text-anchor="middle" font-size="12" class="diagram-text-small" font-family="'Plus Jakarta Sans', sans-serif">Вразлива конфігурація</text>
+
+          <!-- Arrow 2→3 -->
+          <path d="M310,87 L325,87" stroke="#ef4444" stroke-width="2" marker-end="url(#coarrow)"/>
+
+          <!-- Box 3: Metadata -->
+          <rect x="330" y="50" width="140" height="75" rx="10" fill="rgba(234, 179, 8, 0.12)" stroke="#eab308" stroke-width="2"/>
+          <text x="400" y="80" text-anchor="middle" font-size="17" fill="#eab308" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">Метадані</text>
+          <text x="400" y="105" text-anchor="middle" font-size="12" class="diagram-text-small" font-family="'Plus Jakarta Sans', sans-serif">169.254.169.254</text>
+
+          <!-- Arrow 3→4 -->
+          <path d="M470,87 L485,87" stroke="#ef4444" stroke-width="2" marker-end="url(#coarrow)"/>
+
+          <!-- Box 4: IAM -->
+          <rect x="490" y="50" width="140" height="75" rx="10" fill="rgba(99, 102, 241, 0.12)" stroke="#6366f1" stroke-width="2"/>
+          <text x="560" y="80" text-anchor="middle" font-size="17" fill="#6366f1" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif">IAM ключі</text>
+          <text x="560" y="105" text-anchor="middle" font-size="12" class="diagram-text-small" font-family="'Plus Jakarta Sans', sans-serif">Облікові дані</text>
+
+          <!-- Arrow 4→5 -->
+          <path d="M630,87 L645,87" stroke="#ef4444" stroke-width="2" marker-end="url(#coarrow)"/>
+
+          <!-- Box 5: S3 Data -->
+          <rect x="650" y="50" width="140" height="75" rx="10" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2.5"/>
+          <text x="720" y="80" text-anchor="middle" font-size="17" fill="#ef4444" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif">S3 Дані!</text>
+          <text x="720" y="105" text-anchor="middle" font-size="12" class="diagram-text-small" font-family="'Plus Jakarta Sans', sans-serif">106M записів</text>
+
+          <!-- Bottom label -->
+          <text x="400" y="170" text-anchor="middle" font-size="14" class="diagram-text-small" font-family="'Plus Jakarta Sans', sans-serif">Ланцюжок атаки: 5 кроків до витоку даних (breach)</text>
 
           <defs>
-            <marker id="redarrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <marker id="coarrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
               <path d="M0,0 L0,6 L9,3 z" fill="#ef4444"/>
             </marker>
           </defs>
