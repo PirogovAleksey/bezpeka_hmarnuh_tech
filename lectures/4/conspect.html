@@ -92,7 +92,11 @@
           <li>Застосовувати best practices безпеки Docker: захист образів, Dockerfile, runtime</li>
           <li>Налаштовувати безпеку Kubernetes: RBAC, Network Policies, Pod Security Standards</li>
           <li>Розуміти роль та можливості CWPP у захисті хмарних workloads</li>
+          <li>Застосовувати принципи supply chain security для контейнерних середовищ</li>
         </ul>
+
+        <h3>Структура лекції</h3>
+        <p>Ми рухатимемося від фундаменту до практики: спочатку віртуалізація (базовий рівень ізоляції), потім Docker (контейнерна ізоляція), далі Kubernetes (оркестрація контейнерів), CWPP (інструменти захисту), і нарешті — supply chain security (захист ланцюга постачання). Кожен рівень додає нові можливості, але й нові вектори атак.</p>
       </section>
 
       <section>
@@ -1168,25 +1172,32 @@ spec:
         </ul>
 
         <h3>CWPP у хмарних провайдерах</h3>
+        <p>Кожен великий хмарний провайдер пропонує native CWPP-можливості. Перевага native рішень — глибока інтеграція. Недолік — vendor lock-in та обмежена multi-cloud підтримка.</p>
 
         <h4>AWS</h4>
+        <p>AWS пропонує набір окремих сервісів, які разом формують CWPP-стек:</p>
         <ul>
-          <li><strong>Amazon Inspector:</strong> vulnerability scanning</li>
-          <li><strong>Amazon GuardDuty:</strong> threat detection для EKS</li>
-          <li><strong>AWS Security Hub:</strong> централізований security dashboard</li>
+          <li><strong>Amazon Inspector:</strong> автоматичне сканування EC2, Lambda та container images на вразливості. Інтегрується з ECR — сканує образи автоматично при push. Пріоритизує вразливості на основі CVSS + network reachability.</li>
+          <li><strong>Amazon GuardDuty:</strong> threat detection на базі ML. Для EKS аналізує Kubernetes audit logs та виявляє: підозрілі API-виклики, privilege escalation спроби, cryptomining, DNS-based exfiltration.</li>
+          <li><strong>AWS Security Hub:</strong> централізований dashboard, що агрегує findings з Inspector, GuardDuty, Macie, IAM Access Analyzer. Підтримує автоматичні remediation actions через EventBridge.</li>
+          <li><strong>Amazon ECR Image Scanning:</strong> базове та enhanced (powered by Inspector) сканування container images.</li>
         </ul>
 
         <h4>Azure</h4>
+        <p>Microsoft пропонує найбільш інтегроване CWPP-рішення серед трьох провайдерів:</p>
         <ul>
-          <li><strong>Microsoft Defender for Cloud:</strong> CSPM + CWPP</li>
-          <li><strong>Defender for Containers:</strong> специфічний для контейнерів</li>
+          <li><strong>Microsoft Defender for Cloud:</strong> CSPM + CWPP в одному рішенні. Покриває VM, контейнери, serverless, бази даних. Також підтримує multi-cloud (AWS, GCP) через Arc.</li>
+          <li><strong>Defender for Containers:</strong> спеціалізований модуль для AKS та EKS: vulnerability scanning образів, runtime threat detection, Kubernetes security posture management, admission control recommendations.</li>
+          <li><strong>Defender for Servers:</strong> EDR для VM на базі Microsoft Defender for Endpoint. Включає vulnerability assessment, file integrity monitoring, adaptive application control.</li>
         </ul>
 
         <h4>GCP</h4>
+        <p>GCP робить акцент на security-by-default та інтеграції з Kubernetes (Google створив Kubernetes):</p>
         <ul>
-          <li><strong>Security Command Center:</strong> security management</li>
-          <li><strong>Container Threat Detection:</strong> runtime protection</li>
-          <li><strong>Binary Authorization:</strong> image verification</li>
+          <li><strong>Security Command Center (SCC):</strong> централізований security management. Premium tier включає Container Threat Detection, Web Security Scanner, Event Threat Detection.</li>
+          <li><strong>Container Threat Detection:</strong> runtime protection, що виявляє підозрілі binary executions, reverse shells, data exfiltration з GKE pods.</li>
+          <li><strong>Binary Authorization:</strong> admission control, що дозволяє запуск лише підписаних образів. Інтегрується з Artifact Registry та Cloud Build для end-to-end supply chain security.</li>
+          <li><strong>Artifact Analysis:</strong> vulnerability scanning для container images в Artifact Registry. Автоматичне сканування при push.</li>
         </ul>
 
         <h3>Інтеграція в DevSecOps Pipeline</h3>
@@ -1210,16 +1221,150 @@ spec:
       </section>
 
       <section>
+        <h2>4.5 Supply Chain Security для контейнерів</h2>
+
+        <p>Supply chain security — одна з найгарячіших тем у хмарній безпеці. Ваш контейнерний додаток складається з десятків шарів: базовий образ ОС, системні бібліотеки, мовний runtime, фреймворки, ваш код. Компрометація будь-якого шару означає компрометацію всього додатку.</p>
+
+        <h3>Чому supply chain security критичний?</h3>
+
+        <p>Кілька інцидентів змусили індустрію переглянути підхід до supply chain:</p>
+        <ul>
+          <li><strong>SolarWinds (2020):</strong> компрометоване оновлення торкнулося 18,000+ організацій, включаючи US Treasury та Department of Homeland Security.</li>
+          <li><strong>Log4Shell (2021):</strong> CVE-2021-44228 у Log4j — бібліотеці, вбудованій у мільйони Java-додатків та контейнерів. Організації тижнями не могли знайти всі місця, де використовувався Log4j.</li>
+          <li><strong>Codecov (2021):</strong> атакуючі модифікували bash uploader, отримавши доступ до CI/CD secrets тисяч компаній.</li>
+          <li><strong>Malicious Docker Hub images:</strong> регулярно виявляються образи з вбудованими cryptominers або backdoors, що маскуються під легітимні.</li>
+        </ul>
+
+        <h3>SBOM — Software Bill of Materials</h3>
+
+        <p><strong>SBOM</strong> — це повний перелік компонентів, з яких складається ваш програмний продукт. Думайте про це як про список інгредієнтів на продуктовому пакуванні, але для програмного забезпечення.</p>
+
+        <p><strong>Навіщо потрібен SBOM:</strong></p>
+        <ul>
+          <li><strong>Vulnerability response:</strong> коли з'являється нова CVE (як Log4Shell), SBOM дозволяє миттєво знайти всі affected компоненти, замість ручного пошуку</li>
+          <li><strong>License compliance:</strong> знати, які open-source ліцензії використовуються</li>
+          <li><strong>Regulatory requirements:</strong> US Executive Order 14028 (2021) вимагає SBOM для постачальників федерального уряду</li>
+        </ul>
+
+        <p><strong>Формати SBOM:</strong></p>
+        <ul>
+          <li><strong>SPDX (Software Package Data Exchange):</strong> стандарт Linux Foundation, ISO/IEC 5962:2021</li>
+          <li><strong>CycloneDX:</strong> стандарт OWASP, фокус на безпеці</li>
+        </ul>
+
+        <p><strong>Інструменти генерації SBOM:</strong></p>
+        <pre>
+# Генерація SBOM для Docker образу за допомогою Syft
+$ syft myimage:latest -o spdx-json > sbom.json
+
+# Генерація SBOM за допомогою Trivy
+$ trivy image --format spdx-json myimage:latest > sbom.json
+
+# Перевірка SBOM на вразливості за допомогою Grype
+$ grype sbom:sbom.json
+        </pre>
+
+        <h3>SLSA — Supply-chain Levels for Software Artifacts</h3>
+
+        <p><strong>SLSA</strong> (вимовляється "salsa") — це фреймворк від Google для забезпечення цілісності supply chain. Він визначає чотири рівні зрілості:</p>
+
+        <table>
+          <tr>
+            <th>Рівень</th>
+            <th>Вимоги</th>
+            <th>Захищає від</th>
+          </tr>
+          <tr>
+            <td><strong>SLSA 1</strong></td>
+            <td>Документований build process, автоматична генерація provenance</td>
+            <td>Незадокументовані зміни</td>
+          </tr>
+          <tr>
+            <td><strong>SLSA 2</strong></td>
+            <td>Version control, hosted build service, автентифікований provenance</td>
+            <td>Модифікація після build</td>
+          </tr>
+          <tr>
+            <td><strong>SLSA 3</strong></td>
+            <td>Hardened build platform, non-falsifiable provenance</td>
+            <td>Компрометація build process</td>
+          </tr>
+          <tr>
+            <td><strong>SLSA 4</strong></td>
+            <td>Two-person review, hermetic builds, reproducible</td>
+            <td>Insider threats, sophisticated attacks</td>
+          </tr>
+        </table>
+
+        <p><strong>Provenance</strong> — ключове поняття SLSA. Це криптографічно підписаний документ, який відповідає на три питання: що було збудовано? з якого вихідного коду? на якій build-платформі?</p>
+
+        <h3>Sigstore — підпис та верифікація артефактів</h3>
+
+        <p><strong>Sigstore</strong> — це open-source проєкт (Linux Foundation) для підписування, верифікації та захисту software supply chain. Він складається з трьох компонентів:</p>
+        <ul>
+          <li><strong>Cosign:</strong> підписування та верифікація container images та інших OCI-артефактів</li>
+          <li><strong>Fulcio:</strong> certificate authority для keyless signing (використовує OIDC identity замість довготривалих ключів)</li>
+          <li><strong>Rekor:</strong> transparency log — публічний, immutable реєстр підписів</li>
+        </ul>
+
+        <p><strong>Приклад підпису та верифікації образу:</strong></p>
+        <pre>
+# Підпис образу (keyless — використовує OIDC identity)
+$ cosign sign myregistry.io/myimage:v1.0
+
+# Верифікація підпису
+$ cosign verify myregistry.io/myimage:v1.0
+
+# Інтеграція з Kubernetes — admission policy
+# Kyverno policy для перевірки підпису
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-image-signature
+spec:
+  validationFailureAction: Enforce
+  rules:
+  - name: verify-cosign-signature
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    verifyImages:
+    - imageReferences:
+      - "myregistry.io/*"
+      attestors:
+      - entries:
+        - keyless:
+            issuer: "https://accounts.google.com"
+            subject: "builder@mycompany.iam.gserviceaccount.com"
+        </pre>
+
+        <h3>Повний pipeline supply chain security</h3>
+
+        <p>Комплексний підхід до supply chain security включає захист на кожному етапі:</p>
+        <ol>
+          <li><strong>Source:</strong> підписані коміти (git commit signing), branch protection rules, code review</li>
+          <li><strong>Dependencies:</strong> SCA (Software Composition Analysis) — Snyk, Dependabot, Renovate. Lock-файли для фіксації версій.</li>
+          <li><strong>Build:</strong> hardened CI/CD (isolated runners, no secrets in logs), SLSA provenance generation</li>
+          <li><strong>Package:</strong> сканування образів (Trivy, Grype), SBOM генерація, підпис (Cosign)</li>
+          <li><strong>Deploy:</strong> admission control (Kyverno, OPA Gatekeeper) — верифікація підпису та policy compliance</li>
+          <li><strong>Runtime:</strong> continuous monitoring (Falco), drift detection, image re-scanning</li>
+        </ol>
+      </section>
+
+      <section>
         <h2>Висновки</h2>
         <p>Віртуалізація та контейнеризація — це основа сучасних хмарних обчислень. Але ці технології приносять специфічні безпекові виклики, які потребують уваги.</p>
 
         <h3>Ключові тези</h3>
         <ul>
-          <li><strong>Гіпервізор — критичний компонент:</strong> його компрометація впливає на всі VM</li>
-          <li><strong>Контейнери не є VM:</strong> слабша ізоляція вимагає додаткових заходів</li>
-          <li><strong>Misconfiguration — головний ворог:</strong> більшість інцидентів через неправильні налаштування</li>
-          <li><strong>Defense in depth:</strong> кілька рівнів захисту (image scanning + runtime + network)</li>
-          <li><strong>Shift left:</strong> виявляйте проблеми на етапі розробки, а не в production</li>
+          <li><strong>Гіпервізор — критичний компонент:</strong> його компрометація впливає на всі VM. VM escape — рідкісна, але катастрофічна атака.</li>
+          <li><strong>Контейнери не є VM:</strong> спільне ядро означає слабшу ізоляцію. Privileged container = повний контроль над хостом.</li>
+          <li><strong>Misconfiguration — головний ворог:</strong> більшість інцидентів через неправильні налаштування, а не zero-day вразливості.</li>
+          <li><strong>Defense in depth:</strong> кілька рівнів захисту — image scanning + admission control + runtime monitoring + network policies.</li>
+          <li><strong>Shift left:</strong> виявляйте проблеми на етапі розробки, а не в production. SBOM + SLSA для supply chain.</li>
+          <li><strong>Supply chain — новий вектор:</strong> ваш додаток настільки безпечний, наскільки безпечний найслабший компонент у його ланцюзі залежностей.</li>
         </ul>
 
         <h3>Практичні рекомендації</h3>
@@ -1245,7 +1390,69 @@ spec:
           <li>Що таке Pod Security Standards і які рівні вони визначають?</li>
           <li>Яку роль відіграє CWPP у захисті хмарних workloads?</li>
           <li>Як eBPF використовується для runtime security?</li>
+          <li>Що таке SBOM і чому він став обов'язковим для постачальників уряду США?</li>
+          <li>Опишіть чотири рівні SLSA. Який мінімальний рівень ви б рекомендували для production-систем?</li>
+          <li>Як Sigstore/Cosign забезпечує цілісність container images? Чим keyless signing відрізняється від традиційного?</li>
+          <li>Порівняйте native CWPP-рішення AWS, Azure та GCP. Які переваги та недоліки native vs third-party рішень?</li>
         </ol>
+      </section>
+
+      <section>
+        <h3>Практичне завдання</h3>
+        <p>Ваша команда розробляє мікросервісний додаток на Kubernetes, що складається з 4 сервісів: frontend (React), API gateway (Node.js), backend (Python), database (PostgreSQL).</p>
+
+        <p><strong>Завдання:</strong></p>
+        <ol>
+          <li><strong>Dockerfile hardening:</strong> Напишіть безпечний Dockerfile для Python backend-сервісу. Використайте multi-stage build, non-root user, мінімальний базовий образ, health check. Поясніть кожне рішення.</li>
+          <li><strong>Kubernetes security:</strong> Створіть набір Kubernetes manifests:
+            <ul>
+              <li>NetworkPolicy — frontend може звертатися лише до API gateway; API gateway — лише до backend; backend — лише до database</li>
+              <li>Pod Security Context для backend — restricted profile</li>
+              <li>RBAC — роль "developer" може читати pods та logs, але не може exec в контейнери</li>
+            </ul>
+          </li>
+          <li><strong>CI/CD security pipeline:</strong> Спроєктуйте pipeline для GitHub Actions, що включає: SAST (Semgrep), image scanning (Trivy), SBOM generation (Syft), image signing (Cosign), deployment з admission control (Kyverno).</li>
+          <li><strong>Incident response:</strong> Falco виявив alert "shell opened in container" для backend pod о 3:00 AM. Опишіть покрокову процедуру реагування.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Рекомендовані ресурси для подальшого вивчення</h3>
+        <ul>
+          <li><a href="https://kubernetes.io/docs/concepts/security/" target="_blank" rel="noopener">Kubernetes Security Documentation</a> — офіційна документація з безпеки Kubernetes</li>
+          <li><a href="https://docs.docker.com/engine/security/" target="_blank" rel="noopener">Docker Security</a> — офіційний гайд з безпеки Docker</li>
+          <li><a href="https://www.cisecurity.org/benchmark/kubernetes" target="_blank" rel="noopener">CIS Kubernetes Benchmark</a> — золотий стандарт конфігурації безпеки K8s</li>
+          <li><a href="https://falco.org/docs/" target="_blank" rel="noopener">Falco Documentation</a> — runtime threat detection для контейнерів</li>
+          <li><a href="https://slsa.dev/" target="_blank" rel="noopener">SLSA Framework</a> — Supply-chain Levels for Software Artifacts</li>
+          <li><a href="https://www.sigstore.dev/" target="_blank" rel="noopener">Sigstore</a> — підписування та верифікація software artifacts</li>
+          <li><a href="https://aquasecurity.github.io/trivy/" target="_blank" rel="noopener">Trivy</a> — vulnerability scanner для containers, IaC, SBOM</li>
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP Docker Security Cheat Sheet</a> — практичний чеклист безпеки Docker</li>
+          <li><a href="https://sysdig.com/learn-cloud-native/kubernetes-security/" target="_blank" rel="noopener">Sysdig Kubernetes Security Guide</a> — детальний гайд з безпеки K8s від Sysdig</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Глосарій ключових термінів</h3>
+        <ul>
+          <li><strong>Гіпервізор (Hypervisor)</strong> — програмне забезпечення для управління віртуальними машинами. Type 1 (bare-metal): KVM, ESXi, Xen. Type 2 (hosted): VirtualBox, VMware Workstation.</li>
+          <li><strong>VM Escape</strong> — атака, при якій зловмисник виходить з віртуальної машини на рівень гіпервізора або хост-системи</li>
+          <li><strong>Namespace</strong> — механізм ізоляції ядра Linux, що забезпечує ізольований вигляд системних ресурсів для процесів (PID, network, mount, user)</li>
+          <li><strong>Cgroup</strong> — Control Group, механізм ядра Linux для обмеження та обліку ресурсів (CPU, RAM, I/O) для групи процесів</li>
+          <li><strong>Container Escape</strong> — "втеча" з контейнера на хост-систему через вразливість у runtime (runc, containerd) або неправильну конфігурацію</li>
+          <li><strong>Distroless</strong> — мінімальні container images від Google, що містять лише додаток та його runtime залежності (без shell, package manager)</li>
+          <li><strong>RBAC</strong> — Role-Based Access Control, модель контролю доступу в Kubernetes на основі ролей</li>
+          <li><strong>Pod Security Standards</strong> — три рівні обмежень Kubernetes: Privileged (без обмежень), Baseline (мінімальні), Restricted (максимальні)</li>
+          <li><strong>NetworkPolicy</strong> — ресурс Kubernetes для контролю мережевого трафіку між pods (мікросегментація)</li>
+          <li><strong>CWPP</strong> — Cloud Workload Protection Platform, категорія рішень для захисту серверних workloads у хмарі</li>
+          <li><strong>eBPF</strong> — extended Berkeley Packet Filter, технологія для запуску sandboxed-програм у ядрі Linux без модифікації ядра</li>
+          <li><strong>Falco</strong> — open-source runtime threat detection для контейнерів та Kubernetes (CNCF project)</li>
+          <li><strong>SBOM</strong> — Software Bill of Materials, повний перелік компонентів програмного продукту</li>
+          <li><strong>SLSA</strong> — Supply-chain Levels for Software Artifacts, фреймворк від Google для цілісності supply chain (4 рівні)</li>
+          <li><strong>Sigstore</strong> — open-source інфраструктура для підписування та верифікації software artifacts (Cosign, Fulcio, Rekor)</li>
+          <li><strong>OCI</strong> — Open Container Initiative, стандарт для container images та runtimes</li>
+          <li><strong>Admission Controller</strong> — компонент Kubernetes, що перехоплює запити до API server та може дозволити, модифікувати або заблокувати їх</li>
+          <li><strong>Service Mesh</strong> — інфраструктурний рівень для service-to-service комунікації з mTLS, observability та traffic management (Istio, Linkerd)</li>
+        </ul>
       </section>
 
     </article>
