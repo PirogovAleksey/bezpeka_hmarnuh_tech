@@ -96,6 +96,9 @@
           <li>Розуміти процеси аудиту та compliance в хмарі</li>
           <li>Використовувати практичні інструменти для перевірки compliance</li>
         </ul>
+
+        <h3>Структура лекції</h3>
+        <p>Ми рухатимемось від теорії до практики: спочатку стандарти (що вимагається), потім ризики (від чого захищаємось), далі SLA та контракти (як це оформлюється юридично), аудит (як перевіряється), і нарешті — практичні інструменти (як автоматизувати). Кожен розділ спирається на попередній.</p>
       </section>
 
       <section>
@@ -528,42 +531,61 @@
         </ul>
 
         <h3>Специфіка ризиків у хмарі</h3>
-        <p>Хмарні обчислення створюють унікальні ризики, яких немає в традиційних середовищах:</p>
+        <p>Хмарні обчислення створюють унікальні ризики, яких немає в традиційних середовищах. Розуміння цих ризиків — перший крок до їх мітигації.</p>
 
         <h4>1. Втрата контролю</h4>
+        <p>Це, мабуть, найфундаментальніший ризик хмари. Коли ви переносите дані та системи до хмарного провайдера, ви фізично не контролюєте інфраструктуру. Ви не можете підійти до сервера, не можете перевірити, хто має фізичний доступ до вашого обладнання, і не завжди знаєте, що саме провайдер робить "під капотом".</p>
         <ul>
-          <li>Дані та інфраструктура поза фізичним контролем організації</li>
-          <li>Залежність від безпеки провайдера</li>
-          <li>Обмежена видимість операцій провайдера</li>
+          <li><strong>Дані поза вашим периметром</strong> — інфраструктура фізично розташована в дата-центрах провайдера, доступ до яких ви не маєте</li>
+          <li><strong>Залежність від безпеки провайдера</strong> — якщо провайдер допустить помилку, ваші дані під загрозою, навіть якщо ви зробили все правильно</li>
+          <li><strong>Обмежена видимість</strong> — ви не завжди знаєте, як саме провайдер оброблює ваші запити, де зберігаються тимчасові копії даних, хто з персоналу має доступ</li>
         </ul>
+        <p><strong>Як мітигувати:</strong> шифрування на стороні клієнта (client-side encryption), customer-managed keys (CMK), детальне логування через CloudTrail/Azure Monitor/Cloud Audit Logs.</p>
 
         <h4>2. Multi-tenancy ризики</h4>
+        <p>У хмарі ваші робочі навантаження працюють на тому ж фізичному обладнанні, що й інших клієнтів. Хоча провайдери вкладають величезні ресурси в ізоляцію, сам факт спільного використання створює вектори атак, які неможливі в ізольованому дата-центрі.</p>
         <ul>
-          <li>Спільне використання ресурсів з невідомими сусідами</li>
-          <li>Side-channel attacks</li>
-          <li>Data leakage між tenants</li>
+          <li><strong>Side-channel attacks</strong> — атаки типу Spectre/Meltdown, що дозволяють "підслуховувати" дані сусіднього tenant'а через спільний процесор</li>
+          <li><strong>Noisy neighbors</strong> — інший tenant може споживати непропорційно багато ресурсів, впливаючи на вашу продуктивність</li>
+          <li><strong>Data leakage</strong> — помилки в ізоляції можуть призвести до того, що один клієнт отримає доступ до даних іншого</li>
         </ul>
+        <p><strong>Як мітигувати:</strong> dedicated hosts/instances для критичних навантажень, шифрування всіх даних, моніторинг аномальної поведінки.</p>
 
         <h4>3. Vendor lock-in</h4>
+        <p>Vendor lock-in — це не просто технічна незручність. Це стратегічний ризик. Чим глибше ви інтегруєтесь у специфічні сервіси одного провайдера, тим складніше та дорожче буде мігрувати, якщо виникне потреба. А потреба може виникнути з різних причин: зростання цін, зміна умов, санкції, банкрутство провайдера.</p>
         <ul>
-          <li>Залежність від специфічних API та сервісів провайдера</li>
-          <li>Складність міграції даних</li>
-          <li>Ризик зміни цін або умов</li>
+          <li><strong>Пропрієтарні API</strong> — AWS Lambda, Azure Functions, Cloud Functions мають різні API, тому код FaaS не переноситься між провайдерами</li>
+          <li><strong>Формати даних</strong> — деякі бази даних (DynamoDB, Cosmos DB, Spanner) мають унікальні моделі даних, що ускладнює міграцію</li>
+          <li><strong>Зміна умов</strong> — провайдер може змінити ціни, припинити підтримку сервісу або змінити SLA</li>
         </ul>
+        <p><strong>Як мітигувати:</strong> використовуйте portable технології (Kubernetes, Terraform), проєктуйте abstraction layers, регулярно тестуйте exit strategy.</p>
 
         <h4>4. Data sovereignty</h4>
+        <p>Де фізично знаходяться ваші дані? Це питання, яке здається простим, але в хмарі може бути неочевидним. Ваші дані можуть реплікуватися між регіонами, тимчасові копії можуть створюватися в іншій юрисдикції, а backup може зберігатися на іншому континенті — все це без вашого явного відома.</p>
         <ul>
-          <li>Невизначеність місцезнаходження даних</li>
-          <li>Різні юрисдикції — різні закони</li>
-          <li>Cross-border data transfers</li>
+          <li><strong>Юрисдикція</strong> — дані, що зберігаються в США, підпадають під CLOUD Act (уряд США може вимагати доступ); дані в ЄС — під GDPR</li>
+          <li><strong>Cross-border transfers</strong> — передача даних між країнами може порушувати локальне законодавство (після Schrems II — це особливо актуально для ЄС-США)</li>
+          <li><strong>Локальні вимоги</strong> — деякі країни (Китай, Росія, Індія) вимагають зберігання даних громадян на території країни (data localization)</li>
         </ul>
+        <p><strong>Як мітигувати:</strong> чітко обирайте регіони зберігання, використовуйте data residency policies, перевіряйте наявність регіональних endpoint'ів.</p>
 
         <h4>5. Supply chain ризики</h4>
+        <p>Ваш хмарний провайдер — це не монолітна компанія. Він сам залежить від десятків субпідрядників: постачальників обладнання, розробників програмного забезпечення, CDN-провайдерів. Компрометація будь-якої ланки цього ланцюга може вплинути на вас.</p>
         <ul>
-          <li>Субпідрядники провайдера</li>
-          <li>Third-party компоненти</li>
-          <li>SolarWinds-style атаки</li>
+          <li><strong>Субпідрядники провайдера</strong> — хто має фізичний доступ до обладнання? Хто обслуговує мережу?</li>
+          <li><strong>Third-party компоненти</strong> — open-source бібліотеки, от Log4j вразливість (2021) торкнулася мільйонів хмарних систем</li>
+          <li><strong>Supply chain атаки</strong> — SolarWinds (2020) показав, як компрометація одного постачальника може торкнутися 18,000+ організацій, включаючи урядові агенції</li>
         </ul>
+        <p><strong>Як мітигувати:</strong> перевіряйте sub-processor lists провайдера, використовуйте SCA (Software Composition Analysis) для своїх залежностей, моніторте CVE для критичних компонентів.</p>
+
+        <h4>Стратегії обробки ризиків</h4>
+        <p>Після ідентифікації ризику є чотири основні стратегії:</p>
+        <ol>
+          <li><strong>Уникнення (Avoid)</strong> — не використовувати технологію або процес, що створює ризик. Наприклад, не зберігати PII в публічній хмарі, якщо регулятор це забороняє.</li>
+          <li><strong>Мітигація (Mitigate)</strong> — зменшити ймовірність або вплив. Шифрування, MFA, моніторинг — це все мітигація. Найпоширеніша стратегія.</li>
+          <li><strong>Передача (Transfer)</strong> — передати ризик іншій стороні. Кіберстрахування (cyber insurance) — класичний приклад. SLA з компенсаціями — інший. Але пам'ятайте: ви передаєте фінансовий ризик, не репутаційний.</li>
+          <li><strong>Прийняття (Accept)</strong> — свідомо прийняти ризик. Це валідна стратегія для низькоймовірних або низькоімпактних ризиків. Ключове слово — "свідомо". Це має бути задокументоване рішення, а не ігнорування.</li>
+        </ol>
 
         <h3>Реальні кейси порушення Compliance</h3>
 
@@ -963,67 +985,80 @@
 
         <h3>Безпекові аспекти в контрактах</h3>
 
+        <p>SLA — це лише частина контракту з хмарним провайдером. Не менш важливі безпекові положення, які визначають, як провайдер захищатиме ваші дані, як реагуватиме на інциденти, і які права ви маєте як клієнт.</p>
+
         <h4>Data Protection</h4>
+        <p>Захист даних — це серце будь-якого хмарного контракту. Переконайтеся, що наступні аспекти чітко прописані:</p>
         <ul>
-          <li>Шифрування at rest та in transit</li>
-          <li>Управління ключами (customer-managed vs provider-managed)</li>
-          <li>Data residency — географічне розташування</li>
-          <li>Data deletion — процедури безпечного видалення</li>
+          <li><strong>Шифрування at rest:</strong> яким алгоритмом (AES-256 — стандарт), чи є опція customer-managed keys (CMK), де зберігаються ключі</li>
+          <li><strong>Шифрування in transit:</strong> TLS 1.2 мінімум, бажано TLS 1.3. Зверніть увагу на внутрішній трафік провайдера — він теж має бути зашифрований</li>
+          <li><strong>Data residency:</strong> конкретні регіони зберігання. Не "Європа", а "Frankfurt (eu-central-1)". Це важливо для GDPR та інших регуляцій</li>
+          <li><strong>Data deletion:</strong> як провайдер видаляє дані при завершенні контракту? Чи є криптографічне стирання (crypto-shredding)? Чи видаляються backup'и? Протягом якого часу?</li>
         </ul>
 
         <h4>Access and Authentication</h4>
+        <p>Хто і як може отримати доступ до ваших ресурсів — питання, яке має бути чітко регламентоване:</p>
         <ul>
-          <li>Identity management</li>
-          <li>MFA вимоги</li>
-          <li>Audit logging</li>
-          <li>Access controls</li>
+          <li><strong>Identity management:</strong> підтримка SSO (SAML 2.0, OIDC), інтеграція з вашим корпоративним IdP (Active Directory, Okta)</li>
+          <li><strong>MFA вимоги:</strong> чи підтримує провайдер hardware tokens (FIDO2/WebAuthn)? Чи є MFA обов'язковим для адміністративних операцій?</li>
+          <li><strong>Audit logging:</strong> які дії логуються? Яка retention period? Чи можна експортувати логи у ваш SIEM?</li>
+          <li><strong>Доступ персоналу провайдера:</strong> критичне питання — за яких умов інженери провайдера можуть отримати доступ до ваших даних? Чи логується це? Чи потрібна ваша згода?</li>
         </ul>
 
         <h4>Incident Response</h4>
+        <p>Інциденти трапляються навіть у найкращих провайдерів. Контракт має чітко визначати, що відбувається, коли щось йде не так:</p>
         <ul>
-          <li>Notification timelines (коли провайдер сповіщає про інцидент)</li>
-          <li>Forensics support</li>
-          <li>Breach notification</li>
+          <li><strong>Notification timelines:</strong> протягом якого часу провайдер зобов'язаний повідомити вас про інцидент? GDPR вимагає 72 години для notification регулятору, але ви хочете знати раніше. Найкращі провайдери сповіщають протягом 24 годин.</li>
+          <li><strong>Forensics support:</strong> чи надає провайдер дані для розслідування? Логи, snapshots, network captures — все це може бути критичним для incident response.</li>
+          <li><strong>Root Cause Analysis (RCA):</strong> чи зобов'язаний провайдер надати детальний звіт про причини інциденту?</li>
         </ul>
 
         <h4>Compliance</h4>
+        <p>Переконайтеся, що контракт підтримує ваші compliance-зобов'язання:</p>
         <ul>
-          <li>Сертифікації провайдера</li>
-          <li>Audit rights клієнта</li>
-          <li>Compliance reports доступ</li>
+          <li><strong>Сертифікації провайдера:</strong> які сертифікати має провайдер (SOC 2, ISO 27001, CSA STAR)? Чи зобов'язаний він підтримувати їх актуальними?</li>
+          <li><strong>Audit rights:</strong> ваше право на аудит — прямий або через третю сторону. Деякі провайдери надають SOC 2 звіт замість прямого аудиту.</li>
+          <li><strong>Compliance reports:</strong> доступ до звітів про відповідність, penetration test results, vulnerability scan reports</li>
         </ul>
 
         <h3>Data Processing Agreement (DPA)</h3>
-        <p>Для GDPR та інших регуляцій приватності необхідний DPA:</p>
+        <p>Якщо ви обробляєте персональні дані громадян ЄС (а це майже завжди так), вам потрібен DPA — юридично обов'язковий додаток до контракту, що регулює обробку персональних даних.</p>
+
+        <p><strong>Ключові елементи DPA:</strong></p>
         <ul>
-          <li>Ролі: Data Controller vs Data Processor</li>
-          <li>Цілі обробки даних</li>
-          <li>Sub-processors (субпідрядники)</li>
-          <li>Cross-border transfers</li>
-          <li>Data subject rights</li>
+          <li><strong>Ролі:</strong> ви — Data Controller (визначаєте цілі обробки), провайдер — Data Processor (обробляє за вашими інструкціями). Це важливо, бо controller несе основну відповідальність перед суб'єктами даних.</li>
+          <li><strong>Цілі обробки:</strong> для чого саме провайдер обробляє дані? Лише для надання сервісу чи також для своїх цілей (аналітика, покращення моделей AI)?</li>
+          <li><strong>Sub-processors:</strong> хто ще обробляє ваші дані? Провайдер зобов'язаний надати список субпідрядників та повідомляти про зміни. Ви маєте право заперечити.</li>
+          <li><strong>Cross-border transfers:</strong> після Schrems II потрібні Standard Contractual Clauses (SCCs) для передачі даних за межі ЄС</li>
+          <li><strong>Data subject rights:</strong> як провайдер допомагає вам виконувати права суб'єктів (доступ, видалення, портативність)?</li>
         </ul>
 
         <h3>Важливі контрактні положення</h3>
 
-        <h4>Termination clauses</h4>
+        <p>Окрім безпекових аспектів, є кілька контрактних положень, які критично впливають на вашу позицію:</p>
+
+        <h4>Termination clauses (Умови розірвання)</h4>
+        <p>Що станеться, якщо ви вирішите піти від провайдера? Або якщо провайдер припинить роботу? Ці питання мають бути вирішені до підписання контракту, а не після.</p>
         <ul>
-          <li>Право на вивід даних (data portability)</li>
-          <li>Transition period</li>
-          <li>Data deletion після завершення</li>
+          <li><strong>Data portability:</strong> право отримати всі свої дані у стандартному форматі (JSON, CSV, SQL dump). Скільки часу це займе? Чи є додаткові витрати?</li>
+          <li><strong>Transition period:</strong> після завершення контракту провайдер має надати перехідний період (зазвичай 30-90 днів) для міграції</li>
+          <li><strong>Data deletion:</strong> підтвердження повного видалення ваших даних, включаючи backup'и, протягом визначеного терміну (зазвичай 30-60 днів)</li>
         </ul>
 
-        <h4>Liability limitations</h4>
+        <h4>Liability limitations (Обмеження відповідальності)</h4>
+        <p>Це, мабуть, найбільш контроверсійна частина будь-якого хмарного контракту. Провайдери намагаються максимально обмежити свою відповідальність.</p>
         <ul>
-          <li>Caps on liability</li>
-          <li>Exclusions (непряма шкода)</li>
-          <li>Indemnification</li>
+          <li><strong>Caps on liability:</strong> типово — 12 місяців оплати. Тобто якщо ви платите $10K/місяць, максимальна компенсація — $120K, навіть якщо збитки від breach — мільйони</li>
+          <li><strong>Exclusions:</strong> більшість провайдерів виключають непряму шкоду (втрачений прибуток, репутаційні втрати). Це означає, що реальна компенсація може бути мізерною</li>
+          <li><strong>Indemnification:</strong> хто компенсує збитки третім сторонам? Наприклад, якщо витік даних призведе до позовів від ваших клієнтів</li>
         </ul>
 
-        <h4>Change management</h4>
+        <h4>Change management (Управління змінами)</h4>
+        <p>Хмарні провайдери постійно змінюють свої сервіси. Контракт має визначати правила гри:</p>
         <ul>
-          <li>Notification про зміни сервісу</li>
-          <li>Deprecation policy</li>
-          <li>API versioning</li>
+          <li><strong>Notification:</strong> за скільки днів провайдер зобов'язаний повідомити про зміни? 30 днів — мінімум, 90 — бажано</li>
+          <li><strong>Deprecation policy:</strong> що трапляється зі старими API та сервісами? Чи є migration path?</li>
+          <li><strong>Breaking changes:</strong> чи має клієнт право відмовитися від міграції без штрафів, якщо зміни несумісні з його системами?</li>
         </ul>
       </section>
 
@@ -1724,7 +1759,59 @@ deny[msg] {
           <li>Що таке FAIR model і як вона допомагає оцінити ризики?</li>
           <li>Які контролі NIST 800-53 порушив Capital One?</li>
           <li>Як використовувати AWS Config Rules для compliance?</li>
+          <li>Назвіть чотири стратегії обробки ризиків та наведіть хмарний приклад для кожної.</li>
+          <li>Чому liability caps у хмарних контрактах є проблемою? Як організація може захиститися?</li>
         </ol>
+      </section>
+
+      <section>
+        <h3>Практичне завдання</h3>
+        <p>Ваша організація планує мігрувати CRM-систему з on-premise в хмару. CRM містить персональні дані 50,000 клієнтів (імена, email, телефони, історія покупок). Організація працює з клієнтами з ЄС та України.</p>
+
+        <p><strong>Завдання:</strong></p>
+        <ol>
+          <li><strong>Risk Assessment:</strong> Ідентифікуйте 5 ключових ризиків міграції CRM у хмару. Для кожного ризику визначте: ймовірність (Low/Medium/High), вплив (Low/Medium/High), стратегію обробки (avoid/mitigate/transfer/accept) та конкретні контролі.</li>
+          <li><strong>Compliance checklist:</strong> Складіть перелік compliance-вимог для цієї міграції. Які стандарти та регуляції застосовуються? (Підказка: GDPR, можливо ISO 27017)</li>
+          <li><strong>Порівняння провайдерів:</strong> Використовуючи CAIQ (CSA Consensus Assessments Initiative Questionnaire), порівняйте двох провайдерів для розміщення CRM. Визначте 10 найважливіших питань.</li>
+          <li><strong>SLA аналіз:</strong> Знайдіть реальний SLA одного з великих провайдерів (AWS, Azure, GCP) для керованої бази даних. Визначте: availability target, компенсації, exclusions, що НЕ покривається SLA.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Рекомендовані ресурси для подальшого вивчення</h3>
+        <ul>
+          <li><a href="https://csrc.nist.gov/publications/detail/sp/800-37/rev-2/final" target="_blank" rel="noopener">NIST SP 800-37 Rev. 2</a> — Risk Management Framework (RMF) — покроковий процес управління ризиками</li>
+          <li><a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener">NIST Cybersecurity Framework (CSF)</a> — фреймворк для управління кіберризиками</li>
+          <li><a href="https://cloudsecurityalliance.org/research/cloud-controls-matrix" target="_blank" rel="noopener">CSA Cloud Controls Matrix (CCM)</a> — матриця контролів безпеки для хмари</li>
+          <li><a href="https://cloudsecurityalliance.org/research/topics/top-threats" target="_blank" rel="noopener">CSA Top Threats to Cloud Computing</a> — актуальний звіт про загрози</li>
+          <li><a href="https://www.iso.org/standard/43757.html" target="_blank" rel="noopener">ISO/IEC 27017:2015</a> — код практики з безпеки хмарних сервісів</li>
+          <li><a href="https://gdpr.eu/" target="_blank" rel="noopener">GDPR.eu</a> — зрозумілий гід по GDPR з поясненнями кожної статті</li>
+          <li><a href="https://aws.amazon.com/compliance/services-in-scope/" target="_blank" rel="noopener">AWS Services in Scope</a> — які сервіси AWS покриті якими compliance-програмами</li>
+          <li><a href="https://learn.microsoft.com/en-us/azure/compliance/" target="_blank" rel="noopener">Azure Compliance Documentation</a> — compliance-документація Microsoft Azure</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Глосарій ключових термінів</h3>
+        <ul>
+          <li><strong>ISMS</strong> — Information Security Management System, система управління інформаційною безпекою (основа ISO 27001)</li>
+          <li><strong>NIST CSF</strong> — Cybersecurity Framework від NIST, п'ять функцій: Identify, Protect, Detect, Respond, Recover</li>
+          <li><strong>CCM</strong> — Cloud Controls Matrix, матриця контролів безпеки від CSA (197 контролів у 17 доменах)</li>
+          <li><strong>CAIQ</strong> — Consensus Assessments Initiative Questionnaire, анкета для оцінки хмарних провайдерів від CSA</li>
+          <li><strong>SLA</strong> — Service Level Agreement, угода про рівень обслуговування між провайдером і клієнтом</li>
+          <li><strong>RTO</strong> — Recovery Time Objective, цільовий час відновлення після інциденту</li>
+          <li><strong>RPO</strong> — Recovery Point Objective, допустимий обсяг втрати даних (у часі)</li>
+          <li><strong>DPA</strong> — Data Processing Agreement, угода про обробку персональних даних (вимога GDPR)</li>
+          <li><strong>SCCs</strong> — Standard Contractual Clauses, стандартні контрактні положення ЄС для міжнародної передачі даних</li>
+          <li><strong>GDPR</strong> — General Data Protection Regulation, регламент ЄС про захист персональних даних</li>
+          <li><strong>FAIR</strong> — Factor Analysis of Information Risk, кількісна модель оцінки ризиків</li>
+          <li><strong>CSPM</strong> — Cloud Security Posture Management, інструменти моніторингу конфігурації безпеки хмари</li>
+          <li><strong>Policy-as-Code</strong> — підхід до визначення та перевірки безпекових політик через код (OPA, Checkov)</li>
+          <li><strong>FedRAMP</strong> — Federal Risk and Authorization Management Program, програма compliance для хмарних сервісів уряду США</li>
+          <li><strong>Crypto-shredding</strong> — метод видалення даних шляхом знищення ключів шифрування</li>
+          <li><strong>Data Controller</strong> — організація, що визначає цілі та засоби обробки персональних даних</li>
+          <li><strong>Data Processor</strong> — організація, що обробляє персональні дані за дорученням Controller'а</li>
+        </ul>
       </section>
 
     </article>
