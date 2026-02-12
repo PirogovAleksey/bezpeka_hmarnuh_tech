@@ -945,6 +945,122 @@
         </ul>
 
         <p>Більшість організацій використовують комбінацію всіх трьох моделей. Критичні системи — на IaaS для повного контролю. Нові мікросервіси — на PaaS для швидкості. Офісні інструменти — SaaS.</p>
+
+        <h3>Додаткові моделі: XaaS, FaaS, CaaS</h3>
+
+        <p>Класична тріада IaaS/PaaS/SaaS — це фундамент, але сучасна хмара еволюціонувала далеко за ці межі. З'явилося багато спеціалізованих моделей, які заповнюють прогалини між "великою трійкою" або обслуговують специфічні потреби.</p>
+
+        <h4>XaaS — Everything as a Service</h4>
+
+        <p><strong>XaaS (Anything/Everything as a Service)</strong> — це узагальнений термін, що описує тренд перетворення будь-якого IT-ресурсу на хмарний сервіс. По суті, "X" можна замінити на що завгодно:</p>
+
+        <ul>
+          <li><strong>DBaaS (Database as a Service)</strong> — керовані бази даних: Amazon RDS, Azure SQL Database, Google Cloud SQL. Провайдер бере на себе патчинг, резервне копіювання, масштабування. Ви керуєте лише даними та запитами.</li>
+          <li><strong>AIaaS (AI as a Service)</strong> — доступ до моделей машинного навчання та AI: AWS SageMaker, Azure Cognitive Services, Google Vertex AI. Дозволяє використовувати AI без власної інфраструктури для тренування моделей.</li>
+          <li><strong>SECaaS (Security as a Service)</strong> — безпекові сервіси з хмари: WAF, DDoS-захист, SIEM, identity management. Приклади: Cloudflare, CrowdStrike, Okta.</li>
+          <li><strong>DRaaS (Disaster Recovery as a Service)</strong> — відновлення після катастроф: AWS Elastic Disaster Recovery, Azure Site Recovery. Реплікація та автоматичний failover.</li>
+          <li><strong>STaaS (Storage as a Service)</strong> — окреме хмарне зберігання: Dropbox, AWS S3, Azure Blob Storage як самостійний сервіс.</li>
+        </ul>
+
+        <p><strong>Безпекова імплікація XaaS:</strong> кожна нова "aaS" модель змінює лінію розподілу відповідальності. Чим більше "as a Service", тим менше ви контролюєте — і тим важливіше розуміти, що саме провайдер робить "під капотом" із вашими даними.</p>
+
+        <h4>FaaS — Function as a Service</h4>
+
+        <p><strong>FaaS (Function as a Service)</strong> — це модель, в якій ви розгортаєте не додатки, не контейнери, а окремі <strong>функції</strong>. Кожна функція виконує одну конкретну задачу і запускається у відповідь на подію (HTTP-запит, зміна в базі даних, завантаження файлу тощо).</p>
+
+        <p><strong>Основні платформи:</strong></p>
+        <ul>
+          <li><strong>AWS Lambda</strong> — піонер FaaS, підтримує Python, Node.js, Java, Go, .NET та інші</li>
+          <li><strong>Azure Functions</strong> — глибока інтеграція з екосистемою Microsoft</li>
+          <li><strong>Google Cloud Functions</strong> — простий інтерфейс, тісна інтеграція з Firebase</li>
+        </ul>
+
+        <p><strong>Ключові характеристики:</strong></p>
+        <ul>
+          <li><strong>Serverless</strong> — ви не бачите і не управляєте серверами взагалі. Провайдер автоматично виділяє ресурси.</li>
+          <li><strong>Event-driven</strong> — функції "сплять", поки не відбудеться тригерна подія. Ви платите лише за час виконання.</li>
+          <li><strong>Автоматичне масштабування</strong> — від 0 до тисяч паралельних екземплярів без вашого втручання.</li>
+          <li><strong>Короткий час виконання</strong> — типово обмеження від 5 до 15 хвилин на одне виконання.</li>
+        </ul>
+
+        <p><strong>Безпекові аспекти FaaS:</strong></p>
+        <ul>
+          <li><strong>Збільшена attack surface</strong> — кожна функція — це потенційна точка входу. Мікросервіс може мати 5 ендпоінтів, але FaaS-архітектура того ж додатку — 50 окремих функцій.</li>
+          <li><strong>Cold start injection</strong> — під час "холодного старту" функція ініціалізується з нуля, що може створювати вікно для атак.</li>
+          <li><strong>Управління секретами</strong> — не можна просто зберігати API-ключі в коді чи env-змінних. Потрібні спеціальні сервіси: AWS Secrets Manager, Azure Key Vault.</li>
+          <li><strong>Зменшений контроль</strong> — ви не можете встановити агент моніторингу на сервер, бо сервера немає. Потрібні cloud-native інструменти спостережуваності.</li>
+        </ul>
+
+        <h4>CaaS — Container as a Service</h4>
+
+        <p><strong>CaaS (Container as a Service)</strong> — модель, що займає позицію між IaaS та PaaS. Ви отримуєте керовану платформу для запуску контейнерів (Docker), не турбуючись про базову інфраструктуру, але зберігаючи контроль над тим, що саме працює всередині контейнера.</p>
+
+        <p><strong>Основні платформи:</strong></p>
+        <ul>
+          <li><strong>Amazon EKS (Elastic Kubernetes Service)</strong> — керований Kubernetes на AWS</li>
+          <li><strong>Azure AKS (Azure Kubernetes Service)</strong> — керований Kubernetes на Azure</li>
+          <li><strong>Google GKE (Google Kubernetes Engine)</strong> — керований Kubernetes на GCP (вважається найзрілішим, бо Google створив Kubernetes)</li>
+          <li><strong>AWS ECS (Elastic Container Service)</strong> — власне рішення AWS для оркестрації контейнерів</li>
+          <li><strong>AWS Fargate</strong> — serverless-модель для контейнерів (CaaS + serverless)</li>
+        </ul>
+
+        <p><strong>Чим CaaS відрізняється від PaaS?</strong></p>
+        <ul>
+          <li><strong>PaaS</strong> диктує runtime-середовище: ви використовуєте те, що надає платформа (конкретну версію Node.js, Python тощо)</li>
+          <li><strong>CaaS</strong> дає свободу: ви пакуєте свій додаток у контейнер з будь-яким середовищем, будь-якою мовою, будь-якими залежностями</li>
+        </ul>
+
+        <p><strong>Безпекові аспекти CaaS:</strong></p>
+        <ul>
+          <li><strong>Image security</strong> — вразливості в базових образах контейнерів. Потрібне сканування: Trivy, Snyk Container, Amazon ECR scanning.</li>
+          <li><strong>Runtime security</strong> — контейнер може бути скомпрометований під час виконання. Інструменти: Falco, Sysdig.</li>
+          <li><strong>Network policies</strong> — за замовчуванням контейнери в Kubernetes можуть комунікувати між собою без обмежень. Потрібні Network Policies для сегментації.</li>
+          <li><strong>Secrets management</strong> — Kubernetes Secrets за замовчуванням зберігаються в base64 (не шифрування!). Потрібні зовнішні рішення або encryption at rest.</li>
+          <li><strong>Container escape</strong> — рідкісна, але критична загроза: вихід з контейнера на хост-систему через вразливість у runtime (runc, containerd).</li>
+        </ul>
+
+        <h4>Де кожна модель на спектрі контролю?</h4>
+
+        <table>
+          <tr>
+            <th>Модель</th>
+            <th>Що ви контролюєте</th>
+            <th>Що контролює провайдер</th>
+            <th>Приклад</th>
+          </tr>
+          <tr>
+            <td><strong>IaaS</strong></td>
+            <td>ОС, runtime, додатки, дані</td>
+            <td>Фізичний сервер, мережу, віртуалізацію</td>
+            <td>EC2, Azure VM</td>
+          </tr>
+          <tr>
+            <td><strong>CaaS</strong></td>
+            <td>Контейнери, додатки, дані</td>
+            <td>Кластер, ОС хоста, оркестрація</td>
+            <td>EKS, AKS, GKE</td>
+          </tr>
+          <tr>
+            <td><strong>PaaS</strong></td>
+            <td>Код додатку, дані</td>
+            <td>Runtime, ОС, масштабування</td>
+            <td>Heroku, App Engine</td>
+          </tr>
+          <tr>
+            <td><strong>FaaS</strong></td>
+            <td>Код функції, тригери</td>
+            <td>Все інше: runtime, масштабування, ОС</td>
+            <td>Lambda, Cloud Functions</td>
+          </tr>
+          <tr>
+            <td><strong>SaaS</strong></td>
+            <td>Дані, конфігурація, доступ</td>
+            <td>Весь додаток та інфраструктуру</td>
+            <td>Gmail, Salesforce</td>
+          </tr>
+        </table>
+
+        <p><strong>Головне правило:</strong> чим менше ви контролюєте, тим менше у вас відповідальності за інфраструктуру — але тим більше ви залежите від безпекових практик провайдера. Вибір моделі — це завжди компроміс між контролем та зручністю.</p>
       </section>
 
       <section>
@@ -1593,6 +1709,337 @@
       </section>
 
       <section>
+        <h2>1.8 Порівняння хмарних провайдерів: AWS vs Azure vs GCP</h2>
+
+        <p>Три гіганти — Amazon Web Services, Microsoft Azure та Google Cloud Platform — разом контролюють понад 65% світового ринку хмарних послуг. Кожен має свої сильні сторони, філософію та підхід до безпеки. Для спеціаліста з хмарної безпеки критично розуміти відмінності між ними.</p>
+
+        <h3>Amazon Web Services (AWS)</h3>
+
+        <p><strong>Частка ринку: ~31%</strong> (лідер з 2006 року)</p>
+
+        <p>AWS — це піонер публічних хмар. Сервіс Amazon S3 з'явився у 2006 році, і з тих пір AWS залишається найбільшим хмарним провайдером у світі.</p>
+
+        <p><strong>Сильні сторони:</strong></p>
+        <ul>
+          <li><strong>Найширший спектр сервісів</strong> — понад 200 сервісів, від обчислень до супутникових станцій (AWS Ground Station)</li>
+          <li><strong>Зрілість та документація</strong> — найбільша екосистема, найбільше community, найбільше навчальних ресурсів</li>
+          <li><strong>Глобальна інфраструктура</strong> — 33+ регіони, 100+ Availability Zones по всьому світу</li>
+          <li><strong>Стартап-екосистема</strong> — більшість стартапів починають саме з AWS</li>
+        </ul>
+
+        <p><strong>Ключові безпекові сервіси:</strong></p>
+        <ul>
+          <li><strong>AWS IAM</strong> — детальне управління доступом з policy-based контролем</li>
+          <li><strong>AWS GuardDuty</strong> — інтелектуальне виявлення загроз на основі ML</li>
+          <li><strong>AWS Security Hub</strong> — централізований дашборд безпеки</li>
+          <li><strong>AWS CloudTrail</strong> — аудит-логи всіх API-викликів</li>
+          <li><strong>AWS KMS</strong> — управління ключами шифрування</li>
+          <li><strong>Amazon Macie</strong> — автоматичне виявлення та захист чутливих даних (PII) у S3</li>
+        </ul>
+
+        <p><strong>Безпекова філософія:</strong> "Security is job zero". AWS пропонує модель shared responsibility з детальною документацією для кожного сервісу.</p>
+
+        <h3>Microsoft Azure</h3>
+
+        <p><strong>Частка ринку: ~24%</strong> (другий за розміром)</p>
+
+        <p>Azure запущений у 2010 році і швидко зріс завдяки корпоративній базі Microsoft. Якщо ваша компанія вже використовує Windows Server, Active Directory, Office 365 — Azure є природним вибором.</p>
+
+        <p><strong>Сильні сторони:</strong></p>
+        <ul>
+          <li><strong>Корпоративна інтеграція</strong> — найкраща інтеграція з існуючими Microsoft-продуктами (Active Directory, Office 365, Teams)</li>
+          <li><strong>Гібридна хмара</strong> — Azure Arc та Azure Stack дозволяють управляти on-premise та хмарними ресурсами єдиним набором інструментів</li>
+          <li><strong>Compliance</strong> — найбільша кількість сертифікацій відповідності (100+), що критично для держсектора та regulated industries</li>
+          <li><strong>Enterprise agreements</strong> — гнучкі корпоративні ліцензії, знижки для існуючих клієнтів Microsoft</li>
+        </ul>
+
+        <p><strong>Ключові безпекові сервіси:</strong></p>
+        <ul>
+          <li><strong>Microsoft Entra ID (ex-Azure AD)</strong> — корпоративний identity provider з SSO, MFA, Conditional Access</li>
+          <li><strong>Microsoft Defender for Cloud</strong> — CSPM + CWPP, захист multi-cloud середовищ</li>
+          <li><strong>Microsoft Sentinel</strong> — cloud-native SIEM/SOAR на базі AI</li>
+          <li><strong>Azure Key Vault</strong> — управління секретами, ключами, сертифікатами</li>
+          <li><strong>Azure Policy</strong> — автоматичне забезпечення відповідності конфігурацій</li>
+        </ul>
+
+        <p><strong>Безпекова філософія:</strong> "Secure by default". Azure робить акцент на інтеграції безпеки з корпоративними identity-системами та compliance.</p>
+
+        <h3>Google Cloud Platform (GCP)</h3>
+
+        <p><strong>Частка ринку: ~11%</strong> (третій, але швидко зростає)</p>
+
+        <p>GCP запущений у 2011 році. Google привніс у хмарні обчислення технології, якими сам користується: Kubernetes (створений Google), BigQuery, TensorFlow. GCP часто обирають для data-intensive та AI/ML завдань.</p>
+
+        <p><strong>Сильні сторони:</strong></p>
+        <ul>
+          <li><strong>Data & AI/ML</strong> — найсильніша платформа для аналітики (BigQuery), машинного навчання (Vertex AI) та обробки даних</li>
+          <li><strong>Kubernetes</strong> — Google створив Kubernetes, і GKE вважається найзрілішим керованим Kubernetes-сервісом</li>
+          <li><strong>Мережа</strong> — власна глобальна мережа Google з найнижчою затримкою (latency)</li>
+          <li><strong>Простота та UX</strong> — інтуїтивніший інтерфейс порівняно з AWS, менше "перевантаження вибором"</li>
+        </ul>
+
+        <p><strong>Ключові безпекові сервіси:</strong></p>
+        <ul>
+          <li><strong>Google Cloud IAM</strong> — управління доступом із підтримкою організаційних ієрархій</li>
+          <li><strong>Security Command Center</strong> — централізоване управління безпекою та виявлення вразливостей</li>
+          <li><strong>Chronicle (SIEM)</strong> — SIEM на базі інфраструктури Google для аналізу великих обсягів даних безпеки</li>
+          <li><strong>BeyondCorp Enterprise</strong> — реалізація Zero Trust архітектури від Google</li>
+          <li><strong>Cloud KMS + Confidential Computing</strong> — шифрування даних навіть під час обробки в пам'яті</li>
+        </ul>
+
+        <p><strong>Безпекова філософія:</strong> "Shared Fate" (спільна доля) замість "Shared Responsibility". Google вважає, що просто розділити відповідальність недостатньо — провайдер має активно допомагати клієнту бути безпечним. Це проявляється в secure-by-default конфігураціях та вбудованих захисних механізмах.</p>
+
+        <h3>Порівняльна таблиця</h3>
+
+        <table>
+          <tr>
+            <th>Критерій</th>
+            <th>AWS</th>
+            <th>Azure</th>
+            <th>GCP</th>
+          </tr>
+          <tr>
+            <td>Частка ринку</td>
+            <td>~31%</td>
+            <td>~24%</td>
+            <td>~11%</td>
+          </tr>
+          <tr>
+            <td>Кількість сервісів</td>
+            <td>200+</td>
+            <td>200+</td>
+            <td>100+</td>
+          </tr>
+          <tr>
+            <td>Найкраще для</td>
+            <td>Стартапи, широкий вибір</td>
+            <td>Enterprise, гібридна хмара</td>
+            <td>Data/AI, Kubernetes</td>
+          </tr>
+          <tr>
+            <td>Identity</td>
+            <td>AWS IAM</td>
+            <td>Entra ID (Azure AD)</td>
+            <td>Cloud IAM</td>
+          </tr>
+          <tr>
+            <td>SIEM</td>
+            <td>Security Lake + партнери</td>
+            <td>Microsoft Sentinel</td>
+            <td>Chronicle</td>
+          </tr>
+          <tr>
+            <td>Threat Detection</td>
+            <td>GuardDuty</td>
+            <td>Defender for Cloud</td>
+            <td>Security Command Center</td>
+          </tr>
+          <tr>
+            <td>Zero Trust</td>
+            <td>Verified Access</td>
+            <td>Conditional Access</td>
+            <td>BeyondCorp Enterprise</td>
+          </tr>
+          <tr>
+            <td>Безпекова модель</td>
+            <td>Shared Responsibility</td>
+            <td>Shared Responsibility</td>
+            <td>Shared Fate</td>
+          </tr>
+          <tr>
+            <td>Compliance сертифікації</td>
+            <td>90+</td>
+            <td>100+</td>
+            <td>70+</td>
+          </tr>
+          <tr>
+            <td>Сильна сторона безпеки</td>
+            <td>Глибина налаштувань</td>
+            <td>Корпоративний Identity</td>
+            <td>Secure-by-default</td>
+          </tr>
+        </table>
+
+        <h3>Як обирати провайдера з точки зору безпеки?</h3>
+
+        <p>Вибір провайдера — це не лише питання ціни та функціоналу. З точки зору безпеки враховуйте:</p>
+
+        <ol>
+          <li><strong>Compliance вимоги</strong> — чи має провайдер необхідні сертифікації для вашої індустрії? Для держсектора ЄС важливі сертифікації GDPR, для фінансів — PCI DSS, для медицини — HIPAA.</li>
+          <li><strong>Data residency</strong> — де фізично зберігатимуться ваші дані? Чи є дата-центри в потрібному регіоні? Для українських організацій може бути важливо мати дата-центри в ЄС.</li>
+          <li><strong>Існуючий стек</strong> — якщо у вас Windows-інфраструктура, Azure забезпечить найкращу інтеграцію. Якщо ви cloud-native стартап, AWS чи GCP можуть бути кращим вибором.</li>
+          <li><strong>Vendor lock-in</strong> — використання пропрієтарних сервісів одного провайдера ускладнює міграцію. Kubernetes-based рішення (EKS, AKS, GKE) забезпечують більшу портативність.</li>
+          <li><strong>Multi-cloud стратегія</strong> — все більше організацій використовують кілька провайдерів одночасно для зменшення ризиків та оптимізації витрат. Це додає складності, але зменшує залежність від одного постачальника.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>1.9 Compliance Frameworks: SOC 2, ISO 27017, CSA STAR</h2>
+
+        <p>Хмарна безпека — це не лише технічні заходи. Організації повинні демонструвати відповідність (compliance) певним стандартам та фреймворкам. Це важливо для клієнтів, регуляторів і партнерів. Розглянемо три ключових фреймворки, які найчастіше зустрічаються у хмарному середовищі.</p>
+
+        <h3>SOC 2 (Service Organization Control 2)</h3>
+
+        <p><strong>SOC 2</strong> — це стандарт аудиту, розроблений Американським інститутом сертифікованих публічних бухгалтерів (AICPA). Він оцінює, наскільки сервісна організація (хмарний провайдер, SaaS-компанія) захищає дані клієнтів.</p>
+
+        <p><strong>П'ять критеріїв довіри (Trust Service Criteria):</strong></p>
+        <ol>
+          <li><strong>Security (обов'язковий)</strong> — захист від несанкціонованого доступу. Включає файрволи, IDS/IPS, контроль доступу, шифрування.</li>
+          <li><strong>Availability</strong> — система доступна та працює відповідно до SLA. Включає моніторинг, disaster recovery, резервне копіювання.</li>
+          <li><strong>Processing Integrity</strong> — дані обробляються коректно, повністю та вчасно. Важливо для фінансових та розрахункових систем.</li>
+          <li><strong>Confidentiality</strong> — конфіденційна інформація захищена. Включає шифрування, контроль доступу, класифікацію даних.</li>
+          <li><strong>Privacy</strong> — персональні дані збираються, використовуються та зберігаються відповідно до політик. Стосується PII (Personally Identifiable Information).</li>
+        </ol>
+
+        <p><strong>Два типи звітів:</strong></p>
+        <ul>
+          <li><strong>SOC 2 Type I</strong> — оцінка на конкретний момент часу. Аудитор перевіряє: "Чи є у вас правильні контролі на сьогодні?" Це знімок стану безпеки.</li>
+          <li><strong>SOC 2 Type II</strong> — оцінка за період (зазвичай 6-12 місяців). Аудитор перевіряє: "Чи працювали ваші контролі ефективно протягом цього періоду?" Це набагато цінніший звіт, бо демонструє стабільність практик.</li>
+        </ul>
+
+        <p><strong>Чому SOC 2 важливий для хмари:</strong></p>
+        <ul>
+          <li>Де-факто стандарт для SaaS-компаній, особливо на ринку США</li>
+          <li>Клієнти (особливо enterprise) вимагають SOC 2 Type II перед підписанням контракту</li>
+          <li>Всі великі хмарні провайдери (AWS, Azure, GCP) мають SOC 2 Type II</li>
+          <li>Якщо ви будуєте SaaS на хмарі — SOC 2 потрібен і вам, а не лише провайдеру</li>
+        </ul>
+
+        <h3>ISO/IEC 27017</h3>
+
+        <p><strong>ISO 27017</strong> — міжнародний стандарт, що надає рекомендації з інформаційної безпеки для хмарних послуг. Він є розширенням ISO 27001/27002 зі специфічними контролями для хмари.</p>
+
+        <p><strong>Як він пов'язаний з іншими ISO стандартами:</strong></p>
+        <ul>
+          <li><strong>ISO 27001</strong> — базовий стандарт управління інформаційною безпекою (ISMS). Визначає вимоги до системи управління.</li>
+          <li><strong>ISO 27002</strong> — набір контролів безпеки (best practices). "Що робити".</li>
+          <li><strong>ISO 27017</strong> — додаткові контролі, специфічні для хмари. "Що ще робити в хмарі".</li>
+          <li><strong>ISO 27018</strong> — захист персональних даних у хмарі (PII). Доповнює 27017.</li>
+        </ul>
+
+        <p><strong>Ключові аспекти ISO 27017:</strong></p>
+        <ul>
+          <li><strong>Розподіл відповідальності</strong> — стандарт чітко визначає обов'язки хмарного провайдера та клієнта для кожного контролю</li>
+          <li><strong>Віртуалізація</strong> — рекомендації щодо безпеки віртуальних машин, ізоляції, гіпервізорів</li>
+          <li><strong>Multi-tenancy</strong> — як забезпечити ізоляцію між клієнтами на спільній інфраструктурі</li>
+          <li><strong>Видалення активів</strong> — процедури безпечного видалення даних при завершенні контракту з провайдером</li>
+          <li><strong>Географія даних</strong> — прозорість щодо місця зберігання та обробки даних</li>
+        </ul>
+
+        <p><strong>Коли потрібен ISO 27017:</strong></p>
+        <ul>
+          <li>Робота з європейськими та міжнародними клієнтами (ISO більш визнаний за межами США, ніж SOC 2)</li>
+          <li>Регульовані галузі: фінанси, охорона здоров'я, держсектор</li>
+          <li>Якщо ваша організація вже має ISO 27001 — 27017 є логічним розширенням</li>
+        </ul>
+
+        <h3>CSA STAR (Cloud Security Alliance — Security, Trust, Assurance, and Risk)</h3>
+
+        <p><strong>CSA STAR</strong> — це програма сертифікації, розроблена Cloud Security Alliance спеціально для оцінки безпеки хмарних провайдерів. Це єдина програма, створена виключно для хмари.</p>
+
+        <p><strong>Cloud Controls Matrix (CCM):</strong></p>
+        <p>В основі STAR лежить <strong>CCM (Cloud Controls Matrix)</strong> — матриця з 197 контролів безпеки, згрупованих у 17 доменів:</p>
+        <ul>
+          <li>Audit & Assurance</li>
+          <li>Application & Interface Security</li>
+          <li>Business Continuity Management</li>
+          <li>Change Control & Configuration Management</li>
+          <li>Cryptography, Encryption & Key Management</li>
+          <li>Data Security & Privacy Lifecycle Management</li>
+          <li>Datacenter Security</li>
+          <li>Governance, Risk & Compliance</li>
+          <li>Human Resources Security</li>
+          <li>Identity & Access Management</li>
+          <li>Infrastructure & Virtualization Security</li>
+          <li>Interoperability & Portability</li>
+          <li>Logging & Monitoring</li>
+          <li>Security Incident Management</li>
+          <li>Supply Chain Management</li>
+          <li>Threat & Vulnerability Management</li>
+          <li>Universal Endpoint Management</li>
+        </ul>
+
+        <p><strong>Три рівні сертифікації:</strong></p>
+        <ol>
+          <li><strong>STAR Level 1: Self-Assessment</strong> — провайдер самостійно заповнює опитувальник (CAIQ — Consensus Assessments Initiative Questionnaire) та публікує результати в реєстрі CSA STAR. Безкоштовно, базовий рівень прозорості.</li>
+          <li><strong>STAR Level 2: Third-Party Audit</strong> — незалежний аудитор оцінює провайдера за CCM. Може базуватися на ISO 27001 (STAR Certification) або SOC 2 (STAR Attestation). Це золотий стандарт.</li>
+          <li><strong>STAR Level 3: Continuous Monitoring</strong> — безперервний моніторинг та автоматична оцінка безпекового стану. Найвищий рівень довіри.</li>
+        </ol>
+
+        <p><strong>Переваги CSA STAR:</strong></p>
+        <ul>
+          <li><strong>Прозорість</strong> — результати публічно доступні в реєстрі CSA STAR</li>
+          <li><strong>Хмарна специфіка</strong> — на відміну від SOC 2 та ISO, STAR створений виключно для хмари</li>
+          <li><strong>Безкоштовний вхід</strong> — Level 1 дозволяє навіть невеликим провайдерам продемонструвати зрілість</li>
+          <li><strong>Сумісність</strong> — CCM зіставлений з ISO 27001, NIST, PCI DSS, HIPAA та іншими фреймворками</li>
+        </ul>
+
+        <h3>Порівняння фреймворків</h3>
+
+        <table>
+          <tr>
+            <th>Критерій</th>
+            <th>SOC 2</th>
+            <th>ISO 27017</th>
+            <th>CSA STAR</th>
+          </tr>
+          <tr>
+            <td>Хто розробив</td>
+            <td>AICPA (США)</td>
+            <td>ISO/IEC (міжнародний)</td>
+            <td>CSA (міжнародний)</td>
+          </tr>
+          <tr>
+            <td>Фокус</td>
+            <td>Сервісні організації</td>
+            <td>Хмарна безпека (розширення ISO 27001)</td>
+            <td>Виключно хмарні провайдери</td>
+          </tr>
+          <tr>
+            <td>Визнання</td>
+            <td>Домінує в США</td>
+            <td>Міжнародний стандарт</td>
+            <td>Зростаюче, особливо в хмарі</td>
+          </tr>
+          <tr>
+            <td>Публічність результатів</td>
+            <td>Ні (за NDA)</td>
+            <td>Ні (сертифікат публічний, деталі — ні)</td>
+            <td>Так (публічний реєстр)</td>
+          </tr>
+          <tr>
+            <td>Вартість сертифікації</td>
+            <td>$50K-$500K+</td>
+            <td>$30K-$200K+</td>
+            <td>Безкоштовно (L1), $20K-$100K+ (L2)</td>
+          </tr>
+          <tr>
+            <td>Час отримання</td>
+            <td>6-12 місяців</td>
+            <td>6-18 місяців</td>
+            <td>1 день (L1), 3-12 місяців (L2)</td>
+          </tr>
+          <tr>
+            <td>Коли обирати</td>
+            <td>SaaS для ринку США</td>
+            <td>Міжнародні клієнти, regulated</td>
+            <td>Хмарні провайдери, прозорість</td>
+          </tr>
+        </table>
+
+        <h3>Практичні рекомендації</h3>
+
+        <ol>
+          <li><strong>Для стартапу, що будує SaaS</strong> — починайте з SOC 2 Type II. Це те, що попросять ваші перші enterprise-клієнти.</li>
+          <li><strong>Для компанії з міжнародними клієнтами</strong> — ISO 27001 + ISO 27017. Міжнародно визнані стандарти.</li>
+          <li><strong>Для хмарного провайдера</strong> — CSA STAR Level 2. Демонструє хмарну зрілість. Бажано разом із SOC 2 та ISO 27001.</li>
+          <li><strong>Як клієнт хмарних сервісів</strong> — перед вибором провайдера перевіряйте наявність цих сертифікацій. Звіт SOC 2 Type II дає найдетальнішу картину. Реєстр CSA STAR дозволяє порівняти провайдерів публічно.</li>
+        </ol>
+
+        <p><strong>Важливо пам'ятати:</strong> сертифікація провайдера не означає, що ви автоматично відповідаєте вимогам. Якщо AWS має SOC 2, це покриває їхню частину відповідальності (Security OF the Cloud). Ваша частина (Security IN the Cloud) — це ваша відповідальність, і аудитори перевірятимуть саме її.</p>
+      </section>
+
+      <section>
         <h2>Підсумок</h2>
 
         <p>Ми пройшли великий шлях сьогодні. Давайте підсумуємо ключові моменти.</p>
@@ -1641,6 +2088,20 @@
         <p><strong>7. Основні загрози</strong></p>
         <p>Неправильна конфігурація — #1. IAM-проблеми, небезпечні API, компрометація акаунтів, внутрішні загрози, вразливості сторонніх компонентів.</p>
 
+        <p><strong>8. Порівняння провайдерів</strong></p>
+        <ul>
+          <li><strong>AWS</strong> — лідер ринку (~31%), найширший вибір сервісів, "Security is job zero"</li>
+          <li><strong>Azure</strong> — #2 (~24%), найкращий для enterprise та гібридної хмари, найбільше compliance-сертифікацій</li>
+          <li><strong>GCP</strong> — #3 (~11%), найкращий для data/AI та Kubernetes, філософія "Shared Fate"</li>
+        </ul>
+
+        <p><strong>9. Compliance Frameworks</strong></p>
+        <ul>
+          <li><strong>SOC 2</strong> — стандарт аудиту сервісних організацій, 5 критеріїв довіри, Type I (знімок) vs Type II (період)</li>
+          <li><strong>ISO 27017</strong> — міжнародний стандарт хмарної безпеки, розширення ISO 27001</li>
+          <li><strong>CSA STAR</strong> — програма сертифікації виключно для хмари, 3 рівні, публічний реєстр</li>
+        </ul>
+
         <h3>Ключові висновки</h3>
 
         <ol>
@@ -1675,6 +2136,9 @@
           <li>В яких випадках краще обрати приватну хмару замість публічної? Hybrid замість pure cloud?</li>
           <li>Чому "lift and shift" міграція небезпечна з точки зору безпеки?</li>
           <li>Що таке Shadow IT і чому це проблема для хмарної безпеки?</li>
+          <li>Порівняйте FaaS та CaaS: коли кожна модель доцільніша? Які безпекові ризики специфічні для кожної?</li>
+          <li>Чим відрізняється підхід Google "Shared Fate" від класичної "Shared Responsibility" AWS та Azure?</li>
+          <li>Поясніть різницю між SOC 2 Type I та Type II. Який з них цінніший для оцінки провайдера і чому?</li>
         </ol>
 
         <h3>Практичне завдання</h3>
@@ -1709,6 +2173,13 @@
           <li><strong>CSA</strong> — Cloud Security Alliance, провідна організація у сфері хмарної безпеки</li>
           <li><strong>SOC 2</strong> — Service Organization Control 2, стандарт аудиту для сервісних провайдерів</li>
           <li><strong>Lift and Shift</strong> — міграція додатків у хмару без змін архітектури</li>
+          <li><strong>XaaS</strong> — Everything as a Service, узагальнений термін для будь-якого хмарного сервісу</li>
+          <li><strong>FaaS</strong> — Function as a Service, serverless модель виконання окремих функцій (Lambda, Cloud Functions)</li>
+          <li><strong>CaaS</strong> — Container as a Service, керована платформа для контейнерів (EKS, AKS, GKE)</li>
+          <li><strong>SOC 2</strong> — стандарт аудиту сервісних організацій за п'ятьма критеріями довіри</li>
+          <li><strong>ISO 27017</strong> — міжнародний стандарт безпеки хмарних послуг, розширення ISO 27001</li>
+          <li><strong>CSA STAR</strong> — програма сертифікації безпеки хмарних провайдерів від Cloud Security Alliance</li>
+          <li><strong>CCM</strong> — Cloud Controls Matrix, матриця контролів безпеки від CSA</li>
         </ul>
       </section>
     </article>
