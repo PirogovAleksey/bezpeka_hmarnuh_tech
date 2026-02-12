@@ -350,6 +350,45 @@ body.light .slide-diagram .diagram-text-small {
   fill: #64748b;
 }
 
+.slide-diagram .diagram-text-accent {
+  fill: #38bdf8;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+}
+
+body.light .slide-diagram .diagram-text-accent {
+  fill: #0284c7;
+}
+
+.slide-diagram .diagram-text-green {
+  fill: #4ade80;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+}
+
+body.light .slide-diagram .diagram-text-green {
+  fill: #16a34a;
+}
+
+.slide-diagram .diagram-text-yellow {
+  fill: #fbbf24;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+}
+
+body.light .slide-diagram .diagram-text-yellow {
+  fill: #b45309;
+}
+
+.slide-diagram .diagram-text-muted {
+  fill: #475569;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body.light .slide-diagram .diagram-text-muted {
+  fill: #94a3b8;
+}
+
 /* Diagram boxes */
 .slide-diagram .diagram-box {
   fill: #1e3a5f;
@@ -552,6 +591,11 @@ body.light .slide-stat {
   font-size: 1.2rem;
   color: #94a3b8;
   margin-top: 0.5rem;
+}
+
+/* Stat inside grid — smaller size */
+.slide-grid-item .slide-stat {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 /* --- Reduce motion --- */

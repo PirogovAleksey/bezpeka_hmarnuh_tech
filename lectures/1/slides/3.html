@@ -30,26 +30,48 @@
     <section class="slide">
       <h1>Три моделі обслуговування</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 350 220" width="350" height="220">
+        <svg viewBox="0 0 700 340" width="700" height="340">
           <!-- SaaS (top) -->
-          <rect x="50" y="10" width="250" height="55" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
-          <text x="175" y="32" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">SaaS</text>
-          <text x="175" y="52" text-anchor="middle" class="diagram-text-small">Software as a Service</text>
+          <rect x="20" y="10" width="380" height="90" rx="12" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="200" y="40" text-anchor="middle" class="diagram-text-green" font-size="20">SaaS</text>
+          <text x="200" y="62" text-anchor="middle" class="diagram-text-small" font-size="14">Software as a Service</text>
+          <text x="200" y="82" text-anchor="middle" class="diagram-text-small" font-size="11">Microsoft 365, Salesforce, Gmail</text>
+
+          <!-- Arrow -->
+          <line x1="410" y1="55" x2="440" y2="55" stroke="#4ade80" stroke-width="2"/>
+          <polygon points="440,50 450,55 440,60" fill="#4ade80"/>
+
+          <!-- SaaS label -->
+          <text x="460" y="50" text-anchor="start" class="diagram-text-green" font-size="15">Користувачі</text>
+          <text x="460" y="68" text-anchor="start" class="diagram-text-small" font-size="11">Готовий продукт, браузер</text>
 
           <!-- PaaS (middle) -->
-          <rect x="50" y="75" width="250" height="55" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
-          <text x="175" y="97" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">PaaS</text>
-          <text x="175" y="117" text-anchor="middle" class="diagram-text-small">Platform as a Service</text>
+          <rect x="20" y="120" width="380" height="90" rx="12" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="200" y="150" text-anchor="middle" class="diagram-text-yellow" font-size="20">PaaS</text>
+          <text x="200" y="172" text-anchor="middle" class="diagram-text-small" font-size="14">Platform as a Service</text>
+          <text x="200" y="192" text-anchor="middle" class="diagram-text-small" font-size="11">Heroku, Google App Engine, Azure App Service</text>
+
+          <!-- Arrow -->
+          <line x1="410" y1="165" x2="440" y2="165" stroke="#fbbf24" stroke-width="2"/>
+          <polygon points="440,160 450,165 440,170" fill="#fbbf24"/>
+
+          <!-- PaaS label -->
+          <text x="460" y="160" text-anchor="start" class="diagram-text-yellow" font-size="15">Розробники</text>
+          <text x="460" y="178" text-anchor="start" class="diagram-text-small" font-size="11">Деплой коду, без турбот про ОС</text>
 
           <!-- IaaS (bottom) -->
-          <rect x="50" y="140" width="250" height="55" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="175" y="162" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">IaaS</text>
-          <text x="175" y="182" text-anchor="middle" class="diagram-text-small">Infrastructure as a Service</text>
+          <rect x="20" y="230" width="380" height="90" rx="12" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="200" y="260" text-anchor="middle" class="diagram-text-accent" font-size="20">IaaS</text>
+          <text x="200" y="282" text-anchor="middle" class="diagram-text-small" font-size="14">Infrastructure as a Service</text>
+          <text x="200" y="302" text-anchor="middle" class="diagram-text-small" font-size="11">AWS EC2, Azure VMs, Google Compute Engine</text>
 
-          <!-- Arrows on the right side -->
-          <text x="325" y="40" text-anchor="start" class="diagram-text-small">Користувачі</text>
-          <text x="325" y="105" text-anchor="start" class="diagram-text-small">Розробники</text>
-          <text x="325" y="170" text-anchor="start" class="diagram-text-small">ІТ-адміни</text>
+          <!-- Arrow -->
+          <line x1="410" y1="275" x2="440" y2="275" stroke="#38bdf8" stroke-width="2"/>
+          <polygon points="440,270 450,275 440,280" fill="#38bdf8"/>
+
+          <!-- IaaS label -->
+          <text x="460" y="270" text-anchor="start" class="diagram-text-accent" font-size="15">ІТ-адміністратори</text>
+          <text x="460" y="288" text-anchor="start" class="diagram-text-small" font-size="11">Повний контроль: VM, мережі, ОС</text>
         </svg>
       </div>
     </section>
@@ -68,7 +90,7 @@
       <ul>
         <li>Патчинг операційних систем</li>
         <li>Конфігурація Security Groups</li>
-        <li>Шифрування даних at rest</li>
+        <li>Шифрування даних у стані спокою (at rest)</li>
         <li>Моніторинг та логування</li>
         <li>Управління доступом до VM</li>
       </ul>
@@ -89,7 +111,7 @@
         <li>Безпека коду (OWASP Top 10)</li>
         <li>Захист даних додатку</li>
         <li>Управління API ключами</li>
-        <li>Secrets management</li>
+        <li>Управління секретами (Secrets management)</li>
       </ul>
     </section>
 
@@ -108,7 +130,7 @@
         <li>Управління ідентифікаціями (IAM)</li>
         <li>Захист облікових записів (MFA)</li>
         <li>Класифікація даних</li>
-        <li>Compliance з політиками</li>
+        <li>Відповідність (Compliance) з політиками</li>
       </ul>
     </section>
 
@@ -123,7 +145,7 @@
 
     <section class="slide">
       <h1>Питання?</h1>
-      <p>Наступна тема: Shared Responsibility Model</p>
+      <p>Наступна тема: Модель спільної відповідальності (Shared Responsibility)</p>
     </section>
   </div>
 
