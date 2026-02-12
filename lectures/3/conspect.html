@@ -97,6 +97,9 @@
           <li>Застосовувати принципи мікросегментації для захисту хмарних workloads</li>
           <li>Планувати впровадження Zero Trust у хмарному середовищі</li>
         </ul>
+
+        <h3>Структура лекції</h3>
+        <p>Ми почнемо з історії та принципів Zero Trust — чому старий підхід не працює і що прийшло на зміну. Потім розберемо архітектуру за NIST — компоненти, з яких складається ZTA. Далі зануримось у мікросегментацію — ключову техніку для обмеження руху атакуючих. Порівняємо ZTNA з традиційним VPN. І завершимо практикою — як конкретно впровадити Zero Trust на AWS, Azure та GCP.</p>
       </section>
 
       <section>
@@ -924,81 +927,120 @@ spec:
         </ul>
 
         <h3>Zero Trust в AWS</h3>
-        <p>AWS пропонує набір сервісів для побудови ZTA:</p>
+        <p>AWS пропонує набір сервісів для побудови ZTA. Хоча AWS не має єдиного "Zero Trust продукту", комбінація наступних сервісів дозволяє побудувати повноцінну архітектуру нульової довіри:</p>
 
-        <h4>Identity</h4>
+        <h4>Identity — фундамент ZTA на AWS</h4>
+        <p>В AWS Zero Trust починається з IAM. Кожен запит до будь-якого ресурсу автентифікується та авторизується через IAM-систему.</p>
         <ul>
-          <li><strong>AWS IAM:</strong> Управління ідентичностями та доступом</li>
-          <li><strong>AWS IAM Identity Center (SSO):</strong> Централізований SSO</li>
-          <li><strong>AWS Organizations:</strong> Централізоване управління акаунтами</li>
-          <li><strong>Amazon Cognito:</strong> Identity для кінцевих користувачів</li>
+          <li><strong>AWS IAM:</strong> Управління ідентичностями та доступом. IAM policies використовують JSON для визначення детальних дозволів (хто, що, де, коли). Підтримує conditions — наприклад, дозволити доступ лише з певної IP або лише з MFA.</li>
+          <li><strong>AWS IAM Identity Center (SSO):</strong> Централізований SSO для всіх AWS-акаунтів та бізнес-додатків. Інтеграція з Active Directory, Okta, OneLogin.</li>
+          <li><strong>AWS Organizations + SCPs:</strong> Service Control Policies дозволяють встановити "guardrails" на рівні організації — заборонити певні дії навіть для root-акаунту.</li>
+          <li><strong>Amazon Cognito:</strong> Identity для кінцевих користувачів додатків. User pools, federation, MFA.</li>
         </ul>
 
-        <h4>Network</h4>
+        <h4>Network — мікросегментація та ізоляція</h4>
         <ul>
-          <li><strong>Security Groups:</strong> Instance-level firewall</li>
-          <li><strong>VPC:</strong> Ізольовані мережеві середовища</li>
-          <li><strong>AWS PrivateLink:</strong> Private connectivity</li>
-          <li><strong>AWS Network Firewall:</strong> Managed firewall service</li>
+          <li><strong>Security Groups:</strong> Stateful firewall на рівні ENI (мережевого інтерфейсу). Працює як PEP — дозволяє лише явно прописаний трафік.</li>
+          <li><strong>VPC:</strong> Ізольовані мережеві середовища. Кожен workload — у своєму VPC або subnet.</li>
+          <li><strong>AWS PrivateLink:</strong> Private connectivity між VPC та сервісами без виходу в інтернет. Критичний для Zero Trust — трафік залишається в мережі AWS.</li>
+          <li><strong>AWS Network Firewall:</strong> Managed IDS/IPS з підтримкою Suricata rules. Дозволяє інспектувати трафік на рівні L3-L7.</li>
         </ul>
 
-        <h4>Application</h4>
+        <h4>Application — Zero Trust доступ до додатків</h4>
         <ul>
-          <li><strong>AWS Verified Access:</strong> Zero Trust application access</li>
-          <li><strong>AWS WAF:</strong> Web Application Firewall</li>
-          <li><strong>Amazon API Gateway:</strong> API management з автентифікацією</li>
+          <li><strong>AWS Verified Access:</strong> ZTNA-рішення від AWS. Дозволяє надавати доступ до internal-додатків без VPN, на основі ідентичності та device posture. По суті, це PEP для корпоративних додатків.</li>
+          <li><strong>AWS WAF:</strong> Web Application Firewall з rate limiting, geo-blocking, managed rule groups (OWASP Top 10, Bot Control).</li>
+          <li><strong>Amazon API Gateway:</strong> API management з автентифікацією через Cognito, IAM або Lambda Authorizers. Кожен API-виклик — окреме рішення про доступ.</li>
         </ul>
 
-        <h4>Data</h4>
+        <h4>Data — захист даних у спокої та русі</h4>
         <ul>
-          <li><strong>AWS KMS:</strong> Управління ключами шифрування</li>
-          <li><strong>AWS Secrets Manager:</strong> Управління секретами</li>
-          <li><strong>Amazon Macie:</strong> Виявлення чутливих даних</li>
+          <li><strong>AWS KMS:</strong> Управління ключами шифрування. Customer-managed keys (CMK) дають повний контроль над шифруванням. Підтримує автоматичну ротацію ключів.</li>
+          <li><strong>AWS Secrets Manager:</strong> Управління секретами (DB passwords, API keys) з автоматичною ротацією.</li>
+          <li><strong>Amazon Macie:</strong> ML-based виявлення та класифікація чутливих даних (PII, фінансові дані) у S3. Важливий для data-centric Zero Trust.</li>
         </ul>
 
         <h3>Zero Trust в Azure</h3>
-        <p>Microsoft активно просуває Zero Trust і має зрілий набір інструментів:</p>
+        <p>Microsoft — один з найактивніших прихильників Zero Trust серед хмарних провайдерів. Компанія не лише пропонує інструменти, але й сама впровадила Zero Trust для 200,000+ своїх співробітників. Azure має, мабуть, найзрілішу та найінтегрованішу екосистему Zero Trust серед трьох провайдерів.</p>
 
-        <h4>Identity</h4>
+        <h4>Identity — найсильніша сторона Azure</h4>
+        <p>Entra ID (колишній Azure AD) — це серце Zero Trust в Azure. Він не просто автентифікує, а приймає контекстні рішення про доступ.</p>
         <ul>
-          <li><strong>Microsoft Entra ID (Azure AD):</strong> Cloud-native IdP</li>
-          <li><strong>Conditional Access:</strong> Policy-based access control</li>
-          <li><strong>Privileged Identity Management (PIM):</strong> Just-in-time privileged access</li>
-          <li><strong>Entra Verified ID:</strong> Decentralized identity</li>
+          <li><strong>Microsoft Entra ID:</strong> Cloud-native IdP з підтримкою 300,000+ SaaS-додатків. SSO, MFA, passwordless authentication (FIDO2, Windows Hello).</li>
+          <li><strong>Conditional Access:</strong> Серце Zero Trust в Azure — policy engine, який приймає рішення на основі: хто (user/group), що (додаток), звідки (IP, country), з чого (device compliance), рівень ризику (real-time risk detection). Наприклад: "дозволити доступ до SharePoint лише з compliant devices, з MFA, якщо risk level < medium".</li>
+          <li><strong>Privileged Identity Management (PIM):</strong> Just-in-time та just-enough privileged access. Адмін не має постійних привілеїв — він активує роль на обмежений час (наприклад, 4 години) з обґрунтуванням та MFA.</li>
+          <li><strong>Entra Verified ID:</strong> Decentralized identity на основі verifiable credentials — нова парадигма для cross-organization identity.</li>
         </ul>
 
-        <h4>Device</h4>
+        <h4>Device — endpoint як фактор довіри</h4>
+        <p>В Azure Zero Trust пристрій — повноцінний учасник рішення про доступ. Некомплаєнтний пристрій не отримає доступ, навіть якщо credentials правильні.</p>
         <ul>
-          <li><strong>Microsoft Intune:</strong> MDM/MAM</li>
-          <li><strong>Microsoft Defender for Endpoint:</strong> EDR</li>
-          <li><strong>Entra Device Registration:</strong> Device identity</li>
+          <li><strong>Microsoft Intune:</strong> MDM/MAM — управління пристроями, compliance policies (шифрування, оновлення ОС, антивірус).</li>
+          <li><strong>Microsoft Defender for Endpoint:</strong> EDR з risk scoring для кожного пристрою. Інтегрується з Conditional Access — скомпрометований пристрій автоматично втрачає доступ.</li>
+          <li><strong>Entra Device Registration:</strong> Device identity — кожен пристрій реєструється та отримує сертифікат.</li>
         </ul>
 
-        <h4>Network</h4>
+        <h4>Network — мережеві компоненти</h4>
         <ul>
-          <li><strong>Azure Firewall:</strong> Managed cloud firewall</li>
-          <li><strong>NSG/ASG:</strong> Network security groups</li>
-          <li><strong>Azure Private Link:</strong> Private connectivity</li>
-          <li><strong>Azure Front Door:</strong> Global load balancer з WAF</li>
+          <li><strong>Azure Firewall:</strong> Managed cloud firewall з threat intelligence feed та TLS inspection.</li>
+          <li><strong>NSG/ASG:</strong> Network Security Groups для мікросегментації на рівні subnet та NIC. Application Security Groups — логічне групування ресурсів.</li>
+          <li><strong>Azure Private Link:</strong> Private connectivity до PaaS-сервісів — трафік не виходить у публічний інтернет.</li>
+          <li><strong>Azure Front Door:</strong> Global load balancer з вбудованим WAF та DDoS protection. Може виступати як PEP для web-додатків.</li>
         </ul>
 
         <h3>Zero Trust в GCP</h3>
-        <p>Google розробила концепцію BeyondCorp ще до того, як термін "Zero Trust" став популярним:</p>
+        <p>Google — це компанія, яка впровадила Zero Trust задовго до того, як цей термін став модним. Після атаки Operation Aurora у 2009 році (китайська APT проникла у внутрішню мережу Google) компанія розпочала проєкт BeyondCorp — перебудову всієї корпоративної безпеки на принципах Zero Trust. BeyondCorp став основою для комерційних продуктів GCP.</p>
 
-        <h4>BeyondCorp Enterprise</h4>
+        <h4>BeyondCorp Enterprise — повне рішення</h4>
+        <p>BeyondCorp Enterprise — це не окремий продукт, а інтегрований набір можливостей, вбудованих у Chrome та Google Cloud:</p>
         <ul>
-          <li><strong>Identity-Aware Proxy (IAP):</strong> Zero Trust access до додатків</li>
-          <li><strong>Access Context Manager:</strong> Conditional access policies</li>
-          <li><strong>Endpoint Verification:</strong> Device posture assessment</li>
-          <li><strong>BeyondCorp Enterprise:</strong> Повне рішення Zero Trust</li>
+          <li><strong>Identity-Aware Proxy (IAP):</strong> Zero Trust access до додатків, що працюють на GCP, on-premise або в іншій хмарі. Кожен HTTP-запит перевіряється — хто, з якого пристрою, з яким контекстом. VPN не потрібен.</li>
+          <li><strong>Access Context Manager:</strong> Conditional access policies з гранулярними умовами: IP range, device OS, screen lock status, encryption status.</li>
+          <li><strong>Endpoint Verification:</strong> Chrome extension, що збирає інформацію про стан пристрою (OS version, disk encryption, screen lock) та передає в Access Context Manager.</li>
+          <li><strong>Certificate-Based Access:</strong> mTLS для service-to-service та device-to-service комунікації.</li>
         </ul>
 
-        <h4>Інші компоненти</h4>
+        <h4>Інші компоненти ZTA на GCP</h4>
         <ul>
-          <li><strong>Cloud Identity:</strong> IdP для Google Cloud</li>
-          <li><strong>VPC Service Controls:</strong> Security perimeters</li>
-          <li><strong>Binary Authorization:</strong> Container image verification</li>
+          <li><strong>Cloud Identity:</strong> IdP для Google Cloud з підтримкою SSO, MFA, security keys.</li>
+          <li><strong>VPC Service Controls:</strong> Security perimeters навколо GCP-сервісів. Запобігає data exfiltration навіть якщо credentials скомпрометовані — дані не можуть "вийти" за межі периметра.</li>
+          <li><strong>Binary Authorization:</strong> Дозволяє запуск лише підписаних container images. Важливий компонент Zero Trust для CI/CD — гарантує, що в production потрапляє тільки перевірений код.</li>
+          <li><strong>Workload Identity Federation:</strong> Дозволяє workloads з інших хмар (AWS, Azure) або on-premise автентифікуватися в GCP без service account keys.</li>
         </ul>
+
+        <h4>Порівняння підходів провайдерів до Zero Trust</h4>
+        <table>
+          <tr>
+            <th>Аспект</th>
+            <th>AWS</th>
+            <th>Azure</th>
+            <th>GCP</th>
+          </tr>
+          <tr>
+            <td><strong>Підхід</strong></td>
+            <td>Набір сервісів — будуєте самі</td>
+            <td>Інтегрована екосистема</td>
+            <td>BeyondCorp — готове рішення</td>
+          </tr>
+          <tr>
+            <td><strong>Найсильніше</strong></td>
+            <td>Granular IAM policies</td>
+            <td>Conditional Access + Device</td>
+            <td>IAP + Chrome integration</td>
+          </tr>
+          <tr>
+            <td><strong>ZTNA рішення</strong></td>
+            <td>Verified Access</td>
+            <td>Entra Private Access</td>
+            <td>Identity-Aware Proxy</td>
+          </tr>
+          <tr>
+            <td><strong>Зрілість</strong></td>
+            <td>Висока (по частинах)</td>
+            <td>Найвища (інтеграція)</td>
+            <td>Висока (піонер ZT)</td>
+          </tr>
+        </table>
 
         <h3>Реальні кейси впровадження</h3>
 
@@ -1178,6 +1220,102 @@ ROI за 3 роки:
       </section>
 
       <section>
+        <h2>3.5 ZTNA vs VPN: кінець ери VPN?</h2>
+
+        <p>Одне з найпрактичніших застосувань Zero Trust — це заміна традиційного VPN на ZTNA (Zero Trust Network Access). Ця тема заслуговує окремого розгляду, бо стосується кожної організації, що має віддалених працівників.</p>
+
+        <h3>Як працює традиційний VPN</h3>
+        <p>VPN (Virtual Private Network) створює зашифрований тунель між пристроєм користувача та корпоративною мережею. Після підключення користувач потрапляє "всередину периметра" і отримує доступ до всіх ресурсів, наче він фізично в офісі.</p>
+
+        <p><strong>Проблеми VPN:</strong></p>
+        <ul>
+          <li><strong>Надмірний доступ:</strong> підключившись до VPN, користувач бачить всю мережу, навіть ресурси, які йому не потрібні. Це порушує принцип least privilege.</li>
+          <li><strong>Lateral movement:</strong> якщо пристрій скомпрометований, атакуючий через VPN потрапляє у всю корпоративну мережу.</li>
+          <li><strong>Продуктивність:</strong> весь трафік маршрутизується через корпоративний дата-центр (backhauling), навіть якщо користувач працює з хмарним додатком. Це додає затримку.</li>
+          <li><strong>Масштабування:</strong> VPN-концентратори мають обмежену пропускну здатність. Під час COVID-19 багато організацій зіткнулися з тим, що їхня VPN-інфраструктура не витримує навантаження від 100% віддалених працівників.</li>
+          <li><strong>User experience:</strong> необхідність підключатися, вводити credentials, очікувати з'єднання — все це створює friction для користувачів.</li>
+        </ul>
+
+        <h3>Як працює ZTNA</h3>
+        <p>ZTNA (Zero Trust Network Access) — це принципово інший підхід. Замість надання доступу до мережі, ZTNA надає доступ до конкретного додатку.</p>
+
+        <p><strong>Принцип роботи:</strong></p>
+        <ol>
+          <li>Користувач відкриває браузер або agent і запитує доступ до конкретного додатку (наприклад, внутрішній HR-портал).</li>
+          <li>ZTNA-сервіс (PEP) перехоплює запит та перевіряє: ідентичність (хто?), пристрій (чи compliant?), контекст (звідки? о котрій? який risk score?).</li>
+          <li>Policy Engine приймає рішення: дозволити, заборонити, або вимагати step-up authentication.</li>
+          <li>Якщо дозволено — створюється зашифрований тунель лише до цього конкретного додатку. Користувач не бачить решту мережі.</li>
+        </ol>
+
+        <p><strong>Ключова різниця:</strong> VPN дає доступ до мережі (network-level access). ZTNA дає доступ до додатку (application-level access). Мережа залишається невидимою.</p>
+
+        <h3>Порівняння VPN та ZTNA</h3>
+        <table>
+          <tr>
+            <th>Критерій</th>
+            <th>Традиційний VPN</th>
+            <th>ZTNA</th>
+          </tr>
+          <tr>
+            <td><strong>Рівень доступу</strong></td>
+            <td>Мережевий (весь subnet)</td>
+            <td>Application-level (конкретний додаток)</td>
+          </tr>
+          <tr>
+            <td><strong>Принцип</strong></td>
+            <td>"Підключився — довірений"</td>
+            <td>"Перевіряємо кожен запит"</td>
+          </tr>
+          <tr>
+            <td><strong>Lateral movement</strong></td>
+            <td>Можливий</td>
+            <td>Неможливий (додатки ізольовані)</td>
+          </tr>
+          <tr>
+            <td><strong>Device posture</strong></td>
+            <td>Зазвичай не перевіряється</td>
+            <td>Обов'язкова перевірка</td>
+          </tr>
+          <tr>
+            <td><strong>Масштабування</strong></td>
+            <td>Обмежене апаратно</td>
+            <td>Cloud-native, практично безмежне</td>
+          </tr>
+          <tr>
+            <td><strong>UX</strong></td>
+            <td>Потрібне підключення</td>
+            <td>Прозорий — як відкрити веб-сайт</td>
+          </tr>
+          <tr>
+            <td><strong>Видимість</strong></td>
+            <td>Мережевий трафік</td>
+            <td>Application-level + user behavior</td>
+          </tr>
+          <tr>
+            <td><strong>Cloud-ready</strong></td>
+            <td>Backhauling через дата-центр</td>
+            <td>Прямий доступ через cloud edge</td>
+          </tr>
+        </table>
+
+        <h3>ZTNA-рішення на ринку</h3>
+        <ul>
+          <li><strong>Хмарні провайдери:</strong> AWS Verified Access, Azure Entra Private Access, Google IAP</li>
+          <li><strong>Спеціалізовані рішення:</strong> Zscaler Private Access (ZPA), Cloudflare Access, Palo Alto Prisma Access</li>
+          <li><strong>Open-source:</strong> Teleport, Boundary (HashiCorp), Tailscale (WireGuard-based)</li>
+        </ul>
+
+        <h3>Чи мертвий VPN?</h3>
+        <p>Ні, не повністю. VPN все ще має місце в певних сценаріях:</p>
+        <ul>
+          <li><strong>Legacy-додатки</strong> — старі системи, що не підтримують modern authentication, можуть потребувати VPN.</li>
+          <li><strong>Мережевий доступ</strong> — якщо потрібен доступ не до додатку, а до самої мережі (наприклад, для мережевого адміністрування).</li>
+          <li><strong>Перехідний період</strong> — більшість організацій впроваджують ZTNA поступово, зберігаючи VPN як fallback.</li>
+        </ul>
+        <p>Рекомендований підхід: почніть з ZTNA для нових додатків і cloud-ресурсів, поступово мігруйте legacy з VPN на ZTNA. Кінцева мета — повна відмова від VPN.</p>
+      </section>
+
+      <section>
         <h2>Висновки</h2>
         <p>Zero Trust Architecture — це не продукт, який можна купити, і не проєкт, який можна завершити. Це філософія безпеки та безперервний процес удосконалення.</p>
 
@@ -1200,27 +1338,72 @@ ROI за 3 роки:
           <li>Вимірюйте, навчайтеся, ітеруйте</li>
         </ol>
 
-        <h3>Рекомендована література</h3>
+        <h3>Рекомендовані ресурси для подальшого вивчення</h3>
         <ul>
-          <li><strong>NIST SP 800-207:</strong> Zero Trust Architecture — офіційний стандарт</li>
-          <li><strong>CISA Zero Trust Maturity Model:</strong> Практичний гайд для оцінки зрілості</li>
-          <li><strong>Google BeyondCorp Papers:</strong> Серія статей про впровадження в Google</li>
-          <li><strong>Forrester Zero Trust eXtended (ZTX):</strong> Розширена модель Zero Trust</li>
+          <li><a href="https://csrc.nist.gov/publications/detail/sp/800-207/final" target="_blank" rel="noopener">NIST SP 800-207</a> — Zero Trust Architecture — офіційний стандарт, обов'язковий до прочитання</li>
+          <li><a href="https://www.cisa.gov/zero-trust-maturity-model" target="_blank" rel="noopener">CISA Zero Trust Maturity Model</a> — практичний гайд для оцінки зрілості організації</li>
+          <li><a href="https://cloud.google.com/beyondcorp" target="_blank" rel="noopener">Google BeyondCorp</a> — документація та case study впровадження Zero Trust у Google</li>
+          <li><a href="https://www.microsoft.com/en-us/security/business/zero-trust" target="_blank" rel="noopener">Microsoft Zero Trust</a> — комплексний гайд по Zero Trust від Microsoft</li>
+          <li><a href="https://aws.amazon.com/security/zero-trust/" target="_blank" rel="noopener">AWS Zero Trust</a> — підхід AWS до побудови Zero Trust Architecture</li>
+          <li><a href="https://research.google/pubs/pub43231/" target="_blank" rel="noopener">BeyondCorp: A New Approach to Enterprise Security</a> — оригінальна стаття Google (2014)</li>
+          <li><a href="https://www.forrester.com/research/zero-trust/" target="_blank" rel="noopener">Forrester Zero Trust</a> — ZTX Framework від Forrester (автори терміну Zero Trust)</li>
+          <li><a href="https://istio.io/latest/docs/concepts/security/" target="_blank" rel="noopener">Istio Security</a> — документація по mTLS та authorization в service mesh</li>
         </ul>
       </section>
 
       <section>
         <h2>Питання для самоперевірки</h2>
         <ol>
-          <li>Чим Zero Trust відрізняється від традиційної периметрової безпеки?</li>
-          <li>Назвіть та поясніть сім принципів Zero Trust за NIST.</li>
-          <li>Яку роль виконують Policy Engine, Policy Administrator та Policy Enforcement Point?</li>
-          <li>Чому MFA є обов'язковим компонентом Zero Trust?</li>
-          <li>Що таке мікросегментація і як вона підтримує принципи Zero Trust?</li>
-          <li>Як реалізувати автентифікацію service-to-service у хмарному середовищі?</li>
-          <li>Назвіть основні етапи впровадження Zero Trust в організації.</li>
-          <li>Які типові помилки при впровадженні Zero Trust?</li>
+          <li>Чим Zero Trust відрізняється від традиційної периметрової безпеки? Чому периметрова модель більше не працює?</li>
+          <li>Назвіть та поясніть сім принципів Zero Trust за NIST SP 800-207.</li>
+          <li>Яку роль виконують Policy Engine, Policy Administrator та Policy Enforcement Point? Як вони взаємодіють?</li>
+          <li>Чому MFA є обов'язковим компонентом Zero Trust? Чи достатньо лише MFA?</li>
+          <li>Що таке мікросегментація і як вона підтримує принципи Zero Trust? Порівняйте network-based та service mesh підходи.</li>
+          <li>Як реалізувати автентифікацію service-to-service у хмарному середовищі? Що таке SPIFFE/SPIRE?</li>
+          <li>Назвіть основні етапи впровадження Zero Trust в організації. Чому не можна "зробити все одразу"?</li>
+          <li>Які типові помилки при впровадженні Zero Trust? Наведіть приклади.</li>
+          <li>Порівняйте ZTNA та VPN. У яких сценаріях VPN все ще доцільний?</li>
+          <li>Як Azure Conditional Access реалізує принципи Zero Trust? Які фактори враховуються при прийнятті рішення?</li>
+          <li>Що таке CISA Zero Trust Maturity Model? Опишіть чотири рівні зрілості.</li>
+          <li>Як Google BeyondCorp змінив підхід до корпоративної безпеки? Які уроки з цього можна взяти?</li>
         </ol>
+      </section>
+
+      <section>
+        <h3>Практичне завдання</h3>
+        <p>Ваша компанія (300 співробітників, 50 з яких працюють віддалено) планує впровадити Zero Trust. Поточний стан: VPN для віддаленого доступу, плоска внутрішня мережа, basic Active Directory, немає MFA.</p>
+
+        <p><strong>Завдання:</strong></p>
+        <ol>
+          <li><strong>Оцінка зрілості:</strong> Використовуючи CISA Zero Trust Maturity Model, оцініть поточний стан компанії за п'ятьма стовпами (Identity, Devices, Networks, Applications, Data). Для кожного стовпа визначте поточний рівень та цільовий рівень.</li>
+          <li><strong>Roadmap впровадження:</strong> Складіть план впровадження Zero Trust на 4 квартали. Для кожного етапу визначте: конкретні дії, сервіси/інструменти, метрики успіху.</li>
+          <li><strong>ZTNA migration:</strong> Спроєктуйте план міграції з VPN на ZTNA для 5 ключових додатків (HR-портал, CRM, фінансова система, internal wiki, CI/CD pipeline). Для кожного визначте: підхід до міграції, ZTNA-рішення, rollback plan.</li>
+          <li><strong>Мікросегментація:</strong> Напишіть Kubernetes Network Policy, яка реалізує наступні правила: frontend може звертатися лише до backend на порт 8080; backend може звертатися лише до database на порт 5432; database не може ініціювати з'єднання ні до кого.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Глосарій ключових термінів</h3>
+        <ul>
+          <li><strong>Zero Trust</strong> — модель безпеки, що базується на принципі "never trust, always verify", де кожен запит перевіряється незалежно від джерела</li>
+          <li><strong>ZTA</strong> — Zero Trust Architecture, архітектурний підхід до реалізації принципів Zero Trust</li>
+          <li><strong>ZTNA</strong> — Zero Trust Network Access, технологія, що замінює VPN, надаючи доступ до конкретних додатків замість мережі</li>
+          <li><strong>PEP</strong> — Policy Enforcement Point, точка застосування політик, через яку проходять усі запити до ресурсів</li>
+          <li><strong>PDP</strong> — Policy Decision Point, точка прийняття рішень, що містить Policy Engine та Policy Administrator</li>
+          <li><strong>PE</strong> — Policy Engine, "мозок" ZTA, що аналізує контекст та приймає рішення про доступ</li>
+          <li><strong>PA</strong> — Policy Administrator, виконавець рішень Policy Engine</li>
+          <li><strong>mTLS</strong> — mutual TLS, двостороння TLS-автентифікація, де обидві сторони перевіряють сертифікати одна одної</li>
+          <li><strong>Мікросегментація</strong> — розділення мережі на ізольовані сегменти з індивідуальними політиками безпеки</li>
+          <li><strong>Lateral movement</strong> — переміщення атакуючого по внутрішній мережі після початкового проникнення</li>
+          <li><strong>Conditional Access</strong> — policy engine Azure, що приймає рішення про доступ на основі контексту (user, device, location, risk)</li>
+          <li><strong>BeyondCorp</strong> — реалізація Zero Trust від Google, піонерський проєкт що розпочався після Operation Aurora (2009)</li>
+          <li><strong>IAP</strong> — Identity-Aware Proxy, сервіс GCP для Zero Trust доступу до додатків</li>
+          <li><strong>Service Mesh</strong> — інфраструктурний рівень для управління service-to-service комунікацією (Istio, Linkerd)</li>
+          <li><strong>SPIFFE/SPIRE</strong> — стандарт та імплементація для ідентичності workloads у Zero Trust середовищі</li>
+          <li><strong>CISA</strong> — Cybersecurity and Infrastructure Security Agency, агентство США з кібербезпеки</li>
+          <li><strong>Assume breach</strong> — принцип проєктування безпеки з припущенням, що зловмисник вже присутній у мережі</li>
+          <li><strong>Device posture</strong> — стан безпеки пристрою (оновлення ОС, шифрування диску, антивірус), що враховується при прийнятті рішень ZTA</li>
+        </ul>
       </section>
 
     </article>
