@@ -94,7 +94,11 @@
           <li>Ідентифікувати специфічні загрози та вразливості serverless-додатків</li>
           <li>Розуміти технології ізоляції: Firecracker, gVisor, Kata Containers</li>
           <li>Застосовувати best practices безпеки при розробці serverless-додатків</li>
+          <li>Організовувати моніторинг та реагування на інциденти в serverless-середовищі</li>
         </ul>
+
+        <h3>Структура лекції</h3>
+        <p>Ми почнемо з архітектури serverless — як це працює та чим відрізняється від контейнерів і VM. Потім розглянемо загрози — OWASP Serverless Top 10 та реальні інциденти. Далі зануримося в технології ізоляції — як Firecracker, gVisor та V8 Isolates забезпечують безпеку. Вивчимо best practices розробки. І завершимо observability — як моніторити та реагувати на інциденти в розподіленому serverless-середовищі.</p>
       </section>
 
       <section>
@@ -1100,37 +1104,42 @@ exports.handler = async (event, context) => {
         </pre>
 
         <h3>API Gateway Security</h3>
+        <p>API Gateway — це "вхідні двері" до ваших serverless-функцій. Правильна конфігурація gateway — це перша лінія оборони. Більшість атак можна зупинити ще до того, як вони досягнуть вашого коду.</p>
         <ul>
-          <li><strong>Authentication:</strong> Cognito, Lambda Authorizers</li>
-          <li><strong>Rate Limiting:</strong> захист від DoS</li>
-          <li><strong>WAF:</strong> захист від common attacks</li>
-          <li><strong>Request validation:</strong> на рівні API Gateway</li>
-          <li><strong>CORS:</strong> правильна конфігурація</li>
+          <li><strong>Authentication:</strong> Cognito User Pools для B2C, Lambda Authorizers для custom auth логіки (JWT, API keys). Ніколи не залишайте endpoints відкритими без автентифікації.</li>
+          <li><strong>Rate Limiting:</strong> обов'язковий захист від DoS та "denial of wallet" атак. AWS API Gateway дозволяє встановити rate та burst limits на рівні stage, method або API key.</li>
+          <li><strong>WAF:</strong> AWS WAF перед API Gateway блокує SQL injection, XSS, bad bots. Використовуйте managed rule groups (OWASP Core Rule Set, Bot Control).</li>
+          <li><strong>Request validation:</strong> JSON Schema validation на рівні API Gateway відхиляє malformed requests ще до виклику Lambda. Це зменшує attack surface та витрати.</li>
+          <li><strong>CORS:</strong> дозволяйте запити тільки з ваших доменів. Неправильний CORS — частий вектор для CSRF-атак.</li>
         </ul>
 
         <h3>Function Configuration</h3>
+        <p>Правильна конфігурація функцій — це не лише про продуктивність, але й про безпеку. Занадто довгий timeout чи необмежена concurrency можуть перетворити атаку на фінансову катастрофу.</p>
         <ul>
-          <li><strong>Timeout:</strong> встановіть розумний timeout (не максимальний)</li>
-          <li><strong>Memory:</strong> right-size пам'ять</li>
-          <li><strong>Concurrency limits:</strong> захист від runaway costs</li>
-          <li><strong>Reserved concurrency:</strong> для critical functions</li>
-          <li><strong>Dead Letter Queue:</strong> для failed invocations</li>
+          <li><strong>Timeout:</strong> встановіть реалістичний timeout. Якщо функція зазвичай виконується за 3 секунди, timeout 30 секунд — розумний; 900 секунд (максимум Lambda) — ні. Довгий timeout при атаці = великий рахунок.</li>
+          <li><strong>Memory:</strong> right-size пам'ять. Надлишкова пам'ять = зайві витрати. Недостатня = повільне виконання та можливі помилки. AWS Lambda Power Tuning допомагає знайти оптимум.</li>
+          <li><strong>Concurrency limits:</strong> встановіть account-level та function-level concurrency limits. Без лімітів одна функція під атакою може вичерпати concurrency quota всього акаунта, зламавши всі інші функції.</li>
+          <li><strong>Reserved concurrency:</strong> для критичних функцій (наприклад, обробка платежів) зарезервуйте мінімальну concurrency, щоб вони завжди мали ресурси.</li>
+          <li><strong>Dead Letter Queue (DLQ):</strong> налаштуйте SQS або SNS як DLQ для невдалих invocations. Це запобігає втраті подій та дозволяє аналізувати помилки.</li>
         </ul>
 
         <h3>Network Security</h3>
+        <p>Serverless-функції за замовчуванням виконуються в мережі провайдера, а не у вашому VPC. Це має безпекові імплікації в обидві сторони.</p>
         <ul>
-          <li><strong>VPC:</strong> розміщуйте функції у VPC для доступу до internal resources</li>
-          <li><strong>VPC Endpoints:</strong> private access до AWS сервісів</li>
-          <li><strong>Security Groups:</strong> обмежуйте outbound traffic</li>
-          <li><strong>НЕ в VPC:</strong> якщо не потрібен доступ до VPC resources (швидший cold start)</li>
+          <li><strong>VPC placement:</strong> розміщуйте функції у VPC, якщо їм потрібен доступ до internal resources (RDS, ElastiCache, EC2). Але пам'ятайте: VPC Lambda має повільніший cold start та потребує ENI.</li>
+          <li><strong>VPC Endpoints:</strong> якщо Lambda у VPC потрібен доступ до AWS-сервісів (S3, DynamoDB, Secrets Manager) — використовуйте VPC Endpoints замість NAT Gateway. Це дешевше та безпечніше (трафік не виходить в інтернет).</li>
+          <li><strong>Security Groups:</strong> обмежуйте outbound traffic. За замовчуванням Lambda у VPC може підключатися куди завгодно. Обмежте egress лише до необхідних destinations.</li>
+          <li><strong>Без VPC:</strong> якщо функції не потрібен доступ до VPC resources — не ставте її у VPC. Це простіше, швидше (немає cold start від ENI) та менша поверхня атаки.</li>
         </ul>
 
         <h3>CI/CD Security</h3>
+        <p>Serverless-додатки мають десятки чи сотні функцій. Ручне управління безпекою неможливе — потрібна автоматизація через CI/CD.</p>
         <ul>
-          <li><strong>Infrastructure as Code:</strong> SAM, Serverless Framework, Terraform</li>
-          <li><strong>Policy-as-Code:</strong> AWS Config Rules, OPA</li>
-          <li><strong>Automated scanning:</strong> в CI/CD pipeline</li>
-          <li><strong>Staging environments:</strong> тестування перед production</li>
+          <li><strong>Infrastructure as Code:</strong> AWS SAM, Serverless Framework або Terraform. Весь стек (функції, IAM roles, API Gateway, DynamoDB) описаний у коді та version-controlled.</li>
+          <li><strong>Policy-as-Code:</strong> AWS Config Rules, OPA/Conftest для перевірки IaC перед deployment. Наприклад: заблокувати deployment, якщо IAM role має wildcard permissions.</li>
+          <li><strong>Automated scanning:</strong> в CI/CD pipeline: SAST (Semgrep, Snyk Code), SCA (npm audit, Snyk), IaC scanning (Checkov, cfn-nag для CloudFormation).</li>
+          <li><strong>Staging environments:</strong> ніколи не деплойте напряму в production. Використовуйте stages (dev → staging → prod) з progressive deployment (canary, linear).</li>
+          <li><strong>Deployment safeguards:</strong> AWS CodeDeploy з automatic rollback при високій error rate або latency. CloudWatch Alarms тригерять rollback автоматично.</li>
         </ul>
 
         <h3>Serverless Security Checklist</h3>
@@ -1314,6 +1323,83 @@ exports.handler = async (event, context) => {
       </section>
 
       <section>
+        <h2>5.5 Serverless Observability та Incident Response</h2>
+
+        <p>Моніторинг та реагування на інциденти в serverless — це зовсім інший світ порівняно з традиційними серверами. Ви не можете зайти по SSH та подивитися логи. Ви не маєте доступу до файлової системи. Функція може існувати лише мілісекунди. Це вимагає принципово іншого підходу до observability.</p>
+
+        <h3>Три стовпи Serverless Observability</h3>
+
+        <h4>1. Structured Logging</h4>
+        <p>У serverless логи — ваше основне вікно у систему. Але стандартний console.log() недостатній. Потрібен structured logging — JSON-формат з чіткою структурою:</p>
+        <ul>
+          <li><strong>Correlation ID:</strong> унікальний ідентифікатор, що проходить через весь ланцюг викликів (API Gateway → Lambda → SQS → Lambda). Без нього в системі з 50 функцій ви ніколи не відстежите один запит.</li>
+          <li><strong>Context enrichment:</strong> кожен log entry має містити: function name, request ID, account ID, stage (dev/prod), cold start indicator.</li>
+          <li><strong>Sensitive data filtering:</strong> автоматично маскуйте PII, паролі, токени в логах. Одна leaked credential у CloudWatch Logs — це інцидент.</li>
+        </ul>
+
+        <p><strong>Інструменти:</strong></p>
+        <ul>
+          <li><strong>AWS:</strong> CloudWatch Logs + CloudWatch Logs Insights для пошуку. Lambda Powertools (Python/TypeScript) для structured logging.</li>
+          <li><strong>Azure:</strong> Application Insights з автоматичною кореляцією.</li>
+          <li><strong>Third-party:</strong> Datadog, Lumigo, Epsagon (спеціалізовані для serverless).</li>
+        </ul>
+
+        <h4>2. Distributed Tracing</h4>
+        <p>Serverless-додаток — це десятки функцій, з'єднаних через API Gateway, SQS, SNS, EventBridge, DynamoDB Streams. Один бізнес-запит може пройти через 5-10 функцій. Без distributed tracing знайти bottleneck або помилку — як шукати голку в стозі сіна.</p>
+        <ul>
+          <li><strong>AWS X-Ray:</strong> native distributed tracing для Lambda. Автоматично інструментує AWS SDK calls, HTTP requests. Показує trace map — візуалізацію всього ланцюга.</li>
+          <li><strong>OpenTelemetry:</strong> vendor-neutral стандарт. Lambda Layer для автоматичної інструментації. Дані можна надсилати в Jaeger, Zipkin, Datadog, Grafana Tempo.</li>
+        </ul>
+
+        <h4>3. Metrics та Alerting</h4>
+        <p>Ключові метрики для моніторингу serverless-функцій:</p>
+        <ul>
+          <li><strong>Invocation count:</strong> кількість викликів — різкий spike може означати атаку або misconfiguration.</li>
+          <li><strong>Error rate:</strong> % помилок. Alarm при перевищенні порогу (наприклад, >5% за 5 хвилин).</li>
+          <li><strong>Duration:</strong> час виконання. Аномально довге виконання може означати: DoS, cryptomining, data exfiltration.</li>
+          <li><strong>Throttles:</strong> кількість throttled invocations. Може означати, що concurrency limit досягнуто (атака або organic growth).</li>
+          <li><strong>Cold starts:</strong> % cold starts від загальної кількості — впливає на latency та user experience.</li>
+          <li><strong>Cost:</strong> моніторинг витрат — раптове зростання може означати "denial of wallet" атаку.</li>
+        </ul>
+
+        <h3>Incident Response у Serverless</h3>
+
+        <p>Incident response у serverless має свої особливості. Ви не можете зупинити "сервер" — вам потрібно працювати з функціями, тригерами та IAM.</p>
+
+        <h4>Типовий playbook реагування</h4>
+        <ol>
+          <li><strong>Detection:</strong> CloudWatch Alarm, GuardDuty alert, або anomaly detection тригерить інцидент.</li>
+          <li><strong>Containment:</strong>
+            <ul>
+              <li>Відключити тригер функції (disable EventBridge rule, SQS trigger)</li>
+              <li>Обмежити IAM permissions (зменшити або відкликати роль)</li>
+              <li>Встановити reserved concurrency = 0 для скомпрометованої функції</li>
+              <li>Заблокувати підозрілі IP через WAF</li>
+            </ul>
+          </li>
+          <li><strong>Investigation:</strong>
+            <ul>
+              <li>CloudWatch Logs Insights для аналізу логів скомпрометованої функції</li>
+              <li>X-Ray traces для розуміння ланцюга викликів</li>
+              <li>CloudTrail для аналізу IAM activity (хто що викликав)</li>
+              <li>VPC Flow Logs (якщо функція у VPC) для мережевої активності</li>
+            </ul>
+          </li>
+          <li><strong>Eradication:</strong> видалити скомпрометовану версію, оновити секрети, виправити вразливість.</li>
+          <li><strong>Recovery:</strong> розгорнути виправлену версію, поступово увімкнути тригери, моніторити.</li>
+          <li><strong>Lessons learned:</strong> оновити detection rules, додати автоматизацію, покращити policies.</li>
+        </ol>
+
+        <h4>"Denial of Wallet" — фінансова атака</h4>
+        <p>Унікальна загроза для serverless — атакуючий не ламає систему, а змушує її споживати ресурси, генеруючи величезний рахунок. Pay-per-use стає зброєю.</p>
+        <ul>
+          <li><strong>Як це працює:</strong> масивний потік запитів до API Gateway тригерить тисячі Lambda invocations, кожна з яких записує в DynamoDB та S3.</li>
+          <li><strong>Захист:</strong> rate limiting на API Gateway, concurrency limits на Lambda, AWS Budgets з алертами, AWS Cost Anomaly Detection.</li>
+          <li><strong>Реагування:</strong> якщо виявлено аномальне зростання витрат — негайно блокуйте через WAF rate rules або вимкніть тригер.</li>
+        </ul>
+      </section>
+
+      <section>
         <h2>Висновки</h2>
         <p>Serverless змінює парадигму розробки та безпеки. Хоча провайдер бере на себе більше відповідальності за інфраструктуру, нові виклики виникають на рівні коду, конфігурації та архітектури.</p>
 
@@ -1326,27 +1412,82 @@ exports.handler = async (event, context) => {
           <li><strong>Observability складніша:</strong> distributed systems потребують distributed tracing</li>
         </ul>
 
-        <h3>Тренди</h3>
+        <h3>Тренди Serverless Security</h3>
         <ul>
-          <li>Edge computing (Cloudflare Workers, Lambda@Edge)</li>
-          <li>WebAssembly для portable serverless</li>
-          <li>Serverless containers (Cloud Run, Fargate)</li>
-          <li>AI/ML serverless (SageMaker Serverless)</li>
+          <li><strong>Edge computing:</strong> Cloudflare Workers, Lambda@Edge, Vercel Edge Functions — код виконується ближче до користувача. Нові безпекові виклики: data residency на edge, consistency guarantees, обмежений runtime.</li>
+          <li><strong>WebAssembly (Wasm):</strong> portable, sandboxed runtime для serverless. Wasm-функції стартують за мікросекунди (vs мілісекунди для containers). Проєкти: Fermyon Spin, Fastly Compute@Edge, WasmCloud. Потенційна заміна контейнерів для lightweight workloads.</li>
+          <li><strong>Serverless containers:</strong> Cloud Run (GCP), Fargate (AWS), Azure Container Apps — поєднують переваги serverless (auto-scaling, pay-per-use) та контейнерів (портативність, будь-який runtime).</li>
+          <li><strong>AI/ML serverless:</strong> SageMaker Serverless Inference, Azure ML Serverless Endpoints — запуск ML-моделей без управління інфраструктурою. Безпекові виклики: model poisoning, data leakage через inference.</li>
+          <li><strong>Serverless security tools:</strong> зростає екосистема спеціалізованих рішень — Lumigo, Epsagon (Cisco), Dashbird для observability; Protego, PureSec для security scanning serverless-специфічних вразливостей.</li>
         </ul>
       </section>
 
       <section>
         <h2>Питання для самоперевірки</h2>
         <ol>
-          <li>Чим відрізняється FaaS від BaaS?</li>
-          <li>Що таке cold start і як його мінімізувати?</li>
+          <li>Чим відрізняється FaaS від BaaS? Наведіть приклади сервісів кожного типу.</li>
+          <li>Що таке cold start і як його мінімізувати? Які безпекові імплікації має cold start?</li>
           <li>Які специфічні загрози характерні для serverless (OWASP Serverless Top 10)?</li>
-          <li>Як Firecracker забезпечує ізоляцію між функціями?</li>
-          <li>У чому різниця між підходами Firecracker та gVisor?</li>
-          <li>Чому не варто зберігати секрети в environment variables?</li>
-          <li>Як Capital One breach пов'язаний з serverless?</li>
-          <li>Які best practices IAM для Lambda функцій?</li>
+          <li>Як Firecracker забезпечує ізоляцію між функціями? Чим microVM відрізняється від контейнера?</li>
+          <li>У чому різниця між підходами Firecracker, gVisor та V8 Isolates? Коли кожен доцільніший?</li>
+          <li>Чому не варто зберігати секрети в environment variables? Яка альтернатива?</li>
+          <li>Як Capital One breach пов'язаний з serverless IAM misconfiguration?</li>
+          <li>Які best practices IAM для Lambda функцій? Чому потрібна окрема role для кожної функції?</li>
+          <li>Що таке "denial of wallet" атака? Як від неї захиститися?</li>
+          <li>Опишіть три стовпи serverless observability. Чому distributed tracing критичний?</li>
+          <li>Як виглядає incident response playbook для скомпрометованої Lambda функції?</li>
+          <li>Порівняйте безпекові характеристики AWS Lambda, Azure Functions, GCP Cloud Functions та Cloudflare Workers.</li>
         </ol>
+      </section>
+
+      <section>
+        <h3>Практичне завдання</h3>
+        <p>Ви розробляєте serverless REST API для інтернет-магазину на AWS. API складається з 5 Lambda-функцій: createOrder, getOrder, listOrders, processPayment, sendNotification. Тригери: API Gateway для перших трьох, SQS для processPayment, SNS для sendNotification.</p>
+
+        <p><strong>Завдання:</strong></p>
+        <ol>
+          <li><strong>IAM least privilege:</strong> Напишіть IAM policy для кожної з 5 функцій. Кожна функція має мати доступ лише до тих ресурсів, які їй потрібні (конкретні таблиці DynamoDB, конкретні SQS queues, конкретні SNS topics). Порівняйте з "поганою" wildcard-політикою.</li>
+          <li><strong>Security configuration:</strong> Створіть SAM template (template.yaml) для однієї з функцій із усіма безпековими best practices: timeout, memory, reserved concurrency, VPC (якщо потрібно), environment variables (тільки некритичні), DLQ.</li>
+          <li><strong>Threat modeling:</strong> Проведіть threat modeling для processPayment функції. Ідентифікуйте мінімум 5 загроз (використовуючи OWASP Serverless Top 10), оцініть їх severity та запропонуйте мітигації.</li>
+          <li><strong>Incident response:</strong> CloudWatch Alarm показує: processPayment має error rate 45% та anomально високу duration (15 секунд замість звичайних 2). Опишіть покроковий playbook реагування.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>Рекомендовані ресурси для подальшого вивчення</h3>
+        <ul>
+          <li><a href="https://owasp.org/www-project-serverless-top-10/" target="_blank" rel="noopener">OWASP Serverless Top 10</a> — топ загроз для serverless-додатків</li>
+          <li><a href="https://docs.aws.amazon.com/lambda/latest/dg/security.html" target="_blank" rel="noopener">AWS Lambda Security</a> — офіційна документація з безпеки Lambda</li>
+          <li><a href="https://firecracker-microvm.github.io/" target="_blank" rel="noopener">Firecracker</a> — open-source microVM від AWS для serverless</li>
+          <li><a href="https://gvisor.dev/" target="_blank" rel="noopener">gVisor</a> — application kernel від Google для container isolation</li>
+          <li><a href="https://docs.powertools.aws.dev/lambda/python/latest/" target="_blank" rel="noopener">AWS Lambda Powertools</a> — бібліотека для structured logging, tracing, metrics у Lambda</li>
+          <li><a href="https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts" target="_blank" rel="noopener">Azure Functions Security</a> — безпекова документація Azure Functions</li>
+          <li><a href="https://cloud.google.com/functions/docs/securing" target="_blank" rel="noopener">GCP Cloud Functions Security</a> — securing Cloud Functions від Google</li>
+          <li><a href="https://www.datadoghq.com/blog/serverless-monitoring/" target="_blank" rel="noopener">Datadog Serverless Monitoring Guide</a> — практичний гайд з моніторингу serverless</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Глосарій ключових термінів</h3>
+        <ul>
+          <li><strong>Serverless</strong> — модель хмарних обчислень, де провайдер повністю управляє інфраструктурою, а розробник фокусується лише на коді</li>
+          <li><strong>FaaS</strong> — Function as a Service, модель виконання окремих функцій у відповідь на події (Lambda, Cloud Functions, Azure Functions)</li>
+          <li><strong>BaaS</strong> — Backend as a Service, готові бекенд-компоненти: бази даних, автентифікація, сховище (Firebase, Amplify, Supabase)</li>
+          <li><strong>Cold Start</strong> — затримка при першому виклику функції, коли провайдер створює нове execution environment</li>
+          <li><strong>Warm Container</strong> — повторне використання execution environment для наступних викликів (швидше, без cold start)</li>
+          <li><strong>Event-Driven Architecture</strong> — архітектурний підхід, де компоненти комунікують через асинхронні події</li>
+          <li><strong>Firecracker</strong> — open-source microVM від AWS, що поєднує безпеку VM з швидкістю контейнерів (старт за 125 мс)</li>
+          <li><strong>gVisor</strong> — application kernel від Google, що перехоплює системні виклики контейнера та виконує їх у sandboxed середовищі</li>
+          <li><strong>V8 Isolates</strong> — lightweight sandboxes на базі V8 JavaScript engine, що використовуються Cloudflare Workers (старт за <1 мс)</li>
+          <li><strong>Kata Containers</strong> — технологія, що запускає контейнери всередині lightweight VM для кращої ізоляції</li>
+          <li><strong>Event Data Injection</strong> — атака, при якій зловмисник вставляє malicious дані в подію, що тригерить serverless-функцію</li>
+          <li><strong>Denial of Wallet</strong> — атака, спрямована на генерування великих витрат через масивне використання pay-per-use ресурсів</li>
+          <li><strong>Distributed Tracing</strong> — техніка відстеження запиту через множину розподілених сервісів (X-Ray, OpenTelemetry, Jaeger)</li>
+          <li><strong>Correlation ID</strong> — унікальний ідентифікатор, що прив'язує всі логи та traces одного бізнес-запиту через всі функції</li>
+          <li><strong>Lambda Authorizer</strong> — функція Lambda, що виконує custom authentication/authorization для API Gateway запитів</li>
+          <li><strong>SAM</strong> — Serverless Application Model, фреймворк AWS для визначення serverless-додатків як Infrastructure as Code</li>
+          <li><strong>SSRF</strong> — Server-Side Request Forgery, атака, що змушує сервер виконувати запити до внутрішніх ресурсів від імені атакуючого</li>
+        </ul>
       </section>
 
     </article>
