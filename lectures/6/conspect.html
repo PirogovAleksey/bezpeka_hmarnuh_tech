@@ -71,6 +71,17 @@
 
       <p class="conspect-intro">У цій лекції ми розглянемо блокчейн не як фінансову технологію, а як інструмент для побудови безпечних розподілених систем. Блокчейн пропонує унікальні властивості — незмінність, прозорість та децентралізацію — які можуть радикально змінити підходи до кібербезпеки.</p>
 
+      <div class="info-box">
+        <strong>Структура лекції:</strong>
+        <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+          <li><strong>6.1.</strong> Основи блокчейну та криптографії — хеш-функції, цифрові підписи, Merkle Trees, механізми консенсусу</li>
+          <li><strong>6.2.</strong> Децентралізоване управління ідентифікацією — SSI, DIDs, Verifiable Credentials, Zero-Knowledge Proofs</li>
+          <li><strong>6.3.</strong> Смарт-контракти та їх безпека — платформи, вразливості, best practices аудиту</li>
+          <li><strong>6.4.</strong> Застосування блокчейну в кібербезпеці — audit logs, PKI, supply chain, threat intelligence, IoT</li>
+          <li><strong>6.5.</strong> Web3 Security — DeFi вразливості, безпека мостів, MEV та захист протоколів</li>
+        </ul>
+      </div>
+
       <!-- Тема 6.1 -->
       <section class="conspect-section">
         <h2>6.1. Основи блокчейну та криптографії</h2>
@@ -179,30 +190,34 @@
         </div>
 
         <h3>Криптографічні примітиви</h3>
-        <p>Блокчейн базується на кількох криптографічних примітивах:</p>
+        <p>Блокчейн базується на кількох криптографічних примітивах, кожен з яких виконує свою роль у забезпеченні безпеки та цілісності мережі. Розуміння цих примітивів є ключовим для оцінки того, які гарантії безпеки надає блокчейн і де знаходяться його обмеження.</p>
 
         <h4>Хеш-функції</h4>
+        <p>Хеш-функція — це математична функція, що перетворює вхідні дані будь-якого розміру у фіксований вихід (digest). Саме хеш-функції створюють криптографічний зв'язок між блоками, роблячи ланцюг незмінним.</p>
         <ul>
-          <li><strong>SHA-256:</strong> Bitcoin, більшість блокчейнів</li>
-          <li><strong>Keccak-256:</strong> Ethereum</li>
-          <li><strong>Властивості:</strong> односторонність, collision resistance, avalanche effect</li>
-          <li>Будь-яка зміна даних → повністю інший хеш</li>
+          <li><strong>SHA-256:</strong> використовується в Bitcoin та більшості блокчейнів, вихід — 256 біт (64 hex символи)</li>
+          <li><strong>Keccak-256:</strong> обрана Ethereum (відрізняється від стандартного SHA-3)</li>
+          <li><strong>Ключові властивості:</strong> односторонність (неможливо відновити вхід), collision resistance (практично неможливо знайти два входи з однаковим хешем), avalanche effect (зміна одного біта повністю змінює вихід)</li>
+          <li>Будь-яка зміна даних → повністю інший хеш — саме це забезпечує цілісність блокчейну</li>
         </ul>
 
         <h4>Цифрові підписи</h4>
+        <p>Цифрові підписи дозволяють учасникам мережі доводити свою ідентичність та авторизувати транзакції без посередників. Кожен учасник має пару ключів: приватний (для підпису) та публічний (для верифікації).</p>
         <ul>
-          <li><strong>ECDSA:</strong> Elliptic Curve Digital Signature Algorithm</li>
-          <li><strong>EdDSA (Ed25519):</strong> швидший, безпечніший</li>
-          <li>Публічний ключ = адреса, приватний ключ = доступ</li>
-          <li>Підпис доводить володіння без розкриття приватного ключа</li>
+          <li><strong>ECDSA:</strong> Elliptic Curve Digital Signature Algorithm — основний алгоритм у Bitcoin та Ethereum, використовує криву secp256k1</li>
+          <li><strong>EdDSA (Ed25519):</strong> новіший алгоритм, швидший та безпечніший (Solana, Polkadot)</li>
+          <li><strong>Schnorr Signatures:</strong> впроваджені в Bitcoin (Taproot upgrade), дозволяють агрегацію підписів</li>
+          <li>Публічний ключ = адреса (ідентифікатор), приватний ключ = доступ (авторизація)</li>
+          <li>Підпис доводить володіння приватним ключем без його розкриття — фундаментальний принцип асиметричної криптографії</li>
         </ul>
 
         <h4>Merkle Trees</h4>
+        <p>Merkle Tree — бінарне дерево хешів, яке дозволяє ефективно агрегувати великі набори даних в один хеш (Merkle Root) та швидко доводити наявність окремого елемента.</p>
         <ul>
-          <li>Бінарне дерево хешів</li>
-          <li>Ефективна верифікація — O(log n)</li>
-          <li>Merkle Proof — доказ включення транзакції</li>
-          <li>Використовується для light clients</li>
+          <li>Бінарне дерево хешів — кожен батьківський вузол є хешем своїх дочірніх вузлів</li>
+          <li>Ефективна верифікація — потрібно лише O(log n) хешів замість O(n)</li>
+          <li>Merkle Proof — компактний доказ включення транзакції без завантаження всього блоку</li>
+          <li>Використовується для light clients (SPV у Bitcoin), які верифікують транзакції без завантаження повного блокчейну</li>
         </ul>
 
         <h3>Merkle Trees — структура даних</h3>
@@ -283,33 +298,36 @@
         <p>Верифікатор обчислює: H(H(A) + H(B)) → H(AB), потім H(H(AB) + H(CD)) → Merkle Root. Якщо результат співпадає з відомим Merkle Root — транзакція дійсно в блоці.</p>
 
         <h3>Механізми консенсусу</h3>
-        <p>Консенсус — процес узгодження стану мережі між усіма учасниками. Це фундаментальна проблема розподілених систем, відома як "проблема візантійських генералів".</p>
+        <p>Консенсус — процес узгодження стану мережі між усіма учасниками без центрального арбітра. Це фундаментальна проблема розподілених систем, відома як "проблема візантійських генералів" — як досягти згоди, якщо частина учасників може бути зловмисними? Різні механізми консенсусу пропонують різні компроміси між безпекою, швидкістю та децентралізацією.</p>
 
         <h4>Proof of Work (PoW)</h4>
+        <p>Перший і найвідоміший механізм, запроваджений Satoshi Nakamoto у Bitcoin. Майнери змагаються у розв'язанні обчислювально складної задачі — пошуку nonce, при якому хеш блоку починається з певної кількості нулів. Складність задачі автоматично коригується, щоб новий блок з'являвся приблизно кожні 10 хвилин.</p>
         <ul>
-          <li>Майнери вирішують криптографічну задачу</li>
-          <li>Перший, хто знайшов рішення, додає блок</li>
-          <li><strong>Переваги:</strong> перевірена безпека, Sybil resistance</li>
-          <li><strong>Недоліки:</strong> енергозатратність, повільність</li>
-          <li><strong>Приклад:</strong> Bitcoin (~7 TPS)</li>
+          <li>Майнери вирішують криптографічну задачу (підбір nonce для SHA-256)</li>
+          <li>Перший, хто знайшов рішення, додає блок та отримує винагороду</li>
+          <li><strong>Переваги:</strong> перевірена безпека за 15+ років, Sybil resistance, найвищий рівень децентралізації</li>
+          <li><strong>Недоліки:</strong> енергозатратність (~150 TWh/рік для Bitcoin), повільність, централізація майнінгу</li>
+          <li><strong>Приклад:</strong> Bitcoin (~7 TPS), Litecoin, Dogecoin</li>
         </ul>
 
         <h4>Proof of Stake (PoS)</h4>
+        <p>Альтернатива PoW, де замість обчислювальної потужності валідатори "ставлять" (stake) свої токени як заставу. Якщо валідатор діє нечесно — його stake конфіскується (slashing). Ethereum перейшов на PoS у вересні 2022 року ("The Merge"), зменшивши енерговитрати на ~99.95%.</p>
         <ul>
-          <li>Валідатори "ставлять" токени як заставу</li>
-          <li>Право створити блок пропорційне до stake</li>
-          <li><strong>Переваги:</strong> енергоефективність, швидкість</li>
-          <li><strong>Недоліки:</strong> "rich get richer", nothing at stake</li>
-          <li><strong>Приклад:</strong> Ethereum 2.0 (~100,000 TPS з sharding)</li>
+          <li>Валідатори блокують токени як заставу (у Ethereum мінімум 32 ETH)</li>
+          <li>Право створити блок пропорційне до stake або обирається алгоритмічно</li>
+          <li><strong>Переваги:</strong> енергоефективність, швидша фіналізація, нижчий бар'єр входу</li>
+          <li><strong>Недоліки:</strong> "rich get richer", nothing at stake problem, складніша формальна верифікація</li>
+          <li><strong>Приклад:</strong> Ethereum 2.0 (~100,000 TPS з sharding), Cardano, Tezos</li>
         </ul>
 
         <h4>Інші механізми</h4>
+        <p>Існує багато спеціалізованих механізмів, кожен оптимізований для конкретних сценаріїв — від enterprise-мереж з відомими учасниками до IoT-систем з мільйонами пристроїв:</p>
         <ul>
-          <li><strong>Delegated PoS (DPoS):</strong> голосування за делегатів (EOS, Tron)</li>
-          <li><strong>Proof of Authority (PoA):</strong> відомі валідатори (приватні мережі)</li>
-          <li><strong>PBFT:</strong> Byzantine Fault Tolerant для permissioned мереж</li>
-          <li><strong>Proof of History (PoH):</strong> криптографічний годинник (Solana)</li>
-          <li><strong>Proof of Space:</strong> використання дискового простору (Chia)</li>
+          <li><strong>Delegated PoS (DPoS):</strong> голосування за обмежений набір делегатів-валідаторів (EOS — 21 делегат, Tron)</li>
+          <li><strong>Proof of Authority (PoA):</strong> відомі та верифіковані валідатори, ідеальний для приватних мереж</li>
+          <li><strong>PBFT:</strong> Practical Byzantine Fault Tolerant — витримує до ⅓ зловмисних вузлів, використовується в permissioned мережах (Hyperledger)</li>
+          <li><strong>Proof of History (PoH):</strong> криптографічний годинник для впорядкування подій без комунікації (Solana, ~65K TPS)</li>
+          <li><strong>Proof of Space:</strong> використання дискового простору замість обчислень — більш екологічний підхід (Chia)</li>
         </ul>
 
         <h4>Порівняння консенсусних механізмів</h4>
@@ -394,13 +412,13 @@
         <h2>6.2. Децентралізоване управління ідентифікацією</h2>
 
         <h3>Проблема централізованої ідентифікації</h3>
-        <p>Сучасні системи ідентифікації мають критичні недоліки:</p>
+        <p>Сучасна цифрова ідентифікація побудована на централізованій моделі: Google, Facebook, державні органи виступають Identity Providers (IdP), зберігаючи та контролюючи дані мільярдів користувачів. Ця архітектура створює фундаментальні проблеми безпеки та приватності, які блокчейн може вирішити.</p>
         <ul>
-          <li><strong>Single Point of Failure:</strong> злам IdP = доступ до всього</li>
-          <li><strong>Data Breaches:</strong> мільярди записів викрадено</li>
-          <li><strong>Privacy:</strong> IdP знає все про ваші дії</li>
-          <li><strong>Vendor Lock-in:</strong> залежність від провайдера</li>
-          <li><strong>Identity Silos:</strong> різні акаунти скрізь</li>
+          <li><strong>Single Point of Failure:</strong> компрометація IdP дає доступ до всіх пов'язаних сервісів — злам Okta (2022) вплинув на тисячі організацій</li>
+          <li><strong>Data Breaches:</strong> мільярди записів викрадено — Equifax (147M), Yahoo (3B), LinkedIn (700M)</li>
+          <li><strong>Privacy:</strong> IdP знає все про ваші дії, які сервіси ви використовуєте, коли і звідки заходите</li>
+          <li><strong>Vendor Lock-in:</strong> блокування акаунту Google означає втрату доступу до пошти, документів, фото, двофакторної автентифікації</li>
+          <li><strong>Identity Silos:</strong> середній користувач має 100+ акаунтів, кожен з різними credentials</li>
         </ul>
 
         <div class="info-box">
@@ -408,13 +426,14 @@
         </div>
 
         <h3>Self-Sovereign Identity (SSI)</h3>
-        <p>SSI — парадигма, де користувач повністю контролює свою цифрову ідентичність:</p>
+        <p>Self-Sovereign Identity (SSI) — це парадигмальний зсув у управлінні цифровою ідентичністю. На відміну від моделі, де третя сторона (Google, держава) контролює вашу ідентичність, SSI ставить користувача в центр: ви створюєте, володієте та контролюєте свої цифрові credentials так само, як ви контролюєте фізичний паспорт чи водійське посвідчення.</p>
         <ul>
-          <li><strong>Ownership:</strong> ви володієте своєю ідентичністю</li>
-          <li><strong>Control:</strong> ви вирішуєте, що і кому розкривати</li>
-          <li><strong>Portability:</strong> ідентичність не прив'язана до провайдера</li>
-          <li><strong>Privacy:</strong> мінімальне розкриття (selective disclosure)</li>
-          <li><strong>Persistence:</strong> ідентичність існує доки ви цього хочете</li>
+          <li><strong>Ownership:</strong> ви створюєте та володієте своєю ідентичністю — жоден провайдер не може її "видалити"</li>
+          <li><strong>Control:</strong> ви вирішуєте, що і кому розкривати — наприклад, довести вік без показу дати народження</li>
+          <li><strong>Portability:</strong> ідентичність не прив'язана до провайдера — працює з будь-яким сервісом, що підтримує стандарт</li>
+          <li><strong>Privacy:</strong> мінімальне розкриття (selective disclosure) — ви ділитесь лише необхідними атрибутами</li>
+          <li><strong>Persistence:</strong> ідентичність існує доки ви цього хочете і не залежить від бізнес-рішень провайдера</li>
+          <li><strong>Interoperability:</strong> засновано на відкритих стандартах W3C — різні wallet-и та мережі сумісні між собою</li>
         </ul>
 
         <h3>Decentralized Identifiers (DIDs)</h3>
@@ -513,11 +532,13 @@ did:key:z6Mkf5...</code></pre>
         </ul>
 
         <h4>Zero-Knowledge Proofs у VCs</h4>
+        <p>Zero-Knowledge Proofs (ZKP) — це криптографічний інструмент, який дозволяє довести істинність твердження без розкриття самих даних. У контексті Verifiable Credentials це революційна можливість: ви можете довести, що маєте певну властивість, не показуючи сам credential.</p>
         <ul>
-          <li>Доведення властивості без розкриття даних</li>
-          <li><strong>Приклад:</strong> "Мені більше 18" без показу дати народження</li>
-          <li><strong>BBS+ Signatures:</strong> selective disclosure</li>
-          <li><strong>zk-SNARKs:</strong> складніші докази</li>
+          <li><strong>Базовий принцип:</strong> доведення властивості без розкриття даних — "я знаю секрет" без показу секрету</li>
+          <li><strong>Приклад:</strong> "Мені більше 18" без показу дати народження або будь-яких інших даних</li>
+          <li><strong>BBS+ Signatures:</strong> дозволяють selective disclosure — з одного підписаного credential показати лише вибрані поля</li>
+          <li><strong>zk-SNARKs:</strong> Succinct Non-interactive Arguments of Knowledge — доведення довільно складних тверджень за константний час</li>
+          <li><strong>zk-STARKs:</strong> аналогічно до SNARKs, але без trusted setup та стійкі до квантових комп'ютерів</li>
         </ul>
 
         <h3>Приклади впровадження</h3>
@@ -667,89 +688,98 @@ function withdraw() {
         <h2>6.4. Застосування блокчейну в кібербезпеці</h2>
 
         <h3>Незмінний Audit Log</h3>
-        <p>Блокчейн як tamper-proof журнал подій:</p>
+        <p>Одна з найпрактичніших задач, де блокчейн дає реальну перевагу — це створення tamper-proof журналів подій. У традиційних системах атакуючий з root-доступом може видалити або підмінити логи, заховавши сліди проникнення. За даними MITRE ATT&amp;CK, техніка T1070 (Indicator Removal) використовується в більшості складних атак. Блокчейн вирішує цю проблему фундаментально.</p>
         <ul>
-          <li><strong>Проблема:</strong> атакуючі видаляють логи після атаки</li>
-          <li><strong>Рішення:</strong> хеші логів записуються в блокчейн</li>
-          <li>Неможливо змінити без виявлення</li>
-          <li>Timestamping — доказ часу події</li>
+          <li><strong>Проблема:</strong> атакуючі видаляють або модифікують логи після атаки — інцидент стає непомітним</li>
+          <li><strong>Рішення:</strong> хеші логів записуються в блокчейн у реальному часі — створюється незмінний audit trail</li>
+          <li>Навіть якщо атакуючий видалить локальні логи, їх хеші залишаться в блокчейні — факт підміни буде очевидним</li>
+          <li><strong>Timestamping:</strong> криптографічний доказ часу події — важливо для forensic-розслідувань та юридичних процесів</li>
         </ul>
 
         <h4>Варіанти реалізації</h4>
+        <p>Вибір архітектури залежить від обсягу логів, вимог до latency та бюджету:</p>
         <ul>
-          <li><strong>Повне зберігання:</strong> всі логи on-chain (дорого)</li>
-          <li><strong>Хеші:</strong> тільки Merkle root on-chain</li>
-          <li><strong>Hybrid:</strong> off-chain storage + on-chain anchoring</li>
+          <li><strong>Повне зберігання:</strong> всі логи on-chain — максимальна захищеність, але дуже дорого та повільно для великих об'ємів</li>
+          <li><strong>Хеші:</strong> тільки Merkle root on-chain — логи зберігаються локально, а їх "відбиток" (хеш) — в блокчейні</li>
+          <li><strong>Hybrid (рекомендований):</strong> off-chain storage (S3, IPFS) + періодичне on-chain anchoring — оптимальний баланс вартості та безпеки</li>
         </ul>
 
         <h3>PKI та Certificate Transparency</h3>
-        <p>Блокчейн-based PKI вирішує проблеми традиційної PKI:</p>
+        <p>Традиційна Public Key Infrastructure (PKI) побудована на ієрархії Certificate Authorities (CA) — організацій, яким ми "довіряємо" видачу цифрових сертифікатів. Але ця довіра неодноразово була порушена, ставлячи під загрозу безпеку мільйонів користувачів. Блокчейн пропонує децентралізовану альтернативу.</p>
 
         <h4>Проблеми традиційної PKI</h4>
         <ul>
-          <li>Центральні CA можуть бути скомпрометовані</li>
-          <li><strong>DigiNotar (2011):</strong> фейкові сертифікати Google</li>
-          <li>Затримка у відкликанні сертифікатів</li>
-          <li>Непрозорість видачі</li>
+          <li><strong>Централізована довіра:</strong> кожен CA є single point of failure — компрометація одного CA підриває довіру до всієї системи</li>
+          <li><strong>DigiNotar (2011):</strong> голландський CA був зламаний, випущено фейкові сертифікати Google — постраждали 300K+ іранських користувачів</li>
+          <li><strong>Symantec (2017):</strong> найбільший CA у світі був визнаний ненадійним через систематичні порушення — Chrome/Firefox видалили його сертифікати</li>
+          <li><strong>Затримка у відкликанні:</strong> CRL/OCSP працюють повільно, браузери часто не перевіряють відкликання</li>
+          <li><strong>Непрозорість:</strong> CA може видати сертифікат для будь-якого домену без відома власника</li>
         </ul>
 
         <h4>Blockchain PKI</h4>
+        <p>Блокчейн-based PKI усуває необхідність довіри до центральних CA, замінюючи її криптографічними доказами та прозорістю мережі:</p>
         <ul>
-          <li>Децентралізована видача сертифікатів</li>
-          <li>Автоматичне Certificate Transparency</li>
-          <li>Миттєве відкликання через смарт-контракт</li>
-          <li><strong>Приклад:</strong> Namecoin, Blockstack</li>
+          <li><strong>Децентралізована видача:</strong> сертифікати реєструються в блокчейні — немає единого органу, який може бути скомпрометований</li>
+          <li><strong>Автоматичне Certificate Transparency:</strong> кожна видача сертифіката публічно видна в блокчейні — фейковий сертифікат буде миттєво виявлений</li>
+          <li><strong>Миттєве відкликання:</strong> оновлення статусу через смарт-контракт — секунди замість днів</li>
+          <li><strong>Приклади:</strong> Namecoin (.bit домени), Handshake (децентралізований DNS), Blockstack/Stacks</li>
         </ul>
 
         <h3>Secure Software Supply Chain</h3>
-        <p>Захист ланцюга постачання ПЗ:</p>
+        <p>Атаки на ланцюг постачання програмного забезпечення стали одним з найнебезпечніших векторів в кібербезпеці. Зловмисник, який скомпрометує один компонент у ланцюгу збірки, отримує доступ до всіх кінцевих користувачів. Блокчейн може забезпечити незмінний та верифікований запис кожного кроку від написання коду до деплою.</p>
         <ul>
-          <li><strong>SolarWinds Attack (2020):</strong> malware в оновленнях</li>
-          <li><strong>Рішення:</strong> блокчейн для SBOM (Software Bill of Materials)</li>
-          <li>Кожна збірка записується з хешем</li>
-          <li>Верифікація походження коду</li>
+          <li><strong>SolarWinds Attack (2020):</strong> malware було впроваджено в процес збірки — 18,000+ організацій отримали інфікований update, включаючи уряд США</li>
+          <li><strong>Codecov (2021):</strong> скомпрометований bash uploader збирав secrets з CI/CD тисяч компаній</li>
+          <li><strong>Рішення:</strong> блокчейн для SBOM (Software Bill of Materials) — повний реєстр компонентів та їх хешів</li>
+          <li>Кожна збірка записується з криптографічним хешем — підміна артефакту буде миттєво виявлена</li>
+          <li>Верифікація походження коду — provenance attestation на кожному етапі CI/CD</li>
         </ul>
 
         <h4>in-toto + Blockchain</h4>
+        <p>Фреймворк in-toto (розроблений NYU) забезпечує end-to-end верифікацію software supply chain. Поєднання з блокчейном додає незмінність та публічну перевірюваність:</p>
         <ul>
-          <li>Кожен крок CI/CD підписується</li>
-          <li>Хеші зберігаються в блокчейні</li>
-          <li>Кінцевий користувач верифікує весь ланцюг</li>
+          <li>Кожен крок CI/CD (code review, build, test, sign, deploy) підписується відповідальною стороною</li>
+          <li>Хеші всіх артефактів та attestations зберігаються в блокчейні</li>
+          <li>Кінцевий користувач верифікує весь ланцюг — від git commit до release binary</li>
+          <li><strong>SLSA (Supply-chain Levels for Software Artifacts):</strong> Google-розроблений фреймворк, сумісний з blockchain attestation</li>
         </ul>
 
         <h3>Threat Intelligence Sharing</h3>
-        <p>Децентралізований обмін threat intelligence:</p>
+        <p>Обмін інформацією про загрози (threat intelligence) є критичним для колективної кібербезпеки, але стикається з "дилемою ув'язненого" — компанії неохоче діляться інформацією, бо це може виявити їх вразливості або допомогти конкурентам. Блокчейн вирішує це через анонімність, incentivization та децентралізацію.</p>
         <ul>
-          <li><strong>Проблема:</strong> компанії не діляться через конкуренцію</li>
-          <li><strong>Рішення:</strong> анонімний обмін через блокчейн</li>
-          <li>Токени як incentive за якісну інформацію</li>
-          <li>Репутаційна система для джерел</li>
+          <li><strong>Проблема:</strong> компанії не діляться threat intelligence через конкуренцію, юридичні ризики та репутаційні побоювання</li>
+          <li><strong>Рішення:</strong> анонімний або псевдонімний обмін через блокчейн — джерело не розкривається, але якість перевіряється</li>
+          <li><strong>Token incentives:</strong> учасники отримують токени за якісну та своєчасну інформацію — економічна мотивація для обміну</li>
+          <li><strong>Reputation system:</strong> on-chain репутація джерел — IoC від перевіреного джерела отримує більшу вагу</li>
+          <li><strong>Автоматична верифікація:</strong> смарт-контракти перевіряють та класифікують IoC автоматично</li>
         </ul>
 
         <h4>Приклади платформ</h4>
         <ul>
-          <li><strong>MISP + Blockchain:</strong> децентралізований MISP</li>
-          <li><strong>PolySwarm:</strong> marketplace для threat detection</li>
-          <li>Bounty за виявлення нових malware</li>
+          <li><strong>MISP + Blockchain:</strong> децентралізований MISP — популярна open-source TI платформа з блокчейн-розширенням для незмінності та довіри</li>
+          <li><strong>PolySwarm:</strong> marketplace для threat detection — антивірусні вендори конкурують у виявленні malware за токени</li>
+          <li><strong>Bounty-програми:</strong> on-chain bounty за виявлення нових malware сімейств, C2 інфраструктури, zero-day</li>
         </ul>
 
         <h3>IoT Security</h3>
-        <p>Блокчейн для безпеки Internet of Things:</p>
+        <p>Internet of Things створює безпрецедентні виклики для безпеки: мільярди пристроїв з обмеженими ресурсами, різних виробників, часто без можливості оновлення. Традиційна централізована модель безпеки не масштабується для IoT. Блокчейн пропонує децентралізований підхід, де кожен пристрій може автономно автентифікуватися та авторизуватися.</p>
 
         <h4>Проблеми IoT</h4>
         <ul>
-          <li>Мільярди пристроїв без централізованого управління</li>
-          <li>Слабка автентифікація</li>
-          <li>Складність оновлень firmware</li>
-          <li><strong>Mirai Botnet:</strong> атака через IoT devices</li>
+          <li><strong>Масштаб:</strong> очікується 75+ мільярдів пристроїв до 2030 року — централізоване управління ідентичностями неможливе</li>
+          <li><strong>Слабка автентифікація:</strong> дефолтні паролі, відсутність шифрування, hardcoded credentials</li>
+          <li><strong>Складність оновлень:</strong> firmware updates вимагають довіри до джерела — як перевірити автентичність?</li>
+          <li><strong>Mirai Botnet (2016):</strong> ботнет з 600K+ IoT пристроїв здійснив DDoS-атаку на Dyn DNS — впали Twitter, Netflix, Reddit, GitHub</li>
+          <li><strong>Гетерогенність:</strong> тисячі виробників, різні протоколи, немає єдиних стандартів безпеки</li>
         </ul>
 
         <h4>Blockchain-based рішення</h4>
         <ul>
-          <li><strong>Device Identity:</strong> DID для кожного пристрою</li>
-          <li><strong>Access Control:</strong> смарт-контракти для дозволів</li>
-          <li><strong>Firmware Updates:</strong> верифікація через блокчейн</li>
-          <li><strong>IOTA:</strong> DAG-based для IoT microtransactions</li>
+          <li><strong>Device Identity:</strong> DID для кожного пристрою — децентралізована ідентичність, що не залежить від виробника</li>
+          <li><strong>Access Control:</strong> смарт-контракти для дозволів — автоматичне управління правами доступу між пристроями</li>
+          <li><strong>Firmware Updates:</strong> хеш автентичного firmware в блокчейні — пристрій перевіряє оновлення перед встановленням</li>
+          <li><strong>IOTA:</strong> DAG-based протокол (Tangle) спеціально для IoT — feeless microtransactions, lightweight для пристроїв з обмеженими ресурсами</li>
+          <li><strong>Helium:</strong> децентралізована IoT-мережа з PoC (Proof of Coverage) консенсусом — 900K+ hotspots</li>
         </ul>
 
         <h3>Обмеження блокчейну в безпеці</h3>
@@ -834,20 +864,106 @@ function withdraw() {
         </ul>
       </section>
 
+      <!-- Тема 6.5 -->
+      <section class="conspect-section">
+        <h2>6.5. Web3 Security — DeFi вразливості та захист протоколів</h2>
+
+        <p>Web3 — це концепція децентралізованого інтернету, побудованого на блокчейні. DeFi (Decentralized Finance), NFT, DAO та інші Web3-додатки керують мільярдами доларів у смарт-контрактах, що робить їх привабливими цілями для зловмисників. За 2022-2023 роки через хаки DeFi було втрачено понад $6 мільярдів. Розуміння специфічних Web3-вразливостей критично важливе для сучасного спеціаліста з кібербезпеки.</p>
+
+        <h3>DeFi — Decentralized Finance</h3>
+        <p>DeFi замінює традиційних фінансових посередників (банки, біржі, страхові компанії) смарт-контрактами. Це створює відкриту фінансову систему, доступну будь-кому з інтернет-підключенням, але також породжує нові класи вразливостей.</p>
+
+        <h4>Основні компоненти DeFi</h4>
+        <ul>
+          <li><strong>DEX (Decentralized Exchanges):</strong> Uniswap, SushiSwap — обмін токенів через AMM (Automated Market Makers) без посередників</li>
+          <li><strong>Lending/Borrowing:</strong> Aave, Compound — кредитування без банків, з автоматичною ліквідацією при падінні застави</li>
+          <li><strong>Stablecoins:</strong> USDC, DAI — криптовалюти прив'язані до фіатних валют, основа DeFi-екосистеми</li>
+          <li><strong>Yield Farming:</strong> автоматизоване отримання прибутку через надання ліквідності — складні стратегії з високим ризиком</li>
+          <li><strong>Bridges:</strong> Wormhole, LayerZero — перемістення активів між блокчейнами</li>
+        </ul>
+
+        <h3>Типові атаки на DeFi-протоколи</h3>
+
+        <h4>Flash Loan Attacks</h4>
+        <p>Flash loans — це унікальний DeFi-примітив: позика будь-якої суми без застави, за умови повернення в тій самій транзакції. Зловмисники використовують flash loans для маніпуляції ринком:</p>
+        <ol>
+          <li>Позичити $100M через flash loan (без застави)</li>
+          <li>Маніпулювати ціною токена на одній DEX</li>
+          <li>Використати маніпульовану ціну для отримання вигоди на іншому протоколі</li>
+          <li>Повернути позику + прибуток — все в одній транзакції</li>
+        </ol>
+        <p><strong>Приклади:</strong> bZx ($8M, 2020), Cream Finance ($130M, 2021), Euler Finance ($197M, 2023).</p>
+
+        <h4>Bridge Hacks</h4>
+        <p>Cross-chain bridges — найвразливіший компонент Web3-екосистеми. Вони зберігають заблоковані активи на одному блокчейні та випускають "обгорнуті" (wrapped) токени на іншому:</p>
+        <ul>
+          <li><strong>Ronin Bridge ($625M, 2022):</strong> Lazarus Group скомпрометувала 5 з 9 валідаторів — найбільший DeFi-хак в історії</li>
+          <li><strong>Wormhole ($320M, 2022):</strong> вразливість у верифікації підписів дозволила mint фейкових wrapped ETH</li>
+          <li><strong>Nomad ($190M, 2022):</strong> баг у ініціалізації дозволив будь-кому "копіювати" атакуючу транзакцію — перший "crowd-sourced" хак</li>
+          <li><strong>Ключова проблема:</strong> bridge — це централізований компонент між двома децентралізованими мережами</li>
+        </ul>
+
+        <h4>Governance Attacks</h4>
+        <p>Багато DeFi-протоколів управляються через DAO (Decentralized Autonomous Organizations), де власники governance-токенів голосують за зміни. Це створює вектор атаки:</p>
+        <ul>
+          <li><strong>Flash loan governance:</strong> позичити governance-токени → проголосувати за зловмисну пропозицію → повернути токени</li>
+          <li><strong>Beanstalk ($182M, 2022):</strong> зловмисник використав flash loan для отримання ~67% голосів та виведення коштів</li>
+          <li><strong>Захист:</strong> time-lock на голосуваннях, snapshot-based voting, мінімальний період володіння токенами</li>
+        </ul>
+
+        <h4>MEV (Maximal Extractable Value)</h4>
+        <p>MEV — це прибуток, який валідатори/майнери можуть отримати через маніпуляцію порядком транзакцій у блоці. Це системна проблема блокчейнів з публічним mempool:</p>
+        <ul>
+          <li><strong>Sandwich Attack:</strong> валідатор бачить pending swap → вставляє свою транзакцію до та після → отримує прибуток з різниці цін</li>
+          <li><strong>Backrunning:</strong> виконання транзакції одразу після великої торгової операції для захоплення arbitrage</li>
+          <li><strong>Liquidation sniping:</strong> перехоплення ліквідаційних bounty через front-running</li>
+          <li><strong>Масштаб:</strong> понад $600M MEV було вилучено з Ethereum за 2022-2023 роки</li>
+        </ul>
+
+        <h3>Захист Web3-протоколів</h3>
+
+        <h4>Технічні заходи</h4>
+        <ul>
+          <li><strong>Multiple Audits:</strong> мінімум 2-3 незалежних аудити від різних фірм перед запуском</li>
+          <li><strong>Time-locks:</strong> затримка виконання критичних операцій (зазвичай 24-48 годин) для можливості реагування</li>
+          <li><strong>Rate Limiting:</strong> обмеження суми, яку можна вивести за один період</li>
+          <li><strong>Circuit Breakers:</strong> автоматична пауза протоколу при аномальній активності</li>
+          <li><strong>Chainlink CCIP:</strong> стандартизований та безпечний cross-chain протокол від лідера oracle-рішень</li>
+        </ul>
+
+        <h4>MEV Protection</h4>
+        <ul>
+          <li><strong>Flashbots Protect:</strong> приватний RPC endpoint, що приховує транзакції від публічного mempool</li>
+          <li><strong>MEV-Share:</strong> протокол, що повертає частину MEV назад користувачам</li>
+          <li><strong>Encrypted Mempools:</strong> threshold encryption для приховування вмісту транзакцій до включення в блок</li>
+          <li><strong>PBS (Proposer-Builder Separation):</strong> розділення ролей у Ethereum для зменшення MEV-централізації</li>
+        </ul>
+
+        <h4>Страхування в DeFi</h4>
+        <p>Унікальна відповідь Web3 на ризики хаків — децентралізоване страхування:</p>
+        <ul>
+          <li><strong>Nexus Mutual:</strong> децентралізований страховий протокол — учасники вносять кошти в пул та голосують за виплати</li>
+          <li><strong>InsurAce:</strong> cross-chain страхування DeFi-позицій</li>
+          <li><strong>Cover Protocol:</strong> peer-to-peer страхування від smart contract exploits</li>
+          <li>Після великих хаків деякі протоколи (Euler, Wormhole) вдалось відшкодувати кошти через переговори з атакуючими</li>
+        </ul>
+      </section>
+
       <!-- Підсумки -->
       <section class="conspect-section">
         <h2>Підсумки лекції</h2>
 
         <h3>Ключові тези</h3>
         <ul>
-          <li>Блокчейн забезпечує <strong>незмінність</strong>, <strong>прозорість</strong> та <strong>децентралізацію</strong></li>
-          <li><strong>Криптографічні примітиви</strong> — хеш-функції, цифрові підписи, Merkle Trees — основа безпеки блокчейну</li>
-          <li><strong>Self-Sovereign Identity</strong> повертає контроль над ідентичністю користувачам</li>
-          <li><strong>DIDs та Verifiable Credentials</strong> — стандарти W3C для децентралізованої ідентифікації</li>
-          <li><strong>Смарт-контракти</strong> автоматизують угоди, але мають специфічні вразливості</li>
-          <li><strong>Reentrancy, overflow, access control</strong> — типові вразливості смарт-контрактів</li>
-          <li>Блокчейн корисний для <strong>audit logs, PKI, supply chain, threat intelligence</strong></li>
-          <li>Блокчейн <strong>не панацея</strong> — має обмеження scalability, privacy, complexity</li>
+          <li>Блокчейн забезпечує <strong>незмінність</strong>, <strong>прозорість</strong> та <strong>децентралізацію</strong> — три властивості, що змінюють підходи до кібербезпеки</li>
+          <li><strong>Криптографічні примітиви</strong> — хеш-функції (SHA-256, Keccak), цифрові підписи (ECDSA, EdDSA), Merkle Trees — фундамент безпеки блокчейну</li>
+          <li><strong>Self-Sovereign Identity</strong> повертає контроль над ідентичністю користувачам, усуваючи залежність від централізованих IdP</li>
+          <li><strong>DIDs та Verifiable Credentials</strong> — стандарти W3C, що дозволяють децентралізовану ідентифікацію з selective disclosure</li>
+          <li><strong>Zero-Knowledge Proofs</strong> дозволяють доводити властивості без розкриття даних — ключова технологія для приватності</li>
+          <li><strong>Смарт-контракти</strong> автоматизують угоди, але мають специфічні вразливості (reentrancy, overflow, access control, front-running)</li>
+          <li>Блокчейн корисний для <strong>audit logs, PKI, supply chain, threat intelligence, IoT security</strong></li>
+          <li><strong>Web3/DeFi</strong> створює нові класи атак — flash loans, bridge hacks, governance attacks, MEV extraction</li>
+          <li>Блокчейн <strong>не панацея</strong> — має обмеження scalability, privacy, complexity та не замінює традиційні СУБД</li>
         </ul>
 
         <h3>Практичні рекомендації</h3>
@@ -885,6 +1001,95 @@ function withdraw() {
               <td>Так</td>
               <td>Consortium blockchain</td>
             </tr>
+            <tr>
+              <td>DeFi protocol security</td>
+              <td>N/A (on-chain)</td>
+              <td>Multiple audits + time-locks + circuit breakers</td>
+            </tr>
+            <tr>
+              <td>Cross-chain operations</td>
+              <td>Обережно</td>
+              <td>Перевірені bridges (CCIP), мультисиг валідація</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Питання для самоперевірки -->
+      <section class="conspect-section">
+        <h2>Питання для самоперевірки</h2>
+        <ol>
+          <li>Поясніть, як криптографічний зв'язок між блоками забезпечує незмінність (immutability) блокчейну. Що станеться, якщо змінити дані в одному блоці?</li>
+          <li>Порівняйте Proof of Work та Proof of Stake: які компроміси між безпекою, децентралізацією та енергоефективністю?</li>
+          <li>Чим Merkle Proof відрізняється від повної верифікації? Поясніть, чому light clients можуть працювати ефективно.</li>
+          <li>Що таке Self-Sovereign Identity (SSI) і яку проблему вона вирішує? Наведіть приклад використання DIDs.</li>
+          <li>Опишіть трикутник довіри Verifiable Credentials: Issuer → Holder → Verifier. Яка роль блокчейну в цьому процесі?</li>
+          <li>Як Zero-Knowledge Proofs дозволяють доводити властивості без розкриття даних? Наведіть практичний приклад.</li>
+          <li>Поясніть механізм reentrancy attack. Чому патерн Checks-Effects-Interactions захищає від нього?</li>
+          <li>Які переваги має блокчейн-based audit log порівняно з традиційними системами логування (SIEM)?</li>
+          <li>Чому cross-chain bridges є найвразливішим компонентом Web3? Опишіть один з відомих bridge hacks.</li>
+          <li>Що таке flash loan attack? Чому ця атака можлива тільки в DeFi і не має аналогів у традиційних фінансах?</li>
+          <li>Як MEV (Maximal Extractable Value) впливає на користувачів? Які існують методи захисту?</li>
+          <li>Оцініть критично: для яких задач кібербезпеки блокчейн доцільний, а для яких — ні? Обґрунтуйте свою відповідь.</li>
+        </ol>
+      </section>
+
+      <!-- Практичне завдання -->
+      <section class="conspect-section">
+        <h2>Практичне завдання</h2>
+        <div class="info-box">
+          <strong>Завдання: Аналіз безпеки блокчейн-рішення</strong>
+          <ol style="margin-top: 0.5rem;">
+            <li><strong>Аналіз інциденту:</strong> Оберіть один з великих DeFi-хаків (The DAO, Ronin Bridge, Wormhole, Euler Finance). Опишіть: вразливість, вектор атаки, наслідки, та як можна було запобігти.</li>
+            <li><strong>Проєктування рішення:</strong> Спроєктуйте архітектуру blockchain-based audit log для хмарного середовища. Визначте: який тип блокчейну (public/private/consortium), механізм консенсусу, формат даних, частота anchoring.</li>
+            <li><strong>Оцінка доцільності:</strong> Для трьох сценаріїв (identity management, supply chain tracking, real-time trading) обґрунтуйте, чи доцільне використання блокчейну, або традиційна архітектура буде ефективнішою.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Рекомендовані ресурси -->
+      <section class="conspect-section">
+        <h2>Рекомендовані ресурси</h2>
+        <ul>
+          <li><a href="https://www.w3.org/TR/did-core/" target="_blank" rel="noopener">W3C DID Core Specification</a> — офіційна специфікація Decentralized Identifiers</li>
+          <li><a href="https://www.w3.org/TR/vc-data-model/" target="_blank" rel="noopener">W3C Verifiable Credentials Data Model</a> — стандарт Verifiable Credentials</li>
+          <li><a href="https://ethereum.org/en/developers/docs/smart-contracts/security/" target="_blank" rel="noopener">Ethereum Smart Contract Security</a> — офіційний гайд з безпеки смарт-контрактів</li>
+          <li><a href="https://swcregistry.io/" target="_blank" rel="noopener">Smart Contract Weakness Classification (SWC)</a> — реєстр відомих вразливостей смарт-контрактів</li>
+          <li><a href="https://rekt.news/" target="_blank" rel="noopener">Rekt News</a> — аналітична платформа з розбором DeFi-хаків</li>
+          <li><a href="https://www.hyperledger.org/learn" target="_blank" rel="noopener">Hyperledger Learning Resources</a> — навчальні матеріали з enterprise blockchain</li>
+          <li><a href="https://github.com/nickleback2002/awesome-web3-security" target="_blank" rel="noopener">Awesome Web3 Security</a> — курований список ресурсів з Web3 безпеки</li>
+          <li><a href="https://blog.openzeppelin.com/security-audits" target="_blank" rel="noopener">OpenZeppelin Security Audits</a> — публічні аудити смарт-контрактів від лідера індустрії</li>
+        </ul>
+      </section>
+
+      <!-- Глосарій -->
+      <section class="conspect-section">
+        <h2>Глосарій</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Термін</th>
+              <th>Визначення</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Blockchain</strong></td><td>Розподілений реєстр (distributed ledger) з криптографічно зв'язаними блоками, що забезпечує незмінність даних</td></tr>
+            <tr><td><strong>Merkle Tree</strong></td><td>Бінарне дерево хешів, що дозволяє ефективну верифікацію даних за O(log n)</td></tr>
+            <tr><td><strong>Proof of Work (PoW)</strong></td><td>Механізм консенсусу, де майнери вирішують обчислювально складні задачі для додавання блоків</td></tr>
+            <tr><td><strong>Proof of Stake (PoS)</strong></td><td>Механізм консенсусу, де валідатори блокують токени як заставу для участі у валідації</td></tr>
+            <tr><td><strong>SSI (Self-Sovereign Identity)</strong></td><td>Парадигма ідентифікації, де користувач повністю контролює свою цифрову ідентичність</td></tr>
+            <tr><td><strong>DID (Decentralized Identifier)</strong></td><td>Стандарт W3C для децентралізованих ідентифікаторів, не прив'язаних до центрального реєстру</td></tr>
+            <tr><td><strong>Verifiable Credential (VC)</strong></td><td>Цифрове посвідчення з криптографічним доказом автентичності та цілісності</td></tr>
+            <tr><td><strong>Zero-Knowledge Proof (ZKP)</strong></td><td>Криптографічний метод доведення істинності твердження без розкриття самих даних</td></tr>
+            <tr><td><strong>Smart Contract</strong></td><td>Програма на блокчейні, що автоматично виконує умови угоди без посередників</td></tr>
+            <tr><td><strong>Reentrancy Attack</strong></td><td>Вразливість, де зловмисник повторно входить у функцію до завершення попереднього виклику</td></tr>
+            <tr><td><strong>DeFi (Decentralized Finance)</strong></td><td>Фінансові сервіси на блокчейні без централізованих посередників</td></tr>
+            <tr><td><strong>Flash Loan</strong></td><td>Позика без застави, що повертається в тій самій транзакції — унікальний DeFi-примітив</td></tr>
+            <tr><td><strong>MEV (Maximal Extractable Value)</strong></td><td>Прибуток від маніпуляції порядком транзакцій у блоці валідатором</td></tr>
+            <tr><td><strong>Bridge (Cross-chain)</strong></td><td>Протокол для переміщення активів між різними блокчейнами</td></tr>
+            <tr><td><strong>SBOM (Software Bill of Materials)</strong></td><td>Повний перелік компонентів програмного продукту з їх хешами</td></tr>
+            <tr><td><strong>Oracle</strong></td><td>Сервіс, що надає зовнішні дані (ціни, погода) смарт-контрактам</td></tr>
+            <tr><td><strong>DAO (Decentralized Autonomous Organization)</strong></td><td>Організація, керована смарт-контрактами та голосуванням власників токенів</td></tr>
           </tbody>
         </table>
       </section>
@@ -893,7 +1098,7 @@ function withdraw() {
 
     <div class="conspect-nav">
       <a href="../../lecture.html?id=6" class="nav-btn">← До лекції</a>
-      <a href="lecture-7.html" class="nav-btn">Наступний конспект →</a>
+      <a href="../7/conspect.html" class="nav-btn">Наступний конспект →</a>
     </div>
 
     <footer id="footer"></footer>
