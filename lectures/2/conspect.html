@@ -421,15 +421,15 @@
         </table>
 
         <h4>Приклад контролю: AC-6 Least Privilege</h4>
-        <p><strong>AC-6 Least Privilege</strong> — один з найважливіших контролів:</p>
+        <p><strong>AC-6 Least Privilege (Принцип мінімальних привілеїв)</strong> — один з найважливіших контролів у каталозі. Суть принципу: кожен користувач, процес або система повинні мати лише ті права доступу, які мінімально необхідні для виконання їхніх функцій — і не більше. Базовий контроль має кілька enhancements (розширень), що деталізують вимоги:</p>
         <ul>
-          <li><strong>Базовий контроль:</strong> Організація застосовує принцип мінімальних привілеїв</li>
-          <li><strong>AC-6(1):</strong> Authorize access only for specific functions</li>
-          <li><strong>AC-6(2):</strong> Non-privileged access for non-security functions</li>
-          <li><strong>AC-6(3):</strong> Network access to privileged commands</li>
-          <li><strong>AC-6(5):</strong> Privileged accounts restricted to specific personnel</li>
-          <li><strong>AC-6(9):</strong> Log privileged functions</li>
-          <li><strong>AC-6(10):</strong> Prohibit non-privileged users from executing privileged functions</li>
+          <li><strong>Базовий контроль AC-6:</strong> організація застосовує принцип мінімальних привілеїв, надаючи доступ лише до тих ресурсів і операцій, які необхідні для виконання призначених завдань</li>
+          <li><strong>AC-6(1):</strong> авторизація доступу тільки для конкретних функцій — користувач отримує доступ не "до сервера", а до конкретних операцій на сервері</li>
+          <li><strong>AC-6(2):</strong> непривілейований доступ для несекюріті функцій — адміністратор, який перевіряє пошту, має робити це з непривілейованого акаунту, а не з root/admin</li>
+          <li><strong>AC-6(3):</strong> мережевий доступ до привілейованих команд — обмеження того, з яких мережевих сегментів можна виконувати привілейовані дії (наприклад, SSH до production лише з management VPN)</li>
+          <li><strong>AC-6(5):</strong> привілейовані акаунти обмежені конкретним персоналом — чіткий список осіб, що мають root/admin доступ, з регулярним переглядом</li>
+          <li><strong>AC-6(9):</strong> логування привілейованих функцій — всі дії, виконані з підвищеними правами, мають записуватись (CloudTrail, Azure Activity Log)</li>
+          <li><strong>AC-6(10):</strong> заборона виконання привілейованих функцій непривілейованими користувачами — технічне обмеження, а не лише організаційна заборона</li>
         </ul>
 
         <h4>Mapping NIST 800-53 до хмарних сервісів</h4>
@@ -490,23 +490,23 @@
         <h4>Структура CCM v4</h4>
         <p>CCM v4 містить 197 контролів, організованих у 17 доменах. Кожен домен охоплює окрему сферу хмарної безпеки:</p>
         <ul>
-          <li><strong>A&A:</strong> Audit & Assurance</li>
-          <li><strong>AIS:</strong> Application & Interface Security</li>
-          <li><strong>BCR:</strong> Business Continuity & Operational Resilience</li>
-          <li><strong>CCC:</strong> Change Control & Configuration Management</li>
-          <li><strong>CEK:</strong> Cryptography, Encryption & Key Management</li>
-          <li><strong>DCS:</strong> Data Center Security</li>
-          <li><strong>DSP:</strong> Data Security & Privacy</li>
-          <li><strong>GRC:</strong> Governance, Risk & Compliance</li>
-          <li><strong>HRS:</strong> Human Resources Security</li>
-          <li><strong>IAM:</strong> Identity & Access Management</li>
-          <li><strong>IPY:</strong> Interoperability & Portability</li>
-          <li><strong>IVS:</strong> Infrastructure & Virtualization Security</li>
-          <li><strong>LOG:</strong> Logging & Monitoring</li>
-          <li><strong>SEF:</strong> Security Incident Management</li>
-          <li><strong>STA:</strong> Supply Chain, Transparency & Accountability</li>
-          <li><strong>TVM:</strong> Threat & Vulnerability Management</li>
-          <li><strong>UEM:</strong> Universal Endpoint Management</li>
+          <li><strong>A&A — Audit & Assurance:</strong> вимоги до аудиту та підтвердження відповідності — як провайдер демонструє ефективність контролів</li>
+          <li><strong>AIS — Application & Interface Security:</strong> безпека додатків та інтерфейсів — захист API, secure SDLC (Software Development Lifecycle), input validation</li>
+          <li><strong>BCR — Business Continuity & Operational Resilience:</strong> безперервність бізнесу та операційна стійкість — disaster recovery, backup, redundancy</li>
+          <li><strong>CCC — Change Control & Configuration Management:</strong> контроль змін та управління конфігураціями — як відстежуються та затверджуються зміни в інфраструктурі</li>
+          <li><strong>CEK — Cryptography, Encryption & Key Management:</strong> криптографія та управління ключами — алгоритми шифрування, зберігання ключів, ротація, HSM (Hardware Security Module)</li>
+          <li><strong>DCS — Data Center Security:</strong> фізична безпека дата-центрів — доступ, відеоспостереження, захист від стихійних лих</li>
+          <li><strong>DSP — Data Security & Privacy:</strong> безпека та конфіденційність даних — класифікація, шифрування, retention, disposal, захист PII</li>
+          <li><strong>GRC — Governance, Risk & Compliance:</strong> управління, ризики та відповідність — політики, процедури, risk management, regulatory compliance</li>
+          <li><strong>HRS — Human Resources Security:</strong> безпека персоналу — background checks, awareness training, offboarding procedures (відкликання доступу при звільненні)</li>
+          <li><strong>IAM — Identity & Access Management:</strong> управління ідентифікацією та доступом — автентифікація, авторизація, RBAC, MFA, privileged access</li>
+          <li><strong>IPY — Interoperability & Portability:</strong> сумісність та портативність — можливість міграції даних та workloads між провайдерами, стандартні формати, API</li>
+          <li><strong>IVS — Infrastructure & Virtualization Security:</strong> безпека інфраструктури та віртуалізації — ізоляція tenants, hardening гіпервізорів, мережева безпека</li>
+          <li><strong>LOG — Logging & Monitoring:</strong> логування та моніторинг — збір, зберігання та аналіз логів, alerting, SIEM інтеграція</li>
+          <li><strong>SEF — Security Incident Management:</strong> управління інцидентами безпеки — incident response plan, notification procedures, forensics</li>
+          <li><strong>STA — Supply Chain, Transparency & Accountability:</strong> ланцюг постачання та прозорість — оцінка субпідрядників, розкриття sub-processors, third-party risk management</li>
+          <li><strong>TVM — Threat & Vulnerability Management:</strong> управління загрозами та вразливостями — vulnerability scanning, penetration testing, patch management, threat intelligence</li>
+          <li><strong>UEM — Universal Endpoint Management:</strong> управління кінцевими пристроями — BYOD (Bring Your Own Device) політики, MDM (Mobile Device Management), endpoint protection</li>
         </ul>
 
         <h4>CSA STAR Program</h4>
@@ -636,39 +636,39 @@
         <h4>Capital One (2019) — $80M штраф</h4>
         <p><strong>Що сталося:</strong></p>
         <ul>
-          <li>Колишній співробітник AWS експлуатував SSRF вразливість</li>
-          <li>Отримав доступ до 106 млн записів клієнтів</li>
-          <li>Використав misconfigured WAF з overly permissive IAM role</li>
+          <li>Колишня співробітниця AWS експлуатувала <strong>SSRF (Server-Side Request Forgery)</strong> вразливість — тип атаки, при якій зловмисник змушує сервер робити запити до внутрішніх ресурсів, до яких він не повинен мати доступу</li>
+          <li>Отримала доступ до 106 млн записів клієнтів (імена, адреси, кредитні рейтинги, номери соціального страхування)</li>
+          <li>Використала неправильно сконфігурований <strong>WAF (Web Application Firewall)</strong> — міжмережевий екран для веб-додатків, який мав надмірно широку IAM role (роль з надлишковими правами доступу)</li>
         </ul>
         <p><strong>Порушені контролі:</strong></p>
         <ul>
-          <li><strong>AC-6 Least Privilege:</strong> WAF мав доступ до всіх S3 buckets</li>
-          <li><strong>CM-2 Baseline Configuration:</strong> IMDS v1 замість v2</li>
-          <li><strong>AU-6 Audit Review:</strong> аномальна активність не була виявлена</li>
+          <li><strong>AC-6 Least Privilege:</strong> WAF мав доступ до всіх S3 buckets замість лише тих, що необхідні для роботи</li>
+          <li><strong>CM-2 Baseline Configuration:</strong> використовувався <strong>IMDS v1 (Instance Metadata Service)</strong> — сервіс метаданих EC2-інстансів, перша версія якого вразлива до SSRF (v2 вимагає токен і захищена від цієї атаки)</li>
+          <li><strong>AU-6 Audit Review:</strong> аномальна активність (масове завантаження даних з S3) не була виявлена та розслідувана вчасно</li>
         </ul>
-        <p><strong>Наслідки:</strong> $80M штраф OCC, $190M class action settlement, репутаційні втрати</p>
+        <p><strong>Наслідки:</strong> $80M штраф від <strong>OCC (Office of the Comptroller of the Currency)</strong> — регулятора банківської системи США, $190M class action settlement (колективний позов), значні репутаційні втрати</p>
 
         <h4>Marriott (2018) — €20.4M GDPR штраф</h4>
         <p><strong>Що сталося:</strong></p>
         <ul>
-          <li>Breach системи Starwood (придбана Marriott у 2016)</li>
-          <li>383 млн записів гостей скомпрометовано</li>
-          <li>Зловмисники мали доступ з 2014 року — 4 роки непомітно!</li>
+          <li>Breach (витік даних) системи бронювання Starwood, яку Marriott придбала у 2016 році в ході <strong>M&A (Mergers & Acquisitions — злиття та поглинання)</strong></li>
+          <li>383 млн записів гостей скомпрометовано — імена, адреси, паспортні дані, номери кредитних карток</li>
+          <li>Зловмисники мали доступ з 2014 року — 4 роки непомітно! Marriott виявила breach лише у 2018, через 2 роки після придбання Starwood</li>
         </ul>
         <p><strong>Порушені контролі:</strong></p>
         <ul>
-          <li><strong>RA-3 Risk Assessment:</strong> недостатній due diligence при M&A</li>
-          <li><strong>SI-4 System Monitoring:</strong> відсутність detection capabilities</li>
-          <li><strong>IR-4 Incident Handling:</strong> 4 роки без виявлення</li>
+          <li><strong>RA-3 Risk Assessment:</strong> недостатній <strong>due diligence (належна перевірка)</strong> безпеки Starwood при M&A — Marriott не провела повний security assessment придбаної компанії перед інтеграцією систем</li>
+          <li><strong>SI-4 System Monitoring:</strong> відсутність detection capabilities — системи моніторингу не виявили присутність зловмисників протягом років</li>
+          <li><strong>IR-4 Incident Handling:</strong> 4 роки без виявлення свідчать про повну відсутність ефективного incident detection процесу</li>
         </ul>
         <p><strong>GDPR порушення:</strong> Art. 5(1)(f) — integrity and confidentiality, Art. 32 — security of processing</p>
 
         <h4>Equifax (2017) — $700M settlement</h4>
-        <p><strong>Що сталося:</strong></p>
+        <p><strong>Що сталося:</strong> Equifax — одне з трьох найбільших кредитних бюро США, що зберігає фінансову інформацію практично на кожного дорослого американця.</p>
         <ul>
-          <li>Apache Struts vulnerability (CVE-2017-5638) не пропатчена 2 місяці</li>
-          <li>147 млн записів американців</li>
-          <li>SSN, дати народження, адреси</li>
+          <li>Вразливість у Apache Struts (популярний Java web framework) — <strong>CVE-2017-5638</strong> (ідентифікатор у базі Common Vulnerabilities and Exposures) — не була пропатчена протягом 2 місяців після випуску патча</li>
+          <li>147 млн записів американців скомпрометовано — це майже половина дорослого населення США</li>
+          <li>Викрадені дані включали: <strong>SSN (Social Security Number)</strong> — номер соціального страхування (найцінніший ідентифікатор у США, що використовується для кредитних перевірок, податків, відкриття рахунків), дати народження, адреси, номери водійських посвідчень</li>
         </ul>
         <p><strong>Порушені контролі:</strong></p>
         <ul>
@@ -680,15 +680,15 @@
         <h4>British Airways (2018) — £20M GDPR штраф</h4>
         <p><strong>Що сталося:</strong></p>
         <ul>
-          <li>Magecart attack — malicious JavaScript на сайті</li>
-          <li>400,000+ клієнтів, платіжні дані</li>
-          <li>Скрипт перенаправляв дані на сервер атакувальників</li>
+          <li><strong>Magecart</strong> attack — назва групи кіберзлочинців (та типу атаки), що спеціалізується на крадіжці платіжних даних через впровадження зловмисного JavaScript-коду на сайти електронної комерції (digital skimming)</li>
+          <li>Понад 400,000 клієнтів постраждали — викрадені імена, адреси, номери кредитних карток, CVV-коди</li>
+          <li>Зловмисний скрипт (всього 22 рядки коду) був впроваджений у сторінку оплати та перенаправляв копію всіх введених платіжних даних на сервер атакувальників у реальному часі</li>
         </ul>
-        <p><strong>Уроки:</strong></p>
+        <p><strong>Уроки для хмарної безпеки:</strong></p>
         <ul>
-          <li>Supply chain security для JavaScript бібліотек</li>
-          <li>Content Security Policy (CSP) headers</li>
-          <li>Subresource Integrity (SRI) для external scripts</li>
+          <li><strong>Supply chain security</strong> для JavaScript бібліотек — перевірка цілісності зовнішніх скриптів, що завантажуються на сторінку</li>
+          <li><strong>CSP (Content Security Policy)</strong> headers — HTTP-заголовок, що обмежує, з яких джерел браузер може завантажувати скрипти. Правильно налаштований CSP заблокував би зловмисний скрипт</li>
+          <li><strong>SRI (Subresource Integrity)</strong> — механізм, що дозволяє браузеру перевірити, чи зовнішній ресурс (JavaScript, CSS) не був модифікований, порівнюючи його hash із очікуваним значенням</li>
         </ul>
 
         <h3>Процес управління ризиками</h3>
@@ -759,10 +759,11 @@
         </div>
 
         <h4>1. Ідентифікація ризиків</h4>
+        <p>Перший і найважливіший крок — зрозуміти, що саме потрібно захищати і від чого:</p>
         <ul>
-          <li>Інвентаризація активів (дані, системи, сервіси)</li>
-          <li>Ідентифікація загроз (CSA Top Threats, ENISA)</li>
-          <li>Оцінка вразливостей</li>
+          <li><strong>Інвентаризація активів (Asset Inventory):</strong> створення повного переліку всіх активів — дані (бази клієнтів, фінансові записи, інтелектуальна власність), системи (сервери, бази даних, API), сервіси (хмарні підписки, SaaS-додатки). У хмарі це ускладнюється динамічністю: ресурси з'являються і зникають автоматично через auto-scaling</li>
+          <li><strong>Ідентифікація загроз (Threat Identification):</strong> визначення потенційних джерел загроз. Використовуються реєстри: CSA Top Threats (специфічно для хмари), <strong>ENISA (European Union Agency for Cybersecurity)</strong> Threat Landscape (європейська перспектива), MITRE ATT&CK Cloud Matrix (тактики та техніки атакуючих у хмарних середовищах)</li>
+          <li><strong>Оцінка вразливостей (Vulnerability Assessment):</strong> пошук слабких місць — vulnerability scanning (автоматизований пошук відомих CVE), configuration review (перевірка конфігурацій на відповідність CIS Benchmarks), code review (аналіз коду на вразливості)</li>
         </ul>
 
         <h4>2. Аналіз ризиків</h4>
@@ -778,40 +779,43 @@
           </li>
         </ul>
 
-        <h4>3. Оцінка ризиків</h4>
+        <h4>3. Оцінка ризиків (Risk Evaluation)</h4>
+        <p>На цьому етапі результати аналізу порівнюються з бізнес-контекстом організації для прийняття рішень:</p>
         <ul>
-          <li>Порівняння з risk appetite організації</li>
-          <li>Пріоритезація ризиків</li>
-          <li>Визначення прийнятного рівня</li>
+          <li><strong>Порівняння з risk appetite:</strong> risk appetite (апетит до ризику) — це рівень ризику, який організація готова прийняти, визначений керівництвом. Наприклад, стартап може мати високий risk appetite (швидкість важливіша за безпеку), а банк — дуже низький</li>
+          <li><strong>Пріоритезація ризиків:</strong> ранжування за комбінацією ймовірності та впливу. Risk matrix (матриця ризиків) — візуальний інструмент, де по осях розміщуються likelihood та impact, а кожен ризик наноситься як точка. Ризики у правому верхньому куті (high likelihood + high impact) потребують негайної уваги</li>
+          <li><strong>Визначення прийнятного рівня:</strong> risk tolerance (толерантність до ризику) — конкретна межа, нижче якої ризик вважається прийнятним. Наприклад: "ALE менше $50K — прийнятний, $50K-$500K — потребує мітигації, понад $500K — неприйнятний"</li>
         </ul>
 
-        <h4>4. Обробка ризиків</h4>
+        <h4>4. Обробка ризиків (Risk Treatment)</h4>
+        <p>Для кожного ризику, що перевищує прийнятний рівень, обирається стратегія обробки. Вибір стратегії залежить від співвідношення вартості контролю та потенційних збитків:</p>
         <ul>
-          <li><strong>Avoid (Уникнення):</strong> не робити те, що створює ризик</li>
-          <li><strong>Mitigate (Зменшення):</strong> впровадити контролі</li>
-          <li><strong>Transfer (Передача):</strong> страхування, контрактні зобов'язання</li>
-          <li><strong>Accept (Прийняття):</strong> свідоме прийняття ризику</li>
+          <li><strong>Avoid (Уникнення):</strong> повна відмова від діяльності, що генерує ризик. Приклад у хмарі: не зберігати критичні дані (military secrets, ядерні коди) у публічній хмарі взагалі</li>
+          <li><strong>Mitigate (Зменшення):</strong> впровадити контролі для зниження ймовірності або впливу. Найпоширеніша стратегія. Приклад: увімкнути шифрування для захисту від data breach, впровадити MFA для захисту від credential theft</li>
+          <li><strong>Transfer (Передача):</strong> передати фінансові наслідки ризику третій стороні. Приклад: cyber insurance (кіберстрахування) — страхова компанія покриє витрати на incident response та юридичні витрати. SLA з компенсаціями — інший варіант, хоча суми зазвичай мізерні</li>
+          <li><strong>Accept (Прийняття):</strong> свідоме, задокументоване рішення прийняти ризик без додаткових заходів. Валідно для ризиків з ALE нижче вартості мітигації. Ключове: це має бути формальне рішення, підписане risk owner (відповідальною особою), а не просто ігнорування</li>
         </ul>
 
-        <h4>5. Моніторинг та перегляд</h4>
+        <h4>5. Моніторинг та перегляд (Monitor & Review)</h4>
+        <p>Управління ризиками — це не одноразова активність, а безперервний процес. Хмарне середовище змінюється постійно, і ризики змінюються разом з ним:</p>
         <ul>
-          <li>Регулярний перегляд ризиків</li>
-          <li>Оновлення при змінах середовища</li>
-          <li>KRI (Key Risk Indicators) моніторинг</li>
+          <li><strong>Регулярний перегляд ризиків:</strong> щоквартально або при значних змінах (нові сервіси, нові регуляції, зміна провайдера, інцидент безпеки). Risk register (реєстр ризиків) — живий документ, що постійно оновлюється</li>
+          <li><strong>Оновлення при змінах середовища:</strong> додавання нового хмарного сервісу, міграція workload, зміна compliance-вимог, вихід на новий ринок — все це trigger для переоцінки ризиків</li>
+          <li><strong>KRI (Key Risk Indicators) моніторинг:</strong> автоматизовані метрики, що сигналізують про зміну рівня ризику. Наприклад: кількість unpatched critical vulnerabilities, відсоток ресурсів без шифрування, кількість failed login attempts, кількість public-facing storage buckets. Перевищення порогу KRI — trigger для дій</li>
         </ul>
 
         <h3>Фреймворки оцінки ризиків</h3>
 
         <h4>NIST RMF (Risk Management Framework)</h4>
-        <p>NIST SP 800-37 визначає 7-кроковий процес:</p>
+        <p><strong>NIST RMF</strong>, визначений у документі <strong>NIST SP 800-37 Rev. 2</strong>, — це структурований 7-кроковий процес інтеграції безпеки та управління ризиками у життєвий цикл інформаційних систем. RMF є обов'язковим для всіх федеральних інформаційних систем США та широко використовується у приватному секторі:</p>
         <ol>
-          <li><strong>Prepare:</strong> підготовка організації</li>
-          <li><strong>Categorize:</strong> категоризація системи за впливом</li>
-          <li><strong>Select:</strong> вибір базових контролів</li>
-          <li><strong>Implement:</strong> впровадження контролів</li>
-          <li><strong>Assess:</strong> оцінка ефективності</li>
-          <li><strong>Authorize:</strong> авторизація до роботи</li>
-          <li><strong>Monitor:</strong> безперервний моніторинг</li>
+          <li><strong>Prepare (Підготовка):</strong> підготовка організації до управління ризиками — визначення ролей (risk executive, system owner, authorizing official), встановлення risk management strategy, ідентифікація критичних бізнес-процесів</li>
+          <li><strong>Categorize (Категоризація):</strong> категоризація інформаційної системи за рівнем впливу (Low, Moderate, High) згідно з <strong>FIPS 199</strong> (Federal Information Processing Standard). Рівень визначається за трьома критеріями: confidentiality, integrity, availability. Цей крок визначає, скільки контролів знадобиться</li>
+          <li><strong>Select (Вибір):</strong> вибір базового набору контролів з каталогу NIST SP 800-53, відповідного до категорії системи. Базові набори (baselines) визначені у SP 800-53B. Організація може додати або виключити контролі на основі специфічних ризиків (tailoring)</li>
+          <li><strong>Implement (Впровадження):</strong> практична імплементація обраних контролів та документування того, як саме кожен контроль впроваджений у конкретній системі</li>
+          <li><strong>Assess (Оцінка):</strong> незалежна оцінка того, чи контролі впроваджені коректно, працюють як очікується та дають бажаний результат. Проводиться assessor'ом (оцінювачем)</li>
+          <li><strong>Authorize (Авторизація):</strong> <strong>AO (Authorizing Official)</strong> — уповноважена особа приймає рішення на основі assessment results: чи прийнятний залишковий ризик (residual risk) для початку або продовження експлуатації системи. Результат — ATO (Authorization to Operate) або відмова</li>
+          <li><strong>Monitor (Моніторинг):</strong> безперервний моніторинг контролів, середовища та ризиків. Включає ongoing assessments, configuration management, incident response та звітування AO про зміни в ризиковому профілі</li>
         </ol>
 
         <h4>FAIR (Factor Analysis of Information Risk)</h4>
@@ -928,11 +932,12 @@
         </ul>
 
         <h4>CSA Cloud Risk Assessment</h4>
-        <p>CSA пропонує специфічні інструменти:</p>
+        <p>CSA пропонує екосистему інструментів, спеціально розроблених для оцінки ризиків у хмарних середовищах. Ці інструменти взаємопов'язані та доповнюють один одного:</p>
         <ul>
-          <li><strong>CAIQ:</strong> анкета для оцінки провайдера</li>
-          <li><strong>CCM:</strong> контролі для mapping</li>
-          <li><strong>Top Threats:</strong> топ загроз хмарних обчислень</li>
+          <li><strong>CAIQ (Consensus Assessments Initiative Questionnaire):</strong> стандартизована анкета з понад 260 питань типу "так/ні" для оцінки безпеки хмарного провайдера. Питання охоплюють усі 17 доменів CCM. Використовується при виборі провайдера: ви надсилаєте CAIQ потенційному провайдеру, він заповнює, ви порівнюєте відповіді кількох провайдерів. Також є частиною STAR Level 1 (Self-Assessment)</li>
+          <li><strong>CCM (Cloud Controls Matrix):</strong> матриця контролів для mapping — дозволяє відобразити ваші compliance-вимоги (ISO, NIST, PCI DSS) на конкретні хмарні контролі та перевірити, чи провайдер їх впровадив</li>
+          <li><strong>Top Threats:</strong> регулярно оновлюваний звіт про топ загроз хмарних обчислень (детально розглянутий нижче), що допомагає пріоритезувати ризики на основі актуальних даних від індустрії</li>
+          <li><strong>Cloud Controls Matrix + CAIQ mapping:</strong> кожне питання CAIQ прив'язане до конкретного контролю CCM, що дозволяє системно оцінити покриття: якщо провайдер відповів "ні" на питання, пов'язане з критичним для вас контролем — це червоний прапорець</li>
         </ul>
 
         <h3>CSA Top Threats 2024</h3>
@@ -968,7 +973,7 @@
         <h3>Ключові метрики SLA</h3>
 
         <h4>Availability (Доступність)</h4>
-        <p>Найпоширеніша метрика, зазвичай виражається як відсоток часу роботи:</p>
+        <p>Найпоширеніша метрика SLA, зазвичай виражається як відсоток часу, протягом якого сервіс доступний та функціонує коректно. У індустрії прийнято вимірювати availability у "дев'ятках" (nines) — кількості цифр 9 у відсотку доступності. Кожна додаткова "дев'ятка" означає десятикратне зменшення допустимого downtime, але й значне зростання вартості інфраструктури (потрібна більша надлишковість — redundancy). Формула розрахунку: <strong>Availability = (Total time - Downtime) / Total time × 100%</strong>.</p>
         <table>
           <tr>
             <th>SLA</th>
@@ -1014,27 +1019,28 @@
         </ul>
 
         <h3>SLA великих провайдерів</h3>
+        <p>Усі три hyperscalers (AWS, Azure, GCP) публікують свої SLA відкрито. Важливо розуміти: availability SLA зазвичай вимагає правильної архітектури з боку клієнта — наприклад, 99.99% для VM доступний лише при розгортанні у кількох <strong>AZ (Availability Zones — зони доступності)</strong> — фізично розділених дата-центрах у межах одного регіону. Одна VM в одній AZ матиме значно нижчий SLA. Також зверніть увагу на різницю між <strong>availability (доступність)</strong> та <strong>durability (довговічність)</strong> — для storage сервісів durability означає ймовірність того, що дані не будуть втрачені.</p>
 
-        <h4>AWS</h4>
+        <h4>AWS (Amazon Web Services)</h4>
         <ul>
-          <li><strong>EC2:</strong> 99.99% для Multi-AZ</li>
-          <li><strong>S3:</strong> 99.9% availability, 99.999999999% (11 nines) durability</li>
-          <li><strong>RDS Multi-AZ:</strong> 99.95%</li>
-          <li><strong>Компенсація:</strong> service credits (10-30% залежно від downtime)</li>
+          <li><strong>EC2 (Elastic Compute Cloud — віртуальні сервери):</strong> 99.99% для Multi-AZ deployment (розгортання у кількох зонах доступності), 99.5% для single instance</li>
+          <li><strong>S3 (Simple Storage Service — об'єктне сховище):</strong> 99.9% availability (доступність), 99.999999999% (11 nines) durability (довговічність) — це означає, що з 10 мільйонів об'єктів ви можете втратити лише один за 10,000 років</li>
+          <li><strong>RDS (Relational Database Service — керовані бази даних) Multi-AZ:</strong> 99.95% — нижчий за EC2, оскільки бази даних мають складніші механізми failover</li>
+          <li><strong>Компенсація:</strong> service credits — 10% при availability нижче SLA, 25% при &lt;99%, 100% при &lt;95%. Клієнт повинен самостійно подати claim (заявку) протягом 30 днів</li>
         </ul>
 
-        <h4>Azure</h4>
+        <h4>Azure (Microsoft)</h4>
         <ul>
-          <li><strong>Virtual Machines:</strong> 99.9% (single VM), 99.95% (Availability Set), 99.99% (Availability Zones)</li>
-          <li><strong>Azure SQL:</strong> 99.99%</li>
-          <li><strong>Компенсація:</strong> service credits до 100%</li>
+          <li><strong>Virtual Machines:</strong> 99.9% (single VM з Premium SSD), 99.95% (Availability Set — група VM у різних fault/update domains), 99.99% (Availability Zones — різні фізичні дата-центри)</li>
+          <li><strong>Azure SQL Database:</strong> 99.99% — один з найвищих SLA серед керованих баз даних</li>
+          <li><strong>Компенсація:</strong> service credits — 10% при availability 99-99.99%, 25% при &lt;99%, до 100% при &lt;95%</li>
         </ul>
 
-        <h4>Google Cloud</h4>
+        <h4>Google Cloud Platform (GCP)</h4>
         <ul>
-          <li><strong>Compute Engine:</strong> 99.99% (multi-zone)</li>
-          <li><strong>Cloud Storage:</strong> 99.95% (Standard), 99.9% (Nearline)</li>
-          <li><strong>Компенсація:</strong> financial credits</li>
+          <li><strong>Compute Engine (віртуальні машини):</strong> 99.99% для multi-zone instances, 99.5% для single instance</li>
+          <li><strong>Cloud Storage:</strong> 99.95% (Standard — для часто доступних даних), 99.9% (Nearline — для даних з доступом раз на місяць), 99.0% (Coldline — для архівних даних)</li>
+          <li><strong>Компенсація:</strong> financial credits аналогічно до AWS та Azure, з прогресивною шкалою залежно від рівня порушення SLA</li>
         </ul>
 
         <h3>Безпекові аспекти в контрактах</h3>
@@ -1979,6 +1985,30 @@ deny[msg] {
           <li><strong>SSRF</strong> — Server-Side Request Forgery — атака, при якій зловмисник змушує сервер робити запити до внутрішніх ресурсів</li>
           <li><strong>CMK</strong> — Customer-Managed Keys — ключі шифрування, якими керує клієнт (не провайдер)</li>
           <li><strong>3PAO</strong> — Third Party Assessment Organization — незалежна організація для проведення оцінки FedRAMP</li>
+          <li><strong>WAF</strong> — Web Application Firewall — міжмережевий екран для веб-додатків, що фільтрує HTTP-трафік</li>
+          <li><strong>IMDS</strong> — Instance Metadata Service — сервіс метаданих EC2-інстансів AWS (v2 захищений від SSRF)</li>
+          <li><strong>HSM</strong> — Hardware Security Module — апаратний модуль для безпечного зберігання криптографічних ключів</li>
+          <li><strong>CSP</strong> — Content Security Policy — HTTP-заголовок, що обмежує джерела завантаження ресурсів на веб-сторінку</li>
+          <li><strong>SRI</strong> — Subresource Integrity — механізм перевірки цілісності зовнішніх ресурсів (скриптів, стилів) через hash</li>
+          <li><strong>AZ</strong> — Availability Zone — зона доступності, фізично відокремлений дата-центр у межах хмарного регіону</li>
+          <li><strong>VPC</strong> — Virtual Private Cloud — ізольована віртуальна мережа у хмарі</li>
+          <li><strong>NSG</strong> — Network Security Group — група мережевої безпеки в Azure (аналог Security Groups в AWS)</li>
+          <li><strong>SDLC</strong> — Software Development Lifecycle — життєвий цикл розробки програмного забезпечення</li>
+          <li><strong>MDM</strong> — Mobile Device Management — управління мобільними пристроями</li>
+          <li><strong>BYOD</strong> — Bring Your Own Device — політика використання особистих пристроїв для роботи</li>
+        </ul>
+
+        <h4>Бізнес та юридичні терміни</h4>
+        <ul>
+          <li><strong>M&A</strong> — Mergers & Acquisitions — злиття та поглинання компаній</li>
+          <li><strong>Due diligence</strong> — належна перевірка — комплексна оцінка організації перед угодою (M&A, вибір провайдера)</li>
+          <li><strong>OCC</strong> — Office of the Comptroller of the Currency — регулятор банківської системи США</li>
+          <li><strong>HHS</strong> — Department of Health and Human Services — Міністерство охорони здоров'я та соціальних служб США</li>
+          <li><strong>NDA</strong> — Non-Disclosure Agreement — угода про нерозголошення конфіденційної інформації</li>
+          <li><strong>RCA</strong> — Root Cause Analysis — аналіз кореневих причин інциденту</li>
+          <li><strong>ATO</strong> — Authorization to Operate — дозвіл на експлуатацію інформаційної системи (результат NIST RMF)</li>
+          <li><strong>FIPS</strong> — Federal Information Processing Standards — федеральні стандарти обробки інформації США</li>
+          <li><strong>SSN</strong> — Social Security Number — номер соціального страхування (найцінніший ідентифікатор у США)</li>
         </ul>
 
         <h4>Автентифікація та доступ</h4>
