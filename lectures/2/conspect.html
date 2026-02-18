@@ -147,7 +147,7 @@
             </tr>
             <tr>
               <td><strong>Кількість контролів</strong></td>
-              <td>~114 (Annex A)</td>
+              <td>~93 (Annex A, v2022)</td>
               <td>~1000+ (SP 800-53)</td>
               <td>197 (CCM v4)</td>
             </tr>
@@ -301,7 +301,7 @@
         <ul>
           <li><strong>Identify (Ідентифікація):</strong> розуміння бізнес-контексту, активів, ризиків та governance. Включає asset management (інвентаризація всіх ресурсів), business environment (розуміння критичних процесів), governance (політики та процедури), risk assessment (оцінка ризиків) та risk management strategy</li>
           <li><strong>Protect (Захист):</strong> впровадження safeguards (захисних заходів) для забезпечення надання критичних сервісів. Включає access control (управління доступом), awareness training (навчання персоналу), data security (захист даних), information protection processes, maintenance та protective technology</li>
-          <li><strong>Detect (Виявлення):</strong> своєчасне виявлення кіберінцидентів. Включає anomalies and events detection (виявлення аномалій), continuous security monitoring (безперервний моніторинг) та detection processes (процеси виявлення — SIEM, IDS/IPS)</li>
+          <li><strong>Detect (Виявлення):</strong> своєчасне виявлення кіберінцидентів. Включає anomalies and events detection (виявлення аномалій), continuous security monitoring (безперервний моніторинг) та detection processes — використання інструментів, таких як SIEM (Security Information and Event Management — система кореляції безпекових подій), <strong>IDS (Intrusion Detection System — система виявлення вторгнень)</strong> та <strong>IPS (Intrusion Prevention System — система запобігання вторгненням)</strong></li>
           <li><strong>Respond (Реагування):</strong> вжиття заходів при виявленні інциденту. Включає response planning (план реагування), communications (комунікації з зацікавленими сторонами), analysis (аналіз інциденту), mitigation (зменшення наслідків) та improvements (покращення на основі досвіду)</li>
           <li><strong>Recover (Відновлення):</strong> повернення до нормальної роботи після інциденту. Включає recovery planning (план відновлення), improvements (вдосконалення на основі lessons learned) та communications (інформування зацікавлених сторін про хід відновлення)</li>
         </ul>
@@ -433,6 +433,7 @@
         </ul>
 
         <h4>Mapping NIST 800-53 до хмарних сервісів</h4>
+        <p>Одна з головних переваг NIST SP 800-53 — можливість чіткого mapping'у (відображення) абстрактних контролів на конкретні хмарні сервіси. Нижче показано, як основні контролі реалізуються у кожного з трьох великих провайдерів:</p>
         <table>
           <thead>
             <tr>
@@ -566,7 +567,7 @@
 
         <p>Розуміння ризику починається з чіткого розмежування ключових термінів — їх часто плутають навіть досвідчені фахівці:</p>
         <ul>
-          <li><strong>Загроза (Threat):</strong> потенційна причина небажаного інциденту. Загрози можуть бути зовнішніми (хакери, стихійні лиха, конкуренти) та внутрішніми (недбалі співробітники, зловмисні інсайдери). У хмарному контексті загрози включають: misconfiguration, credential theft, DDoS-атаки, insider threats з боку провайдера</li>
+          <li><strong>Загроза (Threat):</strong> потенційна причина небажаного інциденту. Загрози можуть бути зовнішніми (хакери, стихійні лиха, конкуренти) та внутрішніми (недбалі співробітники, зловмисні інсайдери). У хмарному контексті загрози включають: misconfiguration (помилки конфігурації), credential theft (крадіжка облікових даних), DDoS-атаки (Distributed Denial of Service — розподілена атака на відмову в обслуговуванні, коли тисячі машин одночасно перевантажують ціль запитами), insider threats з боку провайдера</li>
           <li><strong>Вразливість (Vulnerability):</strong> слабкість у системі, процесі або конфігурації, яку може експлуатувати загроза. Наприклад: незашифрований S3 bucket, відсутність MFA, непропатчена CVE, надмірні IAM permissions. Вразливість сама по собі не є ризиком — вона стає ризиком лише у поєднанні з загрозою</li>
           <li><strong>Актив (Asset):</strong> будь-що, що має цінність для організації і потребує захисту. У хмарі це: дані клієнтів, бази даних, API ключі, інтелектуальна власність, обчислювальні ресурси, репутація бренду. Класифікація активів (data classification) — перший крок в управлінні ризиками</li>
           <li><strong>Контроль (Control / Safeguard):</strong> технічний, організаційний або фізичний захід для зменшення ризику. Контролі бувають превентивні (запобігають інциденту — MFA, encryption), детективні (виявляють інцидент — моніторинг, IDS) та коригувальні (мінімізують наслідки — backup, incident response plan)</li>
@@ -762,7 +763,7 @@
         <p>Перший і найважливіший крок — зрозуміти, що саме потрібно захищати і від чого:</p>
         <ul>
           <li><strong>Інвентаризація активів (Asset Inventory):</strong> створення повного переліку всіх активів — дані (бази клієнтів, фінансові записи, інтелектуальна власність), системи (сервери, бази даних, API), сервіси (хмарні підписки, SaaS-додатки). У хмарі це ускладнюється динамічністю: ресурси з'являються і зникають автоматично через auto-scaling</li>
-          <li><strong>Ідентифікація загроз (Threat Identification):</strong> визначення потенційних джерел загроз. Використовуються реєстри: CSA Top Threats (специфічно для хмари), <strong>ENISA (European Union Agency for Cybersecurity)</strong> Threat Landscape (європейська перспектива), MITRE ATT&CK Cloud Matrix (тактики та техніки атакуючих у хмарних середовищах)</li>
+          <li><strong>Ідентифікація загроз (Threat Identification):</strong> визначення потенційних джерел загроз. Використовуються реєстри: CSA Top Threats (специфічно для хмари), <strong>ENISA (European Union Agency for Cybersecurity — Агентство кібербезпеки Європейського Союзу)</strong> Threat Landscape (європейська перспектива загроз), <strong>MITRE ATT&CK Cloud Matrix</strong> — структурована база знань від некомерційної організації MITRE, що каталогізує тактики (tactics), техніки (techniques) та процедури (procedures) атакуючих у хмарних середовищах. ATT&CK допомагає відповісти на питання "як саме атакують хмару?"</li>
           <li><strong>Оцінка вразливостей (Vulnerability Assessment):</strong> пошук слабких місць — vulnerability scanning (автоматизований пошук відомих CVE), configuration review (перевірка конфігурацій на відповідність CIS Benchmarks), code review (аналіз коду на вразливості)</li>
         </ul>
 
@@ -1437,8 +1438,10 @@
       <section>
         <h2>2.5 Практичні інструменти Compliance</h2>
 
+        <p>Теорія стандартів та фреймворків — це лише половина справи. На практиці організації потребують конкретних інструментів для автоматизації compliance-перевірок. У цьому розділі ми розглянемо нативні інструменти трьох великих хмарних провайдерів (AWS Config, Azure Policy) та open-source рішення (Checkov, OPA), які дозволяють перевіряти відповідність стандартам автоматично — як у реальному часі, так і на етапі розгортання інфраструктури.</p>
+
         <h3>AWS Config Rules</h3>
-        <p>AWS Config дозволяє автоматично перевіряти compliance ресурсів:</p>
+        <p><strong>AWS Config</strong> — сервіс AWS для відстеження конфігурацій ресурсів та автоматичної перевірки їх відповідності заданим правилам (rules). Config записує кожну зміну конфігурації кожного ресурсу (EC2 instances, S3 buckets, Security Groups тощо) та оцінює їх проти визначених compliance rules. Якщо ресурс не відповідає правилу — він позначається як <strong>NON_COMPLIANT</strong>:</p>
 
         <h4>Приклад: Перевірка шифрування S3</h4>
         <pre><code># AWS Config Rule для перевірки шифрування S3
@@ -1528,7 +1531,7 @@ def lambda_handler(event, context):
         </table>
 
         <h3>Azure Policy</h3>
-        <p>Azure Policy забезпечує governance та compliance:</p>
+        <p><strong>Azure Policy</strong> — сервіс Microsoft Azure для governance (управління) та compliance. На відміну від AWS Config, який переважно моніторить та звітує, Azure Policy може активно <strong>запобігати</strong> створенню ресурсів, що порушують політику (effect: "deny"), або автоматично виправляти конфігурації (effect: "deployIfNotExists"). Політики можна групувати у <strong>initiatives (ініціативи)</strong> — набори пов'язаних політик для конкретного compliance framework:</p>
 
         <h4>Приклад: Deny public IP on VMs</h4>
         <pre><code>{
@@ -1799,8 +1802,8 @@ deny[msg] {
               <td>Мінімум 99.9%, краще 99.99%</td>
             </tr>
             <tr>
-              <td>DR</td>
-              <td>Disaster recovery можливості?</td>
+              <td>DR (Disaster Recovery)</td>
+              <td>Можливості відновлення після катастроф?</td>
               <td>Multi-region, documented RTO/RPO</td>
             </tr>
             <tr>
@@ -2021,6 +2024,18 @@ deny[msg] {
           <li><strong>IdP</strong> — Identity Provider — провайдер ідентичності (Active Directory, Okta, Azure AD)</li>
           <li><strong>RBAC</strong> — Role-Based Access Control — управління доступом на основі ролей</li>
           <li><strong>FIDO2/WebAuthn</strong> — стандарт безпарольної автентифікації з використанням hardware tokens або біометрії</li>
+        </ul>
+
+        <h4>Загрози та захист</h4>
+        <ul>
+          <li><strong>DDoS</strong> — Distributed Denial of Service — розподілена атака на відмову в обслуговуванні (перевантаження цілі масою запитів)</li>
+          <li><strong>IDS</strong> — Intrusion Detection System — система виявлення вторгнень (пасивно моніторить трафік)</li>
+          <li><strong>IPS</strong> — Intrusion Prevention System — система запобігання вторгненням (активно блокує шкідливий трафік)</li>
+          <li><strong>MITRE ATT&CK</strong> — структурована база знань тактик, технік та процедур (TTP) кіберзловмисників, включаючи Cloud Matrix</li>
+          <li><strong>ENISA</strong> — European Union Agency for Cybersecurity — Агентство кібербезпеки ЄС</li>
+          <li><strong>Magecart</strong> — група кіберзлочинців та тип атаки (digital skimming), спрямований на крадіжку платіжних даних через зловмисний JavaScript</li>
+          <li><strong>DR</strong> — Disaster Recovery — відновлення після катастроф (процес повернення ІТ-систем до роботи після серйозного збою)</li>
+          <li><strong>CISO</strong> — Chief Information Security Officer — головний офіцер з інформаційної безпеки організації</li>
         </ul>
       </section>
 
