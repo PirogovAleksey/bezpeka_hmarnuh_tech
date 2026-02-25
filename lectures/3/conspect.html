@@ -84,7 +84,7 @@
         <p>Zero Trust пропонує радикально інший підхід: <strong>"Never trust, always verify"</strong> — ніколи не довіряй, завжди перевіряй. Незалежно від того, звідки приходить запит — ззовні чи зсередини мережі — кожен запит має бути автентифікований, авторизований та зашифрований. Кожен.</p>
 
         <h3>Чому Zero Trust критично важливий для хмари?</h3>
-        <p>У хмарному середовищі концепція периметра втрачає сенс ще більше, ніж в традиційній інфраструктурі. Ваші ресурси розподілені між кількома хмарними провайдерами, різними регіонами, різними сервісами. Ваші користувачі підключаються з будь-якої точки світу. Ваші workloads можуть автоматично масштабуватися, з'являючись і зникаючи за лічені секунди.</p>
+        <p>У хмарному середовищі концепція периметра втрачає сенс ще більше, ніж в традиційній інфраструктурі. Ваші ресурси розподілені між кількома хмарними провайдерами, різними регіонами, різними сервісами. Ваші користувачі підключаються з будь-якої точки світу. Ваші робочі навантаження можуть автоматично масштабуватися, з'являючись і зникаючи за лічені секунди.</p>
 
         <p>У такому середовищі єдиний спосіб забезпечити безпеку — це перевіряти кожен запит індивідуально, базуючись на контексті: хто запитує, що запитує, звідки, коли, з якого пристрою, і чи відповідає цей запит очікуваній поведінці.</p>
 
@@ -94,7 +94,7 @@
           <li>Пояснити принципи Zero Trust та їх відмінність від традиційної периметрової безпеки</li>
           <li>Описати основні компоненти архітектури Zero Trust (PEP, PDP, Policy Engine)</li>
           <li>Розуміти роль Identity Governance та сучасних методів автентифікації в ZTA</li>
-          <li>Застосовувати принципи мікросегментації для захисту хмарних workloads</li>
+          <li>Застосовувати принципи мікросегментації для захисту хмарних робочих навантажень</li>
           <li>Планувати впровадження Zero Trust у хмарному середовищі</li>
         </ul>
 
@@ -113,7 +113,7 @@
         <ul>
           <li><strong>2013 — Target:</strong> Атакуючі проникли через компрометованого підрядника системи кондиціонування, а потім безперешкодно переміщувалися по внутрішній мережі до платіжних систем. Вкрадено дані 40 мільйонів кредитних карток.</li>
           <li><strong>2014 — Sony Pictures:</strong> Після початкового проникнення атакуючі мали необмежений доступ до всієї внутрішньої мережі протягом місяців.</li>
-          <li><strong>2020 — SolarWinds:</strong> Компрометоване оновлення програмного забезпечення дало атакуючим доступ до внутрішніх мереж тисяч організацій, включаючи урядові агентства США.</li>
+          <li><strong>2020 — SolarWinds:</strong> Компрометоване оновлення програмного забезпечення дало атакуючим доступ до внутрішніх мереж тисяч організацій, зокрема урядові агентства США.</li>
         </ul>
 
         <p>У 2020 році NIST опублікував <strong>SP 800-207 "Zero Trust Architecture"</strong> — офіційний стандарт, який формалізував принципи та компоненти ZTA. Цей документ став основою для впровадження Zero Trust у федеральних агентствах США та був широко прийнятий комерційним сектором.</p>
@@ -147,78 +147,88 @@
         <!-- Diagram: Perimeter vs Zero Trust -->
         <div class="diagram">
           <div class="diagram-title">Периметрова безпека vs Zero Trust Architecture</div>
-          <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="-35 0 770 215" xmlns="http://www.w3.org/2000/svg">
             <!-- Left: Perimeter Security -->
             <text class="diagram-text-bold" x="175" y="25" text-anchor="middle">Периметрова безпека</text>
 
+            <!-- Attacker outside -->
+            <circle fill="#fecaca" stroke="#ef4444" cx="-10" cy="120" r="15"/>
+            <text fill="#ef4444" x="-10" y="150" text-anchor="middle" font-size="8">Зловмисник</text>
+            <!-- Arrow from attacker to firewall -->
+            <line stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" x1="5" y1="120" x2="25" y2="120"/>
+            <polygon fill="#ef4444" points="25,116 32,120 25,124"/>
+
             <!-- Outer perimeter (firewall) -->
-            <rect fill="none" stroke="#ef4444" stroke-width="3" x="30" y="40" width="290" height="160" rx="20"/>
+            <rect fill="none" stroke="#ef4444" stroke-width="3" x="35" y="40" width="280" height="155" rx="20"/>
             <text fill="#ef4444" x="175" y="60" text-anchor="middle" font-size="11">Firewall / DMZ</text>
 
             <!-- Internal network - trusted zone -->
-            <rect fill="#dcfce7" x="50" y="75" width="250" height="110" rx="12"/>
-            <text fill="#166534" x="175" y="95" text-anchor="middle" font-size="10">"Trusted Zone"</text>
+            <rect fill="#dcfce7" x="50" y="70" width="250" height="110" rx="12"/>
+            <text fill="#166534" x="175" y="90" text-anchor="middle" font-size="10">"Trusted Zone"</text>
 
             <!-- Internal resources (no protection between them) -->
-            <rect fill="var(--card)" stroke="var(--card-border)" x="70" y="110" width="60" height="50" rx="6"/>
-            <text class="diagram-text-small" x="100" y="140" text-anchor="middle">Server</text>
+            <rect fill="var(--card)" stroke="var(--card-border)" x="70" y="100" width="60" height="50" rx="6"/>
+            <text class="diagram-text-small" x="100" y="130" text-anchor="middle">Server</text>
 
-            <rect fill="var(--card)" stroke="var(--card-border)" x="145" y="110" width="60" height="50" rx="6"/>
-            <text class="diagram-text-small" x="175" y="140" text-anchor="middle">DB</text>
+            <rect fill="var(--card)" stroke="var(--card-border)" x="145" y="100" width="60" height="50" rx="6"/>
+            <text class="diagram-text-small" x="175" y="130" text-anchor="middle">DB</text>
 
-            <rect fill="var(--card)" stroke="var(--card-border)" x="220" y="110" width="60" height="50" rx="6"/>
-            <text class="diagram-text-small" x="250" y="140" text-anchor="middle">App</text>
+            <rect fill="var(--card)" stroke="var(--card-border)" x="220" y="100" width="60" height="50" rx="6"/>
+            <text class="diagram-text-small" x="250" y="130" text-anchor="middle">App</text>
 
             <!-- Dashed lines showing free movement inside -->
-            <line stroke="var(--text-secondary)" stroke-dasharray="3,3" x1="130" y1="135" x2="145" y2="135"/>
-            <line stroke="var(--text-secondary)" stroke-dasharray="3,3" x1="205" y1="135" x2="220" y2="135"/>
+            <line stroke="var(--text-secondary)" stroke-dasharray="3,3" x1="130" y1="125" x2="145" y2="125"/>
+            <line stroke="var(--text-secondary)" stroke-dasharray="3,3" x1="205" y1="125" x2="220" y2="125"/>
 
-            <text fill="#dc2626" x="175" y="175" text-anchor="middle" font-size="9">Lateral movement можливий</text>
+            <text fill="#dc2626" x="175" y="170" text-anchor="middle" font-size="9">Бічне переміщення можливе</text>
 
-            <!-- Attacker outside trying to get in -->
-            <circle fill="#fecaca" stroke="#ef4444" cx="10" cy="120" r="15"/>
-            <text fill="#ef4444" x="10" y="150" text-anchor="middle" font-size="8">Attacker</text>
+            <!-- VS divider -->
+            <text fill="var(--text-secondary)" x="350" y="120" text-anchor="middle" font-size="18" font-weight="bold">vs</text>
 
             <!-- Right: Zero Trust -->
             <text class="diagram-text-bold" x="525" y="25" text-anchor="middle">Zero Trust Architecture</text>
 
-            <!-- No outer perimeter, individual protection -->
-            <rect fill="var(--bg)" x="380" y="40" width="290" height="160" rx="10"/>
-
-            <!-- Each resource with its own protection -->
-            <g transform="translate(400, 75)">
+            <!-- Each resource with its own policy enforcement -->
+            <g transform="translate(400, 55)">
               <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="75" height="65" rx="8"/>
               <rect fill="var(--card)" stroke="var(--card-border)" x="12" y="25" width="50" height="35" rx="4"/>
               <text class="diagram-text-small" x="37" y="48" text-anchor="middle">Server</text>
               <text fill="#3b82f6" x="37" y="15" text-anchor="middle" font-size="8">Policy</text>
             </g>
 
-            <g transform="translate(487, 75)">
+            <g transform="translate(487, 55)">
               <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="75" height="65" rx="8"/>
               <rect fill="var(--card)" stroke="var(--card-border)" x="12" y="25" width="50" height="35" rx="4"/>
               <text class="diagram-text-small" x="37" y="48" text-anchor="middle">DB</text>
               <text fill="#3b82f6" x="37" y="15" text-anchor="middle" font-size="8">Policy</text>
             </g>
 
-            <g transform="translate(574, 75)">
+            <g transform="translate(574, 55)">
               <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="75" height="65" rx="8"/>
               <rect fill="var(--card)" stroke="var(--card-border)" x="12" y="25" width="50" height="35" rx="4"/>
               <text class="diagram-text-small" x="37" y="48" text-anchor="middle">App</text>
               <text fill="#3b82f6" x="37" y="15" text-anchor="middle" font-size="8">Policy</text>
             </g>
 
-            <!-- Verified connections with locks -->
-            <line stroke="#22c55e" stroke-width="2" x1="475" y1="107" x2="487" y2="107"/>
-            <line stroke="#22c55e" stroke-width="2" x1="562" y1="107" x2="574" y2="107"/>
-
-            <text fill="#16a34a" x="525" y="175" text-anchor="middle" font-size="9">Кожен запит верифікується</text>
+            <!-- Verified connections between resources -->
+            <line stroke="#22c55e" stroke-width="2" x1="475" y1="87" x2="487" y2="87"/>
+            <line stroke="#22c55e" stroke-width="2" x1="562" y1="87" x2="574" y2="87"/>
 
             <!-- Policy Decision Point -->
-            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="440" y="155" width="170" height="35" rx="6"/>
-            <text fill="#b45309" x="525" y="177" text-anchor="middle" font-size="10">Policy Decision Point (PDP)</text>
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="420" y="145" width="210" height="35" rx="6"/>
+            <text fill="#b45309" x="525" y="167" text-anchor="middle" font-size="10">Policy Decision Point (PDP)</text>
 
-            <!-- VS divider -->
-            <text fill="var(--text-secondary)" x="350" y="130" text-anchor="middle" font-size="18" font-weight="bold">vs</text>
+            <!-- Dashed lines from PDP to each resource -->
+            <line stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" x1="437" y1="120" x2="437" y2="145"/>
+            <line stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" x1="524" y1="120" x2="524" y2="145"/>
+            <line stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" x1="611" y1="120" x2="611" y2="145"/>
+
+            <!-- Arrows on PDP lines -->
+            <polygon fill="#f59e0b" points="434,121 437,128 440,121"/>
+            <polygon fill="#f59e0b" points="521,121 524,128 527,121"/>
+            <polygon fill="#f59e0b" points="608,121 611,128 614,121"/>
+
+            <text fill="#16a34a" x="525" y="200" text-anchor="middle" font-size="9">Кожен запит верифікується</text>
           </svg>
           <div class="diagram-caption">Рис. 3.1. Порівняння периметрової моделі безпеки та Zero Trust Architecture</div>
         </div>
@@ -257,7 +267,7 @@
           <tr>
             <td><strong>Шифрування</strong></td>
             <td>На периметрі (VPN)</td>
-            <td>End-to-end для всіх комунікацій</td>
+            <td>Наскрізне шифрування для всіх комунікацій</td>
           </tr>
           <tr>
             <td><strong>Моніторинг</strong></td>
@@ -272,40 +282,36 @@
         <!-- Diagram: Three Pillars of Zero Trust -->
         <div class="diagram">
           <div class="diagram-title">Три стовпи Zero Trust Architecture</div>
-          <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg">
-            <!-- Base platform -->
-            <rect fill="var(--card)" stroke="var(--card-border)" x="50" y="230" width="600" height="40" rx="8"/>
-            <text class="diagram-text-bold" x="350" y="255" text-anchor="middle">Zero Trust Foundation: Continuous Verification</text>
-
+          <svg viewBox="0 0 700 305" xmlns="http://www.w3.org/2000/svg">
             <!-- Pillar 1: Identity -->
-            <g transform="translate(80, 60)">
-              <rect fill="#3b82f6" x="0" y="0" width="160" height="170" rx="10"/>
+            <g transform="translate(80, 40)">
+              <rect fill="#3b82f6" x="0" y="0" width="160" height="195" rx="10"/>
               <text fill="white" x="80" y="30" text-anchor="middle" font-weight="600" font-size="14">IDENTITY</text>
               <text fill="white" x="80" y="50" text-anchor="middle" font-size="11">Ідентичність</text>
               <line stroke="white" opacity="0.3" x1="20" y1="60" x2="140" y2="60"/>
-              <text fill="white" x="80" y="80" text-anchor="middle" font-size="9">MFA / Passwordless</text>
-              <text fill="white" x="80" y="95" text-anchor="middle" font-size="9">SSO / Federation</text>
-              <text fill="white" x="80" y="110" text-anchor="middle" font-size="9">Identity Governance</text>
+              <text fill="white" x="80" y="80" text-anchor="middle" font-size="9">MFA / Без паролів</text>
+              <text fill="white" x="80" y="95" text-anchor="middle" font-size="9">SSO / Федерація</text>
+              <text fill="white" x="80" y="110" text-anchor="middle" font-size="9">Управління доступом</text>
               <text fill="white" x="80" y="125" text-anchor="middle" font-size="9">PAM</text>
-              <text fill="white" x="80" y="140" text-anchor="middle" font-size="9">Service Identity</text>
-              <svg x="55" y="145" width="50" height="30" viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none">
+              <text fill="white" x="80" y="140" text-anchor="middle" font-size="9">Ідентичність сервісів</text>
+              <svg x="55" y="150" width="50" height="35" viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
             </g>
 
             <!-- Pillar 2: Device -->
-            <g transform="translate(270, 60)">
-              <rect fill="#22c55e" x="0" y="0" width="160" height="170" rx="10"/>
+            <g transform="translate(270, 40)">
+              <rect fill="#22c55e" x="0" y="0" width="160" height="195" rx="10"/>
               <text fill="white" x="80" y="30" text-anchor="middle" font-weight="600" font-size="14">DEVICE</text>
               <text fill="white" x="80" y="50" text-anchor="middle" font-size="11">Пристрій</text>
               <line stroke="white" opacity="0.3" x1="20" y1="60" x2="140" y2="60"/>
-              <text fill="white" x="80" y="80" text-anchor="middle" font-size="9">Device Posture</text>
+              <text fill="white" x="80" y="80" text-anchor="middle" font-size="9">Стан пристрою</text>
               <text fill="white" x="80" y="95" text-anchor="middle" font-size="9">MDM / MAM</text>
               <text fill="white" x="80" y="110" text-anchor="middle" font-size="9">EDR / XDR</text>
-              <text fill="white" x="80" y="125" text-anchor="middle" font-size="9">Certificate-based ID</text>
-              <text fill="white" x="80" y="140" text-anchor="middle" font-size="9">Compliance Check</text>
-              <svg x="55" y="145" width="50" height="30" viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none">
+              <text fill="white" x="80" y="125" text-anchor="middle" font-size="9">ID на основі сертифікатів</text>
+              <text fill="white" x="80" y="140" text-anchor="middle" font-size="9">Перевірка відповідності</text>
+              <svg x="55" y="150" width="50" height="35" viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none">
                 <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
                 <line x1="8" y1="21" x2="16" y2="21"/>
                 <line x1="12" y1="17" x2="12" y2="21"/>
@@ -313,25 +319,31 @@
             </g>
 
             <!-- Pillar 3: Network -->
-            <g transform="translate(460, 60)">
-              <rect fill="#f59e0b" x="0" y="0" width="160" height="170" rx="10"/>
+            <g transform="translate(460, 40)">
+              <rect fill="#f59e0b" x="0" y="0" width="160" height="195" rx="10"/>
               <text fill="white" x="80" y="30" text-anchor="middle" font-weight="600" font-size="14">NETWORK</text>
               <text fill="white" x="80" y="50" text-anchor="middle" font-size="11">Мережа</text>
               <line stroke="white" opacity="0.3" x1="20" y1="60" x2="140" y2="60"/>
-              <text fill="white" x="80" y="80" text-anchor="middle" font-size="9">Microsegmentation</text>
+              <text fill="white" x="80" y="80" text-anchor="middle" font-size="9">Мікросегментація</text>
               <text fill="white" x="80" y="95" text-anchor="middle" font-size="9">SDP / ZTNA</text>
-              <text fill="white" x="80" y="110" text-anchor="middle" font-size="9">mTLS Encryption</text>
-              <text fill="white" x="80" y="125" text-anchor="middle" font-size="9">East-West Security</text>
-              <text fill="white" x="80" y="140" text-anchor="middle" font-size="9">Network Access Control</text>
-              <svg x="55" y="145" width="50" height="30" viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none">
+              <text fill="white" x="80" y="110" text-anchor="middle" font-size="9">Шифрування mTLS</text>
+              <text fill="white" x="80" y="125" text-anchor="middle" font-size="9">Безпека E-W трафіку</text>
+              <text fill="white" x="80" y="140" text-anchor="middle" font-size="9">Контроль доступу</text>
+              <svg x="55" y="150" width="50" height="35" viewBox="0 0 24 24" stroke="white" stroke-width="1.5" fill="none">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
             </g>
 
-            <!-- Connecting arrows -->
-            <path d="M240 145 L270 145" stroke="var(--text-secondary)" stroke-width="2" stroke-dasharray="4,4"/>
-            <path d="M430 145 L460 145" stroke="var(--text-secondary)" stroke-width="2" stroke-dasharray="4,4"/>
+            <!-- Connecting arrows between pillars -->
+            <line stroke="var(--text-secondary)" stroke-width="2" stroke-dasharray="4,4" x1="240" y1="137" x2="264" y2="137"/>
+            <polygon fill="var(--text-secondary)" points="264,133 270,137 264,141"/>
+            <line stroke="var(--text-secondary)" stroke-width="2" stroke-dasharray="4,4" x1="430" y1="137" x2="454" y2="137"/>
+            <polygon fill="var(--text-secondary)" points="454,133 460,137 454,141"/>
+
+            <!-- Base platform -->
+            <rect fill="var(--card)" stroke="var(--card-border)" x="50" y="250" width="600" height="42" rx="8"/>
+            <text class="diagram-text-bold" x="350" y="276" text-anchor="middle">Фундамент Zero Trust: безперервна верифікація</text>
           </svg>
           <div class="diagram-caption">Рис. 3.3. Три стовпи Zero Trust: Identity, Device та Network працюють разом для забезпечення безпеки</div>
         </div>
@@ -339,30 +351,215 @@
         <p><strong>1. Identity (Ідентичність)</strong></p>
         <p>Ідентичність — це новий периметр. Замість того, щоб запитувати "звідки приходить цей трафік?", ми запитуємо "хто робить цей запит?". Це включає:</p>
         <ul>
-          <li>Сильну автентифікацію (MFA, passwordless)</li>
+          <li>Сильну автентифікацію (MFA, безпарольну)</li>
           <li>Single Sign-On (SSO)</li>
           <li>Identity Governance (управління життєвим циклом ідентичностей)</li>
           <li>Privileged Access Management (PAM)</li>
-          <li>Service-to-service автентифікацію</li>
+          <li>Автентифікацію між сервісами</li>
         </ul>
 
         <p><strong>2. Device (Пристрої)</strong></p>
         <p>Стан пристрою впливає на рівень довіри. Керований корпоративний пристрій з актуальними патчами отримає більший доступ, ніж особистий телефон з застарілою ОС. Це включає:</p>
         <ul>
-          <li>Device posture assessment (оцінка стану пристрою)</li>
-          <li>Mobile Device Management (MDM)</li>
-          <li>Endpoint Detection and Response (EDR)</li>
-          <li>Certificate-based device identity</li>
+          <li>Оцінка стану пристрою (device posture assessment)</li>
+          <li>Управління мобільними пристроями (MDM)</li>
+          <li>Виявлення та реагування на кінцевих точках (EDR)</li>
+          <li>Ідентичність пристрою на основі сертифікатів</li>
         </ul>
 
         <p><strong>3. Network (Мережа)</strong></p>
-        <p>Мікросегментація замінює плоску внутрішню мережу. Кожен workload ізольований, і трафік між ними контролюється на основі політик. Це включає:</p>
+        <p>Мікросегментація замінює плоску внутрішню мережу. Кожне робоче навантаження ізольоване, і трафік між ними контролюється на основі політик. Це включає:</p>
         <ul>
           <li>Мікросегментацію</li>
-          <li>Software-Defined Perimeter (SDP)</li>
-          <li>Encrypted communications (mTLS)</li>
-          <li>Network access control на основі ідентичності</li>
+          <li>Програмно визначений периметр (SDP)</li>
+          <li>Зашифровані комунікації (mTLS)</li>
+          <li>Контроль мережевого доступу на основі ідентичності</li>
         </ul>
+
+        <h3>Моделі розгортання Zero Trust за NIST SP 800-207</h3>
+        <p>NIST визначає три основні моделі розгортання ZTA. Кожна модель описує, як саме Policy Enforcement Point (PEP) реалізується в інфраструктурі та як суб'єкти отримують доступ до ресурсів. Вибір моделі залежить від типу організації, існуючої інфраструктури та конкретних потреб безпеки.</p>
+
+        <h4>1. Agent/Gateway-Based Model (Модель на основі агента та шлюзу)</h4>
+        <p>У цій моделі на кожному пристрої встановлений програмний агент, який взаємодіє зі шлюзом (gateway), розташованим перед ресурсом. Агент на пристрої суб'єкта ініціює запит на доступ, передаючи інформацію про ідентичність користувача, стан пристрою та контекст. Шлюз виступає як PEP — він перехоплює запит, звертається до Policy Engine за рішенням і, якщо доступ дозволено, встановлює зашифрований канал між агентом та ресурсом.</p>
+        <p><strong>Типові сценарії використання:</strong></p>
+        <ul>
+          <li>Корпоративні середовища з керованими пристроями, де ІТ-відділ може встановити агент на кожному ноутбуці та мобільному пристрої</li>
+          <li>Організації, яким потрібен глибокий контроль над станом пристрою — агент збирає телеметрію (версія ОС, стан антивірусу, шифрування диску) і передає її для прийняття рішень</li>
+          <li>Сценарії з високими вимогами до безпеки — наприклад, доступ до фінансових систем або баз даних з персональними даними</li>
+        </ul>
+        <p><strong>Приклади реалізації:</strong> Zscaler Private Access (ZPA) з Zscaler Client Connector, CrowdStrike Falcon Zero Trust Assessment, Microsoft Defender for Endpoint з Entra ID Conditional Access.</p>
+
+        <h4>2. Enclave-Based Model (Модель на основі анклавів)</h4>
+        <p>У цій моделі PEP (шлюз) розташовується на межі анклаву — групи ресурсів, які логічно об'єднані. Замість захисту кожного окремого ресурсу, gateway захищає вхід до цілого анклаву. Суб'єкт автентифікується на шлюзі анклаву і отримує доступ до ресурсів усередині нього відповідно до своїх привілеїв.</p>
+        <p>Ця модель є компромісом між традиційною периметровою безпекою та повним Zero Trust. Вона особливо корисна для організацій, що мають legacy-системи, які не можуть безпосередньо інтегруватися із сучасними засобами автентифікації.</p>
+        <p><strong>Типові сценарії використання:</strong></p>
+        <ul>
+          <li>Enterprise-середовища з on-premise дата-центрами, де є групи серверів, що обслуговують одну бізнес-функцію (наприклад, ERP-анклав, HR-анклав)</li>
+          <li>Перехідний етап міграції до повного Zero Trust — організація починає з анклавів і поступово переходить до більш гранулярного контролю</li>
+          <li>Регульовані галузі, де існують чіткі вимоги до ізоляції певних типів даних (наприклад, PCI DSS вимагає ізоляції Cardholder Data Environment)</li>
+        </ul>
+        <p><strong>Приклади реалізації:</strong> VMware NSX micro-perimeters, Cisco ACI з EPG (Endpoint Groups), AWS VPC з Transit Gateway та PrivateLink.</p>
+
+        <h4>3. Resource Portal-Based Model (Модель на основі ресурсного порталу)</h4>
+        <p>У цій моделі PEP реалізований як веб-портал (або cloud-based proxy), через який суб'єкти отримують доступ до ресурсів. Агент на пристрої не потрібен — достатньо веб-браузера. Портал автентифікує користувача, перевіряє контекст і проксує трафік до цільового ресурсу.</p>
+        <p>Ця модель найбільш зручна для користувачів, оскільки не вимагає встановлення додаткового програмного забезпечення. Однак вона забезпечує менший контроль над станом пристрою порівняно з агентською моделлю.</p>
+        <p><strong>Типові сценарії використання:</strong></p>
+        <ul>
+          <li>SaaS-додатки та хмарні ресурси, доступ до яких здійснюється через браузер</li>
+          <li>Сценарії BYOD (Bring Your Own Device), де організація не може встановити агент на особисті пристрої працівників</li>
+          <li>Забезпечення доступу для зовнішніх підрядників та партнерів, які використовують власні пристрої</li>
+          <li>Тимчасовий або гостьовий доступ без розгортання додаткового ПЗ</li>
+        </ul>
+        <p><strong>Приклади реалізації:</strong> Google Identity-Aware Proxy (IAP), Cloudflare Access, AWS Verified Access, Azure AD Application Proxy.</p>
+
+        <h4>Порівняння моделей розгортання</h4>
+        <table>
+          <tr>
+            <th>Характеристика</th>
+            <th>Agent/Gateway</th>
+            <th>Enclave-Based</th>
+            <th>Resource Portal</th>
+          </tr>
+          <tr>
+            <td><strong>Як працює</strong></td>
+            <td>Агент на пристрої + шлюз перед ресурсом</td>
+            <td>Шлюз на межі анклаву ресурсів</td>
+            <td>Веб-портал/proxy для доступу</td>
+          </tr>
+          <tr>
+            <td><strong>Потрібен агент</strong></td>
+            <td>Так</td>
+            <td>Зазвичай ні</td>
+            <td>Ні</td>
+          </tr>
+          <tr>
+            <td><strong>Стан пристрою</strong></td>
+            <td>Глибока перевірка</td>
+            <td>Обмежена</td>
+            <td>Мінімальна (на рівні браузера)</td>
+          </tr>
+          <tr>
+            <td><strong>Найкраще для</strong></td>
+            <td>Керовані пристрої, високий рівень безпеки</td>
+            <td>Локальна інфраструктура, застарілі системи, перехідний етап</td>
+            <td>SaaS, BYOD, підрядники</td>
+          </tr>
+          <tr>
+            <td><strong>Складність розгортання</strong></td>
+            <td>Висока (потрібне розгортання агента)</td>
+            <td>Середня</td>
+            <td>Низька</td>
+          </tr>
+          <tr>
+            <td><strong>Приклади</strong></td>
+            <td>Zscaler ZPA, CrowdStrike</td>
+            <td>VMware NSX, Cisco ACI</td>
+            <td>Google IAP, Cloudflare Access</td>
+          </tr>
+        </table>
+
+        <p>На практиці організації часто комбінують кілька моделей: Agent/Gateway для корпоративних пристроїв співробітників, Resource Portal для підрядників і BYOD, та Enclave-Based для legacy-систем у дата-центрі.</p>
+
+        <h3>Trust Algorithm — як Policy Engine обчислює рівень довіри</h3>
+        <p>Центральним елементом будь-якої ZTA є Trust Algorithm (алгоритм довіри) — логіка, за якою Policy Engine приймає рішення про надання або відмову в доступі. NIST SP 800-207 описує два основні підходи до реалізації Trust Algorithm.</p>
+
+        <h4>Вхідні дані для Trust Algorithm</h4>
+        <p>Policy Engine аналізує інформацію з багатьох джерел для прийняття рішення. Ключові категорії вхідних даних:</p>
+        <ul>
+          <li><strong>Access Request (запит на доступ):</strong> що саме запитується — ресурс, тип операції (read/write/execute), протокол, порт. Наприклад, запит GET до /api/reports відрізняється від DELETE до /api/users за рівнем ризику.</li>
+          <li><strong>Subject Database (база суб'єктів):</strong> інформація про користувача або сервіс — роль, посада, відділ, історія доступу, поточний рівень ризику, час останньої автентифікації, метод автентифікації (password vs FIDO2).</li>
+          <li><strong>Asset Database (база активів):</strong> інформація про пристрій суб'єкта — чи зареєстрований він в організації, версія ОС, стан патчів, статус антивірусу, шифрування диску, наявність jailbreak/root. Також інформація про цільовий ресурс — його класифікація, чутливість даних.</li>
+          <li><strong>Resource Policies (політики ресурсу):</strong> набір правил, специфічних для кожного ресурсу. Наприклад: "доступ до фінансових звітів тільки для ролі Finance Manager, з compliant device, у робочі години, з території України".</li>
+          <li><strong>Threat Intelligence (розвідка загроз):</strong> зовнішні та внутрішні індикатори загроз — чи не знаходиться IP-адреса суб'єкта в списках відомих ботнетів, чи немає активних CVE для використовуваного ПЗ, чи не зафіксовано аномалій у поведінці.</li>
+        </ul>
+
+        <h4>Criteria-Based Trust Algorithm (на основі критеріїв)</h4>
+        <p>При цьому підході Policy Engine перевіряє набір чітко визначених критеріїв. Кожен критерій має бінарний результат — пройдено або не пройдено. Доступ надається тільки якщо всі обов'язкові критерії пройдені:</p>
+        <pre>
+# Приклад criteria-based trust algorithm (псевдокод)
+def evaluate_access(request, subject, device, resource):
+    # Критерій 1: Автентифікація
+    if not subject.is_authenticated:
+        return DENY
+
+    # Критерій 2: MFA для чутливих ресурсів
+    if resource.sensitivity >= HIGH and not subject.mfa_completed:
+        return REQUIRE_MFA
+
+    # Критерій 3: Device compliance
+    if device.os_version < MINIMUM_VERSION:
+        return DENY
+    if not device.disk_encrypted:
+        return DENY
+
+    # Критерій 4: Геолокація
+    if subject.country not in resource.allowed_countries:
+        return DENY
+
+    # Критерій 5: Робочі години (для певних ресурсів)
+    if resource.time_restricted and not is_business_hours():
+        return DENY
+
+    # Критерій 6: Threat intelligence
+    if subject.ip in threat_intelligence.blocked_ips:
+        return DENY
+
+    return ALLOW
+        </pre>
+        <p><strong>Переваги:</strong> детермінований результат, простота аудиту, зрозумілість для аудиторів. <strong>Недоліки:</strong> не враховує нюанси, може бути занадто жорстким або занадто м'яким.</p>
+
+        <h4>Score-Based Trust Algorithm (на основі оцінки)</h4>
+        <p>При цьому підході кожен фактор отримує числову оцінку (score), яка відображає рівень довіри. Policy Engine розраховує загальну оцінку довіри і порівнює його з пороговими значеннями:</p>
+        <pre>
+# Приклад score-based trust algorithm (псевдокод)
+def calculate_trust_score(request, subject, device, resource):
+    score = 0
+    max_score = 100
+
+    # Автентифікація (до 25 балів)
+    if subject.auth_method == "FIDO2":
+        score += 25
+    elif subject.auth_method == "MFA_TOTP":
+        score += 20
+    elif subject.auth_method == "PASSWORD":
+        score += 10
+
+    # Пристрій (до 25 балів)
+    if device.is_managed and device.is_compliant:
+        score += 25
+    elif device.is_managed:
+        score += 15
+    elif device.is_known:
+        score += 10
+
+    # Контекст (до 25 балів)
+    if subject.location == "office":
+        score += 25
+    elif subject.country in trusted_countries:
+        score += 15
+    else:
+        score += 5
+
+    # Поведінка (до 25 балів)
+    if subject.behavior_anomaly_score < 0.2:
+        score += 25
+    elif subject.behavior_anomaly_score < 0.5:
+        score += 15
+    else:
+        score += 0  # Підозріла поведінка
+
+    # Рішення на основі порогів
+    threshold = resource.required_trust_level  # напр., 70 для чутливих
+    if score >= threshold:
+        return ALLOW
+    elif score >= threshold - 15:
+        return REQUIRE_STEP_UP  # Додаткова перевірка
+    else:
+        return DENY
+        </pre>
+        <p><strong>Переваги:</strong> гнучкість, можливість враховувати нюанси, адаптивність (ML може оптимізувати ваги). <strong>Недоліки:</strong> складніший аудит, потенційна непрозорість рішень ("чому мені відмовили?").</p>
+
+        <p>На практиці більшість сучасних ZTA-рішень використовують гібридний підхід: критерії для базових перевірок (автентифікація, відповідність вимогам) та підхід на основі оцінки для контекстних рішень (рівень ризику, поведінкова аналітика). Наприклад, Azure Conditional Access використовує правила на основі критеріїв, але інтегрується з Entra ID Protection, яке обчислює оцінку ризику на основі ML-аналізу поведінки.</p>
       </section>
 
       <section>
@@ -432,7 +629,7 @@
             </g>
 
             <!-- Data feeds on the right side -->
-            <text class="diagram-text-bold" x="580" y="30" text-anchor="middle">Data Sources</text>
+            <text class="diagram-text-bold" x="580" y="30" text-anchor="middle">Джерела даних</text>
 
             <rect fill="var(--card)" stroke="var(--card-border)" x="520" y="45" width="120" height="30" rx="6"/>
             <text class="diagram-text-small" x="580" y="65" text-anchor="middle">CDM / Compliance</text>
@@ -471,7 +668,7 @@
           <li><strong>Resource (ресурс):</strong> до чого запитується доступ — дані, додаток, сервіс</li>
           <li><strong>Context (контекст):</strong> час, геолокація, тип мережі, стан пристрою</li>
           <li><strong>Threat intelligence:</strong> чи є суб'єкт або IP у списках загроз</li>
-          <li><strong>Behavioral analytics:</strong> чи відповідає запит нормальній поведінці</li>
+          <li><strong>Поведінковий аналіз:</strong> чи відповідає запит нормальній поведінці</li>
         </ul>
 
         <p>На основі цих даних PE консультується з політиками організації та приймає рішення: дозволити, заборонити, або дозволити з умовами (наприклад, вимагати додаткову автентифікацію).</p>
@@ -500,9 +697,9 @@
         <p>У хмарному середовищі PEP може бути реалізований як:</p>
         <ul>
           <li>API Gateway</li>
-          <li>Service Mesh sidecar (Envoy, Istio)</li>
-          <li>Cloud-native proxy (AWS PrivateLink, Azure Private Endpoint)</li>
-          <li>ZTNA connector (Zscaler, Cloudflare Access)</li>
+          <li>sidecar-проксі в Service Mesh (Envoy, Istio)</li>
+          <li>хмарний проксі (AWS PrivateLink, Azure Private Endpoint)</li>
+          <li>конектор ZTNA (Zscaler, Cloudflare Access)</li>
         </ul>
 
         <h3>Допоміжні компоненти</h3>
@@ -525,7 +722,7 @@
           <li>GDPR для персональних даних</li>
           <li>SOC 2 для сервіс-провайдерів</li>
         </ul>
-        <p>Політики доступу можуть автоматично враховувати compliance-вимоги: наприклад, доступ до даних, що підпадають під GDPR, може бути обмежений за геолокацією.</p>
+        <p>Політики доступу можуть автоматично враховувати вимоги відповідності: наприклад, доступ до даних, що підпадають під GDPR, може бути обмежений за геолокацією.</p>
 
         <h4>Threat Intelligence</h4>
         <p>Зовнішні та внутрішні джерела інформації про загрози:</p>
@@ -550,9 +747,9 @@
         <h4>Data Access Policy</h4>
         <p>Політики, специфічні для даних:</p>
         <ul>
-          <li>Класифікація даних (public, internal, confidential, restricted)</li>
+          <li>Класифікація даних (публічні, внутрішні, конфіденційні, обмежені)</li>
           <li>Правила доступу на основі класифікації</li>
-          <li>Data Loss Prevention (DLP) правила</li>
+          <li>Правила запобігання витоку даних (DLP)</li>
           <li>Шифрування на рівні даних</li>
         </ul>
 
@@ -563,28 +760,28 @@
         <ul>
           <li><strong>Автентифікація:</strong> Підтвердження, що користувач є тим, за кого себе видає</li>
           <li><strong>Федерація:</strong> Довіра до ідентичностей з інших організацій</li>
-          <li><strong>Token issuance:</strong> Видача токенів (SAML, OIDC, OAuth) для доступу до ресурсів</li>
-          <li><strong>Session management:</strong> Управління сесіями та їх валідація</li>
+          <li><strong>Видача токенів:</strong> видача токенів (SAML, OIDC, OAuth) для доступу до ресурсів</li>
+          <li><strong>Управління сесіями:</strong> управління сесіями та їх валідація</li>
         </ul>
 
         <h4>Multi-Factor Authentication (MFA)</h4>
         <p>MFA — обов'язковий компонент Zero Trust. Одного пароля недостатньо. Фактори автентифікації:</p>
         <ul>
-          <li><strong>Something you know:</strong> пароль, PIN</li>
-          <li><strong>Something you have:</strong> телефон, hardware token (YubiKey)</li>
-          <li><strong>Something you are:</strong> біометрія (відбиток пальця, Face ID)</li>
-          <li><strong>Somewhere you are:</strong> геолокація</li>
-          <li><strong>Something you do:</strong> поведінкова біометрія (як ви друкуєте)</li>
+          <li><strong>Щось, що ви знаєте:</strong> пароль, PIN</li>
+          <li><strong>Щось, що ви маєте:</strong> телефон, апаратний токен (YubiKey)</li>
+          <li><strong>Щось, що ви є:</strong> біометрія (відбиток пальця, Face ID)</li>
+          <li><strong>Де ви знаходитесь:</strong> геолокація</li>
+          <li><strong>Щось, що ви робите:</strong> поведінкова біометрія (як ви друкуєте)</li>
         </ul>
 
-        <p>Сучасний тренд — <strong>passwordless authentication</strong>: замість пароля використовується комбінація пристрою та біометрії (FIDO2/WebAuthn).</p>
+        <p>Сучасний тренд — <strong>автентифікація без паролів (passwordless)</strong>: замість пароля використовується комбінація пристрою та біометрії (FIDO2/WebAuthn).</p>
 
         <h4>Conditional Access</h4>
         <p>Conditional Access — це механізм, який дозволяє застосовувати різні вимоги автентифікації залежно від контексту:</p>
         <ul>
           <li>Запит з корпоративного пристрою з офісу → достатньо SSO</li>
           <li>Запит з невідомого пристрою → вимагати MFA</li>
-          <li>Запит до фінансових даних → вимагати MFA + device compliance</li>
+          <li>Запит до фінансових даних → вимагати MFA + відповідність пристрою</li>
           <li>Запит з країни з високим ризиком → заблокувати або вимагати додаткову верифікацію</li>
         </ul>
 
@@ -612,47 +809,251 @@
         <h4>SPIFFE/SPIRE</h4>
         <p><strong>SPIFFE</strong> (Secure Production Identity Framework for Everyone) — відкритий стандарт для ідентичності workloads. <strong>SPIRE</strong> — його імплементація.</p>
         <p>Кожен workload отримує SVID (SPIFFE Verifiable Identity Document) — криптографічно підписану ідентичність. Це дозволяє workloads автентифікуватися один до одного без shared secrets.</p>
+
+        <h3>Privileged Access Management (PAM) у контексті Zero Trust</h3>
+        <p>Привілейований доступ — одна з найбільших загроз для будь-якої організації. За даними Verizon Data Breach Investigations Report, понад 74% зломів пов'язані з людським фактором, і зловживання привілейованим доступом є одним з основних векторів атак.</p>
+        <p>У традиційній моделі адміністратори мають постійний (standing) привілейований доступ — вони є "суперкористувачами" 24/7. Це прямо суперечить принципам Zero Trust. Рішення — Privileged Access Management.</p>
+
+        <h4>Just-in-Time (JIT) Access</h4>
+        <p>JIT Access — це підхід, при якому привілейований доступ надається тільки тоді, коли він потрібен, і тільки на обмежений час. Замість того щоб адміністратор мав постійну роль Global Admin, він запитує активацію цієї ролі на конкретний термін (наприклад, 1-4 години) із зазначенням причини.</p>
+        <p><strong>Процес JIT Access:</strong></p>
+        <ol>
+          <li>Адміністратор подає запит на активацію ролі через PAM-систему</li>
+          <li>Вказує обгрунтування (justification) — що саме він планує робити</li>
+          <li>Проходить додаткову автентифікацію (MFA)</li>
+          <li>Запит може вимагати затвердження (approval) від іншого адміністратора або менеджера</li>
+          <li>Роль активується на обмежений час (наприклад, 2 години)</li>
+          <li>Усі дії під час сесії логуються для аудиту</li>
+          <li>Після закінчення часу привілеї автоматично відкликаються</li>
+        </ol>
+
+        <h4>Just-Enough-Access (JEA)</h4>
+        <p>JEA доповнює JIT, обмежуючи не тільки час, але й обсяг привілеїв. Замість повного доступу адміністратор отримує тільки ті дозволи, які необхідні для конкретного завдання. Наприклад, замість ролі Global Admin для перезавантаження сервісу, адміністратор отримує роль, яка дозволяє тільки перезапуск конкретного сервісу і нічого більше.</p>
+        <p><strong>Приклад JEA в PowerShell:</strong></p>
+        <pre>
+# Визначення JEA-конфігурації для helpdesk-оператора
+@{
+    RoleDefinitions = @{
+        'CONTOSO\HelpDesk' = @{
+            RoleCapabilities = 'ServiceRestart'
+        }
+    }
+}
+
+# RoleCapability: ServiceRestart.psrc
+@{
+    VisibleCmdlets = @(
+        'Restart-Service -Name W3SVC',
+        'Restart-Service -Name SQLServer'
+    )
+    # Оператор може перезапустити ТІЛЬКИ ці два сервіси
+    # Інші команди недоступні
+}
+        </pre>
+
+        <h4>Запис сесій та аварійний доступ</h4>
+        <p><strong>Запис сесій (Session Recording)</strong> — запис усіх дій під час привілейованої сесії. Це критично важливо для аудиту та розслідування інцидентів. Сучасні PAM-рішення записують не тільки команди, але й відео сесії (для RDP/SSH), натискання клавіш та зміни файлів. Це створює повний аудиторський слід.</p>
+        <p><strong>Аварійні процедури (Break-Glass)</strong> — це процедури для отримання екстреного привілейованого доступу, коли стандартний процес JIT/JEA неможливий (наприклад, PAM-система сама недоступна). Акаунти аварійного доступу:</p>
+        <ul>
+          <li>Зберігаються в захищеному сховищі (апаратний модуль безпеки (HSM) або фізичний сейф)</li>
+          <li>Мають унікальні, довгі паролі, які змінюються після кожного використання</li>
+          <li>Використання генерує високопріоритетні алерти для SOC (Security Operations Center)</li>
+          <li>Кожне використання документується та розслідується post-factum</li>
+          <li>Паролі ротуються автоматично після кожного використання</li>
+        </ul>
+
+        <h4>Azure PIM — приклад реалізації PAM у хмарі</h4>
+        <p>Microsoft Entra Privileged Identity Management (PIM) — найбільш зріла хмарна реалізація PAM-принципів у контексті Zero Trust:</p>
+
+        <!-- Diagram: Azure PIM Flow -->
+        <div class="diagram">
+          <div class="diagram-title">Процес Just-in-Time активації привілеїв через Azure PIM</div>
+          <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg">
+            <!-- Step 1: Request -->
+            <g transform="translate(10, 30)">
+              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="110" height="80" rx="8"/>
+              <text fill="#1d4ed8" x="55" y="22" text-anchor="middle" font-weight="600" font-size="11">1. Запит</text>
+              <text fill="#1d4ed8" x="55" y="40" text-anchor="middle" font-size="8">Адмін обирає</text>
+              <text fill="#1d4ed8" x="55" y="52" text-anchor="middle" font-size="8">роль + причину</text>
+              <text fill="#1d4ed8" x="55" y="64" text-anchor="middle" font-size="8">+ тривалість</text>
+            </g>
+
+            <!-- Arrow 1→2 -->
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="120" y1="70" x2="138" y2="70"/>
+            <polygon fill="var(--text-secondary)" points="138,66 145,70 138,74"/>
+
+            <!-- Step 2: MFA -->
+            <g transform="translate(148, 30)">
+              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="110" height="80" rx="8"/>
+              <text fill="#b45309" x="55" y="22" text-anchor="middle" font-weight="600" font-size="11">2. MFA</text>
+              <text fill="#b45309" x="55" y="40" text-anchor="middle" font-size="8">Обов'язкова</text>
+              <text fill="#b45309" x="55" y="52" text-anchor="middle" font-size="8">додаткова</text>
+              <text fill="#b45309" x="55" y="64" text-anchor="middle" font-size="8">автентифікація</text>
+            </g>
+
+            <!-- Arrow 2→3 -->
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="258" y1="70" x2="276" y2="70"/>
+            <polygon fill="var(--text-secondary)" points="276,66 283,70 276,74"/>
+
+            <!-- Step 3: Approval -->
+            <g transform="translate(286, 30)">
+              <rect fill="#fce7f3" stroke="#ec4899" stroke-width="2" x="0" y="0" width="110" height="80" rx="8"/>
+              <text fill="#be185d" x="55" y="22" text-anchor="middle" font-weight="600" font-size="11">3. Затвердження</text>
+              <text fill="#be185d" x="55" y="40" text-anchor="middle" font-size="8">Менеджер</text>
+              <text fill="#be185d" x="55" y="52" text-anchor="middle" font-size="8">затверджує</text>
+              <text fill="#be185d" x="55" y="64" text-anchor="middle" font-size="8">(опціонально)</text>
+            </g>
+
+            <!-- Arrow 3→4 -->
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="396" y1="70" x2="414" y2="70"/>
+            <polygon fill="var(--text-secondary)" points="414,66 421,70 414,74"/>
+
+            <!-- Step 4: Activation -->
+            <g transform="translate(424, 30)">
+              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="110" height="80" rx="8"/>
+              <text fill="#166534" x="55" y="22" text-anchor="middle" font-weight="600" font-size="11">4. Активація</text>
+              <text fill="#166534" x="55" y="40" text-anchor="middle" font-size="8">Роль активна</text>
+              <text fill="#166534" x="55" y="52" text-anchor="middle" font-size="8">на 1–4 години</text>
+              <text fill="#166534" x="55" y="64" text-anchor="middle" font-size="8">+ audit log</text>
+            </g>
+
+            <!-- Arrow 4→5 -->
+            <line stroke="var(--text-secondary)" stroke-width="2" x1="534" y1="70" x2="552" y2="70"/>
+            <polygon fill="var(--text-secondary)" points="552,66 559,70 552,74"/>
+
+            <!-- Step 5: Auto-revoke -->
+            <g transform="translate(562, 30)">
+              <rect fill="#e0e7ff" stroke="#6366f1" stroke-width="2" x="0" y="0" width="128" height="80" rx="8"/>
+              <text fill="#4338ca" x="64" y="22" text-anchor="middle" font-weight="600" font-size="10">5. Авто-відкликання</text>
+              <text fill="#4338ca" x="64" y="40" text-anchor="middle" font-size="8">Час вийшов →</text>
+              <text fill="#4338ca" x="64" y="52" text-anchor="middle" font-size="8">привілеї видалені</text>
+              <text fill="#4338ca" x="64" y="64" text-anchor="middle" font-size="8">автоматично</text>
+            </g>
+
+            <!-- Timeline bar -->
+            <rect fill="var(--card)" stroke="var(--card-border)" x="10" y="135" width="680" height="35" rx="6"/>
+            <!-- Green window aligned under Step 4 -->
+            <rect fill="#22c55e" opacity="0.2" x="424" y="135" width="110" height="35" rx="6"/>
+            <!-- Dashed lines from step 4 down to green window -->
+            <line stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2" x1="424" y1="110" x2="424" y2="135"/>
+            <line stroke="#22c55e" stroke-width="1" stroke-dasharray="3,2" x1="534" y1="110" x2="534" y2="135"/>
+            <text class="diagram-text-small" x="350" y="157" text-anchor="middle">Привілейований доступ активний тільки в "зеленому" вікні</text>
+
+            <!-- Time arrow under timeline -->
+            <line stroke="var(--text-secondary)" stroke-width="1" x1="30" y1="185" x2="670" y2="185"/>
+            <polygon fill="var(--text-secondary)" points="670,182 678,185 670,188"/>
+            <text fill="var(--text-secondary)" x="30" y="200" font-size="8">Запит</text>
+            <text fill="var(--text-secondary)" x="670" y="200" text-anchor="end" font-size="8">Час →</text>
+          </svg>
+          <div class="diagram-caption">Рис. 3.6. Процес JIT-активації привілейованого доступу через Azure PIM мінімізує час експозиції</div>
+        </div>
+
+        <p><strong>Чому статичні admin-акаунти порушують Zero Trust:</strong> постійний привілейований доступ означає, що компрометація облікових даних адміністратора в будь-який момент дає атакуючому повний контроль. JIT/JEA скорочує "вікно можливостей" для атакуючого з 24/7 до кількох годин, а session recording забезпечує детекцію навіть у цьому вікні.</p>
+
+        <h3>Continuous Authentication та Adaptive Access</h3>
+        <p>У традиційній моделі автентифікація — це одноразова подія: користувач ввів пароль і MFA-код на початку сесії, і далі вважається довіреним до кінця. Це суперечить принципу Zero Trust про безперервну оцінку довіри. Continuous Authentication вирішує цю проблему.</p>
+
+        <h4>Як працює Continuous Authentication</h4>
+        <p>Система постійно аналізує сигнали під час сесії та перераховує оцінку довіри (trust score) в реальному часі. Якщо оцінка падає нижче порогу — система автоматично вимагає повторну автентифікацію (step-up) або припиняє сесію.</p>
+        <p><strong>Сигнали, що аналізуються безперервно:</strong></p>
+        <ul>
+          <li><strong>Поведінкова біометрія (behavioral biometrics):</strong> як користувач друкує (швидкість, ритм, сила натискання), як рухає мишкою (траєкторія, точність кліків), як тримає мобільний пристрій (кут нахилу, тиск на екран). Ці патерни унікальні для кожної людини — як відбиток пальця.</li>
+          <li><strong>Динаміка натискання клавіш (keystroke dynamics):</strong> час утримання клавіші (dwell time), інтервал між натисканнями (flight time), характерні помилки. Точність ідентифікації за keystroke dynamics сягає 95-99%.</li>
+          <li><strong>Патерни руху миші (mouse movement):</strong> швидкість, прискорення, кривизна траєкторії, мікрорухи. Автоматизовані скрипти та боти мають суттєво відмінні патерни порівняно з реальними людьми.</li>
+          <li><strong>Контекст сесії (session context):</strong> зміна IP-адреси під час сесії, зміна геолокації (impossible travel — якщо користувач був у Києві 5 хвилин тому, він не може бути в Лондоні зараз), зміна характеристик пристрою.</li>
+        </ul>
+
+        <h4>Оцінка ризику в реальному часі</h4>
+        <p>Continuous Authentication використовує ML-моделі для обчислення оцінки ризику в реальному часі. Кожен сигнал впливає на загальну оцінку:</p>
+        <ul>
+          <li><strong>Низький ризик (0-30):</strong> поведінка відповідає базовому профілю, контекст нормальний — сесія продовжується без змін</li>
+          <li><strong>Середній ризик (31-60):</strong> є відхилення від норми — система може обмежити доступ до чутливих ресурсів або вимагати додаткове підтвердження для критичних операцій</li>
+          <li><strong>Високий ризик (61-85):</strong> значні відхилення — система вимагає повторну автентифікацію (step-up), наприклад, повторний MFA</li>
+          <li><strong>Критичний ризик (86-100):</strong> сесія автоматично припиняється, акаунт може бути заблокований, SOC отримує алерт для розслідування</li>
+        </ul>
+
+        <h4>Тригери посиленої автентифікації</h4>
+        <p>Посилена автентифікація (step-up) — це механізм, коли система вимагає додаткової автентифікації під час активної сесії. Тригерами можуть бути:</p>
+        <ul>
+          <li>Спроба доступу до ресурсу з вищим рівнем чутливості (наприклад, з email переходить до фінансової системи)</li>
+          <li>Виконання критичної операції (видалення даних, зміна конфігурації безпеки, експорт великого обсягу даних)</li>
+          <li>Зміна контексту (нова IP-адреса, нова геолокація, інша мережа)</li>
+          <li>Збільшення risk score на основі поведінкової аналітики</li>
+          <li>Тривала неактивність з наступною раптовою активністю</li>
+        </ul>
+
+        <p><strong>Конкретний сценарій:</strong> Олексій працює з корпоративним порталом з офісу в Києві. О 14:00 він авторизувався через SSO + FIDO2. О 15:30 система фіксує, що IP-адреса змінилася (Олексій перейшов на мобільну мережу), keystroke dynamics відхиляються від базового профілю на 40%, і він намагається завантажити великий обсяг клієнтських даних. Risk score зростає з 15 до 72. Система автоматично вимагає повторний MFA перед завантаженням. Якщо MFA не пройдено — сесія припиняється і SOC отримує алерт.</p>
+
+        <h3>User and Entity Behavior Analytics (UEBA)</h3>
+        <p>UEBA — це клас рішень, які використовують machine learning та статистичний аналіз для виявлення аномальної поведінки користувачів та сутностей (серверів, додатків, сервісів). У контексті Zero Trust UEBA виступає критичним джерелом даних для Policy Engine, забезпечуючи "поведінковий" вимір оцінки довіри.</p>
+
+        <h4>Як працює UEBA</h4>
+        <p>UEBA-система проходить три основні фази:</p>
+        <ol>
+          <li><strong>Baseline Building (побудова базового профілю):</strong> Протягом 2-4 тижнів система збирає дані та будує "нормальний" профіль для кожного користувача та сутності: типовий час роботи, звичайні геолокації, пристрої, додатки, обсяг даних, типові операції та мережеві з'єднання.</li>
+          <li><strong>Anomaly Detection (виявлення аномалій):</strong> Система порівнює поточну поведінку з базовим профілем. Відхилення класифікуються за типом та серйозністю. Використовуються алгоритми Isolation Forest, Local Outlier Factor, автоенкодери нейронних мереж та Hidden Markov Models.</li>
+          <li><strong>Risk Scoring (оцінка ризику):</strong> Виявлені аномалії агрегуються в загальний risk score для кожного суб'єкта. Score передається Policy Engine для прийняття рішень про доступ.</li>
+        </ol>
+
+        <h4>Сценарії виявлення загроз через UEBA</h4>
+        <p><strong>Сценарій 1: Unusual Login Time (незвичний час входу)</strong></p>
+        <p>Марія з бухгалтерії зазвичай працює з 9:00 до 18:00 з понеділка по п'ятницю. О 3:00 ночі в неділю фіксується вхід з її облікового запису. UEBA підвищує risk score з 10 до 65. Conditional Access вимагає MFA. Якщо MFA пройдено — доступ обмежений лише читанням. Якщо ні — акаунт блокується, SOC отримує алерт.</p>
+
+        <p><strong>Сценарій 2: Impossible Travel (неможлива подорож)</strong></p>
+        <p>О 10:00 Андрій залогінився з IP-адреси в Києві. О 10:15 зафіксовано логін того ж акаунту з IP у Москві. Фізично подолати цю відстань за 15 хвилин неможливо — це може означати компрометацію облікових даних. UEBA миттєво підвищує risk score до 90. Сесія з Москви блокується. Андрій отримує повідомлення про підозрілу активність. SOC починає розслідування.</p>
+
+        <p><strong>Сценарій 3: Mass Data Download (масове завантаження даних)</strong></p>
+        <p>Інженер Петро зазвичай працює з 5-10 файлами на день. Сьогодні за 30 хвилин він завантажив 500 файлів із конфіденційною документацією. UEBA фіксує відхилення від базового профілю на 5000% та підвищує risk score до 85. DLP (Data Loss Prevention) блокує подальше завантаження. SOC отримує алерт для розслідування. Можливі причини: Петро готує презентацію (легітимно) або це внутрішня загроза / скомпрометований акаунт.</p>
+
+        <h4>Інтеграція UEBA з Policy Engine</h4>
+        <p>UEBA не приймає рішення самостійно — воно надає сигнали ризику Policy Engine, який використовує їх як один із факторів у Trust Algorithm:</p>
+        <ul>
+          <li><strong>Передача ризику в реальному часі:</strong> UEBA передає оцінку ризику через API до Policy Engine. PE враховує цю оцінку при кожному запиті на доступ.</li>
+          <li><strong>Динамічне коригування політик:</strong> при високій оцінці ризику PE може автоматично: вимагати посилену автентифікацію, обмежити доступ до чутливих ресурсів, увімкнути запис сесії, заблокувати експорт даних.</li>
+          <li><strong>Зворотний зв'язок:</strong> результати розслідувань SOC (правильне / хибне спрацювання) повертаються в UEBA для покращення ML-моделей та зменшення хибних спрацювань.</li>
+        </ul>
+        <p><strong>Приклади UEBA-рішень:</strong> Microsoft Sentinel (Azure), Amazon GuardDuty (AWS), Google Chronicle (GCP), Splunk UBA, Exabeam, Securonix.</p>
       </section>
 
       <section>
         <h2>3.3 Мікросегментація мережі</h2>
 
         <h3>Що таке мікросегментація?</h3>
-        <p>Мікросегментація — це техніка мережевої безпеки, яка розділяє мережу на маленькі ізольовані сегменти, кожен зі своїми політиками безпеки. На відміну від традиційної сегментації на рівні VLAN, мікросегментація працює на рівні окремих workloads.</p>
+        <p>Мікросегментація — це техніка мережевої безпеки, яка розділяє мережу на маленькі ізольовані сегменти, кожен зі своїми політиками безпеки. На відміну від традиційної сегментації на рівні VLAN, мікросегментація працює на рівні окремих робочих навантажень.</p>
 
         <p>Уявіть традиційну мережу як великий відкритий офіс — кожен може підійти до кожного. Мікросегментація перетворює це на систему окремих кабінетів з контрольованим доступом до кожного.</p>
 
         <h4>Чому мікросегментація важлива?</h4>
         <ul>
-          <li><strong>Обмеження lateral movement:</strong> Якщо атакуючий компрометує один workload, він не може легко переміститися до інших</li>
-          <li><strong>Зменшення blast radius:</strong> Наслідки інциденту обмежені одним сегментом</li>
-          <li><strong>Compliance:</strong> Ізоляція чутливих даних від решти інфраструктури</li>
+          <li><strong>Обмеження бічного переміщення:</strong> якщо атакуючий компрометує одне робоче навантаження, він не може легко переміститися до інших</li>
+          <li><strong>Зменшення радіусу ураження:</strong> наслідки інциденту обмежені одним сегментом</li>
+          <li><strong>Відповідність вимогам:</strong> ізоляція чутливих даних від решти інфраструктури</li>
           <li><strong>Видимість:</strong> Краще розуміння трафіку між компонентами</li>
         </ul>
 
         <h3>Підходи до мікросегментації</h3>
 
-        <h4>1. Network-based мікросегментація</h4>
+        <h4>1. Мережева мікросегментація</h4>
         <p>Використовує мережеві засоби для ізоляції:</p>
         <ul>
-          <li><strong>VLANs та ACLs:</strong> Традиційний підхід, але складний для масштабування</li>
-          <li><strong>Software-Defined Networking (SDN):</strong> Програмне управління мережею (VMware NSX, Cisco ACI)</li>
+          <li><strong>VLANs та ACLs:</strong> традиційний підхід, але складний для масштабування</li>
+          <li><strong>Software-Defined Networking (SDN):</strong> програмне управління мережею (VMware NSX, Cisco ACI)</li>
           <li><strong>Cloud Security Groups:</strong> AWS Security Groups, Azure NSGs, GCP Firewall Rules</li>
         </ul>
 
-        <h4>2. Host-based мікросегментація</h4>
+        <h4>2. Мікросегментація на рівні хоста</h4>
         <p>Політики застосовуються на самих хостах:</p>
         <ul>
-          <li>Host-based firewalls (iptables, Windows Firewall)</li>
-          <li>Endpoint agents (Illumio, Guardicore)</li>
+          <li>Файрволи на рівні хоста (iptables, Windows Firewall)</li>
+          <li>Агенти на кінцевих точках (Illumio, Guardicore)</li>
           <li>Kubernetes Network Policies</li>
         </ul>
 
-        <h4>3. Application-based мікросегментація</h4>
+        <h4>3. Мікросегментація на рівні додатків</h4>
         <p>Політики на рівні додатків:</p>
         <ul>
           <li>Service Mesh (Istio, Linkerd, Consul Connect)</li>
-          <li>Application-layer firewalls</li>
+          <li>Файрволи прикладного рівня</li>
           <li>API Gateways</li>
         </ul>
 
@@ -688,8 +1089,8 @@ spec:
         <ul>
           <li><strong>mTLS:</strong> Автоматичне взаємне TLS-шифрування між усіма сервісами</li>
           <li><strong>Authorization Policies:</strong> Політики на основі ідентичності сервісу</li>
-          <li><strong>Traffic management:</strong> Контроль трафіку на рівні L7</li>
-          <li><strong>Observability:</strong> Детальна видимість трафіку</li>
+          <li><strong>Управління трафіком:</strong> контроль трафіку на рівні L7</li>
+          <li><strong>Спостережуваність:</strong> детальна видимість трафіку</li>
         </ul>
 
         <pre>
@@ -716,46 +1117,46 @@ spec:
 
         <h4>AWS</h4>
         <ul>
-          <li><strong>Security Groups:</strong> Stateful firewall на рівні EC2 instances</li>
-          <li><strong>Network ACLs:</strong> Stateless firewall на рівні subnet</li>
-          <li><strong>VPC Endpoints:</strong> Private connectivity до AWS сервісів</li>
-          <li><strong>AWS PrivateLink:</strong> Private connectivity між VPCs та сервісами</li>
+          <li><strong>Security Groups:</strong> файрвол зі збереженням стану на рівні EC2-інстансів</li>
+          <li><strong>Network ACLs:</strong> файрвол без збереження стану на рівні підмережі</li>
+          <li><strong>VPC Endpoints:</strong> приватне з'єднання з сервісами AWS</li>
+          <li><strong>AWS PrivateLink:</strong> приватне з'єднання між VPC та сервісами</li>
         </ul>
 
         <h4>Azure</h4>
         <ul>
-          <li><strong>Network Security Groups (NSG):</strong> Firewall правила для subnets та NICs</li>
-          <li><strong>Application Security Groups (ASG):</strong> Логічне групування VM для правил</li>
-          <li><strong>Azure Firewall:</strong> Managed cloud firewall</li>
-          <li><strong>Private Endpoints:</strong> Private connectivity до Azure сервісів</li>
+          <li><strong>Network Security Groups (NSG):</strong> правила файрволу для підмереж та мережевих інтерфейсів</li>
+          <li><strong>Application Security Groups (ASG):</strong> логічне групування VM для правил</li>
+          <li><strong>Azure Firewall:</strong> керований хмарний файрвол</li>
+          <li><strong>Private Endpoints:</strong> приватне з'єднання з сервісами Azure</li>
         </ul>
 
         <h4>GCP</h4>
         <ul>
-          <li><strong>VPC Firewall Rules:</strong> Firewall на рівні VPC з тегами</li>
-          <li><strong>Hierarchical Firewall Policies:</strong> Централізоване управління firewall</li>
-          <li><strong>Private Google Access:</strong> Private connectivity до Google сервісів</li>
-          <li><strong>VPC Service Controls:</strong> Security perimeter для GCP сервісів</li>
+          <li><strong>VPC Firewall Rules:</strong> файрвол на рівні VPC з тегами</li>
+          <li><strong>Hierarchical Firewall Policies:</strong> централізоване управління файрволом</li>
+          <li><strong>Private Google Access:</strong> приватне з'єднання з сервісами Google</li>
+          <li><strong>VPC Service Controls:</strong> безпековий периметр для сервісів GCP</li>
         </ul>
 
-        <h3>Best Practices мікросегментації</h3>
+        <h3>Найкращі практики мікросегментації</h3>
 
         <h4>1. Почніть з моніторингу</h4>
-        <p>Перш ніж сегментувати, зрозумійте поточні потоки трафіку. Використовуйте flow logs, network monitoring для побудови карти залежностей.</p>
+        <p>Перш ніж сегментувати, зрозумійте поточні потоки трафіку. Використовуйте журнали потоків (flow logs), моніторинг мережі для побудови карти залежностей.</p>
 
-        <h4>2. Default Deny</h4>
+        <h4>2. Заборона за замовчуванням</h4>
         <p>Застосуйте політику "заборонено все, що явно не дозволено". Це фундаментальний принцип Zero Trust.</p>
 
-        <h4>3. Least Privilege</h4>
+        <h4>3. Мінімальні привілеї</h4>
         <p>Дозволяйте тільки той трафік, який необхідний для роботи. Не відкривайте весь діапазон портів "на всякий випадок".</p>
 
         <h4>4. Сегментація за чутливістю даних</h4>
-        <p>Workloads, що обробляють чутливі дані (PII, фінансові дані), мають бути в окремих сегментах з посиленим контролем.</p>
+        <p>Робочі навантаження, що обробляють чутливі дані (PII, фінансові дані), мають бути в окремих сегментах з посиленим контролем.</p>
 
-        <h4>5. Automation</h4>
+        <h4>5. Автоматизація</h4>
         <p>Ручне управління тисячами правил неможливе. Використовуйте Infrastructure as Code (Terraform, Pulumi) та policy-as-code.</p>
 
-        <h4>6. Continuous Validation</h4>
+        <h4>6. Безперервна валідація</h4>
         <p>Регулярно перевіряйте, що політики працюють як очікується. Використовуйте інструменти для тестування network policies.</p>
 
         <!-- Diagram: Microsegmentation Approach -->
@@ -784,7 +1185,7 @@ spec:
             <text class="diagram-text-small" x="145" y="145" text-anchor="middle">Dev</text>
 
             <rect fill="#fecaca" stroke="#ef4444" x="190" y="120" width="50" height="40" rx="4"/>
-            <text fill="#dc2626" x="215" y="145" text-anchor="middle" font-size="10">Attacker</text>
+            <text fill="#dc2626" x="215" y="145" text-anchor="middle" font-size="10">Зловмисник</text>
 
             <!-- All-to-all connections in flat network -->
             <line stroke="var(--text-secondary)" stroke-width="1" stroke-dasharray="2,2" x1="75" y1="100" x2="145" y2="100"/>
@@ -794,7 +1195,7 @@ spec:
             <line stroke="#ef4444" stroke-width="2" x1="215" y1="100" x2="215" y2="120"/>
             <line stroke="#ef4444" stroke-width="2" x1="170" y1="140" x2="190" y2="140"/>
 
-            <text fill="#dc2626" x="170" y="200" text-anchor="middle" font-size="10">Lateral movement можливий</text>
+            <text fill="#dc2626" x="170" y="200" text-anchor="middle" font-size="10">Бічне переміщення можливе</text>
             <text fill="#dc2626" x="170" y="215" text-anchor="middle" font-size="10">до всіх ресурсів!</text>
 
             <!-- Arrow -->
@@ -832,17 +1233,17 @@ spec:
 
             <!-- Attacker blocked -->
             <rect fill="#fecaca" stroke="#ef4444" x="585" y="120" width="75" height="50" rx="6"/>
-            <text fill="#dc2626" x="622" y="145" text-anchor="middle" font-size="9">Attacker</text>
-            <text fill="#dc2626" x="622" y="158" text-anchor="middle" font-size="8">BLOCKED</text>
+            <text fill="#dc2626" x="622" y="145" text-anchor="middle" font-size="9">Зловмисник</text>
+            <text fill="#dc2626" x="622" y="158" text-anchor="middle" font-size="8">ЗАБЛОКОВАНО</text>
 
             <!-- Controlled connections -->
             <line stroke="#22c55e" stroke-width="2" x1="480" y1="80" x2="495" y2="80"/>
             <line stroke="#22c55e" stroke-width="2" x1="570" y1="80" x2="585" y2="80"/>
 
             <text fill="#166534" x="530" y="200" text-anchor="middle" font-size="10">Контрольовані з'єднання,</text>
-            <text fill="#166534" x="530" y="215" text-anchor="middle" font-size="10">lateral movement заблоковано</text>
+            <text fill="#166534" x="530" y="215" text-anchor="middle" font-size="10">бічне переміщення заблоковано</text>
           </svg>
-          <div class="diagram-caption">Рис. 3.4. Мікросегментація обмежує lateral movement, ізолюючи кожен сегмент мережі</div>
+          <div class="diagram-caption">Рис. 3.4. Мікросегментація обмежує бічне переміщення, ізолюючи кожен сегмент мережі</div>
         </div>
 
         <h3>Порівняння підходів до мікросегментації</h3>
@@ -854,30 +1255,226 @@ spec:
             <th>Недоліки</th>
           </tr>
           <tr>
-            <td><strong>Network-based</strong></td>
+            <td><strong>Мережевий</strong></td>
             <td>VLANs, ACLs, SDN (NSX, ACI)</td>
-            <td>Не залежить від workload, legacy support</td>
-            <td>Складність управління, IP-based</td>
+            <td>Не залежить від навантаження, підтримка застарілих систем</td>
+            <td>Складність управління, прив'язка до IP</td>
           </tr>
           <tr>
-            <td><strong>Host-based</strong></td>
-            <td>iptables, Windows Firewall, agents</td>
-            <td>Granular control, workload-aware</td>
-            <td>Agent overhead, deployment складність</td>
+            <td><strong>На рівні хоста</strong></td>
+            <td>iptables, Windows Firewall, агенти</td>
+            <td>Детальний контроль, врахування навантаження</td>
+            <td>Навантаження від агента, складність розгортання</td>
           </tr>
           <tr>
             <td><strong>Service Mesh</strong></td>
             <td>Istio, Linkerd, Consul</td>
-            <td>L7 policies, mTLS, observability</td>
-            <td>Kubernetes-specific, learning curve</td>
+            <td>Політики L7, mTLS, спостережуваність</td>
+            <td>Специфічний для Kubernetes, крива навчання</td>
           </tr>
           <tr>
-            <td><strong>Cloud-native</strong></td>
+            <td><strong>Хмарний</strong></td>
             <td>Security Groups, NSGs</td>
-            <td>Native integration, easy to use</td>
-            <td>Cloud-specific, limited cross-cloud</td>
+            <td>Нативна інтеграція, простота використання</td>
+            <td>Специфічний для хмари, обмежена крос-хмарність</td>
           </tr>
         </table>
+
+        <h3>Software-Defined Perimeter (SDP)</h3>
+        <p>Software-Defined Perimeter (SDP) — це архітектурний підхід до мережевої безпеки, розроблений Cloud Security Alliance (CSA) у 2013 році. В основу SDP лягла концепція "чорної хмари" (dark cloud), яку використовувало Агентство оборонних інформаційних систем США (DISA). SDP тісно пов'язаний із Zero Trust і є однією з практичних реалізацій ZTA на мережевому рівні.</p>
+
+        <h4>Принцип "Dark Cloud" (невидимої інфраструктури)</h4>
+        <p>Головна ідея SDP — зробити інфраструктуру невидимою для неавторизованих користувачів. На відміну від традиційного firewall, який блокує з'єднання до портів, SDP робить самі порти невидимими. Якщо атакуючий сканує мережу, він не знайде жодних відкритих портів та сервісів — для нього інфраструктура просто не існує.</p>
+        <p>Порівняйте це з традиційним підходом: звичайний firewall відповідає на запити — навіть якщо він блокує з'єднання, сам факт відповіді (TCP RST або ICMP unreachable) повідомляє атакуючому, що за цією адресою щось є. SDP не відповідає взагалі — пакети від неавторизованих джерел просто відкидаються (drop), без жодної відповіді.</p>
+
+        <h4>Три компоненти архітектури SDP</h4>
+        <p>CSA SDP Specification визначає три ключові компоненти:</p>
+
+        <p><strong>1. SDP Controller (Контролер)</strong></p>
+        <p>SDP Controller — це централізований компонент, який управляє доступом. Він виконує роль Policy Engine та Policy Administrator у термінах NIST ZTA. Контролер:</p>
+        <ul>
+          <li>Автентифікує та авторизує суб'єктів (Initiating Hosts)</li>
+          <li>Визначає, до яких ресурсів (Accepting Hosts) суб'єкт має доступ</li>
+          <li>Надає суб'єкту список дозволених з'єднань</li>
+          <li>Інструктує Accepting Hosts прийняти з'єднання від конкретного суб'єкта</li>
+          <li>Моніторить активні з'єднання та може їх припинити в реальному часі</li>
+        </ul>
+
+        <p><strong>2. Initiating Host (IH) — клієнтська сторона</strong></p>
+        <p>Initiating Host — це пристрій або додаток, що запитує доступ до ресурсу. Перед встановленням будь-якого з'єднання IH:</p>
+        <ul>
+          <li>Автентифікується на SDP Controller</li>
+          <li>Надає інформацію про стан пристрою</li>
+          <li>Отримує від Controller список дозволених Accepting Hosts</li>
+          <li>Використовує Single Packet Authorization (SPA) для встановлення з'єднання</li>
+        </ul>
+
+        <p><strong>3. Accepting Host (AH) — серверна сторона</strong></p>
+        <p>Accepting Host — це шлюз, що захищає ресурс. За замовчуванням AH відхиляє всі вхідні з'єднання (default deny). AH відкриває порт тільки для конкретного Initiating Host після отримання інструкцій від SDP Controller та валідного SPA-пакета.</p>
+
+        <h4>Single Packet Authorization (SPA)</h4>
+        <p>SPA — ключова інновація SDP. Це криптографічний протокол, при якому перший пакет від клієнта до сервера містить автентифікаційну інформацію. Якщо SPA-пакет валідний, сервер "відчиняє двері" для цього клієнта. Якщо ні — пакет відкидається без відповіді.</p>
+        <p><strong>Як працює SPA:</strong></p>
+        <ol>
+          <li>IH генерує одноразовий SPA-пакет, що містить: ідентифікатор клієнта, timestamp, HMAC або цифровий підпис, запитувані ресурси</li>
+          <li>SPA-пакет надсилається на AH (зазвичай UDP, один пакет)</li>
+          <li>AH валідує SPA: перевіряє підпис, timestamp (захист від replay), ідентифікатор</li>
+          <li>Якщо валідний — AH відкриває необхідний порт тільки для IP-адреси IH на обмежений час</li>
+          <li>Якщо невалідний — пакет відкидається, AH залишається невидимим</li>
+        </ol>
+        <p>SPA забезпечує захист від port scanning, DDoS-атак на сервіси, та zero-day експлойтів — атакуючий не може експлуатувати вразливість сервісу, якщо він навіть не знає про його існування.</p>
+
+        <h4>SDP vs традиційний Firewall</h4>
+        <table>
+          <tr>
+            <th>Аспект</th>
+            <th>Традиційний Firewall</th>
+            <th>SDP</th>
+          </tr>
+          <tr>
+            <td><strong>Видимість сервісів</strong></td>
+            <td>Сервіси видимі (port scan виявить їх)</td>
+            <td>Сервіси невидимі ("dark cloud")</td>
+          </tr>
+          <tr>
+            <td><strong>Підхід</strong></td>
+            <td>Дозволити/заборонити на основі IP/port</td>
+            <td>Спочатку автентифікація, потім з'єднання</td>
+          </tr>
+          <tr>
+            <td><strong>Автентифікація</strong></td>
+            <td>На рівні додатку (після з'єднання)</td>
+            <td>До встановлення з'єднання (SPA)</td>
+          </tr>
+          <tr>
+            <td><strong>DDoS захист</strong></td>
+            <td>Обмежений (сервіси відповідають)</td>
+            <td>Високий (немає відповіді неавторизованим)</td>
+          </tr>
+          <tr>
+            <td><strong>Zero-day захист</strong></td>
+            <td>Вразливий (сервіс доступний)</td>
+            <td>Захищений (сервіс невидимий)</td>
+          </tr>
+          <tr>
+            <td><strong>Гранулярність</strong></td>
+            <td>IP/port-based</td>
+            <td>На основі ідентичності та контексту</td>
+          </tr>
+        </table>
+
+        <p><strong>Приклади SDP-рішень:</strong> Appgate SDP (раніше Cyxtera), Zscaler Private Access, Cisco Duo + Software-Defined Access, open-source fwknop (SPA implementation).</p>
+
+        <h3>East-West vs North-South Traffic Security</h3>
+        <p>Для розуміння мікросегментації та Zero Trust на мережевому рівні критично важливо розрізняти два типи мережевого трафіку та загрози, пов'язані з кожним.</p>
+
+        <h4>Визначення типів трафіку</h4>
+        <p><strong>North-South Traffic (вертикальний трафік)</strong> — це трафік, який входить у мережу або виходить з неї. Це трафік між зовнішніми клієнтами (користувачами в інтернеті) та внутрішніми ресурсами (серверами, додатками). Приклади: користувач заходить на веб-сайт компанії, API-запит від зовнішнього партнера, завантаження оновлень з інтернету.</p>
+        <p><strong>East-West Traffic (горизонтальний/латеральний трафік)</strong> — це трафік між workloads усередині мережі. Приклади: web-сервер звертається до application-сервера, application-сервер запитує базу даних, мікросервіс A викликає мікросервіс B, сервер синхронізується з іншим сервером.</p>
+
+        <!-- Diagram: North-South vs East-West -->
+        <div class="diagram">
+          <div class="diagram-title">North-South vs East-West Traffic у хмарному середовищі</div>
+          <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Internet cloud at top -->
+            <ellipse fill="var(--card)" stroke="var(--card-border)" stroke-width="2" cx="350" cy="35" rx="120" ry="30"/>
+            <text class="diagram-text-bold" x="350" y="40" text-anchor="middle">Internet / Users</text>
+
+            <!-- North-South arrows -->
+            <line stroke="#ef4444" stroke-width="3" x1="300" y1="65" x2="300" y2="110" marker-end="url(#arrow-pim)"/>
+            <line stroke="#ef4444" stroke-width="3" x1="400" y1="110" x2="400" y2="65"/>
+            <text fill="#ef4444" x="260" y="95" text-anchor="middle" font-size="10" font-weight="600">N-S</text>
+
+            <!-- Data center boundary -->
+            <rect fill="var(--card)" stroke="var(--card-border)" stroke-width="2" x="100" y="115" width="500" height="170" rx="12"/>
+            <text class="diagram-text-small" x="350" y="135" text-anchor="middle">Data Center / Cloud VPC</text>
+
+            <!-- Internal workloads -->
+            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="130" y="150" width="90" height="50" rx="8"/>
+            <text fill="#1d4ed8" x="175" y="180" text-anchor="middle" font-size="10">Web Server</text>
+
+            <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="305" y="150" width="90" height="50" rx="8"/>
+            <text fill="#166534" x="350" y="180" text-anchor="middle" font-size="10">App Server</text>
+
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="480" y="150" width="90" height="50" rx="8"/>
+            <text fill="#b45309" x="525" y="180" text-anchor="middle" font-size="10">Database</text>
+
+            <!-- East-West arrows -->
+            <line stroke="#3b82f6" stroke-width="3" x1="220" y1="175" x2="305" y2="175" marker-end="url(#arrow-pim)"/>
+            <line stroke="#3b82f6" stroke-width="3" x1="395" y1="175" x2="480" y2="175" marker-end="url(#arrow-pim)"/>
+            <text fill="#3b82f6" x="262" y="168" text-anchor="middle" font-size="10" font-weight="600">E-W</text>
+            <text fill="#3b82f6" x="437" y="168" text-anchor="middle" font-size="10" font-weight="600">E-W</text>
+
+            <!-- More internal services -->
+            <rect fill="#fce7f3" stroke="#ec4899" stroke-width="2" x="130" y="220" width="90" height="50" rx="8"/>
+            <text fill="#be185d" x="175" y="250" text-anchor="middle" font-size="10">Cache</text>
+
+            <rect fill="#e0e7ff" stroke="#6366f1" stroke-width="2" x="305" y="220" width="90" height="50" rx="8"/>
+            <text fill="#4338ca" x="350" y="250" text-anchor="middle" font-size="10">Queue</text>
+
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="480" y="220" width="90" height="50" rx="8"/>
+            <text fill="#b45309" x="525" y="250" text-anchor="middle" font-size="10">Storage</text>
+
+            <!-- More East-West arrows -->
+            <line stroke="#3b82f6" stroke-width="2" stroke-dasharray="4,4" x1="175" y1="200" x2="175" y2="220"/>
+            <line stroke="#3b82f6" stroke-width="2" stroke-dasharray="4,4" x1="350" y1="200" x2="350" y2="220"/>
+            <line stroke="#3b82f6" stroke-width="2" stroke-dasharray="4,4" x1="525" y1="200" x2="525" y2="220"/>
+            <line stroke="#3b82f6" stroke-width="2" stroke-dasharray="4,4" x1="220" y1="245" x2="305" y2="245"/>
+            <line stroke="#3b82f6" stroke-width="2" stroke-dasharray="4,4" x1="395" y1="245" x2="480" y2="245"/>
+          </svg>
+          <div class="diagram-caption">Рис. 3.7. North-South трафік (червоний) vs East-West трафік (синій). East-West складає 70-80% від загального обсягу трафіку в сучасних дата-центрах</div>
+        </div>
+
+        <h4>Чому East-West трафік — головна загроза у хмарі</h4>
+        <p>За даними аналітиків, у сучасних хмарних дата-центрах та мікросервісних архітектурах <strong>70-80% всього мережевого трафіку є East-West</strong> (за оцінками VMware та Cisco). При цьому традиційні засоби безпеки — firewall, IDS/IPS, WAF — зосереджені переважно на North-South трафіку. Це створює величезну "сліпу зону".</p>
+        <p><strong>Чому East-West трафік особливо небезпечний:</strong></p>
+        <ul>
+          <li><strong>Lateral movement:</strong> Після початкового проникнення (через North-South) атакуючий переміщується по внутрішній мережі через East-West з'єднання. У плоскій мережі без мікросегментації це практично безконтрольно.</li>
+          <li><strong>Неявна довіра:</strong> Традиційно трафік між внутрішніми сервісами вважається довіреним і не інспектується. Це дозволяє атакуючому "розчинитися" у легітимному трафіку.</li>
+          <li><strong>Обсяг:</strong> Величезний обсяг East-West трафіку робить ручну перевірку неможливою. Потрібні автоматизовані засоби.</li>
+          <li><strong>Складність:</strong> У мікросервісній архітектурі з сотнями або тисячами сервісів кількість можливих East-West з'єднань зростає експоненційно (N*(N-1)/2).</li>
+        </ul>
+
+        <h4>Засоби контролю East-West та North-South трафіку</h4>
+        <table>
+          <tr>
+            <th>Аспект</th>
+            <th>North-South</th>
+            <th>East-West</th>
+          </tr>
+          <tr>
+            <td><strong>Традиційний захист</strong></td>
+            <td>Firewall, WAF, IDS/IPS, DDoS protection</td>
+            <td>Мінімальний або відсутній</td>
+          </tr>
+          <tr>
+            <td><strong>Zero Trust захист</strong></td>
+            <td>ZTNA, API Gateway, SDP</td>
+            <td>Мікросегментація, Service Mesh, mTLS</td>
+          </tr>
+          <tr>
+            <td><strong>Моніторинг</strong></td>
+            <td>NGFW, аналіз трафіку, DPI</td>
+            <td>Flow logs, Service Mesh telemetry, UEBA</td>
+          </tr>
+          <tr>
+            <td><strong>Шифрування</strong></td>
+            <td>TLS/HTTPS (стандарт)</td>
+            <td>mTLS (часто відсутній без ZT)</td>
+          </tr>
+          <tr>
+            <td><strong>Обсяг трафіку</strong></td>
+            <td>20-30% від загального</td>
+            <td>70-80% від загального</td>
+          </tr>
+          <tr>
+            <td><strong>Хмарні інструменти</strong></td>
+            <td>AWS WAF, Azure Front Door, Cloud Armor</td>
+            <td>Security Groups, VPC Flow Logs, Istio</td>
+          </tr>
+        </table>
+
+        <p><strong>Висновок:</strong> Zero Trust вимагає однакової уваги до обох типів трафіку. Організації, які інвестують тільки в North-South безпеку (firewall, WAF), залишають 70-80% свого трафіку без належного контролю. Мікросегментація та Service Mesh — це ключові інструменти для закриття цієї прогалини.</p>
       </section>
 
       <section>
@@ -890,8 +1487,8 @@ spec:
         <ul>
           <li>Інвентаризація всіх активів: користувачі, пристрої, додатки, дані</li>
           <li>Класифікація даних за чутливістю</li>
-          <li>Mapping критичних бізнес-процесів та їхніх залежностей</li>
-          <li>Ідентифікація "protect surfaces" — критичних активів, які потрібно захистити насамперед</li>
+          <li>Картографування критичних бізнес-процесів та їхніх залежностей</li>
+          <li>Ідентифікація "поверхонь захисту" (protect surfaces) — критичних активів, які потрібно захистити насамперед</li>
         </ul>
 
         <h4>Етап 2: Картографування потоків</h4>
@@ -912,16 +1509,16 @@ spec:
 
         <h4>Етап 4: Пілотне впровадження</h4>
         <ul>
-          <li>Вибір обмеженого scope для пілота</li>
+          <li>Вибір обмеженого обсягу для пілота</li>
           <li>Впровадження у режимі моніторингу (alert-only)</li>
           <li>Збір зворотного зв'язку від користувачів</li>
           <li>Ітеративне покращення політик</li>
         </ul>
 
-        <h4>Етап 5: Розширення та enforcement</h4>
+        <h4>Етап 5: Розширення та застосування політик</h4>
         <ul>
           <li>Поступове розширення на інші системи</li>
-          <li>Перехід від alert-only до enforcement mode</li>
+          <li>Перехід від режиму сповіщень до режиму застосування політик</li>
           <li>Автоматизація процесів</li>
           <li>Безперервний моніторинг та оптимізація</li>
         </ul>
@@ -932,32 +1529,32 @@ spec:
         <h4>Identity — фундамент ZTA на AWS</h4>
         <p>В AWS Zero Trust починається з IAM. Кожен запит до будь-якого ресурсу автентифікується та авторизується через IAM-систему.</p>
         <ul>
-          <li><strong>AWS IAM:</strong> Управління ідентичностями та доступом. IAM policies використовують JSON для визначення детальних дозволів (хто, що, де, коли). Підтримує conditions — наприклад, дозволити доступ лише з певної IP або лише з MFA.</li>
-          <li><strong>AWS IAM Identity Center (SSO):</strong> Централізований SSO для всіх AWS-акаунтів та бізнес-додатків. Інтеграція з Active Directory, Okta, OneLogin.</li>
-          <li><strong>AWS Organizations + SCPs:</strong> Service Control Policies дозволяють встановити "guardrails" на рівні організації — заборонити певні дії навіть для root-акаунту.</li>
-          <li><strong>Amazon Cognito:</strong> Identity для кінцевих користувачів додатків. User pools, federation, MFA.</li>
+          <li><strong>AWS IAM:</strong> управління ідентичностями та доступом. Політики IAM використовують JSON для визначення детальних дозволів (хто, що, де, коли). Підтримує умови — наприклад, дозволити доступ лише з певної IP або лише з MFA.</li>
+          <li><strong>AWS IAM Identity Center (SSO):</strong> централізований SSO для всіх AWS-акаунтів та бізнес-додатків. Інтеграція з Active Directory, Okta, OneLogin.</li>
+          <li><strong>AWS Organizations + SCPs:</strong> політики контролю сервісів, які встановлюють "захисні бар'єри" на рівні організації — заборонити певні дії навіть для root-акаунту.</li>
+          <li><strong>Amazon Cognito:</strong> ідентичність для кінцевих користувачів додатків — пули користувачів, федерація, MFA.</li>
         </ul>
 
         <h4>Network — мікросегментація та ізоляція</h4>
         <ul>
-          <li><strong>Security Groups:</strong> Stateful firewall на рівні ENI (мережевого інтерфейсу). Працює як PEP — дозволяє лише явно прописаний трафік.</li>
-          <li><strong>VPC:</strong> Ізольовані мережеві середовища. Кожен workload — у своєму VPC або subnet.</li>
-          <li><strong>AWS PrivateLink:</strong> Private connectivity між VPC та сервісами без виходу в інтернет. Критичний для Zero Trust — трафік залишається в мережі AWS.</li>
-          <li><strong>AWS Network Firewall:</strong> Managed IDS/IPS з підтримкою Suricata rules. Дозволяє інспектувати трафік на рівні L3-L7.</li>
+          <li><strong>Security Groups:</strong> файрвол зі збереженням стану (stateful) на рівні ENI (мережевого інтерфейсу). Працює як PEP — дозволяє лише явно прописаний трафік.</li>
+          <li><strong>VPC:</strong> ізольовані мережеві середовища. Кожне робоче навантаження — у своєму VPC або підмережі.</li>
+          <li><strong>AWS PrivateLink:</strong> приватне з'єднання між VPC та сервісами без виходу в інтернет. Критичний для Zero Trust — трафік залишається в мережі AWS.</li>
+          <li><strong>AWS Network Firewall:</strong> керована система IDS/IPS з підтримкою правил Suricata. Дозволяє інспектувати трафік на рівні L3–L7.</li>
         </ul>
 
         <h4>Application — Zero Trust доступ до додатків</h4>
         <ul>
-          <li><strong>AWS Verified Access:</strong> ZTNA-рішення від AWS. Дозволяє надавати доступ до internal-додатків без VPN, на основі ідентичності та device posture. По суті, це PEP для корпоративних додатків.</li>
-          <li><strong>AWS WAF:</strong> Web Application Firewall з rate limiting, geo-blocking, managed rule groups (OWASP Top 10, Bot Control).</li>
-          <li><strong>Amazon API Gateway:</strong> API management з автентифікацією через Cognito, IAM або Lambda Authorizers. Кожен API-виклик — окреме рішення про доступ.</li>
+          <li><strong>AWS Verified Access:</strong> ZTNA-рішення від AWS. Дозволяє надавати доступ до внутрішніх додатків без VPN, на основі ідентичності та стану пристрою. По суті, це PEP для корпоративних додатків.</li>
+          <li><strong>AWS WAF:</strong> файрвол веб-додатків з обмеженням частоти запитів, геоблокуванням, керованими наборами правил (OWASP Top 10, Bot Control).</li>
+          <li><strong>Amazon API Gateway:</strong> управління API з автентифікацією через Cognito, IAM або Lambda Authorizers. Кожен API-виклик — окреме рішення про доступ.</li>
         </ul>
 
         <h4>Data — захист даних у спокої та русі</h4>
         <ul>
-          <li><strong>AWS KMS:</strong> Управління ключами шифрування. Customer-managed keys (CMK) дають повний контроль над шифруванням. Підтримує автоматичну ротацію ключів.</li>
-          <li><strong>AWS Secrets Manager:</strong> Управління секретами (DB passwords, API keys) з автоматичною ротацією.</li>
-          <li><strong>Amazon Macie:</strong> ML-based виявлення та класифікація чутливих даних (PII, фінансові дані) у S3. Важливий для data-centric Zero Trust.</li>
+          <li><strong>AWS KMS:</strong> управління ключами шифрування. Ключі під управлінням клієнта (CMK) дають повний контроль над шифруванням. Підтримує автоматичну ротацію ключів.</li>
+          <li><strong>AWS Secrets Manager:</strong> управління секретами (паролі БД, API-ключі) з автоматичною ротацією.</li>
+          <li><strong>Amazon Macie:</strong> виявлення та класифікація чутливих даних (PII, фінансові дані) у S3 на базі ML. Важливий для дата-орієнтованого підходу Zero Trust.</li>
         </ul>
 
         <h3>Zero Trust в Azure</h3>
@@ -966,46 +1563,46 @@ spec:
         <h4>Identity — найсильніша сторона Azure</h4>
         <p>Entra ID (колишній Azure AD) — це серце Zero Trust в Azure. Він не просто автентифікує, а приймає контекстні рішення про доступ.</p>
         <ul>
-          <li><strong>Microsoft Entra ID:</strong> Cloud-native IdP з підтримкою 300,000+ SaaS-додатків. SSO, MFA, passwordless authentication (FIDO2, Windows Hello).</li>
-          <li><strong>Conditional Access:</strong> Серце Zero Trust в Azure — policy engine, який приймає рішення на основі: хто (user/group), що (додаток), звідки (IP, country), з чого (device compliance), рівень ризику (real-time risk detection). Наприклад: "дозволити доступ до SharePoint лише з compliant devices, з MFA, якщо risk level < medium".</li>
-          <li><strong>Privileged Identity Management (PIM):</strong> Just-in-time та just-enough privileged access. Адмін не має постійних привілеїв — він активує роль на обмежений час (наприклад, 4 години) з обґрунтуванням та MFA.</li>
-          <li><strong>Entra Verified ID:</strong> Decentralized identity на основі verifiable credentials — нова парадигма для cross-organization identity.</li>
+          <li><strong>Microsoft Entra ID:</strong> хмарний IdP з підтримкою 300,000+ SaaS-додатків. SSO, MFA, безпарольна автентифікація (FIDO2, Windows Hello).</li>
+          <li><strong>Conditional Access:</strong> серце Zero Trust в Azure — механізм політик, який приймає рішення на основі контексту: хто (користувач/група), що (додаток), звідки (IP, країна), з чого (відповідність пристрою) та який рівень ризику (виявлення ризиків у реальному часі). Приклад політики: "дозволити доступ до SharePoint лише з відповідних пристроїв, з MFA, якщо рівень ризику &lt; середній".</li>
+          <li><strong>Privileged Identity Management (PIM):</strong> привілейований доступ "точно в час" (JIT) та "рівно стільки, скільки потрібно" (JEA). Адмін не має постійних привілеїв — він активує роль на обмежений час (наприклад, 4 години) з обґрунтуванням та MFA.</li>
+          <li><strong>Entra Verified ID:</strong> децентралізована ідентичність на основі верифікованих облікових даних — нова парадигма для міжорганізаційної ідентичності.</li>
         </ul>
 
         <h4>Device — endpoint як фактор довіри</h4>
-        <p>В Azure Zero Trust пристрій — повноцінний учасник рішення про доступ. Некомплаєнтний пристрій не отримає доступ, навіть якщо credentials правильні.</p>
+        <p>В Azure Zero Trust пристрій — повноцінний учасник рішення про доступ. Невідповідний пристрій не отримає доступ, навіть якщо облікові дані правильні.</p>
         <ul>
-          <li><strong>Microsoft Intune:</strong> MDM/MAM — управління пристроями, compliance policies (шифрування, оновлення ОС, антивірус).</li>
-          <li><strong>Microsoft Defender for Endpoint:</strong> EDR з risk scoring для кожного пристрою. Інтегрується з Conditional Access — скомпрометований пристрій автоматично втрачає доступ.</li>
-          <li><strong>Entra Device Registration:</strong> Device identity — кожен пристрій реєструється та отримує сертифікат.</li>
+          <li><strong>Microsoft Intune:</strong> MDM/MAM — управління пристроями, політики відповідності (шифрування, оновлення ОС, антивірус).</li>
+          <li><strong>Microsoft Defender for Endpoint:</strong> EDR з оцінкою ризику для кожного пристрою. Інтегрується з Conditional Access — скомпрометований пристрій автоматично втрачає доступ.</li>
+          <li><strong>Entra Device Registration:</strong> ідентичність пристрою — кожен пристрій реєструється та отримує сертифікат.</li>
         </ul>
 
         <h4>Network — мережеві компоненти</h4>
         <ul>
-          <li><strong>Azure Firewall:</strong> Managed cloud firewall з threat intelligence feed та TLS inspection.</li>
-          <li><strong>NSG/ASG:</strong> Network Security Groups для мікросегментації на рівні subnet та NIC. Application Security Groups — логічне групування ресурсів.</li>
-          <li><strong>Azure Private Link:</strong> Private connectivity до PaaS-сервісів — трафік не виходить у публічний інтернет.</li>
-          <li><strong>Azure Front Door:</strong> Global load balancer з вбудованим WAF та DDoS protection. Може виступати як PEP для web-додатків.</li>
+          <li><strong>Azure Firewall:</strong> керований хмарний файрвол з каналом аналізу загроз та інспекцією TLS-трафіку.</li>
+          <li><strong>NSG/ASG:</strong> групи мережевої безпеки для мікросегментації на рівні підмережі та мережевого інтерфейсу. Application Security Groups — логічне групування ресурсів.</li>
+          <li><strong>Azure Private Link:</strong> приватне з'єднання з PaaS-сервісами — трафік не виходить у публічний інтернет.</li>
+          <li><strong>Azure Front Door:</strong> глобальний балансувальник навантаження з вбудованим WAF та захистом від DDoS. Може виступати як PEP для веб-додатків.</li>
         </ul>
 
         <h3>Zero Trust в GCP</h3>
-        <p>Google — це компанія, яка впровадила Zero Trust задовго до того, як цей термін став модним. Після атаки Operation Aurora у 2009 році (китайська APT проникла у внутрішню мережу Google) компанія розпочала проєкт BeyondCorp — перебудову всієї корпоративної безпеки на принципах Zero Trust. BeyondCorp став основою для комерційних продуктів GCP.</p>
+        <p>Google впровадив Zero Trust задовго до того, як цей термін став модним. Після атаки Operation Aurora у 2009 році (китайська APT проникла у внутрішню мережу) компанія розпочала проєкт BeyondCorp — повну перебудову корпоративної безпеки на принципах Zero Trust. Цей досвід ліг в основу комерційних продуктів GCP.</p>
 
         <h4>BeyondCorp Enterprise — повне рішення</h4>
         <p>BeyondCorp Enterprise — це не окремий продукт, а інтегрований набір можливостей, вбудованих у Chrome та Google Cloud:</p>
         <ul>
           <li><strong>Identity-Aware Proxy (IAP):</strong> Zero Trust access до додатків, що працюють на GCP, on-premise або в іншій хмарі. Кожен HTTP-запит перевіряється — хто, з якого пристрою, з яким контекстом. VPN не потрібен.</li>
-          <li><strong>Access Context Manager:</strong> Conditional access policies з гранулярними умовами: IP range, device OS, screen lock status, encryption status.</li>
-          <li><strong>Endpoint Verification:</strong> Chrome extension, що збирає інформацію про стан пристрою (OS version, disk encryption, screen lock) та передає в Access Context Manager.</li>
-          <li><strong>Certificate-Based Access:</strong> mTLS для service-to-service та device-to-service комунікації.</li>
+          <li><strong>Access Context Manager:</strong> політики умовного доступу з детальними умовами: діапазон IP, ОС пристрою, стан блокування екрана, стан шифрування.</li>
+          <li><strong>Endpoint Verification:</strong> розширення Chrome, що збирає інформацію про стан пристрою (версія ОС, шифрування диска, блокування екрана) та передає в Access Context Manager.</li>
+          <li><strong>Certificate-Based Access:</strong> mTLS для комунікації між сервісами та між пристроєм і сервісом.</li>
         </ul>
 
         <h4>Інші компоненти ZTA на GCP</h4>
         <ul>
-          <li><strong>Cloud Identity:</strong> IdP для Google Cloud з підтримкою SSO, MFA, security keys.</li>
-          <li><strong>VPC Service Controls:</strong> Security perimeters навколо GCP-сервісів. Запобігає data exfiltration навіть якщо credentials скомпрометовані — дані не можуть "вийти" за межі периметра.</li>
-          <li><strong>Binary Authorization:</strong> Дозволяє запуск лише підписаних container images. Важливий компонент Zero Trust для CI/CD — гарантує, що в production потрапляє тільки перевірений код.</li>
-          <li><strong>Workload Identity Federation:</strong> Дозволяє workloads з інших хмар (AWS, Azure) або on-premise автентифікуватися в GCP без service account keys.</li>
+          <li><strong>Cloud Identity:</strong> IdP для Google Cloud з підтримкою SSO, MFA, апаратних ключів безпеки.</li>
+          <li><strong>VPC Service Controls:</strong> безпекові периметри навколо GCP-сервісів. Запобігає витоку даних навіть якщо облікові дані скомпрометовані — дані не можуть "вийти" за межі периметра.</li>
+          <li><strong>Binary Authorization:</strong> дозволяє запуск лише підписаних контейнерних образів. Важливий компонент Zero Trust для CI/CD — гарантує, що у продакшен потрапляє тільки перевірений код.</li>
+          <li><strong>Workload Identity Federation:</strong> дозволяє робочим навантаженням з інших хмар (AWS, Azure) або локальної інфраструктури автентифікуватися в GCP без ключів сервісних акаунтів.</li>
         </ul>
 
         <h4>Порівняння підходів провайдерів до Zero Trust</h4>
@@ -1024,9 +1621,9 @@ spec:
           </tr>
           <tr>
             <td><strong>Найсильніше</strong></td>
-            <td>Granular IAM policies</td>
-            <td>Conditional Access + Device</td>
-            <td>IAP + Chrome integration</td>
+            <td>Детальні політики IAM</td>
+            <td>Conditional Access + пристрої</td>
+            <td>IAP + інтеграція з Chrome</td>
           </tr>
           <tr>
             <td><strong>ZTNA рішення</strong></td>
@@ -1042,35 +1639,306 @@ spec:
           </tr>
         </table>
 
+        <h3>Zero Trust для DevOps та CI/CD</h3>
+        <p>DevOps-пайплайни та CI/CD-системи є одними з найцінніших цілей для атакуючих. Компрометація пайплайну дозволяє впровадити шкідливий код у production, вплинути на тисячі або мільйони кінцевих користувачів, і при цьому обійти традиційні засоби безпеки, оскільки код "приходить" з довіреного джерела.</p>
+
+        <h4>Supply Chain Attacks — загроза ланцюга постачання</h4>
+        <p>Серія гучних атак на ланцюг постачання програмного забезпечення показала, наскільки критично важливо застосовувати принципи Zero Trust до DevOps:</p>
+        <ul>
+          <li><strong>SolarWinds (2020):</strong> Група APT29 (Cozy Bear) скомпрометувала build-систему SolarWinds Orion і впровадила бекдор SUNBURST у офіційне оновлення. Оновлення отримали близько 18,000 організацій, включно з 9 федеральними агентствами США, Microsoft та Intel. Бекдор залишався непоміченим 14 місяців.</li>
+          <li><strong>Codecov (2021):</strong> Атакуючі модифікували bash uploader скрипт Codecov (інструмент для code coverage), додавши витік змінних оточення. Протягом 2 місяців скрипт крав секрети (API keys, tokens, credentials) з CI/CD пайплайнів тисяч компаній, зокрема Twilio, HashiCorp, Confluent.</li>
+          <li><strong>Log4Shell (2021):</strong> Критична RCE-вразливість (CVE-2021-44228) у бібліотеці Apache Log4j, яка використовується в мільйонах Java-додатків. Вразливість дозволяла віддалене виконання коду через простий лог-запис. Більшість організацій навіть не знали, що використовують Log4j, бо вона була транзитивною залежністю їхнього ПЗ.</li>
+        </ul>
+
+        <h4>Принципи Zero Trust для CI/CD</h4>
+        <p>Застосування Zero Trust до DevOps-процесів включає кілька ключових практик:</p>
+
+        <p><strong>1. Signed Commits (підписані коміти)</strong></p>
+        <p>Кожен коміт у репозиторій має бути криптографічно підписаний GPG або SSH ключем розробника. Це гарантує, що код дійсно написаний авторизованим розробником, а не зловмисником, який отримав доступ до репозиторію. Git підтримує підпис комітів з коробки:</p>
+        <pre>
+# Налаштування підпису комітів
+git config --global commit.gpgsign true
+git config --global user.signingkey &lt;GPG-KEY-ID&gt;
+
+# CI/CD перевіряє підпис при merge
+git verify-commit HEAD || exit 1
+        </pre>
+
+        <p><strong>2. Signed Container Images (підписані образи контейнерів)</strong></p>
+        <p>Контейнерні образи підписуються у процесі build і верифікуються перед deployment. Це запобігає запуску модифікованих або несанкціонованих образів. Sigstore/Cosign — це інструмент з відкритим кодом для підпису та верифікації container images:</p>
+        <pre>
+# Підпис образу за допомогою Cosign
+cosign sign --key cosign.key registry.example.com/app:v1.2.3
+
+# Верифікація перед deployment (у Kubernetes admission controller)
+cosign verify --key cosign.pub registry.example.com/app:v1.2.3
+        </pre>
+
+        <p><strong>3. Policy-as-Code</strong></p>
+        <p>Безпекові політики описуються як код, зберігаються у version control та автоматично застосовуються. Open Policy Agent (OPA) та Gatekeeper — це стандартні інструменти для policy-as-code у Kubernetes:</p>
+        <pre>
+# OPA/Rego: заборонити контейнери з root
+package kubernetes.admission
+
+deny[msg] {
+    input.request.kind.kind == "Pod"
+    container := input.request.object.spec.containers[_]
+    container.securityContext.runAsUser == 0
+    msg := sprintf("Container '%v' must not run as root", [container.name])
+}
+
+# OPA/Rego: дозволити тільки підписані образи з довірених registries
+deny[msg] {
+    input.request.kind.kind == "Pod"
+    container := input.request.object.spec.containers[_]
+    not startswith(container.image, "registry.company.com/")
+    msg := sprintf("Image '%v' is not from trusted registry", [container.image])
+}
+        </pre>
+
+        <p><strong>4. Secrets Management (управління секретами)</strong></p>
+        <p>Секрети (API-ключі, паролі баз даних, сертифікати) ніколи не повинні зберігатися у коді, змінних оточення або конфігурації CI/CD. Замість цього використовуються спеціалізовані сховища секретів:</p>
+        <ul>
+          <li><strong>HashiCorp Vault:</strong> централізоване сховище секретів з динамічними секретами (генерація тимчасових облікових даних для кожного запиту), автоматичною ротацією, журналюванням аудиту</li>
+          <li><strong>AWS Secrets Manager / SSM Parameter Store:</strong> вбудоване управління секретами в AWS з доступом на основі IAM</li>
+          <li><strong>Azure Key Vault:</strong> керований HSM та управління секретами з інтеграцією Managed Identity</li>
+          <li><strong>GCP Secret Manager:</strong> управління секретами з детальним IAM та автоматичною реплікацією</li>
+        </ul>
+
+        <p><strong>5. Ephemeral Credentials (тимчасові облікові дані)</strong></p>
+        <p>Замість довгоживучих credentials CI/CD-пайплайн отримує короткоживучі токени для кожного запуску. Це мінімізує вікно можливостей у разі компрометації. Наприклад, GitHub Actions OIDC дозволяє отримати тимчасові AWS credentials без збереження access keys:</p>
+        <pre>
+# GitHub Actions з OIDC для AWS
+jobs:
+  deploy:
+    permissions:
+      id-token: write  # Дозвіл на отримання OIDC token
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/deploy-role
+          aws-region: eu-central-1
+          # Без access keys! Тимчасовий токен через OIDC
+        </pre>
+
+        <h4>SLSA Framework (Supply Chain Levels for Software Artifacts)</h4>
+        <p>SLSA (вимовляється "salsa") — це фреймворк від Google для оцінки та покращення безпеки ланцюга постачання ПЗ. Він визначає чотири рівні зрілості:</p>
+        <table>
+          <tr>
+            <th>Рівень</th>
+            <th>Вимоги</th>
+            <th>Захист від</th>
+          </tr>
+          <tr>
+            <td><strong>SLSA 1</strong></td>
+            <td>Документований процес збирання, базова інформація про походження</td>
+            <td>Невідомість походження артефактів</td>
+          </tr>
+          <tr>
+            <td><strong>SLSA 2</strong></td>
+            <td>Автоматизований build через CI/CD, підписана інформація про походження</td>
+            <td>Маніпуляція з build-процесом після commit</td>
+          </tr>
+          <tr>
+            <td><strong>SLSA 3</strong></td>
+            <td>Ізольоване збирання (герметичне), перевірене джерело, збережені журнали</td>
+            <td>Компрометація середовища збирання (як SolarWinds)</td>
+          </tr>
+          <tr>
+            <td><strong>SLSA 4</strong></td>
+            <td>Два незалежних збирання, параметризований процес</td>
+            <td>Внутрішні загрози та складні цільові атаки (APT)</td>
+          </tr>
+        </table>
+
+        <h4>GitOps та Zero Trust</h4>
+        <p>GitOps — це операційна модель, при якій Git є єдиним джерелом істини для інфраструктури та додатків. GitOps природно узгоджується з Zero Trust:</p>
+        <ul>
+          <li><strong>Декларативна конфігурація:</strong> бажаний стан описаний у Git — будь-яке відхилення автоматично виявляється і коригується</li>
+          <li><strong>Розгортання за принципом "витягування":</strong> кластер сам витягує зміни з Git, замість того щоб CI/CD проштовхував їх. Це зменшує поверхню атаки — CI/CD не потребує прямого доступу до production</li>
+          <li><strong>Аудиторський слід:</strong> історія комітів у Git — це повний журнал аудиту усіх змін: хто, що, коли, чому</li>
+          <li><strong>Огляд коду як контрольна точка:</strong> будь-яка зміна проходить рецензування та автоматичні перевірки перед злиттям</li>
+        </ul>
+        <p><strong>Інструменти GitOps:</strong> ArgoCD, Flux CD (обидва — CNCF projects).</p>
+
+        <h3>Zero Trust та відповідність стандартам</h3>
+        <p>Впровадження Zero Trust не тільки покращує безпеку, але й допомагає виконувати вимоги різних стандартів та регуляцій. Нижче наведено відповідність між компонентами ZTA та вимогами основних стандартів.</p>
+
+        <h4>ISO 27001:2022</h4>
+        <ul>
+          <li><strong>A.5.15 Access Control:</strong> ZTA забезпечує контроль доступу на основі ідентичності, контексту та ризику — повна відповідність вимозі "обмеження доступу до інформації та засобів обробки інформації"</li>
+          <li><strong>A.5.16 Identity Management:</strong> Identity Provider та Identity Governance у ZTA покривають вимоги до управління ідентичностями, включаючи provisioning, deprovisioning та periodic access reviews</li>
+          <li><strong>A.8.1 User Endpoint Devices:</strong> Device posture assessment у ZTA відповідає вимозі захисту інформації на кінцевих пристроях</li>
+          <li><strong>A.8.20 Networks Security:</strong> Мікросегментація та mTLS задовольняють вимоги до безпеки мереж та мережевих сервісів</li>
+          <li><strong>A.8.24 Use of Cryptography:</strong> End-to-end шифрування в ZTA відповідає вимогам до використання криптографії</li>
+        </ul>
+
+        <h4>SOC 2 Trust Service Criteria</h4>
+        <ul>
+          <li><strong>CC6.1 (Logical Access):</strong> Conditional Access та MFA забезпечують контроль логічного доступу</li>
+          <li><strong>CC6.2 (Authentication):</strong> MFA, passwordless, continuous authentication покривають вимоги до автентифікації</li>
+          <li><strong>CC6.3 (Authorization):</strong> RBAC, ABAC, policy-based access у ZTA задовольняють вимоги до авторизації</li>
+          <li><strong>CC7.2 (Monitoring):</strong> SIEM, UEBA та continuous monitoring є ключовими компонентами ZTA</li>
+        </ul>
+
+        <h4>PCI DSS v4.0</h4>
+        <ul>
+          <li><strong>Requirement 1 (Network Security Controls):</strong> Мікросегментація виконує та перевершує вимоги до мережевої сегментації CDE (Cardholder Data Environment)</li>
+          <li><strong>Requirement 7 (Restrict Access):</strong> Least privilege та JIT access у ZTA повністю відповідають вимозі обмеження доступу до даних карток</li>
+          <li><strong>Requirement 8 (User Authentication):</strong> MFA та strong authentication у ZTA покривають вимоги PCI DSS до автентифікації</li>
+          <li><strong>Requirement 10 (Logging and Monitoring):</strong> Comprehensive logging у ZTA (PE decisions, PEP logs, SIEM) задовольняє вимоги аудиту</li>
+        </ul>
+
+        <h4>GDPR (Article 32)</h4>
+        <p>Стаття 32 GDPR вимагає "відповідних технічних та організаційних заходів для забезпечення рівня безпеки, що відповідає ризику". Zero Trust безпосередньо адресує ключові вимоги:</p>
+        <ul>
+          <li><strong>Псевдонімізація та шифрування:</strong> наскрізне шифрування (mTLS) та захист на рівні даних у ZTA</li>
+          <li><strong>Конфіденційність та цілісність:</strong> доступ з мінімальними привілеями, безперервна верифікація, класифікація даних</li>
+          <li><strong>Доступність та стійкість:</strong> мікросегментація обмежує радіус ураження, забезпечуючи доступність решти систем при інциденті</li>
+          <li><strong>Регулярне тестування:</strong> безперервний моніторинг та автоматизовані перевірки відповідності у ZTA</li>
+        </ul>
+
+        <h4>Зведена таблиця: ZTA компоненти та стандарти</h4>
+        <table>
+          <tr>
+            <th>ZTA компонент</th>
+            <th>ISO 27001</th>
+            <th>SOC 2</th>
+            <th>PCI DSS</th>
+            <th>GDPR</th>
+          </tr>
+          <tr>
+            <td><strong>MFA / Conditional Access</strong></td>
+            <td>A.5.15, A.8.5</td>
+            <td>CC6.1, CC6.2</td>
+            <td>Req 8</td>
+            <td>Art. 32(1)</td>
+          </tr>
+          <tr>
+            <td><strong>Мікросегментація</strong></td>
+            <td>A.8.20, A.8.22</td>
+            <td>CC6.1</td>
+            <td>Req 1</td>
+            <td>Art. 32(1)(b)</td>
+          </tr>
+          <tr>
+            <td><strong>Шифрування (mTLS)</strong></td>
+            <td>A.8.24</td>
+            <td>CC6.1</td>
+            <td>Req 4</td>
+            <td>Art. 32(1)(a)</td>
+          </tr>
+          <tr>
+            <td><strong>SIEM / Моніторинг</strong></td>
+            <td>A.8.15, A.8.16</td>
+            <td>CC7.2</td>
+            <td>Req 10</td>
+            <td>Art. 32(1)(d)</td>
+          </tr>
+          <tr>
+            <td><strong>PAM (JIT/JEA)</strong></td>
+            <td>A.5.15, A.8.2</td>
+            <td>CC6.3</td>
+            <td>Req 7</td>
+            <td>Art. 32(1)(b)</td>
+          </tr>
+          <tr>
+            <td><strong>Класифікація даних</strong></td>
+            <td>A.5.12, A.5.13</td>
+            <td>CC6.1</td>
+            <td>Req 3</td>
+            <td>Art. 30</td>
+          </tr>
+        </table>
+
         <h3>Реальні кейси впровадження</h3>
 
         <h4>Google BeyondCorp</h4>
-        <p>Google — один з піонерів Zero Trust. Після атаки Operation Aurora у 2009 році компанія розпочала внутрішній проєкт BeyondCorp. Ключові елементи:</p>
-        <ul>
-          <li>Доступ до внутрішніх ресурсів без VPN</li>
-          <li>Рішення на основі пристрою, користувача та контексту</li>
-          <li>Всі внутрішні додатки доступні через public URLs</li>
-          <li>Безперервна оцінка довіри протягом сесії</li>
-        </ul>
-        <p>Результат: покращена безпека, кращий user experience, можливість працювати з будь-якого місця без VPN.</p>
+        <p>Як уже зазначалося в розділі про GCP, Google розпочав проєкт BeyondCorp після атаки Operation Aurora у 2009 році. Це був перший масштабний перехід великої корпорації на модель Zero Trust. Ключовий результат: 100,000+ співробітників Google працюють без VPN, отримуючи доступ до всіх внутрішніх додатків через Identity-Aware Proxy. Кожен запит перевіряється індивідуально на основі ідентичності, стану пристрою та контексту. Внутрішні додатки доступні через публічні URL, але невидимі для неавторизованих користувачів. Підсумок: кращий досвід користувача, вища безпека, менша операційна складність.</p>
 
         <h4>Netflix</h4>
         <p>Netflix впровадив "Zero Trust Security Model" для своєї AWS-інфраструктури:</p>
         <ul>
           <li>Кожен мікросервіс має унікальну ідентичність</li>
           <li>mTLS між усіма сервісами</li>
-          <li>Fine-grained access control на рівні API</li>
+          <li>Детальний контроль доступу на рівні API</li>
           <li>Автоматизоване управління сертифікатами (Lemur)</li>
         </ul>
+
+        <h4>Capital One Breach (2019)</h4>
+        <p>Злом Capital One — один з найяскравіших прикладів того, як відсутність принципів Zero Trust призводить до масштабних інцидентів. У березні 2019 року колишня співробітниця AWS Пейдж Томпсон використала неправильно налаштований WAF у хмарній інфраструктурі Capital One на AWS.</p>
+        <p><strong>Деталі атаки:</strong></p>
+        <ol>
+          <li><strong>Початковий доступ:</strong> атакуюча виявила неправильно налаштований WAF, який був надмірно привілейованим — мав доступ до IAM metadata service (IMDS) через SSRF</li>
+          <li><strong>Викрадення облікових даних:</strong> через SSRF до EC2 metadata endpoint (http://169.254.169.254) атакуюча отримала тимчасові IAM-облікові дані ролі WAF</li>
+          <li><strong>Бічне переміщення:</strong> використовуючи ці облікові дані, отримала доступ до S3-бакетів з даними клієнтів, оскільки IAM-роль WAF мала надмірні привілеї (доступ до S3 — порушення принципу мінімальних привілеїв)</li>
+          <li><strong>Ексфільтрація даних:</strong> завантажила дані 106 мільйонів клієнтів (100 мільйонів у США та 6 мільйонів у Канаді), зокрема імена, адреси, номери соціального страхування та кредитні рейтинги</li>
+        </ol>
+        <p><strong>Як Zero Trust запобіг би цій атаці:</strong></p>
+        <ul>
+          <li><strong>Мікросегментація:</strong> WAF не повинен мати мережевий доступ до S3-бакетів з клієнтськими даними. У ZTA кожен компонент має доступ тільки до тих ресурсів, які необхідні для його функції.</li>
+          <li><strong>Least Privilege IAM:</strong> IAM-роль WAF повинна мати тільки дозволи для обробки HTTP-трафіку, без доступу до S3. У Zero Trust будь-яка роль має мінімально необхідні привілеї.</li>
+          <li><strong>IMDSv2:</strong> Використання Instance Metadata Service v2 (IMDSv2) з session tokens замість v1, яке вимагає PUT-запит з TTL-заголовком і унеможливлює простий SSRF.</li>
+          <li><strong>UEBA Detection:</strong> Масове завантаження даних з S3-бакетів WAF-роллю — очевидна аномалія, яку UEBA-система виявила б протягом хвилин.</li>
+        </ul>
+        <p>Загальні збитки Capital One від цього інциденту склали понад $300 мільйонів (штрафи, судові позови, усунення наслідків).</p>
+
+        <h4>Uber Breach (2022)</h4>
+        <p>У вересні 2022 року 18-річний хакер з групи Lapsus$ отримав доступ до внутрішніх систем Uber, зокрема Slack, Google Workspace, AWS-консоль, HackerOne та внутрішній фінансовий дашборд.</p>
+        <p><strong>Деталі атаки:</strong></p>
+        <ol>
+          <li><strong>Соціальна інженерія:</strong> атакуючий отримав облікові дані підрядника Uber (ймовірно, з даркнету після попереднього витоку або через шкідливе ПЗ на пристрої підрядника)</li>
+          <li><strong>Атака виснаженням MFA:</strong> Uber використовував MFA на основі push-сповіщень. Атакуючий безперервно надсилав MFA-нотифікації підряднику протягом понад години, доки той не натиснув "Approve" — або випадково, або щоб зупинити потік нотифікацій.</li>
+          <li><strong>Доступ через VPN:</strong> після проходження MFA атакуючий підключився до VPN Uber і отримав доступ до внутрішньої мережі — класична проблема VPN (після підключення — повний доступ до мережі)</li>
+          <li><strong>Виявлення облікових даних:</strong> у внутрішній мережі атакуючий знайшов PowerShell-скрипт на мережевому диску, що містив жорстко закодовані облікові дані для Thycotic PAM. Це дало йому доступ до всіх привілейованих акаунтів.</li>
+          <li><strong>Повна компрометація:</strong> з PAM-обліковими даними атакуючий отримав доступ до AWS, GCP, Slack, SentinelOne, HackerOne та інших критичних систем</li>
+        </ol>
+        <p><strong>Як Zero Trust запобіг би цій атаці:</strong></p>
+        <ul>
+          <li><strong>MFA, стійкий до фішингу:</strong> FIDO2/WebAuthn замість MFA на основі push-сповіщень. FIDO2-ключі не можуть бути "натиснуті випадково" — вони вимагають фізичної присутності та криптографічного рукостискання з конкретним сервісом.</li>
+          <li><strong>UEBA / Conditional Access:</strong> Безперервний потік MFA-запитів від одного акаунту — це очевидний MFA fatigue attack. UEBA-система заблокувала б акаунт після 5-10 невдалих MFA-спроб за короткий час.</li>
+          <li><strong>ZTNA замість VPN:</strong> ZTNA надає доступ до конкретного додатку, а не до всієї мережі. Навіть після успішної автентифікації атакуючий не зміг би сканувати мережу та шукати credentials.</li>
+          <li><strong>PAM з JIT Access:</strong> Привілейовані credentials не повинні зберігатися у скриптах. JIT access з Azure PIM або HashiCorp Vault генерує тимчасові credentials, які неможливо "знайти" на мережевому диску.</li>
+          <li><strong>Session Management:</strong> Continuous Authentication виявила б зміну поведінкових патернів після компрометації — інший keystroke dynamics, інші патерни навігації.</li>
+        </ul>
+
+        <h4>Zero Trust в Україні</h4>
+        <p>Українські організації, особливо в умовах кібервійни та постійних кібератак з 2022 року, активно впроваджують елементи Zero Trust:</p>
+
+        <p><strong>Банківський сектор</strong></p>
+        <p>Провідні українські банки (ПриватБанк, Ощадбанк, monobank) впроваджують принципи Zero Trust у своїй хмарній інфраструктурі. Це включає обов'язковий MFA для всіх співробітників, мікросегментацію критичних платіжних систем, device compliance checks та поведінковий аналіз транзакцій. Національний банк України (НБУ) у своїх рекомендаціях з кібербезпеки наголошує на необхідності переходу від периметрової моделі до Zero Trust для фінансових установ.</p>
+
+        <p><strong>CERT-UA та кіберзахист</strong></p>
+        <p>Урядова команда реагування на комп'ютерні надзвичайні події CERT-UA регулярно публікує рекомендації, які відповідають принципам Zero Trust: обов'язковий MFA, мінімізація привілеїв, сегментація мереж, моніторинг аномалій. Після масових кібератак на українську інфраструктуру (зокрема атаки на Kitsoft, SoftServe та енергетичну інфраструктуру) CERT-UA акцентує увагу на принципі "assume breach" — припускати, що зловмисник вже в мережі.</p>
+
+        <p><strong>Інфраструктура Дія</strong></p>
+        <p>Портал та мобільний додаток "Дія" — один з найбільш високонавантажених цифрових сервісів України з мільйонами користувачів. Безпекова архітектура Дія базується на принципах:</p>
+        <ul>
+          <li>Мікросервісна архітектура з мікросегментацією</li>
+          <li>Багаторівнева автентифікація (BankID, NFC-читання ID-карток, біометрія)</li>
+          <li>Шифрування даних у спокої та русі</li>
+          <li>Безперервний моніторинг та реагування на інциденти</li>
+        </ul>
+
+        <p><strong>КСЗІ та Zero Trust</strong></p>
+        <p>Комплексна система захисту інформації (КСЗІ) — обов'язкова вимога для інформаційних систем, що обробляють інформацію з обмеженим доступом у державних органах України. Вимоги КСЗІ (визначені у НД ТЗІ) узгоджуються з багатьма принципами Zero Trust:</p>
+        <ul>
+          <li>Розмежування доступу на основі ролей (відповідає ZT identity-based access)</li>
+          <li>Реєстрація подій безпеки (відповідає ZT continuous monitoring)</li>
+          <li>Захист інформації при передачі (відповідає ZT end-to-end encryption)</li>
+          <li>Управління вразливостями (відповідає ZT device posture assessment)</li>
+          <li>Контроль цілісності (відповідає ZT continuous verification)</li>
+        </ul>
+        <p>Впровадження Zero Trust допомагає українським організаціям одночасно виконувати вимоги КСЗІ та відповідати міжнародним стандартам (ISO 27001, SOC 2), що важливо для інтеграції з європейськими та міжнародними партнерами.</p>
 
         <h4>Приклад впровадження для середньої компанії</h4>
         <p>Типовий план для компанії на 500-1000 співробітників:</p>
         <ol>
-          <li><strong>Квартал 1:</strong> Впровадження MFA для всіх користувачів, SSO для cloud-додатків</li>
-          <li><strong>Квартал 2:</strong> Conditional Access для критичних додатків, device compliance policies</li>
-          <li><strong>Квартал 3:</strong> Мікросегментація cloud workloads, ZTNA для legacy-додатків</li>
-          <li><strong>Квартал 4:</strong> Service-to-service mTLS, automated policy enforcement</li>
-          <li><strong>Рік 2+:</strong> Continuous improvement, ML-based anomaly detection</li>
+          <li><strong>Квартал 1:</strong> впровадження MFA для всіх користувачів, SSO для хмарних додатків</li>
+          <li><strong>Квартал 2:</strong> умовний доступ (Conditional Access) для критичних додатків, політики відповідності пристроїв</li>
+          <li><strong>Квартал 3:</strong> мікросегментація хмарних робочих навантажень, ZTNA для застарілих додатків</li>
+          <li><strong>Квартал 4:</strong> mTLS між сервісами, автоматичне застосування політик</li>
+          <li><strong>Рік 2+:</strong> безперервне вдосконалення, виявлення аномалій на базі ML</li>
         </ol>
 
         <h3>Виклики та помилки при впровадженні</h3>
@@ -1078,7 +1946,7 @@ spec:
         <h4>Типові помилки</h4>
         <ul>
           <li><strong>Спроба зробити все одразу:</strong> Zero Trust — марафон, не спринт. Поетапний підхід критичний.</li>
-          <li><strong>Ігнорування user experience:</strong> Якщо безпека заважає працювати, користувачі знайдуть способи її обійти.</li>
+          <li><strong>Ігнорування досвіду користувача:</strong> Якщо безпека заважає працювати, користувачі знайдуть способи її обійти.</li>
           <li><strong>Недостатній моніторинг:</strong> Без видимості ви не знаєте, чи працюють ваші політики.</li>
           <li><strong>Забути про legacy-системи:</strong> Старі системи часто найбільш вразливі та потребують уваги.</li>
           <li><strong>Відсутність підтримки керівництва:</strong> Zero Trust потребує бюджету та організаційних змін.</li>
@@ -1086,11 +1954,11 @@ spec:
 
         <h4>Ключові фактори успіху</h4>
         <ul>
-          <li><strong>Executive sponsorship:</strong> Підтримка на рівні C-level</li>
-          <li><strong>Cross-functional team:</strong> Security, IT, DevOps, бізнес</li>
-          <li><strong>Clear metrics:</strong> Вимірювання прогресу (% покритих додатків, зменшення інцидентів)</li>
-          <li><strong>User education:</strong> Пояснення "чому" допомагає adoption</li>
-          <li><strong>Iterative approach:</strong> Швидкі ітерації та навчання на помилках</li>
+          <li><strong>Підтримка керівництва:</strong> підтримка на рівні топ-менеджменту (C-level)</li>
+          <li><strong>Міжфункціональна команда:</strong> безпека, ІТ, DevOps, бізнес</li>
+          <li><strong>Чіткі метрики:</strong> вимірювання прогресу (% покритих додатків, зменшення інцидентів)</li>
+          <li><strong>Навчання користувачів:</strong> пояснення "чому" допомагає прийняттю змін</li>
+          <li><strong>Ітеративний підхід:</strong> швидкі ітерації та навчання на помилках</li>
         </ul>
 
         <h3>CISA Zero Trust Maturity Model</h3>
@@ -1103,38 +1971,38 @@ spec:
             <!-- Maturity levels -->
             <g transform="translate(50, 40)">
               <rect fill="#fee2e2" stroke="#ef4444" x="0" y="0" width="140" height="100" rx="8"/>
-              <text fill="#dc2626" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Traditional</text>
+              <text fill="#dc2626" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Традиційний</text>
               <text fill="#dc2626" x="70" y="45" text-anchor="middle" font-size="9">Периметрова</text>
               <text fill="#dc2626" x="70" y="57" text-anchor="middle" font-size="9">безпека</text>
-              <text fill="#991b1b" x="70" y="75" text-anchor="middle" font-size="8">- Static policies</text>
-              <text fill="#991b1b" x="70" y="87" text-anchor="middle" font-size="8">- Manual processes</text>
+              <text fill="#991b1b" x="70" y="75" text-anchor="middle" font-size="8">- Статичні політики</text>
+              <text fill="#991b1b" x="70" y="87" text-anchor="middle" font-size="8">- Ручні процеси</text>
             </g>
 
             <g transform="translate(200, 40)">
               <rect fill="#fef3c7" stroke="#f59e0b" x="0" y="0" width="140" height="100" rx="8"/>
-              <text fill="#b45309" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Initial</text>
+              <text fill="#b45309" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Початковий</text>
               <text fill="#b45309" x="70" y="45" text-anchor="middle" font-size="9">Початкова</text>
               <text fill="#b45309" x="70" y="57" text-anchor="middle" font-size="9">автоматизація</text>
               <text fill="#92400e" x="70" y="75" text-anchor="middle" font-size="8">- MFA впроваджено</text>
-              <text fill="#92400e" x="70" y="87" text-anchor="middle" font-size="8">- Basic visibility</text>
+              <text fill="#92400e" x="70" y="87" text-anchor="middle" font-size="8">- Базова видимість</text>
             </g>
 
             <g transform="translate(350, 40)">
               <rect fill="#dbeafe" stroke="#3b82f6" x="0" y="0" width="140" height="100" rx="8"/>
-              <text fill="#1d4ed8" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Advanced</text>
+              <text fill="#1d4ed8" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Просунутий</text>
               <text fill="#1d4ed8" x="70" y="45" text-anchor="middle" font-size="9">Централізоване</text>
               <text fill="#1d4ed8" x="70" y="57" text-anchor="middle" font-size="9">управління</text>
-              <text fill="#1e40af" x="70" y="75" text-anchor="middle" font-size="8">- Cross-pillar integration</text>
-              <text fill="#1e40af" x="70" y="87" text-anchor="middle" font-size="8">- Automated response</text>
+              <text fill="#1e40af" x="70" y="75" text-anchor="middle" font-size="8">- Інтеграція стовпів</text>
+              <text fill="#1e40af" x="70" y="87" text-anchor="middle" font-size="8">- Автоматична відповідь</text>
             </g>
 
             <g transform="translate(500, 40)">
               <rect fill="#dcfce7" stroke="#22c55e" x="0" y="0" width="140" height="100" rx="8"/>
-              <text fill="#166534" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Optimal</text>
+              <text fill="#166534" x="70" y="25" text-anchor="middle" font-weight="600" font-size="12">Оптимальний</text>
               <text fill="#166534" x="70" y="45" text-anchor="middle" font-size="9">Повна</text>
               <text fill="#166534" x="70" y="57" text-anchor="middle" font-size="9">автоматизація</text>
-              <text fill="#14532d" x="70" y="75" text-anchor="middle" font-size="8">- AI/ML driven</text>
-              <text fill="#14532d" x="70" y="87" text-anchor="middle" font-size="8">- Continuous optimization</text>
+              <text fill="#14532d" x="70" y="75" text-anchor="middle" font-size="8">- На основі AI/ML</text>
+              <text fill="#14532d" x="70" y="87" text-anchor="middle" font-size="8">- Безперервна оптимізація</text>
             </g>
 
             <!-- Progress arrow -->
@@ -1149,39 +2017,39 @@ spec:
         <table>
           <tr>
             <th>Стовп</th>
-            <th>Traditional</th>
-            <th>Advanced</th>
-            <th>Optimal</th>
+            <th>Традиційний</th>
+            <th>Просунутий</th>
+            <th>Оптимальний</th>
           </tr>
           <tr>
-            <td><strong>Identity</strong></td>
-            <td>Passwords, basic SSO</td>
-            <td>MFA, risk-based auth</td>
-            <td>Continuous validation, passwordless</td>
+            <td><strong>Ідентичність</strong></td>
+            <td>Паролі, базовий SSO</td>
+            <td>MFA, автентифікація на основі ризику</td>
+            <td>Безперервна валідація, без паролів</td>
           </tr>
           <tr>
-            <td><strong>Devices</strong></td>
-            <td>Limited visibility</td>
-            <td>Device compliance checks</td>
-            <td>Real-time posture assessment</td>
+            <td><strong>Пристрої</strong></td>
+            <td>Обмежена видимість</td>
+            <td>Перевірки відповідності пристроїв</td>
+            <td>Оцінка стану в реальному часі</td>
           </tr>
           <tr>
-            <td><strong>Networks</strong></td>
-            <td>Perimeter-based</td>
-            <td>Microsegmentation</td>
-            <td>Software-defined, encrypted</td>
+            <td><strong>Мережі</strong></td>
+            <td>На основі периметра</td>
+            <td>Мікросегментація</td>
+            <td>Програмно визначена, зашифрована</td>
           </tr>
           <tr>
-            <td><strong>Applications</strong></td>
-            <td>On-prem, VPN access</td>
-            <td>Cloud-aware, ZTNA</td>
-            <td>Integrated security, DevSecOps</td>
+            <td><strong>Додатки</strong></td>
+            <td>Локальні, VPN-доступ</td>
+            <td>Хмарно-орієнтовані, ZTNA</td>
+            <td>Інтегрована безпека, DevSecOps</td>
           </tr>
           <tr>
-            <td><strong>Data</strong></td>
-            <td>Static classification</td>
-            <td>Dynamic DLP</td>
-            <td>Automated protection, ML-driven</td>
+            <td><strong>Дані</strong></td>
+            <td>Статична класифікація</td>
+            <td>Динамічний DLP</td>
+            <td>Автоматизований захист, на основі ML</td>
           </tr>
         </table>
 
@@ -1190,12 +2058,12 @@ spec:
 
         <h4>Ключові метрики ефективності</h4>
         <ul>
-          <li><strong>Mean Time to Detect (MTTD):</strong> Час виявлення загрози — має зменшуватися</li>
-          <li><strong>Mean Time to Respond (MTTR):</strong> Час реагування — має зменшуватися</li>
-          <li><strong>Blast Radius:</strong> Кількість систем, уражених при інциденті — має зменшуватися</li>
-          <li><strong>Authentication Success Rate:</strong> Успішність легітимних автентифікацій</li>
-          <li><strong>Policy Violations:</strong> Кількість порушень політик — має зменшуватися</li>
-          <li><strong>Coverage:</strong> % систем під Zero Trust контролем</li>
+          <li><strong>Середній час виявлення (MTTD):</strong> час виявлення загрози — має зменшуватися</li>
+          <li><strong>Середній час реагування (MTTR):</strong> час реагування — має зменшуватися</li>
+          <li><strong>Радіус ураження (Blast Radius):</strong> кількість систем, уражених при інциденті — має зменшуватися</li>
+          <li><strong>Успішність автентифікацій:</strong> відсоток успішних легітимних автентифікацій</li>
+          <li><strong>Порушення політик:</strong> кількість порушень політик — має зменшуватися</li>
+          <li><strong>Покриття:</strong> % систем під контролем Zero Trust</li>
         </ul>
 
         <h4>Приклад ROI калькуляції</h4>
@@ -1233,7 +2101,7 @@ ROI за 3 роки:
           <li><strong>Lateral movement:</strong> якщо пристрій скомпрометований, атакуючий через VPN потрапляє у всю корпоративну мережу.</li>
           <li><strong>Продуктивність:</strong> весь трафік маршрутизується через корпоративний дата-центр (backhauling), навіть якщо користувач працює з хмарним додатком. Це додає затримку.</li>
           <li><strong>Масштабування:</strong> VPN-концентратори мають обмежену пропускну здатність. Під час COVID-19 багато організацій зіткнулися з тим, що їхня VPN-інфраструктура не витримує навантаження від 100% віддалених працівників.</li>
-          <li><strong>User experience:</strong> необхідність підключатися, вводити credentials, очікувати з'єднання — все це створює friction для користувачів.</li>
+          <li><strong>Зручність:</strong> необхідність підключатися, вводити облікові дані, очікувати з'єднання — все це створює бар'єри для користувачів.</li>
         </ul>
 
         <h3>Як працює ZTNA</h3>
@@ -1242,7 +2110,7 @@ ROI за 3 роки:
         <p><strong>Принцип роботи:</strong></p>
         <ol>
           <li>Користувач відкриває браузер або agent і запитує доступ до конкретного додатку (наприклад, внутрішній HR-портал).</li>
-          <li>ZTNA-сервіс (PEP) перехоплює запит та перевіряє: ідентичність (хто?), пристрій (чи compliant?), контекст (звідки? о котрій? який risk score?).</li>
+          <li>ZTNA-сервіс (PEP) перехоплює запит та перевіряє: ідентичність (хто?), пристрій (чи відповідний?), контекст (звідки? о котрій? який risk score?).</li>
           <li>Policy Engine приймає рішення: дозволити, заборонити, або вимагати step-up authentication.</li>
           <li>Якщо дозволено — створюється зашифрований тунель лише до цього конкретного додатку. Користувач не бачить решту мережі.</li>
         </ol>
@@ -1259,7 +2127,7 @@ ROI за 3 роки:
           <tr>
             <td><strong>Рівень доступу</strong></td>
             <td>Мережевий (весь subnet)</td>
-            <td>Application-level (конкретний додаток)</td>
+            <td>На рівні додатку (конкретний додаток)</td>
           </tr>
           <tr>
             <td><strong>Принцип</strong></td>
@@ -1279,22 +2147,22 @@ ROI за 3 роки:
           <tr>
             <td><strong>Масштабування</strong></td>
             <td>Обмежене апаратно</td>
-            <td>Cloud-native, практично безмежне</td>
+            <td>Хмарне, практично безмежне</td>
           </tr>
           <tr>
-            <td><strong>UX</strong></td>
+            <td><strong>Зручність</strong></td>
             <td>Потрібне підключення</td>
             <td>Прозорий — як відкрити веб-сайт</td>
           </tr>
           <tr>
             <td><strong>Видимість</strong></td>
             <td>Мережевий трафік</td>
-            <td>Application-level + user behavior</td>
+            <td>Рівень додатків + поведінка користувача</td>
           </tr>
           <tr>
-            <td><strong>Cloud-ready</strong></td>
-            <td>Backhauling через дата-центр</td>
-            <td>Прямий доступ через cloud edge</td>
+            <td><strong>Хмарна готовність</strong></td>
+            <td>Перенаправлення через дата-центр</td>
+            <td>Прямий доступ через хмарну граничну точку</td>
           </tr>
         </table>
 
@@ -1308,11 +2176,11 @@ ROI за 3 роки:
         <h3>Чи мертвий VPN?</h3>
         <p>Ні, не повністю. VPN все ще має місце в певних сценаріях:</p>
         <ul>
-          <li><strong>Legacy-додатки</strong> — старі системи, що не підтримують modern authentication, можуть потребувати VPN.</li>
+          <li><strong>Legacy-додатки</strong> — старі системи, що не підтримують сучасну автентифікацію, можуть потребувати VPN.</li>
           <li><strong>Мережевий доступ</strong> — якщо потрібен доступ не до додатку, а до самої мережі (наприклад, для мережевого адміністрування).</li>
-          <li><strong>Перехідний період</strong> — більшість організацій впроваджують ZTNA поступово, зберігаючи VPN як fallback.</li>
+          <li><strong>Перехідний період</strong> — більшість організацій впроваджують ZTNA поступово, зберігаючи VPN як резервний варіант.</li>
         </ul>
-        <p>Рекомендований підхід: почніть з ZTNA для нових додатків і cloud-ресурсів, поступово мігруйте legacy з VPN на ZTNA. Кінцева мета — повна відмова від VPN.</p>
+        <p>Рекомендований підхід: почніть з ZTNA для нових додатків і хмарних ресурсів, поступово мігруйте legacy з VPN на ZTNA. Кінцева мета — повна відмова від VPN.</p>
       </section>
 
       <section>
@@ -1324,7 +2192,7 @@ ROI за 3 роки:
           <li><strong>"Never trust, always verify"</strong> — кожен запит перевіряється незалежно від джерела</li>
           <li><strong>Ідентичність — новий периметр:</strong> рішення базуються на "хто", а не "звідки"</li>
           <li><strong>Мінімальні привілеї:</strong> доступ тільки до того, що потрібно, і тільки коли потрібно</li>
-          <li><strong>Assume breach:</strong> проєктуйте так, ніби зловмисник вже всередині</li>
+          <li><strong>Припускайте зламу:</strong> проєктуйте так, ніби зловмисник вже всередині</li>
           <li><strong>Безперервний моніторинг:</strong> довіра оцінюється постійно, не одноразово</li>
         </ul>
 
@@ -1332,11 +2200,59 @@ ROI за 3 роки:
         <p>Для початку впровадження Zero Trust у вашій організації:</p>
         <ol>
           <li>Проведіть аудит поточного стану: активи, ідентичності, потоки даних</li>
-          <li>Впровадьте MFA для всіх користувачів — це найбільш ефективний "quick win"</li>
-          <li>Класифікуйте дані та визначте "protect surfaces"</li>
+          <li>Впровадьте MFA для всіх користувачів — це найшвидший крок з найбільшим ефектом</li>
+          <li>Класифікуйте дані та визначте поверхні захисту</li>
           <li>Почніть з пілота на некритичній системі</li>
           <li>Вимірюйте, навчайтеся, ітеруйте</li>
         </ol>
+
+        <h3>Майбутнє Zero Trust</h3>
+        <p>Zero Trust як концепція продовжує еволюціонувати, адаптуючись до нових технологій та загроз. Ось основні тренди, які визначатимуть розвиток ZTA у найближчі 5-10 років:</p>
+
+        <h4>AI-driven Policy Engines</h4>
+        <p>Поточні Policy Engines переважно використовують підхід на основі правил — людина пише політики, система їх виконує. Майбутні PE будуть використовувати AI/ML для автоматичного формування та адаптації політик.</p>
+        <p>AI-driven PE зможе:</p>
+        <ul>
+          <li>Автоматично виявляти оптимальні політики на основі аналізу трафіку замість ручного написання правил</li>
+          <li>Прогнозувати загрози до їх реалізації (predictive security)</li>
+          <li>Автоматично адаптувати trust thresholds на основі поточного ландшафту загроз</li>
+          <li>Зменшити хибні спрацювання у UEBA на порядок завдяки моделям глибокого навчання</li>
+        </ul>
+
+        <h4>Quantum-Safe Cryptography у ZTA</h4>
+        <p>Квантові комп'ютери загрожують зламати сучасні криптографічні алгоритми (RSA, ECDSA), на яких базується mTLS та інші компоненти ZTA. NIST вже стандартизував перші post-quantum алгоритми: CRYSTALS-Kyber для обміну ключами та CRYSTALS-Dilithium для цифрових підписів.</p>
+        <p>Організації повинні починати планувати міграцію до quantum-safe криптографії — це складний і тривалий процес, який може зайняти 5-10 років. Стратегія "harvest now, decrypt later" (збирати зашифровані дані зараз, дешифрувати квантовим комп'ютером пізніше) робить цю загрозу актуальною вже сьогодні.</p>
+
+        <h4>Identity Mesh</h4>
+        <p>Identity Mesh — це концепція розподіленого управління ідентичностями, де замість єдиного централізованого IdP використовується сітка (mesh) федерованих identity-провайдерів. Це дозволяє:</p>
+        <ul>
+          <li>Забезпечити портативність ідентичностей між хмарами та організаціями</li>
+          <li>Реалізувати децентралізовану ідентичність (DID) на основі blockchain та верифікованих облікових даних</li>
+          <li>Зменшити залежність від єдиного постачальника ідентичностей (vendor lock-in)</li>
+        </ul>
+        <p>Gartner прогнозує, що до 2027 року identity mesh стане стандартним підходом для мультихмарних організацій.</p>
+
+        <h4>SASE (Secure Access Service Edge)</h4>
+        <p>SASE — це конвергенція мережевих та безпекових функцій у єдиному хмарному сервісі. SASE об'єднує:</p>
+        <ul>
+          <li>SD-WAN (Software-Defined Wide Area Network)</li>
+          <li>ZTNA (Zero Trust Network Access)</li>
+          <li>CASB (Cloud Access Security Broker)</li>
+          <li>SWG (Secure Web Gateway)</li>
+          <li>FWaaS (Firewall as a Service)</li>
+        </ul>
+        <p>SASE реалізує Zero Trust на мережевому рівні як хмарний сервіс, усуваючи необхідність у VPN-концентраторах, on-premise firewall та інших апаратних засобах. Лідери ринку: Zscaler, Palo Alto Prisma, Cloudflare One, Netskope.</p>
+
+        <h4>Zero Trust для IoT/OT</h4>
+        <p>Застосування Zero Trust до Інтернету речей (IoT) та операційних технологій (OT) — це наступний великий виклик. IoT/OT пристрої часто не підтримують сучасну автентифікацію, мають обмежені обчислювальні ресурси для шифрування та працюють десятиліттями без оновлень.</p>
+        <p>Підходи до Zero Trust для IoT/OT:</p>
+        <ul>
+          <li><strong>Цифровий відбиток пристрою:</strong> ідентифікація пристроїв на основі їхньої мережевої поведінки</li>
+          <li><strong>Мережева мікросегментація:</strong> ізоляція IoT-пристроїв у окремих мережевих сегментах</li>
+          <li><strong>Автентифікація через шлюз:</strong> IoT-шлюз автентифікується від імені пристроїв</li>
+          <li><strong>Виявлення аномалій на основі поведінки:</strong> виявлення компрометованих IoT через відхилення від нормальної поведінки</li>
+        </ul>
+        <p>Це особливо актуально для розумних міст, промислового IoT та медичних пристроїв.</p>
 
         <h3>Рекомендовані ресурси для подальшого вивчення</h3>
         <ul>
@@ -1366,6 +2282,10 @@ ROI за 3 роки:
           <li>Як Azure Conditional Access реалізує принципи Zero Trust? Які фактори враховуються при прийнятті рішення?</li>
           <li>Що таке CISA Zero Trust Maturity Model? Опишіть чотири рівні зрілості.</li>
           <li>Як Google BeyondCorp змінив підхід до корпоративної безпеки? Які уроки з цього можна взяти?</li>
+          <li>Порівняйте три моделі розгортання ZTA за NIST (Agent/Gateway, Enclave, Resource Portal). У яких сценаріях кожна з них найбільш доцільна?</li>
+          <li>Що таке Trust Algorithm? Поясніть різницю між criteria-based та score-based підходами. Який із них більш гнучкий і чому?</li>
+          <li>Як UEBA інтегрується з Policy Engine у ZTA? Наведіть три сценарії виявлення загроз через UEBA та опишіть очікувану реакцію системи.</li>
+          <li>Чому DevOps/CI/CD пайплайни є критичною ціллю для атак? Назвіть принципи Zero Trust для CI/CD та наведіть приклади supply chain attacks, які вони запобігають.</li>
         </ol>
       </section>
 
@@ -1394,15 +2314,30 @@ ROI за 3 роки:
           <li><strong>PA</strong> — Policy Administrator, виконавець рішень Policy Engine</li>
           <li><strong>mTLS</strong> — mutual TLS, двостороння TLS-автентифікація, де обидві сторони перевіряють сертифікати одна одної</li>
           <li><strong>Мікросегментація</strong> — розділення мережі на ізольовані сегменти з індивідуальними політиками безпеки</li>
-          <li><strong>Lateral movement</strong> — переміщення атакуючого по внутрішній мережі після початкового проникнення</li>
-          <li><strong>Conditional Access</strong> — policy engine Azure, що приймає рішення про доступ на основі контексту (user, device, location, risk)</li>
+          <li><strong>Lateral movement</strong> — бічне переміщення атакуючого по внутрішній мережі після початкового проникнення</li>
+          <li><strong>Conditional Access</strong> — механізм політик Azure, що приймає рішення про доступ на основі контексту (користувач, пристрій, місцезнаходження, ризик)</li>
           <li><strong>BeyondCorp</strong> — реалізація Zero Trust від Google, піонерський проєкт що розпочався після Operation Aurora (2009)</li>
           <li><strong>IAP</strong> — Identity-Aware Proxy, сервіс GCP для Zero Trust доступу до додатків</li>
-          <li><strong>Service Mesh</strong> — інфраструктурний рівень для управління service-to-service комунікацією (Istio, Linkerd)</li>
-          <li><strong>SPIFFE/SPIRE</strong> — стандарт та імплементація для ідентичності workloads у Zero Trust середовищі</li>
+          <li><strong>Service Mesh</strong> — інфраструктурний рівень для управління комунікацією між сервісами (Istio, Linkerd)</li>
+          <li><strong>SPIFFE/SPIRE</strong> — стандарт та імплементація для ідентичності робочих навантажень у середовищі Zero Trust</li>
           <li><strong>CISA</strong> — Cybersecurity and Infrastructure Security Agency, агентство США з кібербезпеки</li>
           <li><strong>Assume breach</strong> — принцип проєктування безпеки з припущенням, що зловмисник вже присутній у мережі</li>
-          <li><strong>Device posture</strong> — стан безпеки пристрою (оновлення ОС, шифрування диску, антивірус), що враховується при прийнятті рішень ZTA</li>
+          <li><strong>Device posture</strong> — стан безпеки пристрою (оновлення ОС, шифрування диска, антивірус), що враховується при прийнятті рішень ZTA</li>
+          <li><strong>SDP</strong> — Software-Defined Perimeter, архітектурний підхід CSA, що робить інфраструктуру невидимою для неавторизованих користувачів ("dark cloud")</li>
+          <li><strong>SPA</strong> — Single Packet Authorization, криптографічний протокол SDP, при якому перший пакет містить автентифікаційну інформацію для "відкриття дверей"</li>
+          <li><strong>UEBA</strong> — User and Entity Behavior Analytics, клас рішень для виявлення аномальної поведінки за допомогою ML та статистичного аналізу</li>
+          <li><strong>PAM</strong> — Privileged Access Management, управління привілейованим доступом з принципами JIT та JEA</li>
+          <li><strong>JIT</strong> — Just-in-Time access, підхід при якому привілейований доступ надається тільки на обмежений час за запитом</li>
+          <li><strong>JEA</strong> — Just-Enough-Access, підхід при якому надаються тільки мінімально необхідні привілеї для конкретного завдання</li>
+          <li><strong>SASE</strong> — Secure Access Service Edge, конвергенція SD-WAN, ZTNA, CASB, SWG та FWaaS у єдиному хмарному сервісі</li>
+          <li><strong>SLSA</strong> — Supply Chain Levels for Software Artifacts, фреймворк Google для оцінки безпеки ланцюга постачання ПЗ (4 рівні зрілості)</li>
+          <li><strong>SIEM</strong> — Security Information and Event Management, система збору, кореляції та аналізу логів безпеки з усіх компонентів ZTA</li>
+          <li><strong>CDM</strong> — Continuous Diagnostics and Mitigation, система безперервної діагностики стану безпеки активів організації</li>
+          <li><strong>East-West traffic</strong> — горизонтальний (латеральний) трафік між workloads усередині мережі, складає 70-80% загального обсягу в сучасних дата-центрах</li>
+          <li><strong>North-South traffic</strong> — вертикальний трафік, що входить у мережу або виходить з неї (між зовнішніми клієнтами та внутрішніми ресурсами)</li>
+          <li><strong>Trust Algorithm</strong> — алгоритм у Policy Engine, що обчислює рівень довіри до суб'єкта на основі множини факторів (criteria-based або score-based)</li>
+          <li><strong>SSRF</strong> — Server-Side Request Forgery, тип вразливості, при якій атакуючий змушує сервер виконувати запити до внутрішніх ресурсів</li>
+          <li><strong>MFA Fatigue</strong> — техніка атаки, при якій зловмисник надсилає безперервний потік MFA push-нотифікацій, доки жертва випадково не підтвердить одну з них</li>
         </ul>
       </section>
 
