@@ -50,7 +50,7 @@
     <section class="slide">
       <h1>Zero Trust: Нова парадигма</h1>
       <ul>
-        <li><strong>"Never trust, always verify"</strong></li>
+        <li><strong>"Ніколи не довіряй, завжди перевіряй"</strong></li>
         <li>Кожен запит перевіряється індивідуально</li>
         <li>Незалежно від розташування в мережі</li>
         <li><strong>Припускайте злам (Assume breach):</strong> припускайте, що зловмисник вже всередині</li>
@@ -64,7 +64,7 @@
         <li><strong>2013:</strong> Злом Target через підрядника</li>
         <li><strong>2014:</strong> Google запускає BeyondCorp</li>
         <li><strong>2020:</strong> NIST SP 800-207</li>
-        <li><strong>2021:</strong> Executive Order від президента США</li>
+        <li><strong>2021:</strong> Указ президента США</li>
       </ul>
     </section>
 
@@ -92,17 +92,17 @@
       <div class="slide-grid">
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <h3>Identity</h3>
+          <h3>Ідентичність</h3>
           <p>MFA, SSO, IAM</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-          <h3>Device</h3>
-          <p>MDM, EDR, compliance</p>
+          <h3>Пристрій</h3>
+          <p>MDM, EDR, відповідність</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-          <h3>Network</h3>
+          <h3>Мережа</h3>
           <p>mTLS, сегментація</p>
         </div>
       </div>
@@ -110,32 +110,27 @@
 
     <section class="slide">
       <h1>Периметр vs Zero Trust</h1>
-      <div class="slide-diagram">
-        <svg viewBox="0 0 450 180" width="450" height="180">
+      <div class="slide-diagram" style="width: 100%;">
+        <svg viewBox="0 0 600 260" style="width: 85%; max-width: none; max-height: none; display: block; margin: 0 auto;">
           <!-- Perimeter model (left) -->
-          <rect x="10" y="30" width="200" height="120" rx="12" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2" stroke-dasharray="5,5"/>
-          <text x="110" y="55" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Периметр</text>
-          <text x="110" y="80" text-anchor="middle" class="diagram-text-small">"Trust but verify"</text>
-          <text x="110" y="100" text-anchor="middle" class="diagram-text-small">Один firewall</text>
-          <text x="110" y="120" text-anchor="middle" class="diagram-text-small">Широкий доступ</text>
-          <text x="110" y="140" text-anchor="middle" class="diagram-text-small">За IP-адресою</text>
+          <rect x="10" y="20" width="250" height="220" rx="16" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6,4"/>
+          <text x="135" y="55" text-anchor="middle" fill="#ef4444" font-size="18" font-weight="700">Периметр</text>
+          <text x="135" y="90" text-anchor="middle" fill="currentColor" font-size="14">"Довіряй, але перевіряй"</text>
+          <text x="135" y="120" text-anchor="middle" fill="currentColor" font-size="14">Один міжмережевий екран</text>
+          <text x="135" y="150" text-anchor="middle" fill="currentColor" font-size="14">Широкий доступ</text>
+          <text x="135" y="180" text-anchor="middle" fill="currentColor" font-size="14">За IP-адресою</text>
 
-          <!-- Arrow -->
-          <path d="M220,95 L230,95" stroke="#64748b" stroke-width="3" marker-end="url(#vsarrow)"/>
+          <!-- Arrow (big, visible) -->
+          <line x1="270" y1="130" x2="330" y2="130" stroke="currentColor" stroke-width="3.5"/>
+          <polygon points="330,122 348,130 330,138" fill="currentColor"/>
 
           <!-- Zero Trust model (right) -->
-          <rect x="240" y="30" width="200" height="120" rx="12" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="2"/>
-          <text x="340" y="55" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Zero Trust</text>
-          <text x="340" y="80" text-anchor="middle" class="diagram-text-small">"Never trust"</text>
-          <text x="340" y="100" text-anchor="middle" class="diagram-text-small">Мікропериметри</text>
-          <text x="340" y="120" text-anchor="middle" class="diagram-text-small">Least privilege</text>
-          <text x="340" y="140" text-anchor="middle" class="diagram-text-small">За ідентичністю</text>
-
-          <defs>
-            <marker id="vsarrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
-            </marker>
-          </defs>
+          <rect x="358" y="20" width="235" height="220" rx="16" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="2.5"/>
+          <text x="475" y="55" text-anchor="middle" fill="#4ade80" font-size="18" font-weight="700">Zero Trust</text>
+          <text x="475" y="90" text-anchor="middle" fill="currentColor" font-size="14">"Ніколи не довіряй"</text>
+          <text x="475" y="120" text-anchor="middle" fill="currentColor" font-size="14">Мікропериметри</text>
+          <text x="475" y="150" text-anchor="middle" fill="currentColor" font-size="14">Мінімальні привілеї</text>
+          <text x="475" y="180" text-anchor="middle" fill="currentColor" font-size="14">За ідентичністю</text>
         </svg>
       </div>
     </section>
@@ -147,6 +142,59 @@
         <li>Тільки на необхідний час</li>
         <li>Тільки з необхідними правами</li>
         <li><strong>Just-in-Time (JIT)</strong> замість постійного доступу</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Моделі розгортання ZTA (NIST)</h1>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <h3>Агент/Шлюз</h3>
+          <p>Агент на пристрої + шлюз перед ресурсом. Глибокий контроль</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <h3>Анклав</h3>
+          <p>Шлюз на межі групи ресурсів. Для legacy-систем</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3>Ресурсний портал</h3>
+          <p>Веб-портал/proxy. Без агента, через браузер</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h1>Порівняння моделей розгортання</h1>
+      <ul>
+        <li><strong>Агент/Шлюз:</strong> Zscaler ZPA, CrowdStrike — для керованих пристроїв з високою безпекою</li>
+        <li><strong>Анклав:</strong> VMware NSX, Cisco ACI — для on-premise та перехідного етапу</li>
+        <li><strong>Портал:</strong> Google IAP, Cloudflare Access — для SaaS, BYOD, підрядників</li>
+        <li><strong>Практика:</strong> організації комбінують кілька моделей</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Trust Algorithm: на основі критеріїв</h1>
+      <ul>
+        <li>Policy Engine перевіряє набір <strong>бінарних критеріїв</strong></li>
+        <li>Кожен: пройдено / не пройдено</li>
+        <li><strong>Критерії:</strong> автентифікація, MFA, стан пристрою, геолокація, робочі години, threat intelligence</li>
+        <li><strong>+</strong> детерміновано, зрозуміло для аудиту</li>
+        <li><strong>−</strong> не враховує нюанси, може бути занадто жорстким</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Trust Algorithm: на основі оцінки</h1>
+      <ul>
+        <li>Кожен фактор отримує <strong>числову оцінку</strong> (score)</li>
+        <li><strong>Автентифікація:</strong> FIDO2 = 25, MFA = 20, пароль = 10</li>
+        <li><strong>Пристрій:</strong> керований + відповідний = 25, BYOD = 10</li>
+        <li><strong>Рішення:</strong> score ≥ порогу → дозвіл, близько → додаткова перевірка, нижче → відмова</li>
+        <li><strong>Практика:</strong> гібрид — критерії + оцінка (Azure Conditional Access)</li>
       </ul>
     </section>
 
