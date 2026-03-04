@@ -33,39 +33,73 @@
         <li>Кілька VM на одному фізичному сервері</li>
         <li><strong>Гіпервізор (VMM)</strong> — керує VM</li>
         <li>Основа хмарних обчислень</li>
-        <li>Ізоляція workloads різних клієнтів</li>
+        <li>Ізоляція робочих навантажень різних клієнтів</li>
       </ul>
     </section>
 
     <section class="slide">
       <h1>Типи гіпервізорів</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 420 180" width="420" height="180">
+        <svg viewBox="0 0 700 300">
           <!-- Type 1 (left) -->
-          <text x="100" y="20" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Тип 1 (Bare-metal)</text>
-          <rect x="20" y="130" width="160" height="30" rx="4" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="100" y="150" text-anchor="middle" class="diagram-text-small">Hardware</text>
-          <rect x="20" y="95" width="160" height="30" rx="4" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
-          <text x="100" y="115" text-anchor="middle" class="diagram-text-small">Hypervisor</text>
-          <rect x="25" y="35" width="45" height="55" rx="4" class="diagram-box"/>
-          <text x="47" y="67" text-anchor="middle" class="diagram-text-small">VM1</text>
-          <rect x="77" y="35" width="45" height="55" rx="4" class="diagram-box"/>
-          <text x="99" y="67" text-anchor="middle" class="diagram-text-small">VM2</text>
-          <rect x="129" y="35" width="45" height="55" rx="4" class="diagram-box"/>
-          <text x="151" y="67" text-anchor="middle" class="diagram-text-small">VM3</text>
+          <text x="175" y="30" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="18">Тип 1 (Bare-metal)</text>
+
+          <!-- Hardware -->
+          <rect x="30" y="230" width="290" height="45" rx="6" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="175" y="258" text-anchor="middle" class="diagram-text" font-size="14">Hardware (CPU, RAM, Storage)</text>
+
+          <!-- Hypervisor -->
+          <rect x="30" y="175" width="290" height="45" rx="6" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
+          <text x="175" y="203" text-anchor="middle" class="diagram-text" font-size="14">Hypervisor (ESXi, KVM, Xen)</text>
+
+          <!-- VMs -->
+          <rect x="40" y="55" width="85" height="110" rx="6" class="diagram-box"/>
+          <text x="82" y="85" text-anchor="middle" class="diagram-text-small" font-size="13">Guest OS</text>
+          <rect x="50" y="95" width="65" height="30" rx="4" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="82" y="115" text-anchor="middle" class="diagram-text-small" font-size="11">App</text>
+          <text x="82" y="155" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="13">VM 1</text>
+
+          <rect x="135" y="55" width="85" height="110" rx="6" class="diagram-box"/>
+          <text x="177" y="85" text-anchor="middle" class="diagram-text-small" font-size="13">Guest OS</text>
+          <rect x="145" y="95" width="65" height="30" rx="4" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="177" y="115" text-anchor="middle" class="diagram-text-small" font-size="11">App</text>
+          <text x="177" y="155" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="13">VM 2</text>
+
+          <rect x="230" y="55" width="85" height="110" rx="6" class="diagram-box"/>
+          <text x="272" y="85" text-anchor="middle" class="diagram-text-small" font-size="13">Guest OS</text>
+          <rect x="240" y="95" width="65" height="30" rx="4" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="272" y="115" text-anchor="middle" class="diagram-text-small" font-size="11">App</text>
+          <text x="272" y="155" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="13">VM 3</text>
+
+          <!-- Divider -->
+          <text x="350" y="160" text-anchor="middle" class="diagram-text-small" font-size="20" fill="#475569">vs</text>
 
           <!-- Type 2 (right) -->
-          <text x="320" y="20" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">Тип 2 (Hosted)</text>
-          <rect x="240" y="130" width="160" height="30" rx="4" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="320" y="150" text-anchor="middle" class="diagram-text-small">Hardware</text>
-          <rect x="240" y="95" width="160" height="30" rx="4" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2"/>
-          <text x="320" y="115" text-anchor="middle" class="diagram-text-small">Host OS</text>
-          <rect x="240" y="60" width="160" height="30" rx="4" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="2"/>
-          <text x="320" y="80" text-anchor="middle" class="diagram-text-small">Hypervisor</text>
-          <rect x="250" y="35" width="60" height="20" rx="4" class="diagram-box"/>
-          <text x="280" y="49" text-anchor="middle" class="diagram-text-small">VM1</text>
-          <rect x="330" y="35" width="60" height="20" rx="4" class="diagram-box"/>
-          <text x="360" y="49" text-anchor="middle" class="diagram-text-small">VM2</text>
+          <text x="525" y="30" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="18">Тип 2 (Hosted)</text>
+
+          <!-- Hardware -->
+          <rect x="380" y="230" width="290" height="45" rx="6" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="525" y="258" text-anchor="middle" class="diagram-text" font-size="14">Hardware (CPU, RAM, Storage)</text>
+
+          <!-- Host OS -->
+          <rect x="380" y="175" width="290" height="45" rx="6" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2"/>
+          <text x="525" y="203" text-anchor="middle" class="diagram-text" font-size="14">Host OS (Windows, macOS, Linux)</text>
+
+          <!-- Hypervisor -->
+          <rect x="380" y="120" width="290" height="45" rx="6" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="525" y="148" text-anchor="middle" class="diagram-text" font-size="14">Hypervisor (VirtualBox, Workstation)</text>
+
+          <!-- VMs -->
+          <rect x="400" y="55" width="80" height="55" rx="6" class="diagram-box"/>
+          <text x="440" y="78" text-anchor="middle" class="diagram-text-small" font-size="12">Guest OS</text>
+          <text x="440" y="100" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="12">VM 1</text>
+
+          <rect x="495" y="55" width="80" height="55" rx="6" class="diagram-box"/>
+          <text x="535" y="78" text-anchor="middle" class="diagram-text-small" font-size="12">Guest OS</text>
+          <text x="535" y="100" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="12">VM 2</text>
+
+          <rect x="590" y="55" width="70" height="55" rx="6" class="diagram-box"/>
+          <text x="625" y="85" text-anchor="middle" class="diagram-text-small" font-size="14">...</text>
         </svg>
       </div>
     </section>
@@ -81,12 +115,12 @@
     </section>
 
     <section class="slide">
-      <h1>Side-Channel Attacks</h1>
+      <h1>Атаки побічних каналів (Side-Channel)</h1>
       <ul>
-        <li>Експлуатація спільних ресурсів (CPU cache)</li>
+        <li>Експлуатація спільних ресурсів (кеш-пам'ять CPU)</li>
         <li><strong>Spectre/Meltdown (2018):</strong> читання пам'яті інших VM</li>
-        <li><strong>L1TF:</strong> L1 cache leak</li>
-        <li><strong>Захист:</strong> мікрокод, dedicated hosts</li>
+        <li><strong>L1TF:</strong> витік з кешу L1</li>
+        <li><strong>Захист:</strong> мікрокод, виділені хости</li>
       </ul>
     </section>
 
@@ -101,12 +135,12 @@
     </section>
 
     <section class="slide">
-      <h1>Noisy Neighbor</h1>
+      <h1>«Шумний сусід» (Noisy Neighbor)</h1>
       <ul>
         <li>Одна VM споживає надто багато ресурсів</li>
         <li>Вплив на інші VM на тому ж хості</li>
-        <li>CPU, Memory, I/O, Network contention</li>
-        <li><strong>Захист:</strong> resource quotas, QoS</li>
+        <li>Конкуренція за CPU, пам'ять, I/O, мережу</li>
+        <li><strong>Захист:</strong> квоти ресурсів, QoS</li>
       </ul>
     </section>
 
@@ -114,30 +148,67 @@
       <h1>Захист гіпервізора</h1>
       <ul>
         <li><strong>Мінімальна інсталяція:</strong> тільки потрібне</li>
-        <li><strong>Окрема management network</strong></li>
-        <li><strong>MFA</strong> для management console</li>
-        <li><strong>Регулярні патчі</strong></li>
+        <li><strong>Окрема мережа управління</strong></li>
+        <li><strong>MFA</strong> для консолі управління</li>
+        <li><strong>Регулярні оновлення безпеки</strong></li>
       </ul>
     </section>
 
     <section class="slide">
       <h1>Захист VM</h1>
       <ul>
-        <li><strong>Hardening:</strong> CIS Benchmarks</li>
-        <li><strong>Encrypted VMs:</strong> диски зашифровані</li>
-        <li><strong>Snapshot management:</strong> безпечне зберігання</li>
-        <li><strong>VM templates:</strong> стандартизовані образи</li>
+        <li><strong>Зміцнення (Hardening):</strong> CIS Benchmarks</li>
+        <li><strong>Шифрування VM:</strong> захист дисків у стані спокою</li>
+        <li><strong>Управління знімками:</strong> безпечне зберігання snapshots</li>
+        <li><strong>Шаблони VM:</strong> стандартизовані «золоті» образи</li>
       </ul>
     </section>
 
     <section class="slide">
       <h1>Таблиця загроз</h1>
-      <ul>
-        <li><strong>VM Escape:</strong> критичний — патчі</li>
-        <li><strong>Side-Channel:</strong> високий — dedicated hosts</li>
-        <li><strong>Hyperjacking:</strong> критичний — Secure Boot</li>
-        <li><strong>Noisy Neighbor:</strong> середній — limits</li>
-      </ul>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 280">
+          <!-- Header -->
+          <rect x="20" y="10" width="200" height="40" rx="6" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="120" y="36" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">Загроза</text>
+          <rect x="230" y="10" width="140" height="40" rx="6" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="300" y="36" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">Вплив</text>
+          <rect x="380" y="10" width="300" height="40" rx="6" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="530" y="36" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">Основний захист</text>
+
+          <!-- Row 1: VM Escape -->
+          <rect x="20" y="60" width="200" height="45" rx="6" class="diagram-box"/>
+          <text x="120" y="88" text-anchor="middle" class="diagram-text" font-size="13">VM Escape</text>
+          <rect x="230" y="60" width="140" height="45" rx="6" fill="rgba(239, 68, 68, 0.25)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="300" y="88" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="600">Критичний</text>
+          <rect x="380" y="60" width="300" height="45" rx="6" class="diagram-box"/>
+          <text x="530" y="88" text-anchor="middle" class="diagram-text-small" font-size="13">Патчі, мінімум віртуальних пристроїв</text>
+
+          <!-- Row 2: Side-Channel -->
+          <rect x="20" y="115" width="200" height="45" rx="6" class="diagram-box"/>
+          <text x="120" y="143" text-anchor="middle" class="diagram-text" font-size="13">Побічні канали</text>
+          <rect x="230" y="115" width="140" height="45" rx="6" fill="rgba(251, 146, 60, 0.25)" stroke="#fb923c" stroke-width="1.5"/>
+          <text x="300" y="143" text-anchor="middle" fill="#fb923c" font-size="13" font-weight="600">Високий</text>
+          <rect x="380" y="115" width="300" height="45" rx="6" class="diagram-box"/>
+          <text x="530" y="143" text-anchor="middle" class="diagram-text-small" font-size="13">Мікрокод, виділені хости</text>
+
+          <!-- Row 3: Hyperjacking -->
+          <rect x="20" y="170" width="200" height="45" rx="6" class="diagram-box"/>
+          <text x="120" y="198" text-anchor="middle" class="diagram-text" font-size="13">Hyperjacking</text>
+          <rect x="230" y="170" width="140" height="45" rx="6" fill="rgba(239, 68, 68, 0.25)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="300" y="198" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="600">Критичний</text>
+          <rect x="380" y="170" width="300" height="45" rx="6" class="diagram-box"/>
+          <text x="530" y="198" text-anchor="middle" class="diagram-text-small" font-size="13">Secure Boot, TPM</text>
+
+          <!-- Row 4: Noisy Neighbor -->
+          <rect x="20" y="225" width="200" height="45" rx="6" class="diagram-box"/>
+          <text x="120" y="253" text-anchor="middle" class="diagram-text" font-size="13">«Шумний сусід»</text>
+          <rect x="230" y="225" width="140" height="45" rx="6" fill="rgba(251, 191, 36, 0.25)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="300" y="253" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="600">Середній</text>
+          <rect x="380" y="225" width="300" height="45" rx="6" class="diagram-box"/>
+          <text x="530" y="253" text-anchor="middle" class="diagram-text-small" font-size="13">Ліміти ресурсів, QoS</text>
+        </svg>
+      </div>
     </section>
 
     <section class="slide">

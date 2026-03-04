@@ -312,12 +312,13 @@ body.light .slide li:hover {
 /* --- Diagrams in Slides --- */
 .slide-diagram {
   margin: 1.5rem 0;
+  width: 100%;
   animation: scaleIn 0.6s ease-out 0.2s both;
 }
 
 .slide-diagram svg {
-  max-width: 90%;
-  max-height: 50vh;
+  width: 90%;
+  max-height: 55vh;
   height: auto;
 }
 

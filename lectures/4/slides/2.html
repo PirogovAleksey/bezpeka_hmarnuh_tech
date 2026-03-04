@@ -30,34 +30,65 @@
     <section class="slide">
       <h1>Контейнери vs VM</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 420 180" width="420" height="180">
-          <!-- VM (left) -->
-          <text x="100" y="20" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Virtual Machines</text>
-          <rect x="20" y="145" width="160" height="25" rx="4" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="100" y="162" text-anchor="middle" class="diagram-text-small">Hardware</text>
-          <rect x="20" y="115" width="160" height="25" rx="4" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
-          <text x="100" y="132" text-anchor="middle" class="diagram-text-small">Hypervisor</text>
-          <rect x="25" y="35" width="70" height="75" rx="4" class="diagram-box"/>
-          <text x="60" y="55" text-anchor="middle" class="diagram-text-small">App</text>
-          <text x="60" y="73" text-anchor="middle" class="diagram-text-small">Guest OS</text>
-          <rect x="105" y="35" width="70" height="75" rx="4" class="diagram-box"/>
-          <text x="140" y="55" text-anchor="middle" class="diagram-text-small">App</text>
-          <text x="140" y="73" text-anchor="middle" class="diagram-text-small">Guest OS</text>
+        <svg viewBox="0 0 700 280">
+          <!-- VM Side -->
+          <text x="175" y="28" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="18">Віртуальні машини</text>
 
-          <!-- Containers (right) -->
-          <text x="320" y="20" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Containers</text>
-          <rect x="240" y="145" width="160" height="25" rx="4" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="320" y="162" text-anchor="middle" class="diagram-text-small">Hardware</text>
-          <rect x="240" y="115" width="160" height="25" rx="4" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2"/>
-          <text x="320" y="132" text-anchor="middle" class="diagram-text-small">Host OS + Kernel</text>
-          <rect x="240" y="85" width="160" height="25" rx="4" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
-          <text x="320" y="102" text-anchor="middle" class="diagram-text-small">Container Runtime</text>
-          <rect x="250" y="35" width="45" height="45" rx="4" class="diagram-box"/>
-          <text x="272" y="62" text-anchor="middle" class="diagram-text-small">App</text>
-          <rect x="305" y="35" width="45" height="45" rx="4" class="diagram-box"/>
-          <text x="327" y="62" text-anchor="middle" class="diagram-text-small">App</text>
-          <rect x="360" y="35" width="30" height="45" rx="4" class="diagram-box"/>
-          <text x="375" y="62" text-anchor="middle" class="diagram-text-small">...</text>
+          <!-- Hardware -->
+          <rect x="30" y="230" width="290" height="35" rx="5" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="175" y="253" text-anchor="middle" class="diagram-text" font-size="13">Hardware</text>
+
+          <!-- Hypervisor -->
+          <rect x="30" y="185" width="290" height="35" rx="5" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
+          <text x="175" y="208" text-anchor="middle" class="diagram-text" font-size="13">Hypervisor</text>
+
+          <!-- VMs -->
+          <rect x="40" y="50" width="130" height="125" rx="6" class="diagram-box"/>
+          <rect x="55" y="65" width="100" height="30" rx="4" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="105" y="85" text-anchor="middle" class="diagram-text-small" font-size="12">App A</text>
+          <rect x="55" y="100" width="100" height="25" rx="4" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="105" y="117" text-anchor="middle" class="diagram-text-small" font-size="11">Bins/Libs</text>
+          <rect x="55" y="130" width="100" height="25" rx="4" fill="rgba(96, 165, 250, 0.3)" stroke="#60a5fa" stroke-width="1"/>
+          <text x="105" y="147" text-anchor="middle" class="diagram-text-small" font-size="11">Guest OS</text>
+
+          <rect x="185" y="50" width="130" height="125" rx="6" class="diagram-box"/>
+          <rect x="200" y="65" width="100" height="30" rx="4" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="250" y="85" text-anchor="middle" class="diagram-text-small" font-size="12">App B</text>
+          <rect x="200" y="100" width="100" height="25" rx="4" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="250" y="117" text-anchor="middle" class="diagram-text-small" font-size="11">Bins/Libs</text>
+          <rect x="200" y="130" width="100" height="25" rx="4" fill="rgba(96, 165, 250, 0.3)" stroke="#60a5fa" stroke-width="1"/>
+          <text x="250" y="147" text-anchor="middle" class="diagram-text-small" font-size="11">Guest OS</text>
+
+          <!-- Divider -->
+          <text x="350" y="150" text-anchor="middle" class="diagram-text-small" font-size="22" fill="#475569" font-weight="bold">vs</text>
+
+          <!-- Container Side -->
+          <text x="525" y="28" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="18">Контейнери</text>
+
+          <!-- Hardware -->
+          <rect x="380" y="230" width="290" height="35" rx="5" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="525" y="253" text-anchor="middle" class="diagram-text" font-size="13">Hardware</text>
+
+          <!-- Host OS -->
+          <rect x="380" y="155" width="290" height="65" rx="5" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="2"/>
+          <text x="525" y="193" text-anchor="middle" class="diagram-text" font-size="13">Host OS (спільне ядро)</text>
+
+          <!-- Container Runtime -->
+          <rect x="380" y="110" width="290" height="35" rx="5" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="2"/>
+          <text x="525" y="133" text-anchor="middle" class="diagram-text" font-size="13">Container Runtime (Docker)</text>
+
+          <!-- Containers -->
+          <rect x="395" y="50" width="80" height="50" rx="6" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="435" y="72" text-anchor="middle" class="diagram-text-small" font-size="11">App A</text>
+          <text x="435" y="90" text-anchor="middle" class="diagram-text-small" font-size="10">Libs</text>
+
+          <rect x="485" y="50" width="80" height="50" rx="6" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="525" y="72" text-anchor="middle" class="diagram-text-small" font-size="11">App B</text>
+          <text x="525" y="90" text-anchor="middle" class="diagram-text-small" font-size="10">Libs</text>
+
+          <rect x="575" y="50" width="80" height="50" rx="6" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="615" y="72" text-anchor="middle" class="diagram-text-small" font-size="11">App C</text>
+          <text x="615" y="90" text-anchor="middle" class="diagram-text-small" font-size="10">Libs</text>
         </svg>
       </div>
     </section>
@@ -67,50 +98,50 @@
       <div class="slide-grid">
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
-          <h3>Namespaces</h3>
-          <p>Процеси, мережа, FS</p>
+          <h3>Простори імен</h3>
+          <p>Процеси, мережа, файлова система</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
-          <h3>Cgroups</h3>
-          <p>CPU, пам'ять, I/O</p>
+          <h3>Контрольні групи</h3>
+          <p>CPU, пам'ять, введення-виведення</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
           <h3>Union FS</h3>
-          <p>Layered filesystem</p>
+          <p>Багатошарова файлова система</p>
         </div>
       </div>
-      <p style="text-align: center; margin-top: 1rem;">Усе це — механізми <strong>Linux kernel</strong></p>
+      <p style="text-align: center; margin-top: 1rem;">Усе це — механізми <strong>ядра Linux</strong></p>
     </section>
 
     <section class="slide">
       <h1>Загроза: Вразливі образи</h1>
       <ul>
-        <li>Застарілі пакети з CVE</li>
-        <li>Malware в публічних образах</li>
+        <li>Застарілі пакети з відомими CVE</li>
+        <li>Шкідливе ПЗ у публічних образах</li>
         <li><strong>2018:</strong> 17 шкідливих образів на Docker Hub</li>
         <li><strong>Захист:</strong> сканування (Trivy, Snyk)</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Загроза: Container Escape</h1>
+      <h1>Загроза: Втеча з контейнера</h1>
       <ul>
         <li><strong>CVE-2019-5736 (runc):</strong> перезапис бінарника</li>
-        <li><strong>CVE-2020-15257:</strong> доступ до host filesystem</li>
-        <li>Спільне ядро = ризик escape</li>
-        <li><strong>Захист:</strong> оновлення, без privileged</li>
+        <li><strong>CVE-2020-15257:</strong> доступ до файлової системи хоста</li>
+        <li>Спільне ядро = ризик втечі</li>
+        <li><strong>Захист:</strong> оновлення, без привілейованого режиму</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Загроза: Misconfiguration</h1>
+      <h1>Загроза: Неправильна конфігурація</h1>
       <ul>
-        <li><strong>Privileged mode:</strong> повні права root на хості</li>
-        <li><strong>Docker socket:</strong> /var/run/docker.sock</li>
-        <li><strong>Sensitive mounts:</strong> /, /etc, /var</li>
-        <li><strong>Running as root</strong> всередині контейнера</li>
+        <li><strong>Привілейований режим:</strong> повні права root на хості</li>
+        <li><strong>Docker-сокет:</strong> /var/run/docker.sock</li>
+        <li><strong>Монтування системних каталогів:</strong> /, /etc, /var</li>
+        <li><strong>Запуск від root</strong> всередині контейнера</li>
       </ul>
     </section>
 
@@ -127,9 +158,9 @@
     <section class="slide">
       <h1>Безпечний Dockerfile</h1>
       <ul>
-        <li><strong>Multi-stage builds:</strong> без build tools у фіналі</li>
-        <li><strong>USER:</strong> non-root користувач</li>
-        <li><strong>Не COPY секрети</strong> — залишаться в layers</li>
+        <li><strong>Багатоетапна збірка:</strong> без інструментів збірки у фіналі</li>
+        <li><strong>USER:</strong> непривілейований користувач</li>
+        <li><strong>Не COPY секрети</strong> — залишаться в шарах образу</li>
         <li><strong>.dockerignore:</strong> виключіть зайве</li>
       </ul>
     </section>
@@ -140,12 +171,12 @@
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></div>
           <h3>--cap-drop=ALL</h3>
-          <p>Видалити capabilities</p>
+          <p>Скинути всі привілеї</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
           <h3>--read-only</h3>
-          <p>Immutable filesystem</p>
+          <p>ФС лише для читання</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
@@ -155,7 +186,7 @@
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
           <h3>--memory, --cpus</h3>
-          <p>Resource limits</p>
+          <p>Ліміти ресурсів</p>
         </div>
       </div>
     </section>
