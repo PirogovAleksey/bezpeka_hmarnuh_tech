@@ -27,145 +27,428 @@
       <p>Тема 6.4: Застосування блокчейну в кібербезпеці</p>
     </section>
 
+    <!-- Slide 2: Незмінний Audit Log -->
     <section class="slide">
-      <h1>Незмінний Audit Log</h1>
+      <h1>Незмінний журнал подій (Audit Log)</h1>
       <ul>
-        <li><strong>Проблема:</strong> атакуючі видаляють логи</li>
-        <li><strong>Рішення:</strong> хеші логів у блокчейні</li>
-        <li>Неможливо змінити без виявлення</li>
-        <li><strong>Timestamping:</strong> доказ часу події</li>
+        <li><strong>Проблема:</strong> атакуючі видаляють або модифікують логи після атаки — інцидент стає непомітним</li>
+        <li><strong>MITRE ATT&amp;CK T1070:</strong> видалення індикаторів (Indicator Removal on Host) — стандартна техніка APT-атак</li>
+        <li><strong>Рішення:</strong> хеші логів записуються в блокчейн у реальному часі — незмінний audit trail</li>
+        <li>Навіть при повній компрометації системи хеші в розподіленому реєстрі залишаються незмінними</li>
+        <li><strong>Timestamping (часові мітки):</strong> криптографічний доказ часу події — критично для forensic-розслідувань</li>
+        <li><strong>Юридична значущість:</strong> незмінний запис прийнятний як доказ у судових процесах</li>
       </ul>
     </section>
 
+    <!-- Slide 3: Варіанти Audit Log -->
     <section class="slide">
-      <h1>Варіанти Audit Log</h1>
+      <h1>Варіанти реалізації Audit Log</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 420 170" width="420" height="170">
+        <svg viewBox="0 0 700 210" width="700" height="210">
           <!-- Full storage -->
-          <rect x="20" y="20" width="110" height="110" rx="8" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="2"/>
-          <text x="75" y="45" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Full</text>
-          <text x="75" y="70" text-anchor="middle" class="diagram-text-small">On-chain</text>
-          <text x="75" y="90" text-anchor="middle" class="diagram-text-small">100% data</text>
-          <text x="75" y="115" text-anchor="middle" class="diagram-text-small" fill="#ef4444">$$$ дорого</text>
+          <rect x="20" y="20" width="200" height="140" rx="8" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="2"/>
+          <text x="120" y="48" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="16">Full On-Chain</text>
+          <text x="120" y="72" text-anchor="middle" class="diagram-text-small" font-size="13">100% даних у блокчейні</text>
+          <text x="120" y="92" text-anchor="middle" class="diagram-text-small" font-size="13">Макс. захищеність</text>
+          <text x="120" y="112" text-anchor="middle" class="diagram-text-small" font-size="13">Повільно та дорого</text>
+          <text x="120" y="145" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="14">$$$ висока вартість</text>
 
           <!-- Hashes only -->
-          <rect x="155" y="20" width="110" height="110" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
-          <text x="210" y="45" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">Hashes</text>
-          <text x="210" y="70" text-anchor="middle" class="diagram-text-small">Merkle root</text>
-          <text x="210" y="90" text-anchor="middle" class="diagram-text-small">Proof only</text>
-          <text x="210" y="115" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">$ економно</text>
+          <rect x="250" y="20" width="200" height="140" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="350" y="48" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="16">Тільки хеші</text>
+          <text x="350" y="72" text-anchor="middle" class="diagram-text-small" font-size="13">Merkle root on-chain</text>
+          <text x="350" y="92" text-anchor="middle" class="diagram-text-small" font-size="13">Логи зберігаються локально</text>
+          <text x="350" y="112" text-anchor="middle" class="diagram-text-small" font-size="13">Proof-only верифікація</text>
+          <text x="350" y="145" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="14">$ економно</text>
 
           <!-- Hybrid -->
-          <rect x="290" y="20" width="110" height="110" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
-          <text x="345" y="45" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Hybrid</text>
-          <text x="345" y="70" text-anchor="middle" class="diagram-text-small">Off-chain data</text>
-          <text x="345" y="90" text-anchor="middle" class="diagram-text-small">On-chain anchor</text>
-          <text x="345" y="115" text-anchor="middle" class="diagram-text-small" fill="#4ade80">$$ баланс</text>
+          <rect x="480" y="20" width="200" height="140" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="580" y="48" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="16">Hybrid (рекоменд.)</text>
+          <text x="580" y="72" text-anchor="middle" class="diagram-text-small" font-size="13">Off-chain: S3, IPFS</text>
+          <text x="580" y="92" text-anchor="middle" class="diagram-text-small" font-size="13">On-chain anchoring</text>
+          <text x="580" y="112" text-anchor="middle" class="diagram-text-small" font-size="13">Оптимальний баланс</text>
+          <text x="580" y="145" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">$$ помірна вартість</text>
 
-          <text x="210" y="155" text-anchor="middle" class="diagram-text-small">Вибір залежить від threat model</text>
+          <text x="350" y="195" text-anchor="middle" class="diagram-text-small" font-size="14">Вибір архітектури залежить від threat model, обсягу логів та бюджету</text>
         </svg>
       </div>
     </section>
 
+    <!-- Slide 4: PKI та Certificate Transparency -->
     <section class="slide">
-      <h1>PKI та Certificate Transparency</h1>
+      <h1>PKI (інфраструктура відкритих ключів) та Certificate Transparency</h1>
       <ul>
-        <li><strong>DigiNotar (2011):</strong> фейкові сертифікати</li>
-        <li>Централізовані CA — single point of failure</li>
-        <li><strong>Blockchain PKI:</strong> децентралізована видача</li>
-        <li>Автоматичне Certificate Transparency</li>
+        <li><strong>Проблема:</strong> централізовані CA (Certificate Authority) — єдина точка відмови (single point of failure)</li>
+        <li><strong>DigiNotar (2011):</strong> голландський CA зламано — випущено фейкові сертифікати Google, постраждали 300K+ іранських користувачів</li>
+        <li><strong>Symantec (2017):</strong> найбільший CA визнано ненадійним — Chrome та Firefox видалили всі його сертифікати</li>
+        <li><strong>Blockchain PKI:</strong> децентралізована видача сертифікатів — немає єдиного органу для компрометації</li>
+        <li><strong>Автоматичне Certificate Transparency:</strong> кожна видача публічно видна — фейковий сертифікат виявляється миттєво</li>
+        <li><strong>Миттєве відкликання (Revocation):</strong> оновлення через смарт-контракт за секунди замість днів (CRL/OCSP)</li>
       </ul>
     </section>
 
+    <!-- Slide 5: Supply Chain Attack Diagram -->
     <section class="slide">
-      <h1>Ланцюг постачання (Supply Chain) програмного забезпечення</h1>
+      <h1>Атака на ланцюг постачання: SolarWinds (2020)</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 280" width="700" height="280">
+          <!-- Step 1: Attacker -->
+          <rect x="20" y="30" width="130" height="60" rx="8" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="85" y="55" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="13">APT29 (Cozy Bear)</text>
+          <text x="85" y="75" text-anchor="middle" class="diagram-text-small" font-size="11">Зловмисник</text>
+
+          <!-- Arrow 1 -->
+          <line x1="150" y1="60" x2="185" y2="60" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+          <!-- Step 2: Build System -->
+          <rect x="185" y="30" width="130" height="60" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="250" y="55" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="13">Build System</text>
+          <text x="250" y="75" text-anchor="middle" class="diagram-text-small" font-size="11">Впровадження malware</text>
+
+          <!-- Arrow 2 -->
+          <line x1="315" y1="60" x2="350" y2="60" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrowYellow)"/>
+
+          <!-- Step 3: Signed Update -->
+          <rect x="350" y="30" width="130" height="60" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="415" y="55" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="13">Signed Update</text>
+          <text x="415" y="75" text-anchor="middle" class="diagram-text-small" font-size="11">Легітимний підпис</text>
+
+          <!-- Arrow 3 -->
+          <line x1="480" y1="60" x2="515" y2="60" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowRed)"/>
+
+          <!-- Step 4: Victims -->
+          <rect x="515" y="30" width="160" height="60" rx="8" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="595" y="55" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="13">18,000+ організацій</text>
+          <text x="595" y="75" text-anchor="middle" class="diagram-text-small" font-size="11">Уряд США, Microsoft...</text>
+
+          <!-- Blockchain Solution -->
+          <rect x="100" y="130" width="500" height="55" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="350" y="155" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">Блокчейн-рішення: SBOM (Software Bill of Materials)</text>
+          <text x="350" y="175" text-anchor="middle" class="diagram-text-small" font-size="12">Кожен крок CI/CD записується з криптографічним хешем — підміну виявлено миттєво</text>
+
+          <!-- Bottom: in-toto steps -->
+          <rect x="30" y="210" width="120" height="50" rx="6" class="diagram-box"/>
+          <text x="90" y="232" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="12">Code Review</text>
+          <text x="90" y="250" text-anchor="middle" class="diagram-text-small" font-size="11">Підпис автора</text>
+
+          <line x1="150" y1="235" x2="175" y2="235" stroke="#38bdf8" stroke-width="1.5"/>
+
+          <rect x="175" y="210" width="120" height="50" rx="6" class="diagram-box"/>
+          <text x="235" y="232" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="12">Build</text>
+          <text x="235" y="250" text-anchor="middle" class="diagram-text-small" font-size="11">Хеш артефакту</text>
+
+          <line x1="295" y1="235" x2="320" y2="235" stroke="#38bdf8" stroke-width="1.5"/>
+
+          <rect x="320" y="210" width="120" height="50" rx="6" class="diagram-box"/>
+          <text x="380" y="232" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="12">Test &amp; Sign</text>
+          <text x="380" y="250" text-anchor="middle" class="diagram-text-small" font-size="11">SLSA attestation</text>
+
+          <line x1="440" y1="235" x2="465" y2="235" stroke="#38bdf8" stroke-width="1.5"/>
+
+          <rect x="465" y="210" width="120" height="50" rx="6" class="diagram-box"/>
+          <text x="525" y="232" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="12">Deploy</text>
+          <text x="525" y="250" text-anchor="middle" class="diagram-text-small" font-size="11">On-chain proof</text>
+
+          <line x1="585" y1="235" x2="610" y2="235" stroke="#4ade80" stroke-width="1.5"/>
+
+          <rect x="610" y="215" width="70" height="40" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="645" y="240" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="20">&#x2713;</text>
+
+          <!-- Arrow markers -->
+          <defs>
+            <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
+            </marker>
+            <marker id="arrowYellow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 6: in-toto + Blockchain -->
+    <section class="slide">
+      <h1>in-toto + Blockchain: захист ланцюга постачання</h1>
       <ul>
-        <li><strong>SolarWinds (2020):</strong> malware в оновленнях</li>
-        <li><strong>SBOM:</strong> Bill of Materials у блокчейні</li>
-        <li>Кожна збірка записується з хешем</li>
-        <li>Верифікація походження коду</li>
+        <li><strong>in-toto (NYU):</strong> фреймворк end-to-end верифікації software supply chain (ланцюга постачання ПЗ)</li>
+        <li>Кожен крок CI/CD (code review, build, test, sign, deploy) підписується відповідальною стороною</li>
+        <li>Хеші всіх артефактів та attestations (підтверджень) зберігаються в блокчейні</li>
+        <li>Кінцевий користувач верифікує весь ланцюг — від git commit до release binary</li>
+        <li><strong>SLSA (Supply-chain Levels for Software Artifacts):</strong> фреймворк Google, сумісний з blockchain attestation</li>
+        <li><strong>Codecov (2021):</strong> скомпрометований bash uploader збирав secrets — блокчейн-верифікація запобігла б атаці</li>
       </ul>
     </section>
 
+    <!-- Slide 7: Threat Intelligence Sharing -->
     <section class="slide">
-      <h1>in-toto + Blockchain</h1>
+      <h1>Обмін розвідкою загроз (Threat Intelligence Sharing)</h1>
       <ul>
-        <li>Кожен крок CI/CD підписується</li>
-        <li>Хеші зберігаються в блокчейні</li>
-        <li>Верифікація всього ланцюга</li>
-        <li>Захист від tampering</li>
+        <li><strong>Проблема:</strong> компанії не діляться IoC через конкуренцію, юридичні ризики та репутаційні побоювання</li>
+        <li><strong>Рішення:</strong> анонімний або псевдонімний обмін через блокчейн — джерело не розкривається</li>
+        <li><strong>Token incentives (токенні стимули):</strong> учасники отримують токени за якісну та своєчасну інформацію</li>
+        <li><strong>Reputation system (система репутації):</strong> on-chain репутація джерел — IoC від перевіреного джерела має більшу вагу</li>
+        <li><strong>PolySwarm:</strong> marketplace для threat detection — антивірусні вендори конкурують за токени</li>
+        <li><strong>MISP + Blockchain:</strong> децентралізований MISP з блокчейн-розширенням для незмінності та довіри</li>
       </ul>
     </section>
 
+    <!-- Slide 8: IoT Statistics -->
     <section class="slide">
-      <h1>Обмін розвідкою загроз (Threat Intelligence)</h1>
-      <ul>
-        <li><strong>Проблема:</strong> компанії не діляться</li>
-        <li><strong>Рішення:</strong> анонімний обмін через блокчейн</li>
-        <li>Токени за якісну інформацію</li>
-        <li><strong>PolySwarm:</strong> marketplace для threat detection</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>IoT Security</h1>
-      <ul>
-        <li><strong>Mirai Botnet:</strong> атака через IoT</li>
-        <li><strong>DID для пристроїв:</strong> унікальна ідентичність</li>
-        <li><strong>Смарт-контракти:</strong> access control</li>
-        <li><strong>IOTA:</strong> DAG для IoT</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Обмеження блокчейну</h1>
-      <ul>
-        <li><strong>Scalability:</strong> обмежена пропускна здатність</li>
-        <li><strong>Privacy:</strong> public blockchains прозорі</li>
-        <li><strong>Immutability:</strong> помилки не виправити</li>
-        <li><strong>Complexity:</strong> складність інтеграції</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Коли використовувати?</h1>
+      <h1>Безпека IoT (Інтернету речей): масштаб проблеми</h1>
       <div class="slide-grid">
         <div class="slide-grid-item">
-          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <h3>Незмінність</h3>
-          <p>Потрібен immutable log</p>
+          <div class="slide-icon" style="background: rgba(56, 189, 248, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #38bdf8;" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3>75+ мільярдів</h3>
+          <p>IoT-пристроїв очікується до 2030 року</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <h3>No Trust</h3>
-          <p>Немає довіри</p>
+          <div class="slide-icon" style="background: rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #ef4444;" fill="none" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <h3>Mirai Botnet (2016)</h3>
+          <p>600K+ пристроїв, DDoS на Dyn DNS — впали Twitter, Netflix, GitHub</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <h3>Децентралізація</h3>
-          <p>Критична вимога</p>
+          <div class="slide-icon" style="background: rgba(251, 191, 36, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #fbbf24;" fill="none" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Слабка автентифікація</h3>
+          <p>Дефолтні паролі, hardcoded credentials, відсутність шифрування</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon" style="background: rgba(239, 68, 68, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #ef4444;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-          <h3>High-frequency</h3>
-          <p>Традиційна БД краще</p>
+          <div class="slide-icon" style="background: rgba(74, 222, 128, 0.15);"><svg viewBox="0 0 24 24" style="stroke: #4ade80;" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Blockchain-рішення</h3>
+          <p>DID для пристроїв, смарт-контракти для access control</p>
         </div>
       </div>
     </section>
 
+    <!-- Slide 9: IoT Blockchain Solutions -->
     <section class="slide">
-      <h1>Майбутнє</h1>
+      <h1>Блокчейн для IoT-безпеки</h1>
       <ul>
-        <li><strong>Post-Quantum:</strong> нова криптографія</li>
-        <li><strong>Layer 2:</strong> масштабування через Rollups</li>
-        <li><strong>Interoperability:</strong> мости між блокчейнами</li>
-        <li><strong>Enterprise:</strong> Hyperledger, R3 Corda</li>
+        <li><strong>Device Identity (ідентичність пристрою):</strong> DID для кожного IoT-пристрою — децентралізована ідентичність, незалежна від виробника</li>
+        <li><strong>Access Control (контроль доступу):</strong> смарт-контракти автоматично управляють правами доступу між пристроями</li>
+        <li><strong>Firmware Updates (оновлення прошивки):</strong> хеш автентичного firmware у блокчейні — пристрій перевіряє перед встановленням</li>
+        <li><strong>IOTA (Tangle):</strong> DAG-based протокол для IoT — feeless мікротранзакції, lightweight для обмежених ресурсів</li>
+        <li><strong>Helium:</strong> децентралізована IoT-мережа з PoC (Proof of Coverage) консенсусом — 900K+ hotspots</li>
+        <li><strong>Гетерогенність:</strong> тисячі виробників, різні протоколи — блокчейн як єдиний шар довіри</li>
       </ul>
     </section>
 
+    <!-- Slide 10: Обмеження блокчейну -->
+    <section class="slide">
+      <h1>Обмеження блокчейну в безпеці</h1>
+      <ul>
+        <li><strong>Масштабованість (Scalability):</strong> публічні блокчейни обробляють на порядки менше TPS ніж традиційні СУБД</li>
+        <li><strong>Приватність (Privacy):</strong> прозорість публічних блокчейнів суперечить вимогам GDPR та захисту даних</li>
+        <li><strong>Незмінність (Immutability):</strong> помилкові дані не виправити, «право на забуття» неможливе</li>
+        <li><strong>Атака 51%:</strong> контроль більшості потужності дозволяє маніпулювати ланцюгом (Ethereum Classic, Bitcoin Gold)</li>
+        <li><strong>Складність інтеграції (Complexity):</strong> перебудова бізнес-процесів значно підвищує вартість впровадження</li>
+        <li><strong>Енергоспоживання:</strong> PoW-блокчейни створюють екологічні проблеми (перехід на PoS пом'якшує)</li>
+      </ul>
+    </section>
+
+    <!-- Slide 11: Коли використовувати? -->
+    <section class="slide">
+      <h1>Коли використовувати блокчейн?</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 280" width="700" height="280">
+          <!-- Header: 3 обов'язкові умови -->
+          <text x="350" y="25" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="16">Три обов'язкові умови (усі одночасно):</text>
+
+          <!-- Condition 1 -->
+          <rect x="30" y="45" width="200" height="70" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="130" y="70" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">1. Незмінність</text>
+          <text x="130" y="90" text-anchor="middle" class="diagram-text-small" font-size="12">Потрібен immutable</text>
+          <text x="130" y="106" text-anchor="middle" class="diagram-text-small" font-size="12">audit trail</text>
+
+          <!-- Condition 2 -->
+          <rect x="250" y="45" width="200" height="70" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="350" y="70" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">2. Децентралізація</text>
+          <text x="350" y="90" text-anchor="middle" class="diagram-text-small" font-size="12">Немає єдиної</text>
+          <text x="350" y="106" text-anchor="middle" class="diagram-text-small" font-size="12">довіреної сторони</text>
+
+          <!-- Condition 3 -->
+          <rect x="470" y="45" width="200" height="70" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="570" y="70" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">3. Недовіра</text>
+          <text x="570" y="90" text-anchor="middle" class="diagram-text-small" font-size="12">Учасники не довіряють</text>
+          <text x="570" y="106" text-anchor="middle" class="diagram-text-small" font-size="12">один одному</text>
+
+          <!-- Divider -->
+          <line x1="50" y1="135" x2="650" y2="135" stroke="#475569" stroke-width="1" stroke-dasharray="4"/>
+
+          <!-- When NOT to use -->
+          <text x="350" y="160" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="16">Коли НЕ використовувати:</text>
+
+          <rect x="30" y="175" width="150" height="55" rx="6" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="105" y="198" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="12">High-frequency</text>
+          <text x="105" y="218" text-anchor="middle" class="diagram-text-small" font-size="11">Традиційна БД краще</text>
+
+          <rect x="200" y="175" width="150" height="55" rx="6" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="275" y="198" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="12">Єдиний оператор</text>
+          <text x="275" y="218" text-anchor="middle" class="diagram-text-small" font-size="11">Централізована БД</text>
+
+          <rect x="370" y="175" width="150" height="55" rx="6" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="445" y="198" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="12">Персональні дані</text>
+          <text x="445" y="218" text-anchor="middle" class="diagram-text-small" font-size="11">GDPR конфлікт</text>
+
+          <rect x="540" y="175" width="150" height="55" rx="6" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="615" y="198" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="12">Потрібне видалення</text>
+          <text x="615" y="218" text-anchor="middle" class="diagram-text-small" font-size="11">«Право на забуття»</text>
+
+          <text x="350" y="265" text-anchor="middle" class="diagram-text-small" font-size="13">Якщо хоча б одна з трьох умов не виконується — традиційна БД ефективніша та дешевша</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 12: Реальні кейси -->
+    <section class="slide">
+      <h1>Реальні кейси застосування</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 260" width="700" height="260">
+          <!-- IBM Food Trust -->
+          <rect x="20" y="15" width="210" height="110" rx="8" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="125" y="40" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">IBM Food Trust</text>
+          <text x="125" y="60" text-anchor="middle" class="diagram-text-small" font-size="11">Hyperledger Fabric</text>
+          <text x="125" y="80" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="13">7 днів &#x2192; 2.2 сек</text>
+          <text x="125" y="98" text-anchor="middle" class="diagram-text-small" font-size="11">Walmart, Nestl&#233;, Dole</text>
+          <text x="125" y="115" text-anchor="middle" class="diagram-text-small" font-size="11">Відстеження продуктів</text>
+
+          <!-- Estonia KSI -->
+          <rect x="245" y="15" width="210" height="110" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="350" y="40" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">Estonia KSI Blockchain</text>
+          <text x="350" y="60" text-anchor="middle" class="diagram-text-small" font-size="11">Guardtime, з 2012 року</text>
+          <text x="350" y="80" text-anchor="middle" class="diagram-text-small" font-size="11">Медичні записи, кадастр</text>
+          <text x="350" y="98" text-anchor="middle" class="diagram-text-small" font-size="11">Бізнес-реєстр, суди</text>
+          <text x="350" y="115" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="11">Найцифровізованіша країна</text>
+
+          <!-- De Beers Tracr -->
+          <rect x="470" y="15" width="210" height="110" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="575" y="40" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="14">De Beers Tracr</text>
+          <text x="575" y="60" text-anchor="middle" class="diagram-text-small" font-size="11">Відстеження діамантів</text>
+          <text x="575" y="80" text-anchor="middle" class="diagram-text-small" font-size="11">Від шахти до магазину</text>
+          <text x="575" y="98" text-anchor="middle" class="diagram-text-small" font-size="11">Проти «кривавих діамантів»</text>
+          <text x="575" y="115" text-anchor="middle" class="diagram-text-small" font-size="11">Цифровий паспорт кожного каменя</text>
+
+          <!-- COVID-19 -->
+          <rect x="130" y="145" width="440" height="90" rx="8" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="350" y="172" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">COVID-19 Vaccine Passports (Verifiable Credentials)</text>
+          <text x="350" y="195" text-anchor="middle" class="diagram-text-small" font-size="12">EU Digital COVID Certificate — принципи VC: цифрові підписи, QR-коди</text>
+          <text x="350" y="215" text-anchor="middle" class="diagram-text-small" font-size="12">IBM &amp; Salesforce — блокчейн-верифікація вакцинації з мінімальним розкриттям даних</text>
+
+          <text x="350" y="252" text-anchor="middle" class="diagram-text-small" font-size="13">Блокчейн ефективний, коли кілька організацій потребують спільного верифікованого реєстру</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 13: Post-Quantum Cryptography -->
+    <section class="slide">
+      <h1>Постквантова криптографія (Post-Quantum Cryptography)</h1>
+      <ul>
+        <li><strong>Загроза:</strong> алгоритм Шора на квантовому комп'ютері здатен зламати ECDSA, RSA та інші поточні алгоритми</li>
+        <li><strong>NIST PQC (2024):</strong> завершено стандартизацію перших постквантових алгоритмів</li>
+        <li><strong>CRYSTALS-Kyber:</strong> стандарт для шифрування (key encapsulation), базується на теорії ґраток (lattice-based)</li>
+        <li><strong>CRYSTALS-Dilithium:</strong> стандарт для цифрових підписів — замінить ECDSA у блокчейнах</li>
+        <li><strong>Ethereum Foundation:</strong> активно досліджує міграцію на PQC — складність через мільйони існуючих акаунтів</li>
+        <li><strong>Harvest Now, Decrypt Later:</strong> зловмисники вже збирають зашифровані дані для майбутнього дешифрування</li>
+      </ul>
+    </section>
+
+    <!-- Slide 14: NIST PQC Timeline -->
+    <section class="slide">
+      <h1>NIST PQC: хронологія стандартизації</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 200" width="700" height="200">
+          <!-- Timeline line -->
+          <line x1="50" y1="90" x2="650" y2="90" stroke="#38bdf8" stroke-width="3"/>
+
+          <!-- 2016 -->
+          <circle cx="100" cy="90" r="8" fill="#38bdf8"/>
+          <text x="100" y="75" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="13">2016</text>
+          <text x="100" y="120" text-anchor="middle" class="diagram-text-small" font-size="11">NIST оголошує</text>
+          <text x="100" y="135" text-anchor="middle" class="diagram-text-small" font-size="11">конкурс PQC</text>
+
+          <!-- 2020 -->
+          <circle cx="240" cy="90" r="8" fill="#fbbf24"/>
+          <text x="240" y="75" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="13">2020</text>
+          <text x="240" y="120" text-anchor="middle" class="diagram-text-small" font-size="11">Раунд 3:</text>
+          <text x="240" y="135" text-anchor="middle" class="diagram-text-small" font-size="11">7 фіналістів</text>
+
+          <!-- 2022 -->
+          <circle cx="380" cy="90" r="8" fill="#fbbf24"/>
+          <text x="380" y="75" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="13">2022</text>
+          <text x="380" y="120" text-anchor="middle" class="diagram-text-small" font-size="11">Обрано Kyber</text>
+          <text x="380" y="135" text-anchor="middle" class="diagram-text-small" font-size="11">та Dilithium</text>
+
+          <!-- 2024 -->
+          <circle cx="510" cy="90" r="8" fill="#4ade80"/>
+          <text x="510" y="75" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="13">2024</text>
+          <text x="510" y="120" text-anchor="middle" class="diagram-text-small" font-size="11">FIPS стандарти</text>
+          <text x="510" y="135" text-anchor="middle" class="diagram-text-small" font-size="11">опубліковано</text>
+
+          <!-- 2030+ -->
+          <circle cx="630" cy="90" r="8" fill="rgba(239, 68, 68, 0.8)"/>
+          <text x="630" y="75" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="13">2030+</text>
+          <text x="630" y="120" text-anchor="middle" class="diagram-text-small" font-size="11">Квантова загроза</text>
+          <text x="630" y="135" text-anchor="middle" class="diagram-text-small" font-size="11">стає реальною?</text>
+
+          <text x="350" y="175" text-anchor="middle" class="diagram-text-small" font-size="13">Блокчейн-спільнота повинна мігрувати на PQC до появи потужних квантових комп'ютерів</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 15: Layer 2 Rollups -->
+    <section class="slide">
+      <h1>Layer 2 Rollups: масштабування блокчейну</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 270" width="700" height="270">
+          <!-- L1 Base -->
+          <rect x="50" y="200" width="600" height="50" rx="8" fill="rgba(56, 189, 248, 0.25)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="350" y="230" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="15">Layer 1: Ethereum (базовий ланцюг, ~30 TPS)</text>
+
+          <!-- Arrow up -->
+          <line x1="200" y1="195" x2="200" y2="160" stroke="#fbbf24" stroke-width="2"/>
+          <line x1="500" y1="195" x2="500" y2="160" stroke="#4ade80" stroke-width="2"/>
+
+          <!-- Optimistic Rollup -->
+          <rect x="50" y="70" width="280" height="85" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="190" y="95" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="14">Optimistic Rollups</text>
+          <text x="190" y="115" text-anchor="middle" class="diagram-text-small" font-size="12">Припускають коректність за замовчуванням</text>
+          <text x="190" y="133" text-anchor="middle" class="diagram-text-small" font-size="12">Challenge period (вікно оспорювання): 7 днів</text>
+          <text x="190" y="148" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="11">Arbitrum, Optimism, Base</text>
+
+          <!-- ZK Rollup -->
+          <rect x="370" y="70" width="280" height="85" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="510" y="95" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">ZK-Rollups (Zero-Knowledge)</text>
+          <text x="510" y="115" text-anchor="middle" class="diagram-text-small" font-size="12">Математичний доказ коректності</text>
+          <text x="510" y="133" text-anchor="middle" class="diagram-text-small" font-size="12">Криптографічні гарантії (не економічні)</text>
+          <text x="510" y="148" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="11">zkSync, StarkNet, Polygon zkEVM</text>
+
+          <!-- Top label -->
+          <text x="350" y="35" text-anchor="middle" class="diagram-text-bold" font-size="16">Layer 2: мільйони TPS при збереженні безпеки L1</text>
+
+          <!-- Comparison -->
+          <text x="190" y="55" text-anchor="middle" class="diagram-text-small" fill="#fbbf24" font-size="12">Економічні стимули</text>
+          <text x="510" y="55" text-anchor="middle" class="diagram-text-small" fill="#4ade80" font-size="12">Криптографічні докази (більш безпечно)</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 16: Interoperability + Enterprise -->
+    <section class="slide">
+      <h1>Міжланцюгова взаємодія (Interoperability) та Enterprise</h1>
+      <ul>
+        <li><strong>Cross-chain bridges (мости):</strong> передача активів між блокчейнами — найвразливіший компонент екосистеми</li>
+        <li><strong>2022:</strong> через хаки мостів втрачено понад $2 мільярди (Ronin Bridge, Wormhole, Nomad)</li>
+        <li><strong>Протоколи:</strong> Cosmos IBC, Polkadot XCM, LayerZero — стандартизована міжланцюгова комунікація</li>
+        <li><strong>Hyperledger (Linux Foundation):</strong> Fabric для бізнес-процесів, Besu для Ethereum-сумісності, Iroha для IoT</li>
+        <li><strong>R3 Corda:</strong> спеціалізація на фінансовому секторі — десятки банків та страхових компаній</li>
+        <li><strong>BaaS (Blockchain-as-a-Service):</strong> Amazon Managed Blockchain, Azure Blockchain Service, IBM Blockchain Platform</li>
+      </ul>
+    </section>
+
+    <!-- Final slide -->
     <section class="slide">
       <h1>Питання?</h1>
-      <p>Кінець Лекції 6: Блокчейн у розподілених системах безпеки</p>
+      <p>Наступна тема: Web3 Security</p>
     </section>
   </div>
 

@@ -22,112 +22,439 @@
   </div>
 
   <div class="slide-deck">
+    <!-- Slide 1: Title -->
     <section class="slide active">
       <h1>Безпека хмарних технологій</h1>
       <p>Тема 6.2: Децентралізоване управління ідентифікацією</p>
     </section>
 
+    <!-- Slide 2: Problems of Centralized Identity -->
     <section class="slide">
       <h1>Проблеми централізованої ідентифікації</h1>
       <ul>
-        <li><strong>Single Point of Failure:</strong> злам IdP = все</li>
-        <li><strong>Data Breaches:</strong> мільярди записів</li>
-        <li><strong>Privacy:</strong> IdP знає все про вас</li>
-        <li><strong>Прив'язка до постачальника (Vendor Lock-in):</strong> залежність</li>
+        <li><strong>Єдина точка відмови (Single Point of Failure):</strong> компрометація одного IdP каскадно впливає на тисячі залежних сервісів</li>
+        <li><strong>Масштабні витоки даних (Data Breaches):</strong> мільярди записів скомпрометовано через централізоване зберігання</li>
+        <li><strong>Порушення приватності (Privacy):</strong> IdP має повну картину активності — які сервіси, коли, звідки</li>
+        <li><strong>Залежність від постачальника (Vendor Lock-in):</strong> блокування акаунта = втрата пошти, файлів, 2FA одночасно</li>
+        <li><strong>Фрагментація ідентичності (Identity Silos):</strong> пересічний користувач підтримує понад 100 окремих облікових записів</li>
+        <li><strong>Відсутність контролю:</strong> провайдер може видалити або заблокувати ідентичність у будь-який момент</li>
       </ul>
     </section>
 
+    <!-- Slide 3: Statistics - Breaches -->
     <section class="slide">
-      <h1>Self-Sovereign Identity (SSI)</h1>
+      <h1>Масштаб проблеми: статистика витоків</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 300">
+          <!-- 2023 stat -->
+          <rect x="20" y="15" width="320" height="70" rx="10" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="180" y="45" text-anchor="middle" fill="#ef4444" font-size="22" font-weight="700">8 мільярдів</text>
+          <text x="180" y="70" text-anchor="middle" class="diagram-text-small" font-size="13">записів скомпрометовано у 2023 році</text>
+
+          <!-- Okta -->
+          <rect x="370" y="15" width="310" height="70" rx="10" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="525" y="42" text-anchor="middle" fill="#fbbf24" font-size="16" font-weight="700">Okta Breach (2022)</text>
+          <text x="525" y="65" text-anchor="middle" class="diagram-text-small" font-size="12">Доступ до систем тисяч клієнтів: Cloudflare, 1Password</text>
+
+          <!-- Equifax -->
+          <rect x="20" y="105" width="320" height="70" rx="10" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="180" y="132" text-anchor="middle" fill="#ef4444" font-size="18" font-weight="700">Equifax — 147 млн</text>
+          <text x="180" y="158" text-anchor="middle" class="diagram-text-small" font-size="13">записів персональних даних (2017)</text>
+
+          <!-- Yahoo -->
+          <rect x="370" y="105" width="310" height="70" rx="10" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+          <text x="525" y="132" text-anchor="middle" fill="#ef4444" font-size="18" font-weight="700">Yahoo — 3 мільярди</text>
+          <text x="525" y="158" text-anchor="middle" class="diagram-text-small" font-size="13">акаунтів скомпрометовано (2013-2014)</text>
+
+          <!-- LinkedIn -->
+          <rect x="20" y="195" width="320" height="70" rx="10" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="180" y="222" text-anchor="middle" fill="#fbbf24" font-size="18" font-weight="700">LinkedIn — 700 млн</text>
+          <text x="180" y="248" text-anchor="middle" class="diagram-text-small" font-size="13">профілів зібрано зловмисниками (2021)</text>
+
+          <!-- Conclusion -->
+          <rect x="370" y="195" width="310" height="70" rx="10" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="525" y="222" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="700">Системна вразливість моделі</text>
+          <text x="525" y="248" text-anchor="middle" class="diagram-text-small" font-size="12">Безпека мільярдів залежить від окремих організацій</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 4: Traditional vs SSI comparison -->
+    <section class="slide">
+      <h1>Традиційна ідентифікація vs SSI</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 310">
+          <!-- Headers -->
+          <rect x="20" y="10" width="120" height="40" rx="6" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="80" y="36" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="13">Критерій</text>
+
+          <rect x="150" y="10" width="260" height="40" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="280" y="36" text-anchor="middle" fill="#ef4444" font-size="13" font-weight="600">Традиційна (IdP)</text>
+
+          <rect x="420" y="10" width="260" height="40" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="550" y="36" text-anchor="middle" fill="#4ade80" font-size="13" font-weight="600">SSI (Self-Sovereign)</text>
+
+          <!-- Row 1: Control -->
+          <rect x="20" y="60" width="120" height="40" rx="6" class="diagram-box"/>
+          <text x="80" y="84" text-anchor="middle" class="diagram-text-small" font-size="12">Контроль</text>
+          <rect x="150" y="60" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="280" y="84" text-anchor="middle" class="diagram-text-small" font-size="12">IdP контролює дані</text>
+          <rect x="420" y="60" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="550" y="84" text-anchor="middle" class="diagram-text-small" font-size="12">Користувач контролює</text>
+
+          <!-- Row 2: Storage -->
+          <rect x="20" y="110" width="120" height="40" rx="6" class="diagram-box"/>
+          <text x="80" y="134" text-anchor="middle" class="diagram-text-small" font-size="12">Зберігання</text>
+          <rect x="150" y="110" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="280" y="134" text-anchor="middle" class="diagram-text-small" font-size="12">Централізовані сервери</text>
+          <rect x="420" y="110" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="550" y="134" text-anchor="middle" class="diagram-text-small" font-size="12">Цифровий гаманець (Wallet)</text>
+
+          <!-- Row 3: Privacy -->
+          <rect x="20" y="160" width="120" height="40" rx="6" class="diagram-box"/>
+          <text x="80" y="184" text-anchor="middle" class="diagram-text-small" font-size="12">Приватність</text>
+          <rect x="150" y="160" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="280" y="184" text-anchor="middle" class="diagram-text-small" font-size="12">IdP бачить усю активність</text>
+          <rect x="420" y="160" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="550" y="184" text-anchor="middle" class="diagram-text-small" font-size="12">Selective Disclosure (ZKP)</text>
+
+          <!-- Row 4: Portability -->
+          <rect x="20" y="210" width="120" height="40" rx="6" class="diagram-box"/>
+          <text x="80" y="234" text-anchor="middle" class="diagram-text-small" font-size="12">Портативність</text>
+          <rect x="150" y="210" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="280" y="234" text-anchor="middle" class="diagram-text-small" font-size="12">Vendor lock-in</text>
+          <rect x="420" y="210" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="550" y="234" text-anchor="middle" class="diagram-text-small" font-size="12">Працює з будь-яким сервісом</text>
+
+          <!-- Row 5: Resilience -->
+          <rect x="20" y="260" width="120" height="40" rx="6" class="diagram-box"/>
+          <text x="80" y="284" text-anchor="middle" class="diagram-text-small" font-size="12">Стійкість</text>
+          <rect x="150" y="260" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="280" y="284" text-anchor="middle" class="diagram-text-small" font-size="12">Single Point of Failure</text>
+          <rect x="420" y="260" width="260" height="40" rx="6" class="diagram-box"/>
+          <text x="550" y="284" text-anchor="middle" class="diagram-text-small" font-size="12">Децентралізований реєстр</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 5: SSI Principles -->
+    <section class="slide">
+      <h1>Self-Sovereign Identity (SSI) — Суверенна ідентичність</h1>
       <ul>
-        <li><strong>Ownership:</strong> ви володієте ідентичністю</li>
-        <li><strong>Control:</strong> ви вирішуєте, що розкривати</li>
-        <li><strong>Portability:</strong> не прив'язано до провайдера</li>
-        <li><strong>Privacy:</strong> selective disclosure</li>
+        <li><strong>Володіння (Ownership):</strong> користувач є єдиним власником своєї ідентичності — жоден провайдер не може її видалити</li>
+        <li><strong>Контроль (Control):</strong> ви самостійно вирішуєте, яку інформацію і кому розкривати</li>
+        <li><strong>Портативність (Portability):</strong> ідентичність не прив'язана до жодного конкретного провайдера чи платформи</li>
+        <li><strong>Приватність (Privacy):</strong> мінімальне розкриття (Selective Disclosure) — лише необхідні атрибути</li>
+        <li><strong>Довговічність (Persistence):</strong> ідентичність існує доти, доки цього бажає власник, незалежно від долі провайдера</li>
+        <li><strong>Інтероперабельність (Interoperability):</strong> відкриті стандарти W3C забезпечують сумісність між різними гаманцями та мережами</li>
       </ul>
     </section>
 
+    <!-- Slide 6: DID Structure Visual -->
     <section class="slide">
-      <h1>Decentralized Identifiers (DIDs)</h1>
+      <h1>Decentralized Identifiers (DIDs) — Структура</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 290">
+          <!-- DID Format -->
+          <text x="350" y="30" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="18">Стандарт W3C (затверджений у липні 2022)</text>
+
+          <!-- Main DID structure -->
+          <rect x="100" y="50" width="500" height="60" rx="10" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
+
+          <!-- Prefix -->
+          <rect x="110" y="58" width="80" height="44" rx="6" fill="rgba(74, 222, 128, 0.3)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="150" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#4ade80" font-family="monospace">did:</text>
+
+          <!-- Method -->
+          <rect x="200" y="58" width="140" height="44" rx="6" fill="rgba(251, 191, 36, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="270" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#fbbf24" font-family="monospace">method:</text>
+
+          <!-- Identifier -->
+          <rect x="350" y="58" width="240" height="44" rx="6" fill="rgba(168, 85, 247, 0.3)" stroke="#a855f7" stroke-width="1.5"/>
+          <text x="470" y="84" text-anchor="middle" font-size="18" font-weight="700" fill="#a855f7" font-family="monospace">identifier</text>
+
+          <!-- Labels -->
+          <text x="150" y="138" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="600">Префікс</text>
+          <text x="150" y="154" text-anchor="middle" class="diagram-text-small" font-size="11">(завжди "did")</text>
+
+          <text x="270" y="138" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="600">Метод</text>
+          <text x="270" y="154" text-anchor="middle" class="diagram-text-small" font-size="11">(мережа реєстрації)</text>
+
+          <text x="470" y="138" text-anchor="middle" fill="#a855f7" font-size="12" font-weight="600">Унікальний ідентифікатор</text>
+          <text x="470" y="154" text-anchor="middle" class="diagram-text-small" font-size="11">(публічний ключ або хеш)</text>
+
+          <!-- Examples -->
+          <text x="350" y="188" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">Приклади (понад 150 методів зареєстровано):</text>
+
+          <rect x="30" y="200" width="310" height="35" rx="6" class="diagram-box"/>
+          <text x="40" y="222" class="diagram-text-small" font-size="12" font-family="monospace" fill="#4ade80">did:ethr:0x123...abc</text>
+          <text x="260" y="222" class="diagram-text-small" font-size="11">— Ethereum</text>
+
+          <rect x="360" y="200" width="310" height="35" rx="6" class="diagram-box"/>
+          <text x="370" y="222" class="diagram-text-small" font-size="12" font-family="monospace" fill="#fbbf24">did:ion:EiD3...xyz</text>
+          <text x="580" y="222" class="diagram-text-small" font-size="11">— Bitcoin L2 (Microsoft)</text>
+
+          <rect x="30" y="245" width="310" height="35" rx="6" class="diagram-box"/>
+          <text x="40" y="267" class="diagram-text-small" font-size="12" font-family="monospace" fill="#a855f7">did:web:example.com</text>
+          <text x="260" y="267" class="diagram-text-small" font-size="11">— DNS/HTTPS</text>
+
+          <rect x="360" y="245" width="310" height="35" rx="6" class="diagram-box"/>
+          <text x="370" y="267" class="diagram-text-small" font-size="12" font-family="monospace" fill="#38bdf8">did:key:z6Mkf5...</text>
+          <text x="580" y="267" class="diagram-text-small" font-size="11">— без блокчейну</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 7: DID Document -->
+    <section class="slide">
+      <h1>DID Document — Документ ідентифікатора</h1>
       <ul>
-        <li>Стандарт W3C</li>
-        <li><code>did:method:identifier</code></li>
-        <li><strong>did:ethr:</strong> Ethereum-based</li>
-        <li><strong>did:ion:</strong> Bitcoin Layer 2</li>
+        <li><strong>id:</strong> сам DID — унікальний ідентифікатор, ключ для пошуку документа в реєстрі</li>
+        <li><strong>verificationMethod:</strong> набір публічних ключів для верифікації підписів та шифрування повідомлень</li>
+        <li><strong>authentication:</strong> визначає, які ключі та протоколи використовуються для автентифікації власника DID</li>
+        <li><strong>service:</strong> endpoint-и для взаємодії — URL для обміну Verifiable Credentials або месенджер</li>
+        <li><strong>Зберігання:</strong> розподілений реєстр (блокчейн) або інше верифіковане сховище</li>
+        <li><strong>Формат:</strong> JSON-LD документ з семантичним контекстом для інтероперабельності</li>
       </ul>
     </section>
 
+    <!-- Slide 8: Triangle of Trust - VC diagram -->
     <section class="slide">
-      <h1>DID Document</h1>
-      <ul>
-        <li><strong>id:</strong> сам DID</li>
-        <li><strong>verificationMethod:</strong> публічні ключі</li>
-        <li><strong>authentication:</strong> методи auth</li>
-        <li><strong>service:</strong> endpoints</li>
-      </ul>
+      <h1>Verifiable Credentials — Трикутник довіри</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 340">
+          <defs>
+            <marker id="vc-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+            </marker>
+          </defs>
+
+          <!-- Issuer (top left) -->
+          <rect fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2" x="30" y="40" width="170" height="100" rx="12"/>
+          <text fill="#38bdf8" x="115" y="70" text-anchor="middle" font-weight="700" font-size="16">Issuer</text>
+          <text x="115" y="90" text-anchor="middle" class="diagram-text-small" font-size="11">(Видавець)</text>
+          <text x="115" y="108" text-anchor="middle" class="diagram-text-small" font-size="10">Університет, Держава,</text>
+          <text x="115" y="122" text-anchor="middle" class="diagram-text-small" font-size="10">Лікарня, Роботодавець</text>
+
+          <!-- Holder (top right) -->
+          <rect fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2" x="500" y="40" width="170" height="100" rx="12"/>
+          <text fill="#4ade80" x="585" y="70" text-anchor="middle" font-weight="700" font-size="16">Holder</text>
+          <text x="585" y="90" text-anchor="middle" class="diagram-text-small" font-size="11">(Власник)</text>
+          <text x="585" y="108" text-anchor="middle" class="diagram-text-small" font-size="10">Користувач + Digital</text>
+          <text x="585" y="122" text-anchor="middle" class="diagram-text-small" font-size="10">Wallet (Гаманець)</text>
+
+          <!-- Verifier (bottom right) -->
+          <rect fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2" x="500" y="190" width="170" height="100" rx="12"/>
+          <text fill="#fbbf24" x="585" y="220" text-anchor="middle" font-weight="700" font-size="16">Verifier</text>
+          <text x="585" y="240" text-anchor="middle" class="diagram-text-small" font-size="11">(Верифікатор)</text>
+          <text x="585" y="258" text-anchor="middle" class="diagram-text-small" font-size="10">Роботодавець, Банк,</text>
+          <text x="585" y="272" text-anchor="middle" class="diagram-text-small" font-size="10">Онлайн-сервіс</text>
+
+          <!-- Blockchain Registry (bottom center) -->
+          <rect fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2" x="175" y="210" width="250" height="65" rx="10"/>
+          <text fill="#a855f7" x="300" y="238" text-anchor="middle" font-weight="700" font-size="13">Blockchain / Verifiable</text>
+          <text fill="#a855f7" x="300" y="256" text-anchor="middle" font-weight="700" font-size="13">Data Registry</text>
+
+          <!-- Arrow: Issuer -> Holder (Issue VC) -->
+          <line stroke="#64748b" stroke-width="2" x1="200" y1="75" x2="495" y2="75" marker-end="url(#vc-arrow)"/>
+          <rect x="280" y="55" width="140" height="24" rx="4" fill="rgba(56, 189, 248, 0.15)" stroke="none"/>
+          <text x="350" y="72" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="600">1. Видає VC</text>
+
+          <!-- Arrow: Holder -> Verifier (Present VP) -->
+          <line stroke="#64748b" stroke-width="2" x1="585" y1="145" x2="585" y2="185" marker-end="url(#vc-arrow)"/>
+          <text x="630" y="168" text-anchor="start" fill="#4ade80" font-size="11" font-weight="600">2. Пред'являє VP</text>
+
+          <!-- Arrow: Verifier -> Registry (Verify) -->
+          <line stroke="#64748b" stroke-width="2" x1="500" y1="250" x2="430" y2="245" marker-end="url(#vc-arrow)"/>
+          <text x="470" y="268" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">3. Перевіряє</text>
+
+          <!-- Arrow: Issuer -> Registry (Register DID) -->
+          <line stroke="#64748b" stroke-width="2" x1="115" y1="145" x2="200" y2="215" marker-end="url(#vc-arrow)"/>
+          <text x="110" y="188" text-anchor="start" fill="#a855f7" font-size="11" font-weight="600">Реєструє DID</text>
+
+          <!-- Key point -->
+          <text x="350" y="325" text-anchor="middle" class="diagram-text-small" font-size="12">Верифікація без звернення до видавця — лише через публічний реєстр</text>
+        </svg>
+      </div>
     </section>
 
+    <!-- Slide 9: VC Structure -->
     <section class="slide">
-      <h1>Verifiable Credentials (VCs)</h1>
+      <h1>Структура Verifiable Credential</h1>
       <div class="slide-grid">
         <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
-          <h3>Issuer</h3>
-          <p>Видає credential</p>
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <h3>@context</h3>
+          <p>Семантичний контекст для інтероперабельності</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <h3>Holder</h3>
-          <p>Зберігає у wallet</p>
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
+          <h3>type</h3>
+          <p>Тип документа (UniversityDegree, DriverLicense)</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-          <h3>Verifier</h3>
-          <p>Перевіряє підпис</p>
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></div>
+          <h3>issuer</h3>
+          <p>DID видавця — однозначна ідентифікація організації</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>credentialSubject</h3>
+          <p>Дані про суб'єкта: ПІБ, ступінь, спеціальність</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>proof</h3>
+          <p>Криптографічний підпис — гарантія автентичності та цілісності</p>
         </div>
       </div>
     </section>
 
+    <!-- Slide 10: ZKP Expanded -->
     <section class="slide">
-      <h1>Zero-Knowledge Proofs</h1>
+      <h1>Zero-Knowledge Proofs (ZKP) — Докази з нульовим розголошенням</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 310">
+          <!-- Title -->
+          <text x="350" y="25" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="15">Приклад: перевірка віку без розкриття даних</text>
+
+          <!-- Step 1: Holder has VC -->
+          <rect x="20" y="45" width="200" height="75" rx="8" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
+          <text x="120" y="68" text-anchor="middle" fill="#4ade80" font-size="13" font-weight="700">1. Holder має VC</text>
+          <text x="120" y="88" text-anchor="middle" class="diagram-text-small" font-size="11">Паспорт з датою</text>
+          <text x="120" y="104" text-anchor="middle" class="diagram-text-small" font-size="11">народження: 15.03.2000</text>
+
+          <!-- Step 2: Verifier requests -->
+          <rect x="250" y="45" width="200" height="75" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="350" y="68" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="700">2. Verifier запитує</text>
+          <text x="350" y="88" text-anchor="middle" class="diagram-text-small" font-size="11">"Доведіть, що</text>
+          <text x="350" y="104" text-anchor="middle" class="diagram-text-small" font-size="11">вам більше 18 років"</text>
+
+          <!-- Step 3: ZKP generated -->
+          <rect x="480" y="45" width="200" height="75" rx="8" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
+          <text x="580" y="68" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="700">3. ZKP генерується</text>
+          <text x="580" y="88" text-anchor="middle" class="diagram-text-small" font-size="11">Математичний доказ:</text>
+          <text x="580" y="104" text-anchor="middle" class="diagram-text-small" font-size="11">"вік >= 18" = TRUE</text>
+
+          <!-- Arrows between steps -->
+          <line stroke="#64748b" stroke-width="1.5" x1="225" y1="82" x2="245" y2="82" marker-end="url(#vc-arrow)"/>
+          <line stroke="#64748b" stroke-width="1.5" x1="455" y1="82" x2="475" y2="82" marker-end="url(#vc-arrow)"/>
+
+          <!-- Result box -->
+          <rect x="100" y="145" width="500" height="50" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
+          <text x="350" y="167" text-anchor="middle" fill="#4ade80" font-size="14" font-weight="700">Результат: Verifier знає ЛИШЕ факт "вік >= 18"</text>
+          <text x="350" y="185" text-anchor="middle" class="diagram-text-small" font-size="12">Не розкрито: дату народження, ім'я, номер документа — нічого зайвого</text>
+
+          <!-- Three properties -->
+          <text x="350" y="220" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">Три властивості ZKP:</text>
+
+          <rect x="20" y="235" width="210" height="65" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="125" y="258" text-anchor="middle" fill="#4ade80" font-size="13" font-weight="600">Повнота</text>
+          <text x="125" y="278" text-anchor="middle" class="diagram-text-small" font-size="11">Чесний верифікатор завжди</text>
+          <text x="125" y="292" text-anchor="middle" class="diagram-text-small" font-size="11">переконається в істині</text>
+
+          <rect x="245" y="235" width="210" height="65" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="350" y="258" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="600">Коректність</text>
+          <text x="350" y="278" text-anchor="middle" class="diagram-text-small" font-size="11">Неможливо довести</text>
+          <text x="350" y="292" text-anchor="middle" class="diagram-text-small" font-size="11">хибне твердження</text>
+
+          <rect x="470" y="235" width="210" height="65" rx="8" fill="rgba(168, 85, 247, 0.15)" stroke="#a855f7" stroke-width="1.5"/>
+          <text x="575" y="258" text-anchor="middle" fill="#a855f7" font-size="13" font-weight="600">Нульове розголошення</text>
+          <text x="575" y="278" text-anchor="middle" class="diagram-text-small" font-size="11">Верифікатор не дізнається</text>
+          <text x="575" y="292" text-anchor="middle" class="diagram-text-small" font-size="11">нічого крім факту</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 11: ZKP Technologies -->
+    <section class="slide">
+      <h1>Криптографічні схеми ZKP</h1>
       <ul>
-        <li>Доведення без розкриття даних</li>
-        <li><strong>Приклад:</strong> "Мені > 18" без дати народження</li>
-        <li><strong>BBS+ Signatures:</strong> selective disclosure</li>
-        <li><strong>zk-SNARKs:</strong> складні докази</li>
+        <li><strong>BBS+ Signatures:</strong> Selective Disclosure — з одного підписаного credential показати лише вибрані поля, зберігаючи дійсність підпису</li>
+        <li><strong>zk-SNARKs (Succinct Non-interactive Arguments of Knowledge):</strong> доведення довільно складних тверджень за константний час верифікації — використовує Zcash</li>
+        <li><strong>zk-STARKs (Scalable Transparent Arguments of Knowledge):</strong> без довіреної ініціалізації (Trusted Setup), стійкість до квантових обчислень</li>
+        <li><strong>Переваги для VCs:</strong> користувач доводить, що credential задовольняє умову, не розкриваючи сам credential</li>
+        <li><strong>Практичне застосування:</strong> вхід до клубу (вік >= 18), KYC без копій документів, анонімне голосування</li>
       </ul>
     </section>
 
+    <!-- Slide 12: eIDAS 2.0 Timeline -->
     <section class="slide">
-      <h1>EU Digital Identity Wallet</h1>
+      <h1>EU Digital Identity Wallet — eIDAS 2.0</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 310">
+          <!-- Title -->
+          <text x="350" y="28" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="16">Найамбітніший проєкт децентралізованої ідентифікації</text>
+
+          <!-- Timeline line -->
+          <line x1="80" y1="80" x2="620" y2="80" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- 2014: eIDAS 1.0 -->
+          <circle cx="120" cy="80" r="10" fill="#38bdf8"/>
+          <text x="120" y="60" text-anchor="middle" fill="#38bdf8" font-size="14" font-weight="700">2014</text>
+          <rect x="55" y="100" width="130" height="40" rx="6" class="diagram-box"/>
+          <text x="120" y="118" text-anchor="middle" class="diagram-text-small" font-size="11">eIDAS 1.0</text>
+          <text x="120" y="132" text-anchor="middle" class="diagram-text-small" font-size="10">Електронна ідентифікація</text>
+
+          <!-- 2021: Proposal -->
+          <circle cx="270" cy="80" r="10" fill="#fbbf24"/>
+          <text x="270" y="60" text-anchor="middle" fill="#fbbf24" font-size="14" font-weight="700">2021</text>
+          <rect x="205" y="100" width="130" height="40" rx="6" class="diagram-box"/>
+          <text x="270" y="118" text-anchor="middle" class="diagram-text-small" font-size="11">Пропозиція 2.0</text>
+          <text x="270" y="132" text-anchor="middle" class="diagram-text-small" font-size="10">Цифровий гаманець ЄС</text>
+
+          <!-- 2024: Adoption -->
+          <circle cx="420" cy="80" r="10" fill="#4ade80"/>
+          <text x="420" y="60" text-anchor="middle" fill="#4ade80" font-size="14" font-weight="700">2024</text>
+          <rect x="355" y="100" width="130" height="40" rx="6" class="diagram-box"/>
+          <text x="420" y="118" text-anchor="middle" class="diagram-text-small" font-size="11">Затвердження</text>
+          <text x="420" y="132" text-anchor="middle" class="diagram-text-small" font-size="10">Регламент прийнято</text>
+
+          <!-- 2026: Full rollout -->
+          <circle cx="570" cy="80" r="12" fill="#ef4444" stroke="#ef4444" stroke-width="3"/>
+          <text x="570" y="58" text-anchor="middle" fill="#ef4444" font-size="14" font-weight="700">2026</text>
+          <rect x="505" y="100" width="130" height="40" rx="6" fill="rgba(239, 68, 68, 0.15)" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="570" y="118" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="600">Повне впровадження</text>
+          <text x="570" y="132" text-anchor="middle" class="diagram-text-small" font-size="10">Обов'язковий запуск</text>
+
+          <!-- Key facts -->
+          <text x="350" y="175" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">Ключові факти eIDAS 2.0:</text>
+
+          <rect x="20" y="190" width="210" height="110" rx="8" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="125" y="218" text-anchor="middle" fill="#38bdf8" font-size="28" font-weight="700">450 млн</text>
+          <text x="125" y="240" text-anchor="middle" class="diagram-text-small" font-size="12">громадян ЄС отримають</text>
+          <text x="125" y="256" text-anchor="middle" class="diagram-text-small" font-size="12">цифровий гаманець</text>
+          <text x="125" y="272" text-anchor="middle" class="diagram-text-small" font-size="12">від своєї держави</text>
+
+          <rect x="245" y="190" width="210" height="110" rx="8" fill="rgba(251, 191, 36, 0.1)" stroke="#fbbf24" stroke-width="1.5"/>
+          <text x="350" y="215" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="700">Обов'язковий прийом</text>
+          <text x="350" y="238" text-anchor="middle" class="diagram-text-small" font-size="12">Google, Facebook, Amazon</text>
+          <text x="350" y="256" text-anchor="middle" class="diagram-text-small" font-size="12">та інші великі платформи</text>
+          <text x="350" y="274" text-anchor="middle" class="diagram-text-small" font-size="12">зобов'язані приймати</text>
+
+          <rect x="470" y="190" width="210" height="110" rx="8" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="575" y="215" text-anchor="middle" fill="#4ade80" font-size="13" font-weight="700">Що зберігатиме:</text>
+          <text x="575" y="238" text-anchor="middle" class="diagram-text-small" font-size="12">Паспорт, водійське</text>
+          <text x="575" y="256" text-anchor="middle" class="diagram-text-small" font-size="12">посвідчення, дипломи,</text>
+          <text x="575" y="274" text-anchor="middle" class="diagram-text-small" font-size="12">медичні записи, ліцензії</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 13: Microsoft ION -->
+    <section class="slide">
+      <h1>Microsoft ION — Identity Overlay Network</h1>
       <ul>
-        <li>eIDAS 2.0 — кожен громадянин ЄС</li>
-        <li>Державні та приватні credentials</li>
-        <li>Обов'язкове для великих платформ</li>
-        <li><strong>Запуск:</strong> 2024-2026</li>
+        <li><strong>Архітектура:</strong> DID мережа побудована як Layer 2 рішення поверх блокчейну Bitcoin</li>
+        <li><strong>Протокол Sidetree:</strong> пакетна обробка тисяч DID-операцій (створення, оновлення, деактивація) в одній BTC транзакції</li>
+        <li><strong>Масштабованість (Scalability):</strong> забезпечує масштабованість при збереженні безпеки базового блокчейну</li>
+        <li><strong>Інтеграція з Azure AD (Microsoft Entra ID):</strong> корпоративні клієнти поступово впроваджують децентралізовану ідентифікацію</li>
+        <li><strong>Відкритий код (Open Source):</strong> розвивається спільнотою Decentralized Identity Foundation (DIF)</li>
+        <li><strong>Практичне значення:</strong> міст між традиційною корпоративною інфраструктурою та децентралізованим майбутнім</li>
       </ul>
     </section>
 
-    <section class="slide">
-      <h1>Microsoft ION</h1>
-      <ul>
-        <li>DID мережа на Bitcoin Layer 2</li>
-        <li>Тисячі операцій в 1 BTC транзакції</li>
-        <li>Інтеграція з Azure AD</li>
-        <li>Open source</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>SSI vs Традиційна ідентифікація</h1>
-      <ul>
-        <li><strong>Традиційна:</strong> IdP контролює все</li>
-        <li><strong>SSI:</strong> користувач контролює</li>
-        <li><strong>Традиційна:</strong> centralized storage</li>
-        <li><strong>SSI:</strong> децентралізоване зберігання</li>
-      </ul>
-    </section>
-
+    <!-- Slide 14: Questions -->
     <section class="slide">
       <h1>Питання?</h1>
       <p>Наступна тема: Смарт-контракти та їх безпека</p>

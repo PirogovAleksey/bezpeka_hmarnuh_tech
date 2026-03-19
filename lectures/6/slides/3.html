@@ -22,64 +22,159 @@
   </div>
 
   <div class="slide-deck">
+    <!-- Slide 1: Title -->
     <section class="slide active">
       <h1>Безпека хмарних технологій</h1>
       <p>Тема 6.3: Смарт-контракти та їх безпека</p>
     </section>
 
+    <!-- Slide 2: What is a smart contract -->
     <section class="slide">
-      <h1>Що таке смарт-контракт?</h1>
+      <h1>Що таке смарт-контракт (Smart Contract)?</h1>
       <ul>
-        <li>Програма на блокчейні</li>
-        <li><strong>Code is Law:</strong> автоматичне виконання</li>
-        <li><strong>Незмінність:</strong> після деплою не змінити</li>
-        <li><strong>Trustless:</strong> не потрібен посередник</li>
+        <li>Програма, розгорнута на блокчейні, що автоматично виконує умови угоди</li>
+        <li><strong>Code is Law (код — це закон):</strong> автоматичне та невідворотне виконання</li>
+        <li><strong>Незмінність (Immutability):</strong> після розгортання (deploy) код не можна модифікувати</li>
+        <li><strong>Прозорість (Transparency):</strong> вихідний код публічно доступний для аудиту</li>
+        <li><strong>Безпосередність (Trustless Execution):</strong> не потрібен посередник, код виконується валідаторами</li>
+        <li>Термін запропонований Ніком Сабо у 1994 році, задовго до появи блокчейну</li>
       </ul>
     </section>
 
+    <!-- Slide 3: Platforms comparison visual grid -->
     <section class="slide">
-      <h1>Платформи</h1>
-      <ul>
-        <li><strong>Ethereum:</strong> Solidity, EVM, найбільша екосистема</li>
-        <li><strong>Solana:</strong> Rust, висока швидкість</li>
-        <li><strong>Hyperledger:</strong> Go/Java, enterprise</li>
-        <li><strong>Cardano:</strong> Haskell, formal verification</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Reentrancy Attack</h1>
-      <ul>
-        <li>Повторний вхід до функції</li>
-        <li>Стан не оновлений → повторне зняття</li>
-        <li><strong>The DAO (2016):</strong> $60M втрачено</li>
-        <li><strong>Захист:</strong> Checks-Effects-Interactions</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Приклад Reentrancy</h1>
+      <h1>Платформи смарт-контрактів (Smart Contract Platforms)</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 400 180" width="400" height="180">
+        <svg viewBox="0 0 700 310">
+          <!-- Ethereum -->
+          <rect x="15" y="10" width="160" height="140" rx="8" fill="rgba(56, 189, 248, 0.12)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="95" y="38" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="16">Ethereum</text>
+          <text x="95" y="60" text-anchor="middle" class="diagram-text-small" font-size="12">Мова: Solidity</text>
+          <text x="95" y="78" text-anchor="middle" class="diagram-text-small" font-size="12">VM: EVM</text>
+          <text x="95" y="96" text-anchor="middle" class="diagram-text-small" font-size="12">~15 TPS</text>
+          <text x="95" y="114" text-anchor="middle" class="diagram-text-small" font-size="12">Найбільша екосистема</text>
+          <rect x="40" y="125" width="110" height="18" rx="4" fill="rgba(56, 189, 248, 0.25)"/>
+          <text x="95" y="138" text-anchor="middle" class="diagram-text-small" font-size="10">DeFi, NFT, DAO</text>
+
+          <!-- Solana -->
+          <rect x="185" y="10" width="160" height="140" rx="8" fill="rgba(74, 222, 128, 0.12)" stroke="#4ade80" stroke-width="2"/>
+          <text x="265" y="38" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="16">Solana</text>
+          <text x="265" y="60" text-anchor="middle" class="diagram-text-small" font-size="12">Мова: Rust</text>
+          <text x="265" y="78" text-anchor="middle" class="diagram-text-small" font-size="12">VM: SVM (Sealevel)</text>
+          <text x="265" y="96" text-anchor="middle" class="diagram-text-small" font-size="12">~65 000 TPS</text>
+          <text x="265" y="114" text-anchor="middle" class="diagram-text-small" font-size="12">Proof of History</text>
+          <rect x="210" y="125" width="110" height="18" rx="4" fill="rgba(74, 222, 128, 0.25)"/>
+          <text x="265" y="138" text-anchor="middle" class="diagram-text-small" font-size="10">Безпека пам'яті Rust</text>
+
+          <!-- Hyperledger -->
+          <rect x="355" y="10" width="160" height="140" rx="8" fill="rgba(251, 191, 36, 0.12)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="435" y="38" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="16">Hyperledger</text>
+          <text x="435" y="60" text-anchor="middle" class="diagram-text-small" font-size="12">Мова: Go / Java</text>
+          <text x="435" y="78" text-anchor="middle" class="diagram-text-small" font-size="12">Chaincode</text>
+          <text x="435" y="96" text-anchor="middle" class="diagram-text-small" font-size="12">~3 000 TPS</text>
+          <text x="435" y="114" text-anchor="middle" class="diagram-text-small" font-size="12">Корпоративний (Enterprise)</text>
+          <rect x="380" y="125" width="110" height="18" rx="4" fill="rgba(251, 191, 36, 0.25)"/>
+          <text x="435" y="138" text-anchor="middle" class="diagram-text-small" font-size="10">Контрольоване середовище</text>
+
+          <!-- Cardano -->
+          <rect x="525" y="10" width="160" height="140" rx="8" fill="rgba(168, 85, 247, 0.12)" stroke="#a855f7" stroke-width="2"/>
+          <text x="605" y="38" text-anchor="middle" class="diagram-text-bold" fill="#a855f7" font-size="16">Cardano</text>
+          <text x="605" y="60" text-anchor="middle" class="diagram-text-small" font-size="12">Мова: Plutus (Haskell)</text>
+          <text x="605" y="78" text-anchor="middle" class="diagram-text-small" font-size="12">eUTXO модель</text>
+          <text x="605" y="96" text-anchor="middle" class="diagram-text-small" font-size="12">~250 TPS</text>
+          <text x="605" y="114" text-anchor="middle" class="diagram-text-small" font-size="12">Сильна типізація</text>
+          <rect x="550" y="125" width="110" height="18" rx="4" fill="rgba(168, 85, 247, 0.25)"/>
+          <text x="605" y="138" text-anchor="middle" class="diagram-text-small" font-size="10">Формальна верифікація</text>
+
+          <!-- Comparison axis -->
+          <line x1="15" y1="175" x2="685" y2="175" stroke="#475569" stroke-width="1" stroke-dasharray="4"/>
+          <text x="350" y="198" text-anchor="middle" class="diagram-text-small" font-size="13">Швидкість (TPS)</text>
+
+          <!-- Speed bar chart -->
+          <rect x="55" y="210" width="20" height="60" rx="3" fill="rgba(56, 189, 248, 0.5)" stroke="#38bdf8" stroke-width="1"/>
+          <text x="65" y="285" text-anchor="middle" class="diagram-text-small" font-size="10">15</text>
+
+          <rect x="225" y="210" width="20" height="60" rx="3" fill="rgba(74, 222, 128, 0.5)" stroke="#4ade80" stroke-width="1"/>
+          <rect x="225" y="210" width="20" height="60" rx="3" fill="rgba(74, 222, 128, 0.7)" stroke="#4ade80" stroke-width="1"/>
+          <text x="235" y="205" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="11">65K</text>
+
+          <rect x="395" y="230" width="20" height="40" rx="3" fill="rgba(251, 191, 36, 0.5)" stroke="#fbbf24" stroke-width="1"/>
+          <text x="405" y="285" text-anchor="middle" class="diagram-text-small" font-size="10">3K</text>
+
+          <rect x="565" y="245" width="20" height="25" rx="3" fill="rgba(168, 85, 247, 0.5)" stroke="#a855f7" stroke-width="1"/>
+          <text x="575" y="285" text-anchor="middle" class="diagram-text-small" font-size="10">250</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 4: Reentrancy Attack -->
+    <section class="slide">
+      <h1>Атака повторного входу (Reentrancy Attack)</h1>
+      <ul>
+        <li>Зловмисний контракт повторно викликає функцію жертви до завершення попереднього виконання</li>
+        <li>Стан (balance) не оновлений на момент повторного виклику — кошти знімаються повторно</li>
+        <li><strong>Fallback-функція</strong> атакуючого автоматично ініціює повторний виклик withdraw()</li>
+        <li>Цикл повторюється, поки не вичерпається газ (gas) або баланс контракту</li>
+        <li><strong>Захист:</strong> патерн Checks-Effects-Interactions (CEI) та модифікатор ReentrancyGuard</li>
+        <li>Найруйнівніша вразливість в історії смарт-контрактів — The DAO, 2016</li>
+      </ul>
+    </section>
+
+    <!-- Slide 5: Reentrancy code example -->
+    <section class="slide">
+      <h1>Приклад Reentrancy: код Solidity</h1>
+      <pre><code>// Вразливий код (Vulnerable)
+function withdraw() {
+    uint amount = balances[msg.sender];
+    // 1. Відправка ETH - атакуючий
+    //    повторно викликає withdraw()!
+    msg.sender.call{value: amount}("");
+    // 2. Оновлення балансу - ЗАПІЗНО!
+    balances[msg.sender] = 0;
+}
+
+// Захищений код (Checks-Effects-Interactions)
+function withdraw() {
+    uint amount = balances[msg.sender];
+    // 1. Check: перевірка
+    require(amount > 0, "No funds");
+    // 2. Effect: оновлюємо стан ПЕРШИМ
+    balances[msg.sender] = 0;
+    // 3. Interaction: зовнішній виклик
+    msg.sender.call{value: amount}("");
+}</code></pre>
+    </section>
+
+    <!-- Slide 6: Reentrancy diagram -->
+    <section class="slide">
+      <h1>Reentrancy: вразливий vs безпечний патерн</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 220" width="700" height="220">
           <!-- Bad pattern -->
-          <rect x="20" y="20" width="160" height="130" rx="8" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2"/>
-          <text x="100" y="45" text-anchor="middle" class="diagram-text-bold" fill="#ef4444">Вразливий</text>
-          <rect x="35" y="55" width="130" height="25" rx="4" fill="#ef4444" opacity="0.2"/>
-          <text x="100" y="73" text-anchor="middle" class="diagram-text-small">1. transfer()</text>
-          <line x1="100" y1="80" x2="100" y2="90" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-bad)"/>
-          <rect x="35" y="95" width="130" height="25" rx="4" fill="#ef4444" opacity="0.2"/>
-          <text x="100" y="113" text-anchor="middle" class="diagram-text-small">2. update balance</text>
-          <text x="100" y="140" text-anchor="middle" class="diagram-text-small" fill="#ef4444">Reentry можливий!</text>
+          <rect x="20" y="10" width="310" height="200" rx="8" fill="rgba(239, 68, 68, 0.08)" stroke="#ef4444" stroke-width="2"/>
+          <text x="175" y="38" text-anchor="middle" class="diagram-text-bold" fill="#ef4444" font-size="15">Вразливий (Vulnerable)</text>
+          <rect x="40" y="50" width="270" height="30" rx="4" fill="rgba(239, 68, 68, 0.15)"/>
+          <text x="175" y="70" text-anchor="middle" class="diagram-text-small" font-size="12">1. call{value: amount}("") - transfer</text>
+          <line x1="175" y1="82" x2="175" y2="95" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-bad)"/>
+          <rect x="40" y="97" width="270" height="30" rx="4" fill="rgba(239, 68, 68, 0.15)"/>
+          <text x="175" y="117" text-anchor="middle" class="diagram-text-small" font-size="12">2. Fallback() -> withdraw() знову!</text>
+          <line x1="175" y1="129" x2="175" y2="142" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-bad)"/>
+          <rect x="40" y="144" width="270" height="30" rx="4" fill="rgba(239, 68, 68, 0.15)"/>
+          <text x="175" y="164" text-anchor="middle" class="diagram-text-small" font-size="12">3. balances[sender] = 0  (ЗАПІЗНО!)</text>
+          <text x="175" y="198" text-anchor="middle" class="diagram-text-small" fill="#ef4444" font-size="12">Reentry можливий - кошти вкрадено!</text>
 
           <!-- Good pattern -->
-          <rect x="220" y="20" width="160" height="130" rx="8" fill="rgba(74, 222, 128, 0.1)" stroke="#4ade80" stroke-width="2"/>
-          <text x="300" y="45" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Безпечний</text>
-          <rect x="235" y="55" width="130" height="25" rx="4" fill="#4ade80" opacity="0.2"/>
-          <text x="300" y="73" text-anchor="middle" class="diagram-text-small">1. update balance</text>
-          <line x1="300" y1="80" x2="300" y2="90" stroke="#4ade80" stroke-width="2" marker-end="url(#arrow-good)"/>
-          <rect x="235" y="95" width="130" height="25" rx="4" fill="#4ade80" opacity="0.2"/>
-          <text x="300" y="113" text-anchor="middle" class="diagram-text-small">2. transfer()</text>
-          <text x="300" y="140" text-anchor="middle" class="diagram-text-small" fill="#4ade80">CEI Pattern</text>
+          <rect x="370" y="10" width="310" height="200" rx="8" fill="rgba(74, 222, 128, 0.08)" stroke="#4ade80" stroke-width="2"/>
+          <text x="525" y="38" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="15">Безпечний (CEI Pattern)</text>
+          <rect x="390" y="50" width="270" height="30" rx="4" fill="rgba(74, 222, 128, 0.15)"/>
+          <text x="525" y="70" text-anchor="middle" class="diagram-text-small" font-size="12">1. Check: require(amount > 0)</text>
+          <line x1="525" y1="82" x2="525" y2="95" stroke="#4ade80" stroke-width="2" marker-end="url(#arrow-good)"/>
+          <rect x="390" y="97" width="270" height="30" rx="4" fill="rgba(74, 222, 128, 0.15)"/>
+          <text x="525" y="117" text-anchor="middle" class="diagram-text-small" font-size="12">2. Effect: balances[sender] = 0</text>
+          <line x1="525" y1="129" x2="525" y2="142" stroke="#4ade80" stroke-width="2" marker-end="url(#arrow-good)"/>
+          <rect x="390" y="144" width="270" height="30" rx="4" fill="rgba(74, 222, 128, 0.15)"/>
+          <text x="525" y="164" text-anchor="middle" class="diagram-text-small" font-size="12">3. Interaction: call{value}("")</text>
+          <text x="525" y="198" text-anchor="middle" class="diagram-text-small" fill="#4ade80" font-size="12">Reentry безпечний - баланс вже 0!</text>
 
           <defs>
             <marker id="arrow-bad" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#ef4444"/></marker>
@@ -89,82 +184,196 @@
       </div>
     </section>
 
+    <!-- Slide 7: The DAO Hack -->
     <section class="slide">
-      <h1>Integer Overflow</h1>
-      <ul>
-        <li><code>uint256 max + 1 = 0</code></li>
-        <li>До Solidity 0.8 — без перевірок</li>
-        <li><strong>SafeMath:</strong> бібліотека захисту</li>
-        <li><strong>Solidity 0.8+:</strong> автоматичні перевірки</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Access Control</h1>
-      <ul>
-        <li>Відсутність <code>onlyOwner</code></li>
-        <li>Публічні функції замість private</li>
-        <li><strong>Parity Wallet:</strong> $30M через публічну функцію</li>
-        <li><strong>Захист:</strong> OpenZeppelin AccessControl</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Front-Running</h1>
-      <ul>
-        <li>Атакуючий бачить pending транзакцію</li>
-        <li>Відправляє свою з вищим gas</li>
-        <li><strong>MEV:</strong> Miner Extractable Value</li>
-        <li><strong>Flashbots:</strong> захист від MEV</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Oracle Manipulation</h1>
-      <ul>
-        <li>Контракти не мають зовнішніх даних</li>
-        <li>Oracles надають ціни, дані</li>
-        <li><strong>Flash Loan Attacks:</strong> маніпуляція цін</li>
-        <li><strong>Chainlink:</strong> децентралізовані oracles</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Security Tools</h1>
-      <div class="slide-grid">
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-          <h3>Slither</h3>
-          <p>Static analysis</p>
+      <h1>The DAO Hack (2016) — $60 мільйонів</h1>
+      <div class="slide-timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Квітень 2016</div>
+          <div class="timeline-text">Запуск The DAO — найбільший краудфандинг ($150M ETH)</div>
         </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-          <h3>Mythril</h3>
-          <p>Symbolic execution</p>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">17 червня</div>
+          <div class="timeline-text">Атакуючий використав reentrancy, викрав 3.6M ETH (~$60M)</div>
         </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <h3>Echidna</h3>
-          <p>Fuzzing</p>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">20 липня</div>
+          <div class="timeline-text">Hard fork Ethereum — відкат транзакцій атакуючого</div>
         </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-          <h3>Certora</h3>
-          <p>Formal verification</p>
+        <div class="timeline-line"></div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Наслідки</div>
+          <div class="timeline-text">Розкол на Ethereum (ETH) та Ethereum Classic (ETC)</div>
         </div>
       </div>
     </section>
 
+    <!-- Slide 8: Parity Wallet -->
     <section class="slide">
-      <h1>Bug Bounty</h1>
+      <h1>Parity Wallet — $30M + $150M заблоковано</h1>
       <ul>
-        <li><strong>Immunefi:</strong> найбільша Web3 платформа</li>
-        <li>Виплати до $10M за критичні баги</li>
-        <li>Постійний аудит community</li>
-        <li>Third-party audits: OpenZeppelin, Trail of Bits</li>
+        <li><strong>Липень 2017:</strong> публічна функція ініціалізації (initWallet) без захисту доступу (Access Control)</li>
+        <li>Зловмисник викликав initWallet(), оголосив себе власником (owner) та вивів <strong>$30 мільйонів</strong></li>
+        <li><strong>Листопад 2017:</strong> інший користувач випадково викликав selfdestruct() на бібліотечному контракті</li>
+        <li>Бібліотека знищена — всі залежні гаманці перестали працювати</li>
+        <li><strong>$150 мільйонів ETH заблоковано назавжди</strong> — кошти існують, але недоступні</li>
+        <li>Урок: критичні функції потребують модифікаторів <code>onlyOwner</code> та OpenZeppelin AccessControl</li>
       </ul>
     </section>
 
+    <!-- Slide 9: Integer Overflow -->
+    <section class="slide">
+      <h1>Переповнення цілих чисел (Integer Overflow/Underflow)</h1>
+      <ul>
+        <li><code>uint256 max + 1 = 0</code> — переповнення (overflow), обхід перевірки балансу</li>
+        <li><code>uint256 0 - 1 = 2^256 - 1</code> — обернене переповнення (underflow), створення токенів "з нічого"</li>
+        <li>До Solidity 0.8 арифметичні операції не мали автоматичних перевірок</li>
+        <li><strong>SafeMath (OpenZeppelin):</strong> бібліотека для безпечної арифметики у старих версіях</li>
+        <li><strong>Solidity 0.8+:</strong> компілятор автоматично відкидає транзакцію при переповненні</li>
+        <li>Зловмисники використовували overflow для обходу перевірок <code>require(balance >= amount)</code></li>
+      </ul>
+    </section>
+
+    <!-- Slide 10: Front-Running -->
+    <section class="slide">
+      <h1>Front-Running та MEV</h1>
+      <ul>
+        <li>Транзакції перед включенням у блок потрапляють у публічний пул очікування (mempool)</li>
+        <li>Атакуючий бачить вигідну pending-транзакцію (наприклад, великий обмін токенів)</li>
+        <li>Відправляє свою транзакцію з вищою ціною газу (gas price) — вона включається першою</li>
+        <li><strong>MEV (Maximal Extractable Value):</strong> систематичне витягування прибутку з порядку транзакцій</li>
+        <li><strong>Sandwich-атака:</strong> купівля перед жертвою + продаж після — прибуток на різниці цін</li>
+        <li><strong>Flashbots:</strong> приватний пул транзакцій для захисту від MEV-ботів</li>
+      </ul>
+    </section>
+
+    <!-- Slide 11: Oracle Manipulation -->
+    <section class="slide">
+      <h1>Маніпуляція оракулами (Oracle Manipulation)</h1>
+      <ul>
+        <li>Смарт-контракти не мають доступу до зовнішніх даних — "бачать" лише стан блокчейну</li>
+        <li><strong>Оракули (Oracles):</strong> спеціальні сервіси, що надають ціни активів, курси, дані подій</li>
+        <li>Маніпуляція оракулом = маніпуляція контрактом — хибні дані призводять до хибних дій</li>
+        <li><strong>Flash Loan Attack:</strong> миттєва безкоштовна позика для тимчасової маніпуляції ринковою ціною</li>
+        <li><strong>Chainlink:</strong> децентралізована мережа оракулів з агрегацією від багатьох джерел</li>
+        <li><strong>TWAP (Time-Weighted Average Price):</strong> середньозважена ціна за період — стійкість до маніпуляцій</li>
+      </ul>
+    </section>
+
+    <!-- Slide 12: Security Tools expanded -->
+    <section class="slide">
+      <h1>Інструменти безпеки (Security Tools)</h1>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Slither</h3>
+          <p>Статичний аналіз (Static Analysis) — сканує код на 80+ відомих вразливостей без виконання контракту</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <h3>Mythril</h3>
+          <p>Символічне виконання (Symbolic Execution) — аналіз усіх можливих шляхів виконання коду</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>Echidna</h3>
+          <p>Фаз-тестування (Fuzzing) — генерує випадкові входи для виявлення порушень інваріантів</p>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h3>Certora</h3>
+          <p>Формальна верифікація (Formal Verification) — математичний доказ коректності за будь-яких входів</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 13: Secure Development Lifecycle -->
+    <section class="slide">
+      <h1>Безпечний цикл розробки (Secure Development Lifecycle)</h1>
+      <div class="slide-diagram">
+        <svg viewBox="0 0 700 280">
+          <!-- CEI Pattern -->
+          <rect x="15" y="10" width="215" height="260" rx="8" fill="rgba(56, 189, 248, 0.08)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="122" y="38" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8" font-size="14">Checks-Effects-Interactions</text>
+          <rect x="30" y="52" width="185" height="28" rx="4" class="diagram-box"/>
+          <text x="122" y="71" text-anchor="middle" class="diagram-text-small" font-size="12">1. Checks: перевірка умов</text>
+          <line x1="122" y1="82" x2="122" y2="95" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr-blue)"/>
+          <rect x="30" y="98" width="185" height="28" rx="4" class="diagram-box"/>
+          <text x="122" y="117" text-anchor="middle" class="diagram-text-small" font-size="12">2. Effects: оновлення стану</text>
+          <line x1="122" y1="128" x2="122" y2="141" stroke="#38bdf8" stroke-width="2" marker-end="url(#arr-blue)"/>
+          <rect x="30" y="144" width="185" height="28" rx="4" class="diagram-box"/>
+          <text x="122" y="163" text-anchor="middle" class="diagram-text-small" font-size="12">3. Interactions: зовнішні виклики</text>
+          <text x="122" y="195" text-anchor="middle" class="diagram-text-small" fill="#38bdf8" font-size="11">Захист від reentrancy</text>
+          <text x="122" y="212" text-anchor="middle" class="diagram-text-small" fill="#38bdf8" font-size="11">та cross-function атак</text>
+
+          <!-- Pull over Push -->
+          <rect x="245" y="10" width="215" height="260" rx="8" fill="rgba(74, 222, 128, 0.08)" stroke="#4ade80" stroke-width="2"/>
+          <text x="352" y="38" text-anchor="middle" class="diagram-text-bold" fill="#4ade80" font-size="14">Pull over Push</text>
+          <rect x="260" y="55" width="185" height="42" rx="4" fill="rgba(239, 68, 68, 0.12)" stroke="#ef4444" stroke-width="1"/>
+          <text x="352" y="73" text-anchor="middle" class="diagram-text-small" fill="#ef4444" font-size="11">Push: контракт сам</text>
+          <text x="352" y="89" text-anchor="middle" class="diagram-text-small" fill="#ef4444" font-size="11">відправляє кошти (небезпечно)</text>
+          <line x1="352" y1="100" x2="352" y2="118" stroke="#4ade80" stroke-width="2" marker-end="url(#arr-green)"/>
+          <rect x="260" y="120" width="185" height="42" rx="4" fill="rgba(74, 222, 128, 0.12)" stroke="#4ade80" stroke-width="1"/>
+          <text x="352" y="138" text-anchor="middle" class="diagram-text-small" fill="#4ade80" font-size="11">Pull: користувач сам</text>
+          <text x="352" y="154" text-anchor="middle" class="diagram-text-small" fill="#4ade80" font-size="11">ініціює отримання (безпечно)</text>
+          <text x="352" y="195" text-anchor="middle" class="diagram-text-small" fill="#4ade80" font-size="11">Усуває цілий клас</text>
+          <text x="352" y="212" text-anchor="middle" class="diagram-text-small" fill="#4ade80" font-size="11">вразливостей зовнішніх викликів</text>
+
+          <!-- Fail-safe -->
+          <rect x="475" y="10" width="215" height="260" rx="8" fill="rgba(251, 191, 36, 0.08)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="582" y="38" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24" font-size="14">Fail-safe механізми</text>
+          <rect x="490" y="55" width="185" height="28" rx="4" class="diagram-box"/>
+          <text x="582" y="74" text-anchor="middle" class="diagram-text-small" font-size="12">Pause: призупинення контракту</text>
+          <rect x="490" y="92" width="185" height="28" rx="4" class="diagram-box"/>
+          <text x="582" y="111" text-anchor="middle" class="diagram-text-small" font-size="12">Emergency Withdraw</text>
+          <rect x="490" y="129" width="185" height="28" rx="4" class="diagram-box"/>
+          <text x="582" y="148" text-anchor="middle" class="diagram-text-small" font-size="12">Timelock: затримка дій</text>
+          <rect x="490" y="166" width="185" height="28" rx="4" class="diagram-box"/>
+          <text x="582" y="185" text-anchor="middle" class="diagram-text-small" font-size="12">Upgradeable Proxy</text>
+          <text x="582" y="218" text-anchor="middle" class="diagram-text-small" fill="#fbbf24" font-size="11">"Червона кнопка" для</text>
+          <text x="582" y="235" text-anchor="middle" class="diagram-text-small" fill="#fbbf24" font-size="11">аномальної активності</text>
+
+          <defs>
+            <marker id="arr-blue" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#38bdf8"/></marker>
+            <marker id="arr-green" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#4ade80"/></marker>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Slide 14: Audit & Testing -->
+    <section class="slide">
+      <h1>Аудит та тестування (Audit &amp; Testing)</h1>
+      <ul>
+        <li><strong>Unit-тестування:</strong> 100% покриття коду — кожна функція з валідними та невалідними входами</li>
+        <li><strong>Fuzz-тестування (Echidna, Foundry):</strong> випадкові вхідні дані для виявлення граничних випадків</li>
+        <li><strong>Статичний аналіз (Slither, Mythril):</strong> автоматичне сканування на відомі патерни вразливостей</li>
+        <li><strong>Формальна верифікація (Certora, K Framework):</strong> математичний доказ властивостей контракту</li>
+        <li><strong>Незалежний аудит:</strong> OpenZeppelin, Trail of Bits, Consensys Diligence — стандарт індустрії</li>
+        <li><strong>Багаторівневий підхід:</strong> жоден окремий метод не є достатнім — комбінація усіх рівнів</li>
+      </ul>
+    </section>
+
+    <!-- Slide 15: Bug Bounty -->
+    <section class="slide">
+      <h1>Програми винагород (Bug Bounty Programs)</h1>
+      <ul>
+        <li><strong>Immunefi:</strong> найбільша платформа Bug Bounty у Web3-просторі</li>
+        <li>Виплати до <strong>$10 мільйонів</strong> за критичні вразливості у DeFi-протоколах</li>
+        <li>Економічний стимул для "білих хакерів" (White Hat Hackers) повідомляти, а не експлуатувати</li>
+        <li><strong>Постійний розподілений аудит:</strong> глобальна спільнота дослідників безпеки</li>
+        <li>Незалежні аудитори: OpenZeppelin, Trail of Bits — обов'язкові перед деплоєм великих контрактів</li>
+        <li>Комбінація Bug Bounty + професійний аудит = найвищий рівень захисту смарт-контрактів</li>
+      </ul>
+    </section>
+
+    <!-- Slide 16: Questions -->
     <section class="slide">
       <h1>Питання?</h1>
       <p>Наступна тема: Застосування блокчейну в кібербезпеці</p>
