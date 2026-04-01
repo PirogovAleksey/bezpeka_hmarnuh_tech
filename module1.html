@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Питання до модульної контрольної роботи №1: Архітектура, стандарти та основи безпеки хмарних технологій.">
+  <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
+  <meta name="theme-color" content="#0ea5e9">
+  <title>Модулі — Безпека хмарних технологій</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark')</script>
+</head>
+<body>
+
+  <aside>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+          <path d="M12 13v-1a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1"/>
+          <rect x="10" y="13" width="8" height="5" rx="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        Безпека<br>хмарних технологій
+        <span>онлайн-курс</span>
+      </div>
+    </div>
+
+    <nav aria-label="Головна навігація"></nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Перемкнути тему">
+        <svg id="theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        <span id="theme-label">Темна тема</span>
+      </button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="page-header">
+      <h1>Модулі</h1>
+      <p>Питання до модульних контрольних робіт з курсу безпеки хмарних технологій.</p>
+    </div>
+
+    <div class="module-rules">
+      <h2>Правила здачі модульної контрольної роботи</h2>
+      <ul>
+        <li><strong>Формат:</strong> письмова робота в електронному вигляді (PDF, DOCX або посилання на Google Docs) на пошту <a href="mailto:oleksii.pyrohov@uzhnu.edu.ua">oleksii.pyrohov@uzhnu.edu.ua</a></li>
+        <li><strong>Кількість питань:</strong> 6 (по одному вибраному питанню з кожної теми із 10)</li>
+      </ul>
+    </div>
+
+    <details class="module-accordion" open>
+      <summary class="module-accordion-header">
+        <div class="module-accordion-title">
+          <span class="module-accordion-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          </span>
+          <div>
+            <h2>Модуль 1. Архітектура, стандарти та основи безпеки</h2>
+            <p>Лекції 1-6 &middot; 60 питань</p>
+          </div>
+        </div>
+        <span class="module-accordion-chevron">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+      </summary>
+
+      <div class="module-accordion-body">
+
+        <section>
+          <h3 class="module-topic-title">Тема 1. Вступ до хмарних обчислень та еталонна архітектура NIST</h3>
+          <ol class="module-questions">
+            <li>Дайте визначення хмарних обчислень за NIST SP 800-145. Охарактеризуйте п'ять основних характеристик хмарних обчислень.</li>
+            <li>Опишіть три моделі обслуговування (IaaS, PaaS, SaaS). Як розподіляється відповідальність за безпеку в кожній із них?</li>
+            <li>Охарактеризуйте чотири моделі розгортання хмар (публічна, приватна, гібридна, спільнота). У яких сценаріях доцільна кожна модель?</li>
+            <li>Опишіть п'ять акторів еталонної архітектури NIST SP 500-292: Cloud Consumer, Cloud Provider, Cloud Auditor, Cloud Broker, Cloud Carrier. Яку роль відіграє кожен?</li>
+            <li>Що таке Shared Responsibility Model? Поясніть різницю між «Security OF the Cloud» та «Security IN the Cloud» на прикладах для IaaS та SaaS.</li>
+            <li>Проаналізуйте інцидент Capital One (2019). Які помилки конфігурації призвели до витоку 106 млн записів і яку роль відіграла SSRF-атака?</li>
+            <li>Перелічіть основні загрози безпеці хмарних обчислень за CSA (Cloud Security Alliance). Чому помилки конфігурації є загрозою №1?</li>
+            <li>Що таке multi-tenancy та які безпекові ризики вона створює? Охарактеризуйте атаки побічного каналу (Spectre/Meltdown) у контексті хмари.</li>
+            <li>Порівняйте хмарних провайдерів AWS, Azure та GCP за часткою ринку, ключовими сервісами безпеки та моделями відповідності (SOC 2, ISO 27017, CSA STAR).</li>
+            <li>Що таке Shadow IT та криптоджекінг у хмарному середовищі? Які інструменти та практики допомагають їм протидіяти?</li>
+          </ol>
+        </section>
+
+        <section>
+          <h3 class="module-topic-title">Тема 2. Стандартизація та управління ризиками</h3>
+          <ol class="module-questions" start="11">
+            <li>Охарактеризуйте стандарт ISO/IEC 27017:2015. Які додаткові контролі (CLD.*) він додає до ISO 27002 для хмарних середовищ?</li>
+            <li>Порівняйте стандарти NIST CSF, NIST SP 800-53 та CSA CCM v4. У яких сценаріях доцільно застосовувати кожен із них?</li>
+            <li>Опишіть формулу ризику (Risk = Likelihood × Impact). Які п'ять специфічних ризиків хмарних обчислень виділяють і як їх мітигувати?</li>
+            <li>Що таке SOC 2 аудит? Порівняйте SOC 2 Type I та Type II. Охарактеризуйте п'ять Trust Service Criteria.</li>
+            <li>Поясніть різницю між SLA, SLO та SLI. Що означають «дев'ятки» доступності (99.9%, 99.99%, 99.999%) у контексті допустимого простою?</li>
+            <li>Що таке RTO та RPO? Як ці метрики впливають на проєктування стратегії аварійного відновлення хмарної інфраструктури?</li>
+            <li>Охарактеризуйте вимоги GDPR до хмарних провайдерів. Що таке DPA (Data Processing Agreement) і які ключові статті регулюють обробку даних?</li>
+            <li>Поясніть рішення Schrems II (2020) та його вплив на транскордонну передачу даних. Які механізми (SCCs, BCRs, Adequacy Decisions) дозволяють легально передавати дані?</li>
+            <li>Проаналізуйте інцидент Equifax (2017): 147 млн записів, CVE-2017-5638 у Apache Struts. Які уроки з цього інциденту для управління вразливостями?</li>
+            <li>Опишіть чотири стратегії обробки ризиків (уникнення, пом'якшення, передача, прийняття). Що таке кіберстрахування і коли воно доцільне?</li>
+          </ol>
+        </section>
+
+        <section>
+          <h3 class="module-topic-title">Тема 3. Архітектура нульової довіри (Zero Trust) у хмарі</h3>
+          <ol class="module-questions" start="21">
+            <li>Розкрийте принцип «Never trust, always verify». Чим архітектура Zero Trust відрізняється від традиційної периметрової моделі безпеки («castle and moat»)?</li>
+            <li>Перелічіть та поясніть 7 принципів Zero Trust за NIST SP 800-207. Що означає принцип «Assume breach»?</li>
+            <li>Опишіть три стовпи Zero Trust: Identity, Device, Network. Які технології реалізують кожен стовп?</li>
+            <li>Охарактеризуйте компоненти архітектури ZTA: PEP, PDP (Policy Engine + Policy Administrator). Як вони взаємодіють при обробці запиту на доступ?</li>
+            <li>Порівняйте три моделі розгортання ZTA: Agent/Gateway-Based, Enclave-Based, Resource Portal-Based. У яких сценаріях доцільна кожна?</li>
+            <li>Що таке мікросегментація мережі? Порівняйте три підходи: мережевий (SDN, Security Groups), хостовий (iptables, K8s Network Policies) та прикладний (Service Mesh).</li>
+            <li>Порівняйте ZTNA та традиційний VPN. Чому ZTNA вважається більш безпечним підходом для хмарних середовищ?</li>
+            <li>Проаналізуйте кейс Google BeyondCorp. Як Google реалізував Zero Trust для внутрішніх ресурсів без використання VPN?</li>
+            <li>Опишіть інцидент SolarWinds (2020). Як архітектура Zero Trust могла б обмежити наслідки цієї supply chain атаки?</li>
+            <li>Охарактеризуйте CISA Zero Trust Maturity Model. Які п'ять стовпів та чотири рівні зрілості вона визначає?</li>
+          </ol>
+        </section>
+
+        <section>
+          <h3 class="module-topic-title">Тема 4. Безпека віртуалізації та контейнеризації</h3>
+          <ol class="module-questions" start="31">
+            <li>Порівняйте гіпервізори Type 1 (ESXi, KVM, Xen) та Type 2 (VirtualBox, VMware Workstation). Які загрози безпеці характерні для кожного типу?</li>
+            <li>Що таке VM Escape? Чому це найнебезпечніша атака на віртуалізовані середовища? Наведіть приклади та методи захисту.</li>
+            <li>Опишіть механізми ізоляції Docker: Linux namespaces (PID, NET, MNT, UTS, IPC, USER) та cgroups. Чим контейнери відрізняються від віртуальних машин за рівнем ізоляції?</li>
+            <li>Перелічіть основні загрози безпеці Docker: container escape, небезпечні образи, привілейовані контейнери, відкритий Docker socket. Як кожній із них протидіяти?</li>
+            <li>Опишіть архітектуру безпеки Kubernetes: RBAC, Pod Security Standards (Privileged, Baseline, Restricted), Network Policies. Чому etcd потребує особливого захисту?</li>
+            <li>Проаналізуйте CVE-2025-1974 «IngressNightmare» (CVSS 9.8). Як ця вразливість дозволяла RCE в Ingress NGINX Controller і який відсоток хмарних середовищ був під загрозою?</li>
+            <li>Що таке CWPP (Cloud Workload Protection Platform)? Опишіть його основні можливості: управління вразливостями, runtime-безпека, compliance, мережева сегментація.</li>
+            <li>Що таке SBOM (Software Bill of Materials)? Опишіть формати SPDX та CycloneDX та їх роль у безпеці ланцюга постачання ПЗ.</li>
+            <li>Охарактеризуйте фреймворк SLSA (Supply-chain Levels for Software Artifacts) від Google. Які чотири рівні захисту він визначає?</li>
+            <li>Що таке Sigstore (Cosign, Fulcio, Rekor)? Як ці інструменти забезпечують підписання та верифікацію контейнерних образів?</li>
+          </ol>
+        </section>
+
+        <section>
+          <h3 class="module-topic-title">Тема 5. Безпека безсерверних обчислень (Serverless Security)</h3>
+          <ol class="module-questions" start="41">
+            <li>Охарактеризуйте архітектуру Serverless: FaaS та BaaS. Які ключові характеристики (event-driven, stateless, ephemeral, auto-scaling, pay-per-execution) визначають цю модель?</li>
+            <li>Опишіть життєвий цикл Lambda-функції (Cold Start → Init → Invoke → Warm → Shutdown). Що таке Cold Start і які фактори впливають на його тривалість?</li>
+            <li>Перелічіть та охарактеризуйте OWASP Serverless Top 10. Чим специфіка загроз Serverless відрізняється від традиційних веб-додатків?</li>
+            <li>Що таке Event Data Injection та Poisoned Function? Як ці атаки експлуатують особливості безсерверної архітектури?</li>
+            <li>Що таке Financial DoS у контексті Serverless? Як зловмисник може спричинити значні фінансові збитки через генерацію мільйонів викликів функцій?</li>
+            <li>Порівняйте технології ізоляції: AWS Firecracker, Google gVisor, Kata Containers, Cloudflare V8 Isolates за параметрами cold start, overhead RAM та рівнем ізоляції.</li>
+            <li>Опишіть архітектуру AWS Firecracker: microVM, KVM, Jailer, seccomp-фільтри. Чому він написаний на Rust і які переваги це дає для безпеки?</li>
+            <li>Що таке Google gVisor? Опишіть компоненти Sentry та Gofer. Як user-space ядро забезпечує ізоляцію контейнерів?</li>
+            <li>Охарактеризуйте best practices безпеки Serverless: принцип найменших привілеїв для IAM, управління секретами (Secrets Manager vs змінні середовища), валідація вхідних даних.</li>
+            <li>Опишіть три стовпи спостережуваності Serverless: Logs, Metrics, Traces. Які виклики створює ефемерність контейнерів для Incident Response?</li>
+          </ol>
+        </section>
+
+        <section>
+          <h3 class="module-topic-title">Тема 6. Блокчейн у розподілених системах безпеки</h3>
+          <ol class="module-questions" start="51">
+            <li>Опишіть структуру блоку в блокчейні (Header, Previous Block Hash, Merkle Root, Timestamp, Nonce, Transactions). Які три фундаментальні властивості блокчейну забезпечують його безпеку?</li>
+            <li>Охарактеризуйте криптографічні примітиви блокчейну: хеш-функції (SHA-256), цифрові підписи (ECDSA) та дерева Меркла. Яку роль вони відіграють у забезпеченні цілісності?</li>
+            <li>Порівняйте механізми консенсусу: PoW, PoS, DPoS, PBFT, PoH. Що таке «трилема блокчейну» Віталіка Бутеріна?</li>
+            <li>Що таке SSI (Self-Sovereign Identity) та DID (Decentralized Identifiers)? Опишіть стандарт W3C для DID та формат DID Document.</li>
+            <li>Охарактеризуйте Verifiable Credentials (VCs) за стандартом W3C. Як Zero-Knowledge Proofs дозволяють підтверджувати властивості без розкриття даних?</li>
+            <li>Що таке смарт-контракти (термін Ніка Сабо, 1994)? Опишіть принцип «Code is Law» та платформу Ethereum (Solidity, gas-механізм).</li>
+            <li>Проаналізуйте атаку reentrancy на The DAO (2016): $60 млн вкрадено, хард-форк Ethereum. Які паттерни захисту (Checks-Effects-Interactions) запобігають цій вразливості?</li>
+            <li>Опишіть застосування блокчейну для tamper-proof журналів аудиту та децентралізованої PKI. Як це вирішує проблеми типу інциденту DigiNotar (2011)?</li>
+            <li>Що таке атака 51%? На яких блокчейнах вона була реалізована? Які обмеження блокчейну (масштабованість, конфлікт з GDPR) стримують його впровадження?</li>
+            <li>Охарактеризуйте безпеку DeFi: Flash Loan атаки, rug pulls, експлойти мостів. Які інструменти аудиту смарт-контрактів (Slither, Mythril, Echidna) допомагають виявляти вразливості?</li>
+          </ol>
+        </section>
+
+      </div>
+    </details>
+
+    <details class="module-accordion">
+      <summary class="module-accordion-header">
+        <div class="module-accordion-title">
+          <span class="module-accordion-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          </span>
+          <div>
+            <h2>Модуль 2. Моніторинг, захист даних та реагування на інциденти</h2>
+            <p>Лекції 7-12 &middot; Скоро</p>
+          </div>
+        </div>
+        <span class="module-accordion-chevron">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+      </summary>
+      <div class="module-accordion-body">
+        <p style="text-align:center;color:var(--text-secondary);padding:32px 0;">Питання до модуля 2 будуть додані пізніше.</p>
+      </div>
+    </details>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <button class="mobile-theme-toggle" onclick="toggleTheme()" aria-label="Змінити тему">
+    <svg id="mobile-theme-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+  </button>
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>

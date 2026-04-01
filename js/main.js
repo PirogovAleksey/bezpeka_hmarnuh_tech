@@ -3,6 +3,48 @@ const sunIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 const menuIcon = '<svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
 const closeIcon = '<svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>';
 
+// Dynamic navigation rendering
+function renderNav() {
+  const nav = document.querySelector('aside nav');
+  if (!nav) return;
+
+  // Determine base path for nested pages (e.g., lectures/1/conspect.html)
+  const path = window.location.pathname;
+  let base = '';
+  if (path.includes('/lectures/')) {
+    base = '../../';
+  }
+
+  // Determine active page
+  const href = window.location.href;
+  const getActive = (page) => {
+    if (page === 'index.html') {
+      return (href.endsWith('/') || href.includes('index.html') || href.includes('lecture.html')) && !href.includes('module') ? ' class="active"' : '';
+    }
+    return href.includes(page) ? ' class="active"' : '';
+  };
+
+  const navItems = [
+    { href: 'index.html', label: 'Лекції', icon: '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>' },
+    { href: 'practicals.html', label: 'Семінари', icon: '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' },
+    { href: 'tests.html', label: 'Тести', icon: '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>' },
+    { href: 'module1.html', label: 'Модулі', icon: '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>' },
+    { href: 'materials.html', label: 'Матеріали', icon: '<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>' }
+  ];
+
+  // Also handle test.html as active for "Тести"
+  const isTestPage = href.includes('test.html') && !href.includes('tests.html');
+
+  nav.innerHTML = navItems.map(item => {
+    let active = getActive(item.href);
+    if (isTestPage && item.href === 'tests.html') active = ' class="active"';
+    return `<a href="${base}${item.href}"${active}>
+        <span class="nav-icon" aria-hidden="true">${item.icon}</span>
+        ${item.label}
+      </a>`;
+  }).join('\n');
+}
+
 function toggleTheme() {
   const isDark = !document.documentElement.classList.contains('dark');
   document.documentElement.classList.toggle('dark', isDark);
@@ -170,6 +212,7 @@ window.addEventListener('resize', () => {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+  renderNav();
   renderFooter();
   addSkipLink();
   initMobileMenu();

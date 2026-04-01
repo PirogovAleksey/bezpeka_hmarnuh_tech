@@ -154,6 +154,13 @@ const searchIndex = [
   },
   {
     type: 'page',
+    title: 'Модулі',
+    keywords: ['модуль', 'модульна', 'контрольна', 'питання', 'екзамен'],
+    url: 'module1.html',
+    description: 'Питання до модульних контрольних робіт.'
+  },
+  {
+    type: 'page',
     title: 'Матеріали',
     keywords: ['матеріали', 'ресурси', 'документи', 'презентації'],
     url: 'materials.html',
