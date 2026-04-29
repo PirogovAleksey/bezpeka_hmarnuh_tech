@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тема 8.1 — Від Point Solutions до CNAPP | Безпека хмарних технологій</title>
+  <title>Тема 8.1 — Від точкових рішень до CNAPP | Безпека хмарних технологій</title>
   <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/slides.css">
@@ -24,95 +24,71 @@
   <div class="slide-deck">
     <section class="slide active">
       <h1>Безпека хмарних технологій</h1>
-      <p>Тема 8.1: Від Point Solutions до CNAPP</p>
+      <p>Тема 8.1: Від точкових рішень до CNAPP</p>
     </section>
 
     <section class="slide">
-      <h1>Що таке CNAPP?</h1>
-      <div class="slide-diagram">
-        <svg viewBox="0 0 380 160" width="380" height="160">
-          <!-- CNAPP outer box -->
-          <rect x="10" y="10" width="360" height="140" rx="12" fill="rgba(56, 189, 248, 0.1)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="190" y="35" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">CNAPP</text>
-
-          <!-- Components -->
-          <rect x="25" y="55" width="75" height="40" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
-          <text x="62" y="80" text-anchor="middle" class="diagram-text-small">CSPM</text>
-
-          <rect x="110" y="55" width="75" height="40" rx="6" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
-          <text x="147" y="80" text-anchor="middle" class="diagram-text-small">CWPP</text>
-
-          <rect x="195" y="55" width="75" height="40" rx="6" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
-          <text x="232" y="80" text-anchor="middle" class="diagram-text-small">CIEM</text>
-
-          <rect x="280" y="55" width="75" height="40" rx="6" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
-          <text x="317" y="80" text-anchor="middle" class="diagram-text-small">Container</text>
-
-          <!-- Labels -->
-          <text x="62" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Posture</text>
-          <text x="147" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Workload</text>
-          <text x="232" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Identity</text>
-          <text x="317" y="115" text-anchor="middle" class="diagram-text-small" fill="#64748b">Security</text>
-        </svg>
+      <h1>Масштаб проблеми</h1>
+      <div class="slide-grid">
+        <div class="slide-grid-item">
+          <div class="slide-stat">$5,17M</div>
+          <div class="slide-stat-label">середня вартість витоку даних у хмарі (IBM Cost of a Data Breach 2024)</div>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-stat">91%</div>
+          <div class="slide-stat-label">атак проходять через ≥2 класи помилок: конфігурація + ідентичність (Sysdig 2024)</div>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-stat">8–10</div>
+          <div class="slide-stat-label">ізольованих cloud-security-інструментів у середній enterprise — корінь tool sprawl</div>
+        </div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>Проблема Tool Sprawl</h1>
+      <h1>Чотири фази еволюції хмарної безпеки</h1>
+      <div class="slide-timeline">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2010–2015</div><div class="timeline-text">Lift-and-shift: адаптовані on-prem-інструменти</div></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2015–2019</div><div class="timeline-text">Cloud-native: CSPM, CWPP, контейнерна безпека</div></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2019–2021</div><div class="timeline-text">Tool sprawl: 11 інструментів, alert fatigue</div></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2021+</div><div class="timeline-text">Консолідація: Gartner вводить термін CNAPP</div></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h1>Визначення CNAPP за Gartner</h1>
       <ul>
-        <li><strong>CSPM:</strong> Configuration assessment</li>
-        <li><strong>CWPP:</strong> Workload protection</li>
-        <li><strong>CIEM:</strong> Identity management</li>
-        <li><strong>Container Security:</strong> Image scanning</li>
-        <li><strong>IaC Security:</strong> Terraform/CloudFormation</li>
-        <li>Кожен tool — окремі alerts без контексту</li>
+        <li><strong>Уніфікованість (Unified):</strong> єдина консоль, модель даних, схема політик</li>
+        <li><strong>Тісна інтеграція (Tightly integrated):</strong> компоненти обмінюються контекстом, не лише співіснують</li>
+        <li><strong>Покриття життєвого циклу:</strong> від коду до runtime, єдині політики на всіх етапах</li>
+        <li><strong>Cloud-native фокус:</strong> контейнери, serverless, ефемерні ідентичності, API-ландшафт</li>
+        <li><strong>Прогноз Gartner:</strong> до 2029 р. 60% впроваджень Zero Trust у хмарі спиратимуться на CNAPP</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Еволюція Cloud Security</h1>
+      <h1>П'ять стовпів CNAPP та принцип Shift Left + Shield Right</h1>
       <ul>
-        <li><strong>2010-2015:</strong> Lift-and-shift, adapted on-prem tools</li>
-        <li><strong>2015-2019:</strong> Cloud-native, point solutions emerge</li>
-        <li><strong>2019-2021:</strong> Tool sprawl crisis, alert fatigue</li>
-        <li><strong>2021+:</strong> CNAPP consolidation</li>
+        <li><strong>Видимість і контекст активів</strong> — інвентаризація та графова модель</li>
+        <li><strong>CSPM</strong> — управління станом конфігурацій</li>
+        <li><strong>CWPP</strong> — захист робочих навантажень</li>
+        <li><strong>CIEM</strong> — управління правами ідентичностей</li>
+        <li><strong>Безпека на етапі розробки</strong> — IaC, контейнери, секрети у CI/CD</li>
+        <li><strong>Policy parity:</strong> ті самі правила від pull request до production</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Чому point solutions недостатньо?</h1>
+      <h1>Ключові висновки</h1>
       <ul>
-        <li><strong>CSPM:</strong> "S3 bucket is public" — Medium</li>
-        <li><strong>DSPM:</strong> "Contains PII" — High</li>
-        <li><strong>CWPP:</strong> "Lambda has CVE" — Medium</li>
-        <li><strong>Окремо:</strong> 3 findings серед тисяч</li>
-        <li><strong>CNAPP:</strong> "Critical path to PII data"</li>
+        <li>Розростання інструментів (tool sprawl) перетворило безпеку на сортування сповіщень</li>
+        <li>CNAPP — відповідь Gartner: уніфікація CSPM, CWPP, CIEM, DSPM в одній платформі</li>
+        <li>Цінність CNAPP — у контексті, а не в кількості перевірок</li>
+        <li>Ринок змістився: 75% нових придбань CSPM у 2025 р. — як частина CNAPP</li>
       </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Визначення CNAPP (Gartner)</h1>
-      <ul>
-        <li><strong>Unified:</strong> Єдина платформа</li>
-        <li><strong>Tightly integrated:</strong> Компоненти обмінюються контекстом</li>
-        <li><strong>Dev + Production:</strong> Весь lifecycle</li>
-        <li><strong>Cloud-native:</strong> Containers, serverless, IaC</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Переваги CNAPP</h1>
-      <ul>
-        <li><strong>Correlated context:</strong> Misconfiguration + vulnerability + permissions</li>
-        <li><strong>Attack path analysis:</strong> Реальні ризики</li>
-        <li><strong>Unified prioritization:</strong> Фокус на критичному</li>
-        <li><strong>Single pane of glass:</strong> Одна консоль</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Питання?</h1>
-      <p>Наступна тема: Компоненти CNAPP</p>
     </section>
   </div>
 

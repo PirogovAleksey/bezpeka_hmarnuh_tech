@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Конспект лекції 8: Cloud-Native Application Protection Platform (CNAPP) — комплексний захист cloud-native додатків.">
+  <meta name="description" content="Конспект лекції 8: Платформа захисту хмарних застосунків (Cloud-Native Application Protection Platform, CNAPP) — уніфіковане виявлення, кореляція та усунення ризиків у хмарних середовищах.">
   <meta name="author" content="Кафедра ТЕІБ, Ужгородський національний університет">
   <meta name="theme-color" content="#0ea5e9">
   <title>Конспект лекції 8 — Безпека хмарних технологій</title>
@@ -51,758 +51,1065 @@
     </div>
 
     <article class="lecture-content">
-      <h1>Лекція 8. Cloud-Native Application Protection Platform (CNAPP)</h1>
+      <h1>Лекція 8. Платформа захисту хмарних застосунків (Cloud-Native Application Protection Platform, CNAPP)</h1>
       <div class="lecture-info">
         <span><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" style="vertical-align: -2px; margin-right: 4px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>2 год</span>
       </div>
 
       <section>
         <h2>Вступ</h2>
-        <p>У попередній лекції ми детально розглянули CSPM — інструменти для управління станом безпеки хмарних конфігурацій. Однак CSPM — лише один з компонентів комплексної хмарної безпеки. Сьогодні ми розглянемо <strong>CNAPP (Cloud-Native Application Protection Platform)</strong> — концепцію об'єднання всіх аспектів захисту cloud-native додатків в єдину платформу.</p>
+        <p>У попередній лекції ми розглянули CSPM — категорію інструментів управління станом безпеки хмарних конфігурацій. Однак CSPM закриває лише один зріз проблеми: помилкові конфігурації. У реальній хмарній атаці зловмисник комбінує кілька векторів — вразливість у контейнері, надмірні права ідентичності (excessive permissions), публічну експозицію та доступ до чутливих даних. Виявити такий складений ризик окремими інструментами неможливо: кожен з них бачить лише фрагмент картини.</p>
 
-        <p>Gartner ввів термін CNAPP у 2021 році, визнавши, що організації стикаються з "tool sprawl" — надмірною кількістю ізольованих інструментів безпеки, які не взаємодіють між собою. CNAPP — це відповідь на цю проблему: єдина платформа, яка захищає весь lifecycle cloud-native додатків.</p>
+        <p>Відповіддю стала <strong>Платформа захисту хмарних застосунків (Cloud-Native Application Protection Platform, CNAPP)</strong> — концепція уніфікації CSPM, CWPP, CIEM, DSPM, безпеки контейнерів та інфраструктури як коду в єдину платформу з кореляцією знахідок та аналізом шляхів атаки. Термін уведений Gartner у 2021 р. і за чотири роки став домінантною моделлю споживання хмарної безпеки на корпоративному ринку.</p>
 
-        <h3>Чому виникла потреба в CNAPP?</h3>
-        <p>Еволюція хмарної безпеки створила кілька окремих категорій інструментів:</p>
+        <p>Драйвер консолідації — не маркетинг, а економіка операцій безпеки. У звіті Sysdig Cloud-Native Security Report 2024 середня корпоративна команда безпеки витрачала 70% часу на сортування сповіщень з 7–10 ізольованих інструментів. CNAPP повертає цей час через корельовану пріоритезацію: одна знахідка з контекстом замість десяти без нього.</p>
+
+        <h3>Чому це важливо?</h3>
+        <p>Актуальна статистика (2024–2026):</p>
         <ul>
-          <li><strong>CSPM:</strong> Configuration та compliance для IaaS</li>
-          <li><strong>CWPP:</strong> Захист workloads (VMs, containers, serverless)</li>
-          <li><strong>CIEM:</strong> Identity та entitlement management</li>
-          <li><strong>Container Security:</strong> Image scanning, runtime protection</li>
-          <li><strong>IaC Security:</strong> Сканування Terraform, CloudFormation</li>
+          <li><strong>До 2029 р. 60% корпоративних впроваджень Zero Trust у хмарі спиратимуться на єдину CNAPP-платформу</strong> проти 25% у 2024 р. (Gartner Market Guide for CNAPP, 2025).</li>
+          <li><strong>Понад 75% нових придбань CSPM у 2025 р.</strong> постачаються як частина CNAPP, а не як окреме рішення (Gartner, 2025).</li>
+          <li><strong>Середня вартість витоку даних у хмарі — $5,17 млн</strong> у 2024 р., що на 13,1% вище за середню вартість витоку (IBM Cost of a Data Breach Report 2024).</li>
+          <li><strong>91% атак, що досягли продакшну, проходять щонайменше через два класи помилок</strong> — конфігурація + ідентичність, або вразливість + надмірні права (Sysdig Cloud-Native Security Report 2024).</li>
+          <li><strong>67% організацій</strong> мають понад 500 невирішених знахідок безпеки у хмарних середовищах одночасно (Wiz State of Cloud Security 2025).</li>
+          <li><strong>Ринок CNAPP</strong> зростає з $9,8 млрд (2024) до прогнозованих $33,4 млрд (2030) — середньорічний темп приросту 22,7% (Markets and Markets, 2025).</li>
         </ul>
 
-        <p>Проблема в тому, що ці інструменти працювали ізольовано. Security team отримувала тисячі alerts з різних систем без можливості зрозуміти реальний ризик. CNAPP об'єднує ці компоненти, забезпечуючи:</p>
+        <h3>Знакові інциденти, що ілюструють потребу в CNAPP (2023–2025)</h3>
         <ul>
-          <li><strong>Correlated context:</strong> Зв'язок між misconfiguration, vulnerability та excessive permissions</li>
-          <li><strong>Attack path analysis:</strong> Розуміння, як атакуючий може досягти критичних активів</li>
-          <li><strong>Unified prioritization:</strong> Фокус на реальних ризиках, а не окремих findings</li>
-          <li><strong>Single pane of glass:</strong> Одна консоль для всієї cloud security</li>
+          <li><strong>Snowflake / UNC5537 (2024):</strong> атака на сотні клієнтських акаунтів через викрадені обліковими даними інфокрадіями (infostealers). Жодна окрема система не бачила повного шляху: відсутність обов'язкового багатофакторного аутентифікації (MFA), широкі ролі імперсонації (impersonation roles), дозвіл на масові експорти. CNAPP-платформи з кореляцією IAM + DSPM повідомили клієнтів про ризик за тижні до інциденту.</li>
+          <li><strong>MGM Resorts / Scattered Spider (2023):</strong> компрометація через соціальну інженерію служби підтримки Okta + надмірні права в Azure AD дали зловмисникам доступ до VMware-середовища; шифрування ESXi-хостів спричинило збитки понад $100 млн. Класичний приклад мультидоменного шляху атаки — ідентичність → хмара → віртуалізація.</li>
+          <li><strong>Microsoft AI Research (2023):</strong> Shared Access Signature (SAS)-токен з широкими правами розкрив 38 ТБ внутрішніх даних, включно з резервними копіями робочих станцій інженерів. CSPM побачив би помилкову конфігурацію, DSPM — чутливість даних, але саме їх кореляція робить інцидент критичним.</li>
+          <li><strong>Toyota Connected (2023):</strong> публічно доступний обліковий ключ розробника у GitHub-репозиторії дав доступ до 260 000 записів автомобільних клієнтів. Code-to-cloud-кореляція в CNAPP виявляє витікання секретів у репозиторіях ще до досягнення продакшну.</li>
+          <li><strong>Capital One (2019):</strong> класичний приклад складеного шляху — помилкова конфігурація брандмауера веб-застосунків (Web Application Firewall, WAF) → server-side request forgery (SSRF) → Instance Metadata Service v1 → надмірні IAM-права → 100+ млн записів. Жоден окремий інструмент не виявив би повного ланцюга — необхідна графова кореляція, яку зараз надає CNAPP.</li>
         </ul>
 
         <h3>Цілі лекції</h3>
         <p>Після цієї лекції ви зможете:</p>
         <ul>
-          <li>Пояснити концепцію CNAPP та її відмінність від point solutions</li>
-          <li>Описати компоненти CNAPP та їх взаємодію</li>
-          <li>Розуміти attack path analysis та risk correlation</li>
-          <li>Оцінювати CNAPP-рішення для організації</li>
+          <li>Пояснити концепцію CNAPP та її відмінність від набору точкових рішень (point solutions)</li>
+          <li>Описати архітектурні компоненти CNAPP — CSPM, CWPP, CIEM, DSPM, безпека контейнерів, IaC — та принципи їх інтеграції</li>
+          <li>Аналізувати шляхи атаки (attack paths) у хмарному середовищі за допомогою графового підходу</li>
+          <li>Орієнтуватися в провідних CNAPP-платформах ринку 2025 р. та критеріях їх вибору</li>
+          <li>Спланувати поетапне впровадження CNAPP в організації</li>
+        </ul>
+
+        <h3>Структура лекції</h3>
+        <ul>
+          <li><strong>8.1 Від точкових рішень до CNAPP</strong> — еволюція хмарної безпеки, проблема розростання інструментів (tool sprawl), визначення CNAPP за Gartner, обмеження ізольованих рішень.</li>
+          <li><strong>8.2 Архітектура та компоненти CNAPP</strong> — функціональні шари платформи: CSPM, CWPP, CIEM, безпека контейнерів, безпека IaC, DSPM. Принципи інтеграції та збагачення контексту.</li>
+          <li><strong>8.3 Аналіз шляхів атаки (Attack Path Analysis)</strong> — графовий підхід до моделювання хмарного середовища, оцінка експлуатованості та впливу, пріоритезація ризиків.</li>
+          <li><strong>8.4 Ринок CNAPP та провідні платформи</strong> — Gartner Magic Quadrant 2025, огляд Wiz, Palo Alto Prisma Cloud, Microsoft Defender for Cloud, Orca Security, CrowdStrike, Sysdig, критерії вибору.</li>
+          <li><strong>8.5 Впровадження CNAPP та майбутнє платформ</strong> — фази розгортання, метрики ефективності, інтеграція code-to-cloud, AI/ML-тренди, конвергенція з ASPM.</li>
         </ul>
       </section>
 
       <section>
-        <h2>8.1 Від Point Solutions до CNAPP</h2>
+        <h2>8.1 Від точкових рішень до CNAPP (From Point Solutions to CNAPP)</h2>
 
-        <h3>Історія розвитку хмарної безпеки</h3>
-        <p>Еволюція cloud security tools відображає еволюцію самих хмарних технологій:</p>
+        <h3>Еволюція хмарної безпеки: чотири фази</h3>
+        <p>Хмарна безпека як дисципліна сформувалася за останні п'ятнадцять років. Її розвиток відображає еволюцію самих хмарних архітектур: від простого перенесення віртуальних машин до складних cloud-native-стеків з мікросервісами, контейнерами та serverless. Кожна фаза породжувала свій клас інструментів — і свій клас проблем.</p>
 
-        <p><strong>Фаза 1: Lift-and-Shift (2010-2015)</strong></p>
+        <p><strong>Фаза 1: Lift-and-shift (2010–2015).</strong> Перші міграції в хмару були простими: підняти віртуальну машину (ВМ), встановити застосунок, що раніше працював на власному сервері. Інструменти безпеки наслідували цю модель — антивірус, host intrusion detection system (HIDS), мережевий брандмауер на рівні ВМ. Проблеми хмарної моделі (надмірні IAM-ролі, публічні бакети) не розв'язувалися адаптованими on-premise-інструментами.</p>
+
+        <p><strong>Фаза 2: Поява cloud-native (2015–2019).</strong> AWS Lambda (2014), Docker (2013), що утвердив контейнер як одиницю постачання застосунків, Kubernetes (2015) як стандарт оркестрації контейнерів. Архітектура змістилася від монолітів на ВМ до мікросервісів і функцій. У відповідь з'явилися спеціалізовані категорії: <strong>CSPM</strong> для конфігурацій IaaS, <strong>CWPP</strong> для робочих навантажень (workloads), <strong>контейнерна безпека</strong> для образів та реєстрів. Кожна проблема — окремий інструмент, кожен інструмент — окрема консоль.</p>
+
+        <p><strong>Фаза 3: Криза розростання інструментів (Tool Sprawl, 2019–2021).</strong> За даними IDC 2021 р., середня корпоративна команда безпеки використовувала 11 хмарних інструментів безпеки, з них 7 — спеціалізовані. Кожен генерував тисячі сповіщень без перехресного контексту. У звіті ESG 2021 р. 62% команд безпеки повідомили, що не могли пріоритезувати знахідки через брак інтеграції між інструментами. Це називали "alert fatigue" — втома від сповіщень.</p>
+
+        <p><strong>Фаза 4: Консолідація та CNAPP (2021–тепер).</strong> Gartner у серпні 2021 р. публікує перший Innovation Insight for Cloud-Native Application Protection Platforms — формальне визначення нової категорії. Вендори починають інтегрувати точкові рішення: Palo Alto через серію придбань (Twistlock, Bridgecrew, Dig Security, Talon), Wiz формує продукт як CNAPP з самого початку, Microsoft консолідує рішення в Defender for Cloud. До 2025 р. ринок змістився від "Який саме CSPM ми купимо?" до "Яку CNAPP-платформу ми впровадимо?".</p>
+
+        <h3>Що таке "розростання інструментів" (tool sprawl)?</h3>
+        <p>Розростання інструментів — стан, у якому організація використовує велику кількість вузькоспеціалізованих засобів безпеки, кожен з яких розв'язує власне завдання, але без обміну контекстом з іншими. Симптоми:</p>
         <ul>
-          <li>Міграція традиційних додатків в хмару</li>
-          <li>Security tools: адаптовані on-premise рішення</li>
-          <li>Фокус на VM security, network firewalls</li>
+          <li>Понад 8–10 окремих консолей безпеки для cloud-native-стеку</li>
+          <li>Дублювання знахідок (один і той самий ризик у кількох системах з різними ідентифікаторами)</li>
+          <li>Відсутність єдиної моделі ризику — критичність у CSPM не співвідноситься з критичністю у CWPP</li>
+          <li>Інтеграційний борг (integration debt): команда вимушена писати власні скрипти кореляції</li>
+          <li>Сповіщення без виконуваних дій (non-actionable alerts) — інженеру не зрозуміло, з чого почати</li>
         </ul>
 
-        <p><strong>Фаза 2: Cloud-Native Emergence (2015-2019)</strong></p>
-        <ul>
-          <li>Kubernetes, Docker, serverless набирають популярність</li>
-          <li>Нові категорії: Container Security, CSPM, CWPP</li>
-          <li>Кожна проблема — окремий tool</li>
-        </ul>
-
-        <p><strong>Фаза 3: Tool Sprawl Crisis (2019-2021)</strong></p>
-        <ul>
-          <li>Середня enterprise організація: 10-15 cloud security tools</li>
-          <li>Тисячі alerts без контексту та prioritization</li>
-          <li>Integration challenges, alert fatigue</li>
-        </ul>
-
-        <p><strong>Фаза 4: Consolidation/CNAPP (2021+)</strong></p>
-        <ul>
-          <li>Gartner вводить термін CNAPP</li>
-          <li>Vendors об'єднують point solutions</li>
-          <li>Фокус на correlated risk та attack paths</li>
-        </ul>
+        <p>За дослідженням Wiz State of Cloud Security 2025, організації, що скоротили кількість cloud-security-інструментів з 8+ до 3–4 завдяки CNAPP, демонструють зменшення середнього часу виявлення (Mean Time to Detect, MTTD) на 47% та середнього часу усунення (Mean Time to Remediate, MTTR) на 38%.</p>
 
         <h3>Визначення CNAPP за Gartner</h3>
-        <p>Gartner визначає CNAPP як "unified, tightly integrated set of security and compliance capabilities designed to protect cloud-native infrastructure and applications across development and production".</p>
+        <p>У Market Guide for Cloud-Native Application Protection Platforms (оновлення 2025 р.) Gartner визначає CNAPP як "уніфікований, тісно інтегрований набір можливостей безпеки та відповідності, призначений для захисту хмарної інфраструктури та застосунків на всіх етапах їхнього життєвого циклу — від розробки до продакшну". Чотири ключові характеристики:</p>
 
-        <p><strong>Ключові характеристики CNAPP:</strong></p>
         <ul>
-          <li><strong>Unified:</strong> Єдина платформа замість набору point solutions</li>
-          <li><strong>Tightly integrated:</strong> Компоненти працюють разом, обмінюються контекстом</li>
-          <li><strong>Dev + Production:</strong> Захист на всіх етапах lifecycle</li>
-          <li><strong>Cloud-native focus:</strong> Специально для containers, serverless, IaC</li>
+          <li><strong>Уніфікованість (Unified):</strong> єдина консоль, єдина модель даних, єдина схема політик. Інженер не перемикається між шістьма інтерфейсами для аналізу одного інциденту.</li>
+          <li><strong>Тісна інтеграція (Tightly integrated):</strong> компоненти не просто співіснують — вони обмінюються контекстом. Знахідка CSPM збагачується даними CWPP та CIEM до того, як її побачить аналітик.</li>
+          <li><strong>Покриття життєвого циклу (Dev + Production):</strong> ті самі політики застосовуються до інфраструктури як коду на етапі pre-deployment та до розгорнутих ресурсів у runtime — це принцип "shift-left + shield-right".</li>
+          <li><strong>Cloud-native фокус:</strong> платформа спроектована під особливості контейнерів, serverless, API-ландшафту, ефемерних ідентичностей, на відміну від адаптованих on-premise-інструментів.</li>
         </ul>
 
-        <h3>Проблема ізольованих інструментів</h3>
-        <p>Чому point solutions недостатньо? Розглянемо приклад:</p>
+        <h3>Обмеження точкових рішень: ілюстративний сценарій</h3>
+        <p>Розглянемо реальний сценарій, який ілюструє, чому шість окремих інструментів не дають того, що дає одна CNAPP-платформа.</p>
 
-        <p><strong>Сценарій:</strong> Публічна S3 bucket з sensitive data</p>
+        <p><strong>Контекст:</strong> e-commerce-платформа на AWS. Розгорнуто:</p>
         <ul>
-          <li><strong>CSPM</strong> знаходить: "S3 bucket is public" — Medium severity</li>
-          <li><strong>DSPM</strong> знаходить: "Bucket contains PII data" — High severity</li>
-          <li><strong>CIEM</strong> знаходить: "Lambda has access to bucket" — Low severity</li>
-          <li><strong>CWPP</strong> знаходить: "Lambda has vulnerability CVE-XXX" — Medium severity</li>
+          <li>Application Load Balancer (ALB), доступний з інтернету</li>
+          <li>Контейнерна задача ECS, що обробляє запити</li>
+          <li>IAM-роль <code>ecs-task-role</code>, прикріплена до задачі</li>
+          <li>База даних RDS з персональними даними (Personally Identifiable Information, PII)</li>
+          <li>S3-бакет з резервними копіями БД, що містять платіжні картки</li>
         </ul>
 
-        <p>Кожен tool бачить свою частину картини. Але реальний ризик — це <strong>attack path</strong>:</p>
-        <p><em>Internet → Vulnerable Lambda → IAM role → Public S3 → PII data breach</em></p>
+        <p><strong>Що бачать ізольовані інструменти:</strong></p>
+        <ul>
+          <li><strong>CSPM:</strong> "S3-бакет дозволяє доступ з іншого акаунта" — Medium severity. Серед тисяч таких знахідок в інвентарі.</li>
+          <li><strong>CWPP / image scanner:</strong> "У контейнерному образі ECS виявлено CVE-2024-21626 (Leaky Vessels, runc, CVSS 8.6)" — High severity. Ще одне з 600 однакових знахідок у різних образах.</li>
+          <li><strong>CIEM:</strong> "Роль <code>ecs-task-role</code> має <code>s3:*</code> та <code>rds:*</code>" — Medium severity. Серед 200 ролей з надмірними правами.</li>
+          <li><strong>DSPM:</strong> "У RDS виявлено PII", "У S3-бакеті виявлено дані PCI" — два окремих критичних позначення активу.</li>
+          <li><strong>Network security:</strong> "ALB доступний з 0.0.0.0/0" — Low severity (це нормальна конфігурація для публічного сервісу).</li>
+          <li><strong>Container runtime:</strong> "Підвищена аномальна активність процесів у контейнері" — після того, як зловмисник уже всередині.</li>
+        </ul>
 
-        <p>CNAPP об'єднує ці findings і показує: "Critical: Exploitable path to PII data".</p>
+        <p>Жоден з цих інструментів не повідомить, що повний шлях від інтернету через експлуатовану вразливість і надмірні права веде до даних PCI на S3. CNAPP — повідомить.</p>
+
+        <p><strong>Що бачить CNAPP:</strong></p>
+        <pre>Критичний шлях атаки [Risk Score: 9.4/10]
+Інтернет
+  → ALB (публічний)
+  → ECS Task (CVE-2024-21626, експлойт публічний)
+  → IAM Role: ecs-task-role
+  → S3 Bucket: prod-db-backups
+  → Дані: PCI DSS (4,2 млн записів)
+
+Першопричина: контейнерний образ містить
+вразливу версію runc + IAM-роль має s3:*
+
+Рекомендація:
+1. Оновити base image до runc 1.1.12+
+2. Замінити s3:* на s3:GetObject для конкретного бакета
+3. Увімкнути block-public-access на S3</pre>
+
+        <p>Це не одна знахідка серед тисяч — це єдине пріоритетне завдання тижня. Саме така консолідація контексту і робить CNAPP принципово відмінним від набору точкових рішень.</p>
+
+        <h3>Принцип "Shift Left + Shield Right"</h3>
+        <p>CNAPP реалізує два доповнюючі підходи в одній платформі:</p>
+
+        <p><strong>Shift Left</strong> — перенесення перевірок безпеки якомога раніше в процес розробки:</p>
+        <ul>
+          <li>Сканування інфраструктури як коду (Terraform, CloudFormation, Bicep, Pulumi) у редакторі коду інженера</li>
+          <li>Pre-commit-хуки та перевірки у pull request (PR)</li>
+          <li>Сканування контейнерних образів у конвеєрі неперервної інтеграції (continuous integration, CI)</li>
+          <li>Аналіз залежностей та секретів у репозиторіях</li>
+        </ul>
+
+        <p><strong>Shield Right</strong> — захист уже розгорнутих ресурсів у часі виконання (runtime):</p>
+        <ul>
+          <li>Виявлення дрейфу конфігурацій порівняно зі станом у IaC</li>
+          <li>Виявлення аномальної поведінки контейнерів (eBPF-зонди)</li>
+          <li>Виявлення міжакаунтових дій ідентичностей</li>
+          <li>Реагування на події хмарного провайдера (CloudTrail, Activity Log)</li>
+        </ul>
+
+        <p>Принципова перевага CNAPP — застосування <em>тих самих політик</em> на обох етапах. Якщо політика "S3-бакет не може бути публічним" виявляє порушення на pre-deployment, та сама політика виявить його у runtime, якщо хтось обійшов CI. Це називається "policy parity" — паритет політик.</p>
+
+        <h3>Pillars CNAPP за Gartner: п'ять стовпів</h3>
+        <p>У Market Guide 2025 Gartner визначає CNAPP через п'ять обов'язкових стовпів (pillars), без жодного з яких платформа не вважається повноцінною:</p>
+
+        <ol>
+          <li><strong>Видимість і контекст активів</strong> — інвентаризація, кореляція ресурсів, графова модель середовища</li>
+          <li><strong>Захист стану конфігурації</strong> — функціональність CSPM</li>
+          <li><strong>Захист робочих навантажень</strong> — функціональність CWPP, що включає сканування образів та runtime-захист</li>
+          <li><strong>Управління правами ідентичностей</strong> — функціональність CIEM</li>
+          <li><strong>Безпека на етапі розробки</strong> — сканування IaC, контейнерів, секретів у CI/CD</li>
+        </ol>
+
+        <p>Опціональні, але дедалі частіші компоненти: <strong>DSPM</strong> (Data Security Posture Management), <strong>безпека Kubernetes</strong> (KSPM, Kubernetes Security Posture Management), <strong>безпека API</strong>, <strong>захист застосунків у часі виконання (runtime application self-protection, RASP)</strong>. До 2026 р. Gartner прогнозує, що DSPM стане обов'язковим стовпом CNAPP.</p>
       </section>
 
       <section>
-        <h2>8.2 Компоненти CNAPP</h2>
+        <h2>8.2 Архітектура та компоненти CNAPP (CNAPP Architecture &amp; Components)</h2>
 
-        <h3>Основні компоненти</h3>
+        <h3>Загальна архітектура платформи</h3>
+        <p>CNAPP — не моноліт, а інтегрована система з шарами збору, нормалізації, аналізу та представлення. Архітектура більшості сучасних платформ слідує наступній логіці:</p>
 
-        <!-- Diagram: CNAPP Components -->
+        <!-- Diagram: CNAPP Architecture -->
         <div class="diagram">
-          <div class="diagram-title">CNAPP: інтеграція компонентів хмарної безпеки</div>
-          <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
-            <!-- Central CNAPP circle -->
-            <ellipse fill="var(--accent-light)" stroke="var(--accent)" stroke-width="3" cx="350" cy="130" rx="100" ry="60"/>
-            <text fill="var(--accent)" x="350" y="125" text-anchor="middle" font-weight="700" font-size="18">CNAPP</text>
-            <text class="diagram-text-small" x="350" y="145" text-anchor="middle">Unified Platform</text>
+          <div class="diagram-title">Архітектурні шари CNAPP-платформи</div>
+          <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="cnapp-arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+              </marker>
+            </defs>
 
-            <!-- CSPM -->
-            <g transform="translate(70, 30)">
-              <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="0" y="0" width="100" height="55" rx="8"/>
-              <text fill="#1d4ed8" x="50" y="25" text-anchor="middle" font-weight="600" font-size="12">CSPM</text>
-              <text fill="#1d4ed8" x="50" y="42" text-anchor="middle" font-size="9">Configuration</text>
-            </g>
-            <line stroke="var(--text-secondary)" stroke-width="2" x1="170" y1="57" x2="260" y2="100"/>
+            <!-- Sources -->
+            <text x="60" y="20" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Джерела даних</text>
+            <rect x="20" y="40" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="58" text-anchor="middle" fill="#e2e8f0" font-size="11">AWS / Azure / GCP</text>
+            <rect x="20" y="78" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="96" text-anchor="middle" fill="#e2e8f0" font-size="11">Kubernetes</text>
+            <rect x="20" y="116" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="134" text-anchor="middle" fill="#e2e8f0" font-size="11">CI/CD &amp; Git</text>
+            <rect x="20" y="154" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="172" text-anchor="middle" fill="#e2e8f0" font-size="11">IaC репозиторії</text>
+            <rect x="20" y="192" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="60" y="210" text-anchor="middle" fill="#e2e8f0" font-size="11">Identity providers</text>
 
-            <!-- CWPP -->
-            <g transform="translate(70, 160)">
-              <rect fill="#dcfce7" stroke="#22c55e" stroke-width="2" x="0" y="0" width="100" height="55" rx="8"/>
-              <text fill="#166534" x="50" y="25" text-anchor="middle" font-weight="600" font-size="12">CWPP</text>
-              <text fill="#166534" x="50" y="42" text-anchor="middle" font-size="9">Workloads</text>
-            </g>
-            <line stroke="var(--text-secondary)" stroke-width="2" x1="170" y1="187" x2="260" y2="155"/>
+            <!-- Collection -->
+            <text x="200" y="20" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Збір</text>
+            <rect x="135" y="100" width="130" height="60" rx="8" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="2"/>
+            <text x="200" y="125" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="600">Безагентний</text>
+            <text x="200" y="142" text-anchor="middle" fill="#38bdf8" font-size="11">+ агенти eBPF</text>
 
-            <!-- CIEM -->
-            <g transform="translate(530, 30)">
-              <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="0" y="0" width="100" height="55" rx="8"/>
-              <text fill="#b45309" x="50" y="25" text-anchor="middle" font-weight="600" font-size="12">CIEM</text>
-              <text fill="#b45309" x="50" y="42" text-anchor="middle" font-size="9">Identity</text>
-            </g>
-            <line stroke="var(--text-secondary)" stroke-width="2" x1="530" y1="57" x2="440" y2="100"/>
+            <!-- Arrows sources → collection -->
+            <line x1="100" y1="54" x2="135" y2="115" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+            <line x1="100" y1="92" x2="135" y2="125" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+            <line x1="100" y1="130" x2="135" y2="135" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+            <line x1="100" y1="168" x2="135" y2="145" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+            <line x1="100" y1="206" x2="135" y2="155" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
 
-            <!-- Container Security -->
-            <g transform="translate(530, 160)">
-              <rect fill="#fce7f3" stroke="#ec4899" stroke-width="2" x="0" y="0" width="100" height="55" rx="8"/>
-              <text fill="#be185d" x="50" y="25" text-anchor="middle" font-weight="600" font-size="12">Container</text>
-              <text fill="#be185d" x="50" y="42" text-anchor="middle" font-size="9">Security</text>
-            </g>
-            <line stroke="var(--text-secondary)" stroke-width="2" x1="530" y1="187" x2="440" y2="155"/>
+            <!-- Graph engine -->
+            <text x="370" y="20" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Графовий рушій</text>
+            <rect x="295" y="40" width="155" height="180" rx="10" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="2"/>
+            <text x="372" y="65" text-anchor="middle" fill="#c084fc" font-size="13" font-weight="600">Граф ризиків</text>
+            <text x="372" y="85" text-anchor="middle" fill="#c084fc" font-size="10">Cloud Asset Graph</text>
+            <line x1="305" y1="95" x2="445" y2="95" stroke="#a855f7" stroke-opacity="0.4"/>
+            <text x="372" y="112" text-anchor="middle" fill="#e2e8f0" font-size="10">CSPM · CWPP</text>
+            <text x="372" y="128" text-anchor="middle" fill="#e2e8f0" font-size="10">CIEM · DSPM</text>
+            <text x="372" y="144" text-anchor="middle" fill="#e2e8f0" font-size="10">IaC · Containers</text>
+            <line x1="305" y1="155" x2="445" y2="155" stroke="#a855f7" stroke-opacity="0.4"/>
+            <text x="372" y="173" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">Attack Path Engine</text>
+            <text x="372" y="191" text-anchor="middle" fill="#94a3b8" font-size="9">Кореляція + пріоритезація</text>
+            <text x="372" y="208" text-anchor="middle" fill="#94a3b8" font-size="9">за впливом</text>
 
-            <!-- IaC Security (top) -->
-            <g transform="translate(250, 0)">
-              <rect fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" x="0" y="0" width="100" height="45" rx="8"/>
-              <text fill="#7c3aed" x="50" y="20" text-anchor="middle" font-weight="600" font-size="11">IaC Security</text>
-              <text fill="#7c3aed" x="50" y="35" text-anchor="middle" font-size="9">Shift-Left</text>
-            </g>
-            <line stroke="var(--text-secondary)" stroke-width="2" x1="300" y1="45" x2="320" y2="75"/>
+            <!-- Arrow collection → graph -->
+            <line x1="265" y1="130" x2="295" y2="130" stroke="#64748b" stroke-width="1.5" marker-end="url(#cnapp-arr)"/>
 
-            <!-- DSPM (top right) -->
-            <g transform="translate(370, 0)">
-              <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="0" y="0" width="100" height="45" rx="8"/>
-              <text fill="#dc2626" x="50" y="20" text-anchor="middle" font-weight="600" font-size="11">DSPM</text>
-              <text fill="#dc2626" x="50" y="35" text-anchor="middle" font-size="9">Data Security</text>
-            </g>
-            <line stroke="var(--text-secondary)" stroke-width="2" x1="420" y1="45" x2="380" y2="75"/>
+            <!-- Outputs -->
+            <text x="555" y="20" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Інтерфейс</text>
+            <rect x="490" y="50" width="135" height="32" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+            <text x="557" y="70" text-anchor="middle" fill="#4ade80" font-size="11">Уніфікована консоль</text>
 
-            <!-- Attack Path Analysis (bottom) -->
-            <rect fill="var(--card)" stroke="var(--accent)" stroke-width="2" x="270" y="205" width="160" height="45" rx="8"/>
-            <text fill="var(--accent)" x="350" y="225" text-anchor="middle" font-weight="600" font-size="11">Attack Path Analysis</text>
-            <text class="diagram-text-small" x="350" y="240" text-anchor="middle">Risk Prioritization</text>
-            <line stroke="var(--accent)" stroke-width="2" x1="350" y1="190" x2="350" y2="203"/>
+            <rect x="490" y="92" width="135" height="32" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+            <text x="557" y="112" text-anchor="middle" fill="#4ade80" font-size="11">PR / IDE інтеграції</text>
+
+            <rect x="490" y="134" width="135" height="32" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+            <text x="557" y="154" text-anchor="middle" fill="#4ade80" font-size="11">SIEM / SOAR</text>
+
+            <rect x="490" y="176" width="135" height="32" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+            <text x="557" y="196" text-anchor="middle" fill="#4ade80" font-size="11">Тикетинг / Slack</text>
+
+            <!-- Arrows graph → outputs -->
+            <line x1="450" y1="80" x2="490" y2="68" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+            <line x1="450" y1="110" x2="490" y2="108" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+            <line x1="450" y1="155" x2="490" y2="150" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+            <line x1="450" y1="190" x2="490" y2="192" stroke="#64748b" stroke-width="1" marker-end="url(#cnapp-arr)"/>
+
+            <!-- Bottom note -->
+            <text x="370" y="270" text-anchor="middle" fill="#94a3b8" font-size="11">Збір через API провайдерів та зонди eBPF → нормалізація у графовій моделі →</text>
+            <text x="370" y="288" text-anchor="middle" fill="#94a3b8" font-size="11">аналіз шляхів атаки → корельовані сповіщення з контекстом</text>
           </svg>
-          <div class="diagram-caption">Рис. 8.1. CNAPP об'єднує розрізнені інструменти безпеки в єдину платформу з централізованим аналізом ризиків</div>
+          <div class="diagram-caption">Рис. 8.1. Шари CNAPP-платформи. Сила архітектури — у графовій моделі, що поєднує дані з усіх компонентів та виявляє корельовані ризики, невидимі окремим інструментам.</div>
         </div>
 
-        <p><strong>1. CSPM (Cloud Security Posture Management)</strong></p>
-        <p>Ми детально розглядали в попередній лекції. У контексті CNAPP:</p>
+        <h3>Шар 1: Збір даних (Data Collection)</h3>
+        <p>CNAPP-платформи збирають дані двома основними способами:</p>
+
+        <p><strong>Безагентний підхід (agentless).</strong> Доступ через API хмарного провайдера лише на читання — стало стандартом у 2023–2025 рр. Методи:</p>
         <ul>
-          <li>Configuration assessment для cloud infrastructure</li>
-          <li>Compliance monitoring (CIS, SOC 2, PCI DSS)</li>
-          <li>Asset inventory та visibility</li>
-          <li>Інтеграція з іншими компонентами для context enrichment</li>
+          <li><strong>API polling:</strong> періодичне опитування AWS Config, Azure Resource Graph, GCP Cloud Asset Inventory</li>
+          <li><strong>Подієвий канал:</strong> AWS CloudTrail, EventBridge, Azure Activity Log, GCP Audit Logs — оновлення у реальному часі</li>
+          <li><strong>Сканування знімків (snapshot scanning):</strong> Wiz і Orca створюють знімки EBS-томів для глибокого сканування вразливостей без запуску агентів на ВМ</li>
+          <li><strong>Сканування образів:</strong> завантаження образів з реєстрів (ECR, ACR, GAR, Docker Hub) та аналіз на CVE, секрети, шкідливе ПЗ</li>
         </ul>
 
-        <p><strong>2. CWPP (Cloud Workload Protection Platform)</strong></p>
-        <p>Захист робочих навантажень — VMs, containers, serverless:</p>
+        <p><strong>Агентний підхід (agent-based)</strong> для глибокого runtime-аналізу:</p>
         <ul>
-          <li><strong>Vulnerability Management:</strong> Сканування images та workloads на CVEs</li>
-          <li><strong>Runtime Protection:</strong> Моніторинг behavior, anomaly detection</li>
-          <li><strong>Malware Detection:</strong> Антивірус для cloud workloads</li>
-          <li><strong>File Integrity Monitoring:</strong> Виявлення змін у файловій системі</li>
-          <li><strong>Network Security:</strong> Microsegmentation, traffic analysis</li>
+          <li>Зонди eBPF на хостах для виявлення поведінки на рівні ядра без втручання у workload</li>
+          <li>Сайдкари в Kubernetes для аналізу мережевого трафіку</li>
+          <li>Інтеграція з CRI (Container Runtime Interface) для перехоплення системних викликів</li>
         </ul>
 
-        <p><strong>3. CIEM (Cloud Infrastructure Entitlement Management)</strong></p>
-        <p>Управління ідентифікацією та правами доступу:</p>
+        <p>Сучасні платформи переважно використовують <em>гібридну</em> модель: безагентне покриття 80–90% вимог + опціональні агенти для критичних навантажень, де потрібна повна runtime-видимість.</p>
+
+        <h3>Шар 2: Нормалізація та графова модель (Cloud Asset Graph)</h3>
+        <p>Зібрані дані потрапляють у графову базу — це центральна інновація CNAPP. У такій базі:</p>
+
+        <p><strong>Вершини (nodes)</strong> — будь-які сутності хмарного середовища:</p>
         <ul>
-          <li><strong>Permission Analysis:</strong> Хто має доступ до чого</li>
-          <li><strong>Least Privilege:</strong> Виявлення excessive permissions</li>
-          <li><strong>Unused Access:</strong> Права, які не використовуються</li>
-          <li><strong>Cross-account Access:</strong> Mapping доступу між accounts</li>
-          <li><strong>Service Account Security:</strong> Non-human identities</li>
+          <li>Ресурси: ВМ, контейнери, бази даних, бакети, функції</li>
+          <li>Ідентичності: користувачі, ролі, сервісні акаунти, federated identities</li>
+          <li>Мережеві об'єкти: VPC, підмережі, security groups, route tables</li>
+          <li>Дані: бази, об'єктні сховища, теги класифікації даних</li>
+          <li>Артефакти розробки: репозиторії, IaC-модулі, образи контейнерів, pull request</li>
         </ul>
 
-        <p><strong>4. Container Security</strong></p>
-        <p>Специфічний захист для контейнерів та Kubernetes:</p>
+        <p><strong>Ребра (edges)</strong> — зв'язки між сутностями:</p>
         <ul>
-          <li><strong>Image Scanning:</strong> Vulnerabilities, malware, secrets у images</li>
-          <li><strong>Registry Security:</strong> Захист container registries</li>
-          <li><strong>Kubernetes Security:</strong> RBAC, Network Policies, Pod Security</li>
-          <li><strong>Runtime Protection:</strong> Container behavior monitoring</li>
+          <li>Мережева зв'язність: чи є TCP-маршрут від A до B</li>
+          <li>IAM-права: яка ідентичність може виконати яку дію над яким ресурсом</li>
+          <li>Доступ до даних: куди ресурс може записувати чи читати</li>
+          <li>Довірчі відносини: cross-account assume role, federated trust</li>
+          <li>Походження артефакту: який pull request створив цей IaC-модуль, що розгорнув цей ресурс</li>
         </ul>
 
-        <p><strong>5. IaC Security (Shift-Left)</strong></p>
-        <p>Безпека Infrastructure as Code:</p>
+        <p>Графова модель дозволяє виконувати запити, неможливі у реляційних базах. Приклад запиту до CSPM-без-графу: "знайди публічні бакети". Той самий запит у CNAPP: "знайди публічні бакети, які містять PII і до яких має доступ роль, прикріплена до інтернет-доступних навантажень з відомим CVE". Перший — десятки тисяч результатів, другий — одиниці.</p>
+
+        <h3>Шар 3: Функціональні компоненти (CNAPP Pillars)</h3>
+
+        <p><strong>1. CSPM (Cloud Security Posture Management) — управління станом безпеки конфігурацій</strong></p>
+        <p>Розглянуто детально в лекції 7. У контексті CNAPP важливі такі особливості:</p>
         <ul>
-          <li><strong>IaC Scanning:</strong> Terraform, CloudFormation, Pulumi</li>
-          <li><strong>Policy as Code:</strong> OPA/Rego, Sentinel</li>
-          <li><strong>CI/CD Integration:</strong> Pre-deployment checks</li>
-          <li><strong>Drift Detection:</strong> Різниця між IaC та deployed resources</li>
+          <li>Перевірки за CIS Benchmarks, NIST 800-53, PCI DSS, SOC 2, HIPAA, GDPR</li>
+          <li>Підтримка політики як коду (policy-as-code) через Open Policy Agent (OPA) / Rego</li>
+          <li>Дрейф конфігурацій: різниця між IaC-станом і фактично розгорнутим</li>
+          <li>Збагачення кожної знахідки контекстом з графа: чи має ресурс публічний доступ, чи містить чутливі дані</li>
         </ul>
 
-        <p><strong>6. DSPM (Data Security Posture Management)</strong></p>
-        <p>Захист даних у хмарі:</p>
+        <p><strong>2. CWPP (Cloud Workload Protection Platform) — захист робочих навантажень</strong></p>
+        <p>CWPP захищає виконувані одиниці навантаження: ВМ, контейнери, функції serverless. Основні можливості:</p>
         <ul>
-          <li><strong>Data Discovery:</strong> Автоматичне виявлення sensitive data</li>
-          <li><strong>Data Classification:</strong> PII, PHI, PCI, secrets</li>
-          <li><strong>Data Flow Analysis:</strong> Куди переміщуються дані</li>
-          <li><strong>Encryption Status:</strong> At-rest та in-transit</li>
+          <li><strong>Управління вразливостями (vulnerability management):</strong> сканування образів та ВМ на CVE з пріоритезацією за експлуатованістю</li>
+          <li><strong>Runtime-захист:</strong> виявлення аномальної поведінки процесів, мережевих з'єднань, спроб ескалації привілеїв</li>
+          <li><strong>Виявлення шкідливого ПЗ:</strong> сигнатурне і поведінкове виявлення</li>
+          <li><strong>Контроль цілісності файлів (File Integrity Monitoring, FIM):</strong> моніторинг змін критичних файлів</li>
+          <li><strong>Мікросегментація мережі:</strong> політики вузлового рівня для обмеження бічного руху</li>
         </ul>
 
-        <h3>Інтеграція компонентів</h3>
-        <p>Сила CNAPP — у взаємодії компонентів:</p>
+        <p>Сучасний CWPP побудовано на eBPF — технології ядра Linux для безпечного виконання програм у ядрі без модифікації коду. Це дає глибоку видимість при низьких накладних витратах. Платформи Sysdig, CrowdStrike Falcon, Aqua Security — лідери в eBPF-CWPP.</p>
+
+        <p><strong>3. CIEM (Cloud Infrastructure Entitlement Management) — управління правами в хмарі</strong></p>
+        <p>За даними Microsoft Defender for Cloud Telemetry 2024, понад 95% дозволів IAM не використовуються активно. CIEM розв'язує цю проблему:</p>
+        <ul>
+          <li><strong>Аналіз ефективних прав:</strong> які саме дії може виконати ідентичність з урахуванням group memberships, role assumptions, resource policies, SCP, permission boundaries</li>
+          <li><strong>Виявлення надмірних прав:</strong> порівняння наданих прав з фактично використаними за останні 90 днів</li>
+          <li><strong>Принцип найменших привілеїв (least privilege):</strong> автоматична генерація скоригованих політик</li>
+          <li><strong>Виявлення сплячих ідентичностей (dormant identities):</strong> акаунти без активності понад X днів</li>
+          <li><strong>Аналіз шляхів ескалації:</strong> які ланцюги прав ведуть до підвищення до admin</li>
+        </ul>
+
+        <p>Приклад надмірного права. Розробник створив IAM-роль з <code>"Action": "*"</code> "тимчасово" для дебагу. Через рік роль все ще активна і прикріплена до 12 ECS-задач. CIEM виявляє: за 90 днів роль використала 14 з понад 5000 доступних дій. Рекомендована скорочена політика — 25–30 рядків замість одного зірочки.</p>
+
+        <p><strong>4. Безпека контейнерів та Kubernetes (Container &amp; Kubernetes Security)</strong></p>
+        <p>Спеціалізовані можливості для cloud-native-стеку:</p>
+        <ul>
+          <li><strong>Сканування образів:</strong> CVE, секрети, шкідливе ПЗ в шарах образу</li>
+          <li><strong>Безпека реєстру:</strong> підпис образів через Sigstore / Cosign, контроль доступу до реєстру</li>
+          <li><strong>KSPM (Kubernetes Security Posture Management):</strong> аудит RBAC, NetworkPolicy, PodSecurityStandards, аналіз конфігурацій etcd, kubelet</li>
+          <li><strong>Захист runtime:</strong> моніторинг syscalls в контейнері, виявлення container escape</li>
+          <li><strong>Admission control:</strong> блокування небезпечних маніфестів через Kyverno чи OPA Gatekeeper</li>
+        </ul>
+
+        <p>Приклад знакової вразливості: <strong>CVE-2024-21626 (Leaky Vessels, runc &lt;1.1.12, CVSS 8.6)</strong> — дозволяла container escape з контейнера на хост через витоки файлових дескрипторів. Виявлена в січні 2024 р. компанією Snyk. CNAPP-платформи Wiz і Aqua сповістили клієнтів за лічені дні з повним списком вражених навантажень — там, де ручний інвентар зайняв би тижні.</p>
+
+        <p><strong>5. Безпека інфраструктури як коду (Infrastructure as Code Security)</strong></p>
+        <p>Зсув ліворуч (shift-left) починається з IaC. CNAPP сканує:</p>
+        <ul>
+          <li>Terraform-модулі та plan-файли</li>
+          <li>AWS CloudFormation шаблони</li>
+          <li>Azure Bicep / ARM</li>
+          <li>Pulumi, AWS CDK, Crossplane</li>
+          <li>Kubernetes-маніфести та Helm-чарти</li>
+        </ul>
+
+        <p>Перевірки виконуються в трьох точках:</p>
+        <ol>
+          <li><strong>IDE:</strong> розширення для VS Code / IntelliJ показують помилки під час набору коду</li>
+          <li><strong>Pre-commit:</strong> локальні хуки відхиляють комміт з критичними помилками</li>
+          <li><strong>Pull request:</strong> бот залишає коментар з коментарем інлайн до конкретного рядка коду</li>
+        </ol>
+
+        <p>Приклад робочого процесу IaC-сканування у GitHub Actions:</p>
+        <pre>name: cnapp-iac-scan
+on: [pull_request]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wiz IaC Scanner
+        uses: wiz-sec/wiz-cli-action@v1
+        with:
+          scan-type: iac
+          path: ./terraform
+          policy: 'enforce-critical'
+        env:
+          WIZ_CLIENT_ID: ${{ secrets.WIZ_ID }}
+          WIZ_CLIENT_SECRET: ${{ secrets.WIZ_SECRET }}</pre>
+
+        <p><strong>6. DSPM (Data Security Posture Management) — управління безпекою даних</strong></p>
+        <p>DSPM з 2024 р. — стандартний компонент CNAPP. Завдання: знайти, де живуть чутливі дані, і чи доступні вони неавторизованим ідентичностям.</p>
+        <ul>
+          <li><strong>Виявлення (discovery):</strong> сканування S3, RDS, BigQuery, Snowflake, OneDrive на наявність даних</li>
+          <li><strong>Класифікація:</strong> PII, PHI (Protected Health Information), PCI, секрети (API keys, certificates), внутрішні документи</li>
+          <li><strong>Аналіз потоків (data flow):</strong> куди дані копіюються, бекапляться, ETL-пайплайнами переміщуються</li>
+          <li><strong>Стан шифрування:</strong> at-rest (KMS-ключі), in-transit (TLS), in-use (confidential computing)</li>
+          <li><strong>Доступ до даних:</strong> інтеграція з CIEM — хто фактично має ефективні права читати ці дані</li>
+        </ul>
+
+        <p>Кореляція DSPM + CIEM — найпотужніша знахідка CNAPP: "сервісний акаунт <code>etl-batch</code> має доступ до 4,2 млн PCI-записів і використовує access key, який не ротувався 410 днів". Жоден окремий інструмент не дав би такого формулювання.</p>
+
+        <h3>Кореляція компонентів: матриця збагачення контексту</h3>
+        <p>Сила CNAPP — у тому, як знахідки одного компоненту збагачуються даними інших. Матриця типових кореляцій:</p>
 
         <table>
           <thead>
             <tr>
-              <th>Компонент A</th>
-              <th>+ Компонент B</th>
-              <th>= Результат</th>
+              <th>Знахідка</th>
+              <th>+ Контекст</th>
+              <th>= Корельований ризик</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>CSPM (public bucket)</td>
-              <td>DSPM (contains PII)</td>
-              <td>Critical data exposure</td>
+              <td>CSPM: публічний бакет</td>
+              <td>DSPM: містить PII</td>
+              <td>Critical: експозиція 2,1 млн записів</td>
             </tr>
             <tr>
-              <td>CWPP (vulnerable image)</td>
-              <td>CIEM (internet-facing)</td>
-              <td>Exploitable from internet</td>
+              <td>CWPP: критичний CVE в образі</td>
+              <td>Network: образ запущений за публічним ALB</td>
+              <td>High: експлуатовний з інтернету</td>
             </tr>
             <tr>
-              <td>Container (CVE)</td>
-              <td>CIEM (admin IAM role)</td>
-              <td>Privilege escalation path</td>
+              <td>CIEM: роль з <code>iam:PassRole</code></td>
+              <td>Container: роль прикріплена до compromised pod</td>
+              <td>Critical: шлях до admin-привілеїв</td>
             </tr>
             <tr>
-              <td>IaC (misconfiguration)</td>
-              <td>CSPM (deployed)</td>
-              <td>Drift alert</td>
+              <td>IaC: незашифрований EBS</td>
+              <td>CSPM: ресурс розгорнуто 14 днів тому</td>
+              <td>Drift: розбіжність pre-deployment vs runtime</td>
+            </tr>
+            <tr>
+              <td>Container: тіньовий процес у pod</td>
+              <td>CIEM: pod-роль має <code>secretsmanager:*</code></td>
+              <td>Critical: можлива екфільтрація секретів</td>
+            </tr>
+            <tr>
+              <td>DSPM: дублікат БД у dev-середовищі</td>
+              <td>CIEM: 47 розробників мають доступ</td>
+              <td>High: PII в dev — порушення GDPR Article 5</td>
             </tr>
           </tbody>
         </table>
+
+        <h3>Шар 4: Інтерфейс та інтеграції</h3>
+        <p>Виходи CNAPP — не тільки консоль, а й інструменти, де працюють користувачі:</p>
+        <ul>
+          <li><strong>Інженерні інтерфейси:</strong> розширення IDE, статус-перевірки в pull request, нативні дашборди в Backstage / Port</li>
+          <li><strong>Безпекові інструменти:</strong> інтеграція з SIEM (Splunk, Microsoft Sentinel, Elastic Security), SOAR (Tines, Torq, Cortex XSOAR), MDR-сервісами</li>
+          <li><strong>Тикетинг та ChatOps:</strong> Jira, ServiceNow, Linear, Slack, Microsoft Teams з можливістю відповіді на сповіщення прямо в чаті</li>
+          <li><strong>Public API та webhooks:</strong> для власних автоматизацій та звітності</li>
+          <li><strong>SBOM (Software Bill of Materials):</strong> експорт у форматах SPDX і CycloneDX для регуляторної звітності</li>
+        </ul>
       </section>
 
       <section>
-        <h2>8.3 Attack Path Analysis</h2>
+        <h2>8.3 Аналіз шляхів атаки (Attack Path Analysis)</h2>
 
-        <h3>Що таке Attack Path?</h3>
-        <p>Attack path — це послідовність кроків, які атакуючий може виконати для досягнення цілі (наприклад, доступу до sensitive data або компрометації критичної системи).</p>
+        <h3>Що таке шлях атаки?</h3>
+        <p>Шлях атаки (attack path) — послідовність кроків, які зловмисник може виконати у хмарному середовищі, щоб досягти цілі. Цілі поділяються на дві категорії:</p>
+        <ul>
+          <li><strong>Crown jewels — критичні активи:</strong> бази клієнтських даних, фінансові системи, секрети, інтелектуальна власність</li>
+          <li><strong>Privileged identities — критичні привілеї:</strong> роль адміністратора організації, master-ключ KMS, root-акаунт хмарного провайдера</li>
+        </ul>
 
-        <p><strong>Приклад attack path:</strong></p>
+        <p>Кожен крок шляху — це експлуатація окремої слабкості: вразливості, помилкової конфігурації, надмірного права чи непотрібної мережевої зв'язності. Жодна слабкість окремо не є катастрофою — катастрофою є їхня комбінація.</p>
+
+        <h3>Modus operandi: фази атаки за MITRE ATT&amp;CK</h3>
+        <p>Сучасний CNAPP мапить шлях атаки на тактики MITRE ATT&amp;CK Cloud Matrix:</p>
+
         <ol>
-          <li><strong>Initial Access:</strong> Publicly exposed Lambda function з вразливістю</li>
-          <li><strong>Execution:</strong> Експлуатація CVE для виконання коду</li>
-          <li><strong>Privilege Escalation:</strong> Lambda role має надмірні permissions</li>
-          <li><strong>Lateral Movement:</strong> Доступ до RDS через IAM role</li>
-          <li><strong>Data Exfiltration:</strong> Копіювання даних з бази</li>
+          <li><strong>Initial Access (TA0001):</strong> phishing, експозиція API, скомпрометовані облікові дані з infostealers, OAuth-токени</li>
+          <li><strong>Execution (TA0002):</strong> експлойт CVE, виконання довільного коду через CI/CD, lambda invocation</li>
+          <li><strong>Persistence (TA0003):</strong> створення тіньового користувача, додавання SSH-ключа, modifications IAM trust policies</li>
+          <li><strong>Privilege Escalation (TA0004):</strong> assume role, iam:PassRole, експлуатація IMDS</li>
+          <li><strong>Defense Evasion (TA0005):</strong> вимкнення CloudTrail, видалення логів, обхід WAF</li>
+          <li><strong>Credential Access (TA0006):</strong> читання секретів з Secrets Manager, перехоплення в RAM, доступ до .env</li>
+          <li><strong>Discovery (TA0007):</strong> описи ресурсів через API, отримання метаданих</li>
+          <li><strong>Lateral Movement (TA0008):</strong> assume role, SSM Session Manager, kubectl exec</li>
+          <li><strong>Collection (TA0009):</strong> експорт БД, копіювання S3-об'єктів</li>
+          <li><strong>Exfiltration (TA0010):</strong> завантаження через легітимні API, presigned URLs, тунелювання через DNS</li>
+          <li><strong>Impact (TA0040):</strong> шифрування даних, видалення ресурсів, criptojacking</li>
         </ol>
 
-        <h3>Graph-based Approach</h3>
-        <p>Сучасні CNAPP використовують graph databases для моделювання cloud environments:</p>
+        <h3>Графовий підхід до моделювання середовища</h3>
+        <p>CNAPP-платформи будують повну графову модель хмарного середовища і виконують graph traversal-алгоритми (BFS, Dijkstra, кастомні евристики) для пошуку шляхів від точок входу до критичних активів.</p>
 
-        <p><strong>Nodes (вершини):</strong></p>
+        <p><strong>Точки входу (entry points)</strong> — вершини графа, доступні зовнішнім зловмисникам:</p>
         <ul>
-          <li>Resources: VMs, containers, databases, storage</li>
-          <li>Identities: Users, roles, service accounts</li>
-          <li>Network: VPCs, subnets, security groups</li>
-          <li>Data: Data stores, data flows</li>
+          <li>Публічні навантаження: ALB, API Gateway, публічні ВМ</li>
+          <li>Публічні ідентичності: користувачі без MFA, опубліковані OAuth-додатки</li>
+          <li>Cross-account trust з менш захищеним акаунтом</li>
+          <li>Витікання облікових даних: GitHub commits, public S3, отриманні infostealers</li>
         </ul>
 
-        <p><strong>Edges (зв'язки):</strong></p>
+        <p><strong>Алгоритм пошуку шляху:</strong> для кожного критичного активу платформа виконує зворотній обхід графа — від цілі до точок входу. Кожне ребро має вагу, що відображає експлуатованість. Знайдені шляхи з вагою нижче порогу підсвічуються як активні шляхи атаки.</p>
+
+        <p>Приклад спрощеного графового запиту в синтаксисі Wiz Security Graph (на основі Cypher):</p>
+        <pre>MATCH path = (entry:Resource)-[*..6]-&gt;(target:Database)
+WHERE entry.publicAccess = true
+  AND target.dataClass IN ['PII', 'PCI']
+  AND ALL(rel IN relationships(path)
+          WHERE rel.exploitability &gt; 0.5)
+RETURN path
+ORDER BY length(path) ASC, sum(rel.exploitability) DESC
+LIMIT 25</pre>
+
+        <p>Цей запит знаходить до 25 найкоротших шляхів від публічних точок входу до баз з PII/PCI, де всі переходи мають експлуатованість понад 0.5. У реальних графах кількість вершин — десятки мільйонів, тому обчислення оптимізують через індекси за типом ресурсу і кешування часткових шляхів.</p>
+
+        <h3>Оцінка ризику: експлуатованість × вплив</h3>
+        <p>Кожен шлях атаки оцінюється за двома вимірами.</p>
+
+        <p><strong>Експлуатованість (exploitability)</strong> — наскільки реалістично пройти шлях:</p>
         <ul>
-          <li>Network connectivity</li>
-          <li>IAM permissions</li>
-          <li>Data access</li>
-          <li>Trust relationships</li>
+          <li>Чи є точка входу публічною?</li>
+          <li>Чи відомий експлойт для CVE на шляху? (CISA KEV, Exploit-DB, Metasploit)</li>
+          <li>Який Exploit Prediction Scoring System (EPSS) для CVE?</li>
+          <li>Чи потрібна автентифікація на якомусь кроці?</li>
+          <li>Чи логуються дії, які мала б побачити команда безпеки?</li>
         </ul>
 
-        <p>Алгоритми graph traversal знаходять шляхи від entry points (internet-facing resources) до crown jewels (critical data/systems).</p>
-
-        <h3>Risk Scoring та Prioritization</h3>
-        <p>CNAPP пріоритезує findings на основі:</p>
-
-        <p><strong>Exploitability factors:</strong></p>
+        <p><strong>Вплив (impact)</strong> — масштаб збитку при успіху:</p>
         <ul>
-          <li>Чи є публічний доступ? (Internet exposure)</li>
-          <li>Чи є known exploit для вразливості?</li>
-          <li>Чи потрібна автентифікація?</li>
-          <li>Складність експлуатації (CVSS metrics)</li>
+          <li>Скільки записів у цільовій базі?</li>
+          <li>Який клас даних? (PII, PHI, PCI, military-grade secrets)</li>
+          <li>Регуляторні наслідки: GDPR, CCPA, HIPAA, PCI DSS</li>
+          <li>Бізнес-критичність системи: production / pre-prod / dev</li>
+          <li>Радіус ураження (blast radius): які ще ресурси постраждають при компрометації</li>
         </ul>
 
-        <p><strong>Impact factors:</strong></p>
-        <ul>
-          <li>Які дані можуть бути скомпрометовані?</li>
-          <li>Яка business criticality системи?</li>
-          <li>Regulatory implications (PCI, HIPAA)?</li>
-          <li>Blast radius — що ще буде затронуто?</li>
-        </ul>
+        <p><strong>Підсумкова формула:</strong> Risk Score = Exploitability × Impact, де обидва значення нормовані до [0,1]. Шляхи зі Score &gt; 0.8 — критичні, &gt; 0.6 — високі. Платформи Wiz і Orca публічно описують свої формули; Palo Alto Prisma використовує комбіновану метрику з елементами CVSS і власних евристик.</p>
 
-        <p><strong>Combined Risk = Exploitability × Impact</strong></p>
-
-        <h3>Приклад Attack Path Analysis</h3>
-
-        <p><strong>Scenario: E-commerce application на AWS</strong></p>
-
-        <p>CNAPP виявляє attack path:</p>
-        <pre>
-Internet
-    ↓
-[ALB] Public Load Balancer
-    ↓
-[ECS Task] Container з CVE-2024-XXXX (Critical)
-    ↓
-[IAM Role] ecs-task-role (має s3:*, rds:*)
-    ↓
-[RDS] Customer database (PII)
-    ↓
-[S3 Bucket] Backups (contains credit cards)
-        </pre>
+        <h3>Приклад: розбір шляху атаки в e-commerce-середовищі</h3>
+        <p>Розглянемо реальний шлях, виявлений CNAPP в e-commerce-системі на AWS (відображає реальний інцидент 2024 р., деталі змінено). Початкова знахідка прийшла з SIEM: підозрілий трафік до RDS-бази з контейнера ECS.</p>
 
         <!-- Diagram: Attack Path Example -->
         <div class="diagram">
-          <div class="diagram-title">Візуалізація Attack Path: від Internet до даних</div>
-          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <div class="diagram-title">Шлях атаки: від інтернету до даних PCI</div>
+          <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <marker id="ap-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <marker id="ap8-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                 <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444"/>
               </marker>
             </defs>
 
+            <text x="360" y="20" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="600">Корельований шлях атаки [Risk Score: 9.4 / 10]</text>
+
             <!-- Internet -->
-            <circle fill="#fee2e2" stroke="#ef4444" stroke-width="2" cx="50" cy="110" r="35"/>
-            <text fill="#dc2626" x="50" y="105" text-anchor="middle" font-size="10">🌐</text>
-            <text fill="#dc2626" x="50" y="120" text-anchor="middle" font-size="9">Internet</text>
+            <circle fill="#fee2e2" stroke="#ef4444" stroke-width="2" cx="50" cy="115" r="32"/>
+            <text fill="#dc2626" x="50" y="120" text-anchor="middle" font-size="11" font-weight="600">Internet</text>
 
             <!-- ALB -->
-            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="120" y="85" width="70" height="50" rx="6"/>
-            <text fill="#b45309" x="155" y="105" text-anchor="middle" font-size="9">ALB</text>
-            <text fill="#b45309" x="155" y="118" text-anchor="middle" font-size="8">Public</text>
+            <rect fill="#fef3c7" stroke="#f59e0b" stroke-width="2" x="115" y="92" width="80" height="48" rx="6"/>
+            <text fill="#b45309" x="155" y="112" text-anchor="middle" font-size="11" font-weight="600">ALB</text>
+            <text fill="#b45309" x="155" y="128" text-anchor="middle" font-size="9">Public</text>
 
             <!-- ECS with CVE -->
-            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="220" y="85" width="80" height="50" rx="6"/>
-            <text fill="#dc2626" x="260" y="100" text-anchor="middle" font-size="9">ECS Task</text>
-            <text fill="#dc2626" x="260" y="115" text-anchor="middle" font-size="8">CVE-2024-XXX</text>
-            <text fill="#dc2626" x="260" y="128" text-anchor="middle" font-size="7">Critical!</text>
+            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="220" y="80" width="100" height="72" rx="6"/>
+            <text fill="#dc2626" x="270" y="100" text-anchor="middle" font-size="11" font-weight="600">ECS Task</text>
+            <text fill="#dc2626" x="270" y="116" text-anchor="middle" font-size="9">CVE-2024-21626</text>
+            <text fill="#dc2626" x="270" y="130" text-anchor="middle" font-size="9">runc escape</text>
+            <text fill="#dc2626" x="270" y="144" text-anchor="middle" font-size="8">CVSS 8.6 · KEV</text>
 
             <!-- IAM Role -->
-            <rect fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" x="330" y="85" width="80" height="50" rx="6"/>
-            <text fill="#7c3aed" x="370" y="100" text-anchor="middle" font-size="9">IAM Role</text>
-            <text fill="#7c3aed" x="370" y="115" text-anchor="middle" font-size="8">s3:*, rds:*</text>
-            <text fill="#ef4444" x="370" y="128" text-anchor="middle" font-size="7">Overprivileged</text>
+            <rect fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" x="345" y="80" width="100" height="72" rx="6"/>
+            <text fill="#7c3aed" x="395" y="100" text-anchor="middle" font-size="11" font-weight="600">IAM Role</text>
+            <text fill="#7c3aed" x="395" y="116" text-anchor="middle" font-size="9">ecs-task-role</text>
+            <text fill="#7c3aed" x="395" y="130" text-anchor="middle" font-size="9">s3:* rds:*</text>
+            <text fill="#ef4444" x="395" y="144" text-anchor="middle" font-size="8">overprivileged</text>
 
             <!-- RDS -->
-            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="440" y="40" width="70" height="45" rx="6"/>
-            <text fill="#1d4ed8" x="475" y="58" text-anchor="middle" font-size="9">RDS</text>
-            <text fill="#1d4ed8" x="475" y="73" text-anchor="middle" font-size="8">PII Data</text>
+            <rect fill="#dbeafe" stroke="#3b82f6" stroke-width="2" x="475" y="50" width="90" height="48" rx="6"/>
+            <text fill="#1d4ed8" x="520" y="70" text-anchor="middle" font-size="11" font-weight="600">RDS</text>
+            <text fill="#1d4ed8" x="520" y="86" text-anchor="middle" font-size="9">PII · 4.2M</text>
 
             <!-- S3 -->
-            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="440" y="130" width="70" height="45" rx="6"/>
-            <text fill="#dc2626" x="475" y="148" text-anchor="middle" font-size="9">S3</text>
-            <text fill="#dc2626" x="475" y="163" text-anchor="middle" font-size="8">Cards</text>
+            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="2" x="475" y="135" width="90" height="48" rx="6"/>
+            <text fill="#dc2626" x="520" y="155" text-anchor="middle" font-size="11" font-weight="600">S3 Backups</text>
+            <text fill="#dc2626" x="520" y="171" text-anchor="middle" font-size="9">PCI · cards</text>
 
-            <!-- Data icon -->
-            <rect fill="#fee2e2" stroke="#ef4444" stroke-width="3" x="540" y="75" width="50" height="70" rx="6"/>
-            <text fill="#dc2626" x="565" y="100" text-anchor="middle" font-size="16">💳</text>
-            <text fill="#dc2626" x="565" y="120" text-anchor="middle" font-size="8">Breach!</text>
+            <!-- Exfil -->
+            <rect fill="#1f2937" stroke="#ef4444" stroke-width="3" x="600" y="92" width="100" height="48" rx="6"/>
+            <text fill="#fca5a5" x="650" y="112" text-anchor="middle" font-size="11" font-weight="600">Exfiltration</text>
+            <text fill="#fca5a5" x="650" y="128" text-anchor="middle" font-size="9">через presigned URL</text>
 
             <!-- Arrows -->
-            <line stroke="#ef4444" stroke-width="2" x1="85" y1="110" x2="115" y2="110" marker-end="url(#ap-arrow)"/>
-            <line stroke="#ef4444" stroke-width="2" x1="190" y1="110" x2="215" y2="110" marker-end="url(#ap-arrow)"/>
-            <line stroke="#ef4444" stroke-width="2" x1="300" y1="110" x2="325" y2="110" marker-end="url(#ap-arrow)"/>
-            <line stroke="#ef4444" stroke-width="2" x1="410" y1="95" x2="435" y2="70" marker-end="url(#ap-arrow)"/>
-            <line stroke="#ef4444" stroke-width="2" x1="410" y1="125" x2="435" y2="145" marker-end="url(#ap-arrow)"/>
-            <line stroke="#ef4444" stroke-width="2" x1="510" y1="62" x2="535" y2="90" marker-end="url(#ap-arrow)"/>
-            <line stroke="#ef4444" stroke-width="2" x1="510" y1="152" x2="535" y2="130" marker-end="url(#ap-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="82" y1="115" x2="112" y2="115" marker-end="url(#ap8-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="195" y1="115" x2="217" y2="115" marker-end="url(#ap8-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="320" y1="115" x2="342" y2="115" marker-end="url(#ap8-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="445" y1="100" x2="472" y2="80" marker-end="url(#ap8-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="445" y1="135" x2="472" y2="155" marker-end="url(#ap8-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="565" y1="74" x2="600" y2="105" marker-end="url(#ap8-arrow)"/>
+            <line stroke="#ef4444" stroke-width="2" x1="565" y1="159" x2="600" y2="128" marker-end="url(#ap8-arrow)"/>
 
             <!-- Risk label -->
-            <rect fill="#ef4444" x="200" y="180" width="200" height="25" rx="4"/>
-            <text fill="white" x="300" y="197" text-anchor="middle" font-weight="600" font-size="11">CRITICAL ATTACK PATH</text>
+            <rect fill="#dc2626" x="220" y="200" width="280" height="24" rx="4"/>
+            <text fill="white" x="360" y="217" text-anchor="middle" font-weight="600" font-size="11">CRITICAL ATTACK PATH · NEEDS IMMEDIATE ACTION</text>
           </svg>
-          <div class="diagram-caption">Рис. 8.2. Attack path visualization: CNAPP показує повний шлях від Internet до критичних даних</div>
+          <div class="diagram-caption">Рис. 8.2. Реальний шлях атаки, виявлений CNAPP-платформою. Жодна окрема знахідка (CVE, IAM, S3) не була критичною — критичним є саме ланцюг.</div>
         </div>
 
-        <p><strong>CNAPP Risk Assessment:</strong></p>
-        <ul>
-          <li>Entry point: Internet (high exploitability)</li>
-          <li>Vulnerability: Critical CVE з public exploit</li>
-          <li>IAM: Excessive permissions (s3:*, rds:*)</li>
-          <li>Data: PII + payment card data (high impact)</li>
-          <li><strong>Combined Score: Critical — requires immediate action</strong></li>
-        </ul>
+        <p><strong>Розбір шляху:</strong></p>
+        <ol>
+          <li><strong>Internet → ALB:</strong> публічна точка входу — нормальна конфігурація для e-commerce. Експлуатованість: 1.0.</li>
+          <li><strong>ALB → ECS Task:</strong> ALB направляє трафік до контейнера. У контейнері — Java-застосунок з вразливою версією runc 1.1.10 (CVE-2024-21626 у CISA KEV). Експлуатованість: 0.85.</li>
+          <li><strong>ECS Task → IAM Role:</strong> через container escape зловмисник отримує доступ до Instance Metadata Service v1 і отримує тимчасові облікові дані задачі. Експлуатованість: 0.9.</li>
+          <li><strong>IAM Role → RDS / S3:</strong> роль <code>ecs-task-role</code> має <code>s3:*</code> та <code>rds:*</code>. Реальне використання за 90 днів — лише <code>s3:GetObject</code> для одного бакета і <code>rds:Connect</code>. Експлуатованість: 0.95.</li>
+          <li><strong>RDS → Exfil:</strong> експорт даних через <code>SELECT</code> з подальшим записом у S3-бакет, контрольований зловмисником, через presigned URL. Експлуатованість: 0.8.</li>
+        </ol>
 
-        <p><strong>Порівняння з point solutions:</strong></p>
+        <p><strong>Загальний Risk Score:</strong> 1.0 × 0.85 × 0.9 × 0.95 × 0.8 = 0.58 (експлуатованість) × 0.95 (impact: PCI + 4,2 млн записів + регуляторний вплив) = <strong>0.94</strong>. Критичний.</p>
+
+        <p><strong>Рекомендована послідовність усунення:</strong></p>
+        <ol>
+          <li><em>Терміново (години):</em> оновити base image до runc 1.1.12+ для всіх 47 вражених контейнерів</li>
+          <li><em>День 1–2:</em> замінити <code>s3:*</code> на скоригований шаблон у <code>ecs-task-role</code> (CIEM генерує конкретну політику)</li>
+          <li><em>Тиждень 1:</em> увімкнути block-public-access для S3 + IMDSv2-only для всіх ECS-задач (запобігання повторним сценаріям)</li>
+          <li><em>Місяць 1:</em> увести політику IaC, що блокує деплой контейнерів з runc-CVE у CISA KEV</li>
+        </ol>
+
+        <h3>Чому graph-based підхід кращий за списки знахідок</h3>
+        <p>Класичний CSPM показує: "S3-бакет публічний — High". Список з 47 000 таких знахідок — типовий стан корпоративного середовища. Аналітик не знає, з чого починати.</p>
+
+        <p>CNAPP з графовим аналізом показує: "12 шляхів атаки до даних PCI". Список з 12 — і кожен має чіткий план дій. Це і є різниця між <strong>обсягом знахідок</strong> і <strong>обсягом ризику</strong>.</p>
+
+        <p>За даними Sysdig Cloud-Native Security Report 2024, після впровадження CNAPP з attack path analysis середня команда розв'язує на 73% більше критичних ризиків при тій самій кількості людино-годин — просто тому, що працює над правильними завданнями.</p>
+
+        <h3>Інциденти, передбачувані attack path analysis</h3>
+        <p>Деякі реальні інциденти 2023–2024 рр., де ретроспективний аналіз шляху був би помітним для CNAPP до атаки:</p>
+
         <ul>
-          <li>CWPP: "Container has critical CVE" — одне finding серед тисяч</li>
-          <li>CIEM: "Role has excessive permissions" — немає контексту чи використовується</li>
-          <li>CSPM: "Bucket allows cross-account access" — здається безпечним</li>
-          <li>CNAPP: "Critical attack path to customer data" — чіткий пріоритет</li>
+          <li><strong>MGM Resorts (2023):</strong> шлях Identity (Okta soc-eng) → Azure AD admin → vCenter → ESXi mass encryption. CIEM + CWPP + посилений моніторинг ESXi виявили б невикористаний admin-доступ і незахищене вертикальне підвищення.</li>
+          <li><strong>Snowflake / UNC5537 (2024):</strong> шлях infostealer credentials → Snowflake акаунт без MFA → масовий експорт. CIEM + DSPM показали б акаунти з широкими експортними правами і відсутністю MFA до інциденту.</li>
+          <li><strong>Toyota Connected (2023):</strong> шлях GitHub repo (плюс public) → AWS access key (plain text) → S3 → 260 000 PII. Code-to-cloud-кореляція з секрет-сканером + CIEM показала б експозицію секретів і їхні ефективні права.</li>
         </ul>
       </section>
 
       <section>
-        <h2>8.4 CNAPP: Ринок та інструменти</h2>
+        <h2>8.4 Ринок CNAPP та провідні платформи (CNAPP Market 2025)</h2>
 
-        <h3>Gartner Magic Quadrant</h3>
-        <p>Gartner оцінює CNAPP vendors за двома осями:</p>
+        <h3>Стан ринку 2025 р.</h3>
+        <p>За останні два роки ринок CNAPP пройшов фазу активної консолідації. Ключові події:</p>
         <ul>
-          <li><strong>Ability to Execute:</strong> Product, sales, market responsiveness</li>
-          <li><strong>Completeness of Vision:</strong> Strategy, innovation, market understanding</li>
+          <li><strong>Березень 2025:</strong> Google анонсує намір придбати Wiz за $32 млрд — найбільша угода в історії хмарної безпеки. Очікуване закриття — 2026 р. Wiz продовжить роботу як мультихмарна платформа.</li>
+          <li><strong>2024:</strong> Wiz придбала Gem Security (cloud detection &amp; response) за $350 млн та Raftt (developer environment security) — розширюючи стек у бік CDR і shift-left.</li>
+          <li><strong>2024:</strong> Palo Alto завершує інтеграцію придбань Dig Security (DSPM, 2023, $400 млн) та Talon (browser security) у Prisma Cloud.</li>
+          <li><strong>2024–2025:</strong> CrowdStrike купує Flow Security (DSPM) і Adaptive Shield (SaaS Security Posture Management, SSPM), розширюючи Falcon Cloud Security.</li>
+          <li><strong>2025:</strong> Microsoft Defender for Cloud отримує AI-агентів Security Copilot, що виконують автоматичні розслідування інцидентів.</li>
         </ul>
 
-        <p><strong>Leaders (2024):</strong> Wiz, Palo Alto (Prisma Cloud), Microsoft, CrowdStrike</p>
-        <p><strong>Challengers:</strong> Orca, Lacework, Aqua, Sysdig</p>
-        <p><strong>Visionaries:</strong> Emerging vendors з innovative approaches</p>
-        <p><strong>Niche Players:</strong> Specialized solutions</p>
+        <p>За даними Gartner Magic Quadrant for Cloud-Native Application Protection Platforms (April 2025), ринок поляризується між трьома Лідерами (Wiz, Palo Alto, Microsoft) і потужними Visionaries (Sysdig, Aqua, Orca). Чотири категорії з MQ 2025:</p>
 
-        <h3>Огляд ключових платформ</h3>
+        <ul>
+          <li><strong>Leaders:</strong> Wiz, Palo Alto Networks (Prisma Cloud), Microsoft (Defender for Cloud), CrowdStrike (Falcon Cloud Security)</li>
+          <li><strong>Challengers:</strong> Tenable Cloud Security (нащадок Ermetic), Trend Micro (Cloud One)</li>
+          <li><strong>Visionaries:</strong> Sysdig, Aqua Security, Orca Security, Lacework (придбана Fortinet 2024), Check Point (CloudGuard)</li>
+          <li><strong>Niche Players:</strong> Sweet Security, Stream Security, Uptycs, Caveonix</li>
+        </ul>
+
+        <h3>Огляд провідних платформ</h3>
 
         <p><strong>Wiz</strong></p>
         <ul>
-          <li><strong>Differentiation:</strong> Agentless, graph-based, attack path focus</li>
-          <li><strong>Architecture:</strong> API-only, snapshot scanning</li>
-          <li><strong>Strengths:</strong> Speed of deployment, visualization, risk prioritization</li>
-          <li><strong>Coverage:</strong> AWS, Azure, GCP, OCI, Alibaba, Kubernetes</li>
-          <li><strong>Notable:</strong> Fastest-growing security startup ($10B+ valuation)</li>
+          <li><strong>Архітектура:</strong> 100% безагентна, центральний компонент — Wiz Security Graph (на Neo4j-подібній графовій базі)</li>
+          <li><strong>Особливість:</strong> найшвидше розгортання серед Лідерів — підключення акаунту за 15 хвилин, перші знахідки — за години</li>
+          <li><strong>Стек:</strong> CSPM + CWPP (snapshot-based image scanning) + CIEM + DSPM + KSPM + IaC scanning + Wiz Code (code-to-cloud)</li>
+          <li><strong>Покриття:</strong> AWS, Azure, GCP, OCI, Alibaba, IBM Cloud, Kubernetes, OpenShift</li>
+          <li><strong>Сильні сторони:</strong> візуалізація, attack path analysis, швидкість, UX</li>
+          <li><strong>Слабкі сторони:</strong> до 2024 р. — обмежений runtime-захист (вирішується після придбання Gem Security); ціна на верхньому сегменті ринку</li>
         </ul>
 
-        <p><strong>Palo Alto Prisma Cloud</strong></p>
+        <p><strong>Palo Alto Networks Prisma Cloud</strong></p>
         <ul>
-          <li><strong>Differentiation:</strong> Most comprehensive, enterprise features</li>
-          <li><strong>Architecture:</strong> Agent + agentless hybrid</li>
-          <li><strong>Strengths:</strong> Breadth of capabilities, compliance, enterprise support</li>
-          <li><strong>Coverage:</strong> All major clouds + on-prem Kubernetes</li>
-          <li><strong>Notable:</strong> Built through acquisitions (Twistlock, Bridgecrew, etc.)</li>
+          <li><strong>Архітектура:</strong> гібридна (агенти Defender + безагентні sensors), власний AI-аналітик Cortex XSIAM</li>
+          <li><strong>Особливість:</strong> найширший функціонал на ринку, побудований через серію придбань (Twistlock 2019, Bridgecrew 2021, Cider Security 2022, Dig Security 2023, Talon 2023)</li>
+          <li><strong>Стек:</strong> повний стек CNAPP + ASPM (Cider) + DSPM (Dig) + browser isolation (Talon) + WAAS (web application &amp; API security)</li>
+          <li><strong>Покриття:</strong> усі великі хмари + on-prem Kubernetes + OpenStack</li>
+          <li><strong>Сильні сторони:</strong> глибина функцій, enterprise-можливості, відповідність регуляторним вимогам</li>
+          <li><strong>Слабкі сторони:</strong> складність впровадження, фрагментація історично окремих продуктів, що інтегруються</li>
         </ul>
 
         <p><strong>Microsoft Defender for Cloud</strong></p>
         <ul>
-          <li><strong>Differentiation:</strong> Native Azure integration, Microsoft ecosystem</li>
-          <li><strong>Architecture:</strong> Agent-based + agentless options</li>
-          <li><strong>Strengths:</strong> Azure depth, Microsoft 365 integration, pricing</li>
-          <li><strong>Coverage:</strong> Azure-first, AWS/GCP support</li>
-          <li><strong>Notable:</strong> Included in many Microsoft licensing agreements</li>
-        </ul>
-
-        <p><strong>Orca Security</strong></p>
-        <ul>
-          <li><strong>Differentiation:</strong> SideScanning (snapshot-based), no agents</li>
-          <li><strong>Architecture:</strong> 100% agentless</li>
-          <li><strong>Strengths:</strong> Deep visibility without agents, unified platform</li>
-          <li><strong>Coverage:</strong> AWS, Azure, GCP, Alibaba</li>
-          <li><strong>Notable:</strong> Pioneer of agentless cloud security</li>
+          <li><strong>Архітектура:</strong> гібридна, нативно інтегрована з Microsoft Sentinel і Security Copilot</li>
+          <li><strong>Особливість:</strong> найкраще покриття Azure (нативний доступ до Azure Resource Graph), включена в плани E5</li>
+          <li><strong>Стек:</strong> Defender CSPM + Defender for Servers / Containers / Storage / Databases / DevOps + Security Copilot AI</li>
+          <li><strong>Покриття:</strong> глибоке для Azure, повне для AWS і GCP, базове для OCI</li>
+          <li><strong>Сильні сторони:</strong> інтеграція з екосистемою Microsoft 365, ціна для існуючих клієнтів</li>
+          <li><strong>Слабкі сторони:</strong> для не-Microsoft-середовищ функціонал помітно менший за Wiz / Prisma Cloud</li>
         </ul>
 
         <p><strong>CrowdStrike Falcon Cloud Security</strong></p>
         <ul>
-          <li><strong>Differentiation:</strong> EDR heritage, threat intelligence</li>
-          <li><strong>Architecture:</strong> Agent-based (Falcon sensor)</li>
-          <li><strong>Strengths:</strong> Runtime protection, threat detection, XDR integration</li>
-          <li><strong>Coverage:</strong> All major clouds</li>
-          <li><strong>Notable:</strong> Strong in workload protection</li>
+          <li><strong>Архітектура:</strong> агентна (Falcon sensor) + безагентна, єдиний агент для CWPP / EDR / IDP</li>
+          <li><strong>Особливість:</strong> найкраща runtime-протекція серед Лідерів завдяки еDR-спадщині та threat intelligence з 200+ trillion подій на тиждень</li>
+          <li><strong>Стек:</strong> Falcon Cloud Workload Protection + Cloud Security Posture + Cloud Identity Protection + Falcon Data Protection (від Flow Security)</li>
+          <li><strong>Покриття:</strong> усі великі хмари, повна інтеграція з Falcon endpoint platform</li>
+          <li><strong>Сильні сторони:</strong> runtime-захист, threat intel, XDR-кореляція з endpoint</li>
+          <li><strong>Слабкі сторони:</strong> CSPM-функціонал історично слабший за Wiz, агентна модель не для всіх</li>
         </ul>
 
-        <h3>Порівняльна таблиця CNAPP-платформ</h3>
+        <p><strong>Orca Security</strong></p>
+        <ul>
+          <li><strong>Архітектура:</strong> 100% безагентна, технологія SideScanning™ — сканування знімків EBS-томів без доступу до workloads</li>
+          <li><strong>Особливість:</strong> піонер безагентного підходу (з 2019 р.), глибокий vulnerability scanning без агентів</li>
+          <li><strong>Стек:</strong> CSPM + CWPP (snapshot-based) + CIEM + DSPM + KSPM + ASPM</li>
+          <li><strong>Покриття:</strong> AWS, Azure, GCP, OCI, Alibaba, Kubernetes</li>
+          <li><strong>Сильні сторони:</strong> deep visibility без накладних витрат, simplicity</li>
+          <li><strong>Слабкі сторони:</strong> runtime detection обмежено через відсутність агентів</li>
+        </ul>
+
+        <p><strong>Sysdig Secure</strong></p>
+        <ul>
+          <li><strong>Архітектура:</strong> агентна на eBPF + безагентний CSPM, відкриті corner stones — Falco і OPA</li>
+          <li><strong>Особливість:</strong> найкращий runtime detection на ринку, фундатори Sysdig створили Falco — стандарт CNCF для runtime-аномалій</li>
+          <li><strong>Стек:</strong> CSPM + CWPP (eBPF) + CIEM + KSPM + Sysdig Inline Scanning + Drift Control</li>
+          <li><strong>Сильні сторони:</strong> runtime detection, відкритий стек, контейнерна експертиза</li>
+          <li><strong>Слабкі сторони:</strong> графова кореляція менш зріла за Wiz, історично agent-first</li>
+        </ul>
+
+        <h3>Порівняльна таблиця</h3>
         <table>
           <thead>
             <tr>
               <th>Платформа</th>
-              <th>Architecture</th>
-              <th>Strengths</th>
-              <th>Best For</th>
+              <th>Архітектура</th>
+              <th>Сильні сторони</th>
+              <th>Кому підходить</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>Wiz</strong></td>
-              <td>100% Agentless</td>
-              <td>Attack paths, speed, UX</td>
-              <td>Fast deployment, visualization</td>
+              <td>100% безагентна</td>
+              <td>Шлях атаки, графова кореляція, UX</td>
+              <td>Швидке розгортання, мультихмара</td>
             </tr>
             <tr>
               <td><strong>Prisma Cloud</strong></td>
-              <td>Hybrid</td>
-              <td>Breadth, enterprise</td>
-              <td>Large enterprises, compliance</td>
+              <td>Гібридна</td>
+              <td>Глибина функцій, регуляторика</td>
+              <td>Великі enterprise з compliance-вимогами</td>
             </tr>
             <tr>
-              <td><strong>Microsoft Defender</strong></td>
-              <td>Hybrid</td>
-              <td>Azure integration, pricing</td>
-              <td>Microsoft shops</td>
+              <td><strong>Defender for Cloud</strong></td>
+              <td>Гібридна</td>
+              <td>Azure-інтеграція, ціна для M365 E5</td>
+              <td>Microsoft-shops, гібридні Azure-середовища</td>
+            </tr>
+            <tr>
+              <td><strong>CrowdStrike Falcon</strong></td>
+              <td>Агентна + agentless</td>
+              <td>Runtime-захист, threat intel, XDR</td>
+              <td>Організації з фокусом на runtime та EDR</td>
             </tr>
             <tr>
               <td><strong>Orca</strong></td>
-              <td>100% Agentless</td>
-              <td>Deep visibility</td>
-              <td>Multi-cloud, no agents</td>
+              <td>100% безагентна</td>
+              <td>SideScanning, deep vulnerability</td>
+              <td>Мультихмара, мінімум експлуатаційних витрат</td>
             </tr>
             <tr>
-              <td><strong>CrowdStrike</strong></td>
-              <td>Agent-based</td>
-              <td>Runtime, threat intel</td>
-              <td>Workload protection focus</td>
+              <td><strong>Sysdig</strong></td>
+              <td>eBPF-агентна</td>
+              <td>Runtime detection, Falco, контейнери</td>
+              <td>Cloud-native стеки з фокусом на runtime</td>
             </tr>
           </tbody>
         </table>
 
+        <h3>Open-source альтернативи</h3>
+        <p>Повних безкоштовних аналогів комерційних CNAPP на ринку немає — графова кореляція і attack path analysis вимагають значних інженерних інвестицій. Однак окремі компоненти доступні як open-source:</p>
+        <ul>
+          <li><strong>Prowler</strong> (CSPM) — 200+ перевірок CIS/NIST для AWS/Azure/GCP</li>
+          <li><strong>Steampipe</strong> — SQL-інтерфейс до cloud APIs з готовими mods для compliance</li>
+          <li><strong>Falco</strong> (CNCF) — runtime detection через eBPF, базова рушій більшості CWPP</li>
+          <li><strong>Checkov, tfsec, Terrascan, KICS</strong> — IaC-сканери</li>
+          <li><strong>Trivy</strong> (Aqua) — сканер контейнерних образів і IaC, частково open-source</li>
+          <li><strong>OPA / Gatekeeper</strong> — admission control і policy-as-code</li>
+          <li><strong>Cartography</strong> (Lyft) — графова інвентаризація хмарних активів на Neo4j, базова основа для саморобного "wiz-like" рішення</li>
+        </ul>
+
+        <p>Реалістичний open-source-стек: Steampipe + Prowler + Falco + Trivy + Cartography + кастомна корелююча логіка на Neo4j. Покриває 60–70% функцій комерційного CNAPP, але вимагає 2–3 FTE на підтримку. Виправдано лише для команд з сильними in-house compétences або жорсткими data-residency вимогами.</p>
+
         <h3>Критерії вибору CNAPP</h3>
+        <p><strong>1. Покриття.</strong> Які хмарні провайдери у скоупі? Чи є гібридні / on-prem-навантаження? Який рівень підтримки потрібен для Kubernetes — managed (EKS/GKE/AKS), self-hosted, edge?</p>
 
-        <p><strong>1. Coverage</strong></p>
-        <ul>
-          <li>Які cloud providers використовуєте?</li>
-          <li>Kubernetes (managed vs self-hosted)?</li>
-          <li>Serverless workloads?</li>
-          <li>On-premises components?</li>
-        </ul>
+        <p><strong>2. Модель розгортання.</strong> Безагентна спрощує впровадження, агентна дає глибший runtime-захист. Гібрид — компроміс, але ускладнює експлуатацію. Питання data residency: де платформа зберігає метадані?</p>
 
-        <p><strong>2. Deployment Model</strong></p>
-        <ul>
-          <li>Agentless vs agent-based vs hybrid?</li>
-          <li>Impact на performance?</li>
-          <li>Regulatory requirements (data residency)?</li>
-        </ul>
+        <p><strong>3. Глибина компонентів.</strong> CSPM-функціонал зріс і вирівнявся між вендорами. Реальна відмінність — у DSPM (хто справді сканує дані, а не лише позначає бакети), у CIEM (хто реально аналізує ефективні права з SCP, а не лише inline policies), у runtime detection (eBPF + threat intel vs прості правила).</p>
 
-        <p><strong>3. Component Depth</strong></p>
-        <ul>
-          <li>CSPM: Наскільки глибокі configuration checks?</li>
-          <li>CWPP: Runtime protection capabilities?</li>
-          <li>CIEM: Identity analysis sophistication?</li>
-          <li>Shift-left: IaC та CI/CD integration?</li>
-        </ul>
+        <p><strong>4. Графова кореляція та attack path analysis.</strong> Це серце CNAPP. Запитуйте у вендора: чи показує платформа повний шлях, які алгоритми використовує, чи дозволяє кастомні графові запити.</p>
 
-        <p><strong>4. Risk Prioritization</strong></p>
-        <ul>
-          <li>Attack path analysis quality?</li>
-          <li>Context awareness (data sensitivity, business criticality)?</li>
-          <li>False positive rates?</li>
-        </ul>
+        <p><strong>5. Інтеграції.</strong> SIEM, SOAR, тикетинг, CI/CD — переконайтеся, що інтеграції є, а не "у дорожній карті". Public API критично важливий для власних автоматизацій.</p>
 
-        <p><strong>5. Integrations</strong></p>
-        <ul>
-          <li>SIEM/SOAR integration?</li>
-          <li>Ticketing systems (Jira, ServiceNow)?</li>
-          <li>CI/CD pipelines?</li>
-          <li>API for custom integrations?</li>
-        </ul>
+        <p><strong>6. Total Cost of Ownership.</strong> Цінові моделі різняться: per-workload (Wiz, Prisma), per-asset (Orca), per-сценарій (Sysdig). Корпоративний бюджет CNAPP у 2025 р. — від $200K до $5М+ на рік для великих enterprise. Включайте у TCO: вартість впровадження, навчання, інтеграції, операційний overhead.</p>
 
-        <p><strong>6. Total Cost of Ownership</strong></p>
-        <ul>
-          <li>Pricing model (per workload, per asset, per user)?</li>
-          <li>Implementation та training costs?</li>
-          <li>Ongoing operational overhead?</li>
-        </ul>
+        <p><strong>7. Vendor risk.</strong> Чи стійкий вендор? Чи буде платформа існувати у нинішньому вигляді через 3 роки? Питання особливо актуальне після хвилі придбань 2023–2025 рр.</p>
       </section>
 
       <section>
-        <h2>8.5 Впровадження CNAPP</h2>
+        <h2>8.5 Впровадження CNAPP та майбутнє платформ</h2>
 
-        <h3>Стратегія впровадження</h3>
+        <h3>Фази впровадження</h3>
+        <p>Типовий проєкт впровадження CNAPP в enterprise — 4–6 місяців до повного operationalization. Чотири фази:</p>
 
-        <p><strong>Фаза 1: Assessment та Planning (2-4 тижні)</strong></p>
+        <p><strong>Фаза 1: Оцінка та планування (2–4 тижні)</strong></p>
         <ul>
-          <li>Inventory поточних security tools</li>
-          <li>Gap analysis: що покриваємо, що ні</li>
-          <li>Stakeholder alignment (Security, DevOps, Compliance)</li>
-          <li>Requirements gathering</li>
-          <li>Vendor shortlist (2-3 candidates)</li>
+          <li>Інвентаризація поточних інструментів безпеки і виявлення overlap</li>
+          <li>Аналіз розривів покриття (gap analysis): що захищене, що ні</li>
+          <li>Узгодження зі стейкхолдерами: команди безпеки, DevOps, compliance, data protection</li>
+          <li>Збір вимог: підтримувані хмари, регуляторні рамки, integration must-haves</li>
+          <li>Шорт-лист 2–3 кандидатів з MQ Leaders або Visionaries</li>
         </ul>
 
-        <p><strong>Фаза 2: Proof of Concept (3-4 тижні)</strong></p>
+        <p><strong>Фаза 2: Proof of Concept (3–4 тижні)</strong></p>
         <ul>
-          <li>POC з 1-2 vendors</li>
-          <li>Підключення до subset of environment</li>
-          <li>Evaluation criteria scoring</li>
-          <li>Technical та business decision</li>
+          <li>Pilot з 1–2 вендорами на репрезентативному підмножині середовища (1 акаунт production + 1 dev)</li>
+          <li>Сценарії оцінки: швидкість розгортання, якість шляхів атаки, точність кореляції, helpfulness ремедіацій</li>
+          <li>Reference calls з існуючими клієнтами вендорів</li>
+          <li>Технічне і бізнесове рішення, переговори щодо ціни</li>
         </ul>
 
-        <p><strong>Фаза 3: Initial Deployment (4-6 тижнів)</strong></p>
+        <p><strong>Фаза 3: Початкове розгортання (4–6 тижнів)</strong></p>
         <ul>
-          <li>Production deployment</li>
-          <li>Поступове підключення cloud accounts</li>
-          <li>Baseline assessment</li>
-          <li>Initial remediation priorities</li>
+          <li>Production deployment у read-only-режимі: спостерігаємо, не блокуємо</li>
+          <li>Поступове підключення хмарних акаунтів, починаючи з найкритичніших</li>
+          <li>Baseline assessment поточного стану ризиків</li>
+          <li>Перший раунд remediation: топ-10 критичних шляхів атаки</li>
+          <li>Інтеграція з SIEM і тикетингом</li>
         </ul>
 
-        <p><strong>Фаза 4: Operationalization (ongoing)</strong></p>
+        <p><strong>Фаза 4: Operationalization (постійно)</strong></p>
         <ul>
-          <li>Integration з existing workflows</li>
-          <li>Alerting та escalation configuration</li>
-          <li>Shift-left integration (CI/CD)</li>
-          <li>Metrics та reporting</li>
-          <li>Continuous improvement</li>
+          <li>Інтеграція з робочими процесами: ескалації, SLA, on-call</li>
+          <li>Налаштування alerting та escalation policies</li>
+          <li>Shift-left інтеграція: pre-commit hooks, PR checks, CI/CD-блокатори</li>
+          <li>Метрики і звітність до керівництва</li>
+          <li>Continuous improvement: tuning policies, додавання custom queries</li>
         </ul>
 
-        <h3>Best Practices</h3>
+        <h3>Найкращі практики впровадження</h3>
 
-        <p><strong>1. Start with visibility, not enforcement</strong></p>
-        <p>Спочатку зрозумійте поточний стан. Не блокуйте deployments одразу.</p>
+        <p><strong>1. Спочатку видимість, потім примус.</strong> У перший місяць не блокуйте deployments — слухайте, що показує платформа. Інакше команди розробки сприймуть CNAPP як перешкоду, а не партнера.</p>
 
-        <p><strong>2. Focus on attack paths, not individual findings</strong></p>
-        <p>10 critical attack paths важливіші за 1000 isolated findings.</p>
+        <p><strong>2. Фокус на шляхах атаки, не на окремих знахідках.</strong> 10 критичних шляхів важливіші за 10 000 знахідок Medium severity. Пріоритезуйте за впливом, не за obsah.</p>
 
-        <p><strong>3. Enable DevOps self-service</strong></p>
+        <p><strong>3. Self-service для DevOps.</strong> Дайте розробникам:
+        </p>
         <ul>
-          <li>Developer dashboards</li>
-          <li>Clear remediation guidance</li>
-          <li>IDE integrations</li>
-          <li>Pre-commit hooks</li>
+          <li>Власні дашборди з фокусом на їхні застосунки</li>
+          <li>Чіткі рекомендації з усунення (готові IaC patches, kubectl-команди)</li>
+          <li>IDE-розширення для виявлення проблем у коді</li>
+          <li>Pre-commit hooks для критичних правил</li>
         </ul>
 
-        <p><strong>4. Integrate early in SDLC</strong></p>
-        <p>Shift-left: знаходьте проблеми до deployment, а не після.</p>
+        <p><strong>4. Інтеграція раніше в SDLC.</strong> CNAPP, що працює тільки в runtime, наполовину марний. IaC-сканування + PR-перевірки + secret scanning у GitHub запобігають проблемам до того, як вони стають інцидентами.</p>
 
-        <p><strong>5. Consolidate tools gradually</strong></p>
-        <p>Не відключайте existing tools одразу. Parallel running, потім migration.</p>
+        <p><strong>5. Поступова консолідація.</strong> Не вимикайте старі інструменти одразу — паралельний запуск 1–2 місяці, потім міграція. Інакше ризикуєте втратити покриття під час перехідного періоду.</p>
 
-        <p><strong>6. Measure what matters</strong></p>
+        <p><strong>6. Метрики, що важливі.</strong> Не звітуйте кількістю сповіщень. Звітуйте:</p>
         <ul>
-          <li>Critical attack paths resolved</li>
-          <li>Mean Time to Detect (MTTD)</li>
-          <li>Mean Time to Remediate (MTTR)</li>
-          <li>Coverage (% of assets protected)</li>
+          <li>Закриті критичні шляхи атаки за період</li>
+          <li>Mean Time to Detect (MTTD) та Mean Time to Remediate (MTTR)</li>
+          <li>% активів під захистом (coverage)</li>
+          <li>% IaC-конфігурацій, що пройшли pre-deployment-сканування</li>
+          <li>Кількість запобіжних подій (prevented findings) — заблоковані PR, відхилені deployments</li>
         </ul>
 
-        <h3>Типові помилки</h3>
+        <h3>Типові помилки впровадження</h3>
         <ul>
-          <li><strong>Boiling the ocean:</strong> Намагання виправити все одразу</li>
-          <li><strong>Alert fatigue:</strong> Надто багато alerts без prioritization</li>
-          <li><strong>Siloed implementation:</strong> Security team працює окремо</li>
-          <li><strong>Ignoring shift-left:</strong> Тільки runtime, без CI/CD</li>
-          <li><strong>Underestimating change management:</strong> Tool — лише частина рішення</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>8.6 Майбутнє CNAPP</h2>
-
-        <h3>Тренди розвитку</h3>
-
-        <p><strong>1. AI/ML Integration</strong></p>
-        <ul>
-          <li>Intelligent prioritization</li>
-          <li>Automated remediation recommendations</li>
-          <li>Anomaly detection</li>
-          <li>Natural language queries</li>
+          <li><strong>Намагання виправити все одразу:</strong> кип'ятіння океану — гарантований шлях до перевантаження команди і провалу проєкту</li>
+          <li><strong>Ігнорування shift-left:</strong> запуск тільки runtime-частини — пропуск 80% переваг CNAPP</li>
+          <li><strong>Сило-впровадження:</strong> security team працює без DevOps — конфлікт замість партнерства</li>
+          <li><strong>Недооцінка управління змінами:</strong> інструмент — лише 30% рішення; 70% — процеси, ролі, відповідальності</li>
+          <li><strong>Невиправлений стейкхолдерський конфлікт:</strong> CISO купує CNAPP, але VP Engineering не зобов'язаний реагувати на знахідки</li>
         </ul>
 
-        <p><strong>2. Runtime Context</strong></p>
+        <h3>Інтеграція code-to-cloud: майбутнє shift-left</h3>
+        <p>Code-to-cloud — концепція повної traceability від рядка коду до розгорнутого ресурсу. У 2025 р. це стало ключовим диференціатором CNAPP:</p>
+
         <ul>
-          <li>eBPF-based monitoring</li>
-          <li>Real-time behavior analysis</li>
-          <li>Combining posture + runtime signals</li>
+          <li><strong>Аналіз коду застосунку:</strong> SAST (Static Application Security Testing), SCA (Software Composition Analysis), secret scanning</li>
+          <li><strong>Аналіз IaC:</strong> Terraform, CloudFormation, Bicep, Helm</li>
+          <li><strong>Аналіз CI/CD-пайплайну:</strong> небезпечні Actions, надмірні permissions у workflows</li>
+          <li><strong>Прив'язка до runtime:</strong> "цей конкретний контейнер у production походить з цього коміту в цьому репозиторії"</li>
         </ul>
 
-        <p><strong>3. Application Security Integration</strong></p>
+        <p>Сценарій: CNAPP виявляє вразливий контейнер у production. Замість тикета "перевірте image X" платформа повідомляє: "репозиторій Y, гілка main, коміт abc123, рядок Dockerfile 12, додавання залежності log4j 2.14 — підняти PR з оновленням до 2.17.2". Це і є code-to-cloud у дії.</p>
+
+        <h3>AI-агенти у CNAPP</h3>
+        <p>2025 р. — рік AI-агентів у безпеці. Усі провідні CNAPP-платформи інтегрували генеративний AI:</p>
         <ul>
-          <li>SAST/DAST integration</li>
-          <li>API security</li>
-          <li>Software composition analysis (SCA)</li>
-          <li>Code-to-cloud traceability</li>
+          <li><strong>Microsoft Security Copilot:</strong> розслідування інцидентів, генерація запитів, summarization логів</li>
+          <li><strong>Wiz AI Assistant:</strong> natural language queries до Security Graph, автогенерація IaC-патчів</li>
+          <li><strong>Palo Alto Cortex Copilot:</strong> playbook-генерація, ланцюги розслідувань</li>
+          <li><strong>CrowdStrike Charlotte AI:</strong> аналіз threat intel, побудова detections</li>
         </ul>
 
-        <p><strong>4. Multi-cloud Native</strong></p>
-        <ul>
-          <li>True multi-cloud (не окремі modules)</li>
-          <li>Cross-cloud attack paths</li>
-          <li>Unified policies across clouds</li>
-        </ul>
+        <p>Реалістичний поточний рівень (2025–2026): AI-агенти добре справляються з summarization, генерацією запитів, написанням ремедіаційного коду. Автономне прийняття рішень про блокування ресурсів — поки що ризиковане і вимагає human-in-the-loop. Очікуваний наступний крок (2026–2027): AI-driven incident response з obмеженою автономністю в рамках чітких політик.</p>
 
-        <p><strong>5. Platform Engineering Integration</strong></p>
-        <ul>
-          <li>Internal Developer Platforms (IDP)</li>
-          <li>Security as a service for developers</li>
-          <li>Self-service security guardrails</li>
-        </ul>
+        <h3>Тренди розвитку CNAPP до 2027 р.</h3>
 
-        <h3>Gartner Predictions</h3>
+        <p><strong>1. ASPM-конвергенція (Application Security Posture Management).</strong> CNAPP розширюється від інфраструктури до коду застосунку: DAST, SAST, SCA, API security стають частиною єдиної платформи. Прогноз Gartner: до 2027 р. 50% CNAPP включатимуть повноцінний ASPM.</p>
+
+        <p><strong>2. SaaS-середовища (SSPM).</strong> Salesforce, Workday, Snowflake, Microsoft 365 — критична частина attack surface, що історично лежала поза CNAPP. CrowdStrike (Adaptive Shield) і Wiz (через нативні інтеграції) активно розширюються в цей домен.</p>
+
+        <p><strong>3. AI-моделі та LLM-безпека.</strong> Корпоративні розгортання LLM (OpenAI Enterprise, Anthropic Claude, Google Gemini, локальні Llama) створюють новий клас активів. CNAPP майбутнього включатиме: моніторинг витоку даних через prompts, виявлення prompt injection, контроль доступу до моделей. Wiz уже додав AI-SPM у 2024 р.</p>
+
+        <p><strong>4. Cross-cloud attack paths.</strong> Бізнеси все частіше працюють у мультихмарі — і атакам це не заважає. CNAPP майбутнього шукатиме шляхи, що проходять через AWS і Azure одночасно.</p>
+
+        <p><strong>5. Платформена інженерія (platform engineering).</strong> Internal Developer Platforms (IDP) — Backstage, Port, Cortex — стають точкою інтеграції безпеки. CNAPP постачає security guardrails як self-service, без участі security team у кожному запиті.</p>
+
+        <h3>Прогнози Gartner до 2027 р.</h3>
         <ul>
-          <li>До 2025: 75% нових CSPM purchases будуть частиною CNAPP</li>
-          <li>До 2026: 60% enterprises матимуть consolidated CNAPP</li>
-          <li>До 2027: CNAPP стане default для cloud security</li>
+          <li>До 2026 р.: 60% організацій консолідують cloud security в одній CNAPP-платформі (проти 25% у 2024)</li>
+          <li>До 2027 р.: 80% нових CSPM/CWPP/CIEM-покупок будуть як частина CNAPP</li>
+          <li>До 2027 р.: 50% CNAPP-платформ включатимуть DSPM як обов'язковий компонент</li>
+          <li>До 2028 р.: 75% корпоративних команд безпеки використовуватимуть AI-агентів для cloud security operations</li>
         </ul>
       </section>
 
       <section>
         <h2>Висновки</h2>
-        <p>CNAPP представляє фундаментальну зміну в підході до хмарної безпеки — від набору ізольованих інструментів до єдиної інтегрованої платформи. Ключові висновки:</p>
 
+        <h3>Ключові тези</h3>
         <ul>
-          <li><strong>Consolidation is key:</strong> Point solutions створюють tool sprawl та alert fatigue</li>
-          <li><strong>Context matters:</strong> Correlated findings важливіші за isolated alerts</li>
-          <li><strong>Attack paths — це пріоритет:</strong> Фокус на реальних ризиках, а не окремих findings</li>
-          <li><strong>Dev + Sec + Ops:</strong> CNAPP має підтримувати всі три команди</li>
-          <li><strong>Shift-left essential:</strong> Безпека на всіх етапах lifecycle</li>
-          <li><strong>Market is maturing:</strong> CNAPP стає стандартом для enterprise</li>
+          <li><strong>Точкові рішення вичерпали себе:</strong> 8–10 ізольованих інструментів створюють розростання сповіщень без приросту безпеки. Майбутнє за консолідацією.</li>
+          <li><strong>Контекст важливіший за обсяг:</strong> 12 корельованих критичних шляхів атаки цінніші за 47 000 ізольованих знахідок Medium severity.</li>
+          <li><strong>Графова модель — серце CNAPP:</strong> уніфікація CSPM, CWPP, CIEM, DSPM у графі ризиків дає аналіз, неможливий для окремих інструментів.</li>
+          <li><strong>Shift Left + Shield Right:</strong> єдині політики від IaC до runtime — фундамент послідовної безпеки.</li>
+          <li><strong>DevOps — не клієнт, а партнер:</strong> CNAPP має підтримувати workflows розробників, а не блокувати їх.</li>
+          <li><strong>Ринок дозрів:</strong> Magic Quadrant 2025 показує стабільну групу Лідерів — Wiz, Palo Alto, Microsoft, CrowdStrike — вибір залежить від конкретного контексту, а не від технологічної переваги.</li>
+          <li><strong>Майбутнє — конвергенція:</strong> ASPM, SSPM, AI-SPM додають нові виміри, але архітектурний центр (graph + attack paths) залишається.</li>
         </ul>
 
         <h3>Практичні рекомендації</h3>
         <ol>
-          <li>Проведіть audit поточних cloud security tools</li>
-          <li>Визначте gaps у покритті (CSPM, CWPP, CIEM, etc.)</li>
-          <li>Оцініть readiness для consolidation</li>
-          <li>Створіть shortlist CNAPP vendors</li>
-          <li>Проведіть POC з фокусом на attack path analysis</li>
-          <li>Плануйте поступову migration, не big bang</li>
+          <li>Проведіть аудит поточних cloud-security-інструментів і виявіть overlap та розриви покриття.</li>
+          <li>Сформулюйте 5 найкритичніших сценаріїв ризику у вашому середовищі — це буде evaluation criteria для PoC.</li>
+          <li>Включіть у шорт-лист щонайменше одного Лідера і одного Visionary з MQ — порівнюйте підходи, а не лише функції.</li>
+          <li>Виконайте PoC у максимально реалістичних умовах: production-like середовище, реальні навантаження, реальні incident scenarios.</li>
+          <li>Плануйте впровадження як трансформацію процесів, а не лише розгортання інструменту: ролі, SLA, ескалації, метрики.</li>
+          <li>Інтегруйте shift-left з першого дня: pre-commit, PR checks, CI/CD-блокатори. Без цього CNAPP — лише дорогий моніторинг.</li>
+          <li>Введіть KPI критичних шляхів атаки — закриті за період, MTTD, MTTR — і звітуйте до керівництва саме ними.</li>
         </ol>
 
-        <p>У наступній лекції ми розглянемо застосування AI та Machine Learning у хмарній безпеці — як ці технології трансформують detection та response.</p>
+        <p>У наступній лекції ми перейдемо до застосувань штучного інтелекту і машинного навчання у хмарній безпеці — як AI трансформує detection, response та проактивну threat hunting, які нові класи ризиків створюють самі AI-системи.</p>
       </section>
 
       <section>
-        <h2>Контрольні питання</h2>
+        <h2>Питання для самоперевірки</h2>
         <ol>
-          <li>Що таке CNAPP і чому виникла потреба в цій категорії?</li>
-          <li>Назвіть основні компоненти CNAPP та їх функції.</li>
-          <li>Що таке attack path analysis і чому він важливий?</li>
-          <li>Чим відрізняється CNAPP від набору point solutions?</li>
-          <li>Які критерії важливі при виборі CNAPP-платформи?</li>
-          <li>Опишіть типові фази впровадження CNAPP.</li>
-          <li>Які тренди визначатимуть майбутнє CNAPP?</li>
+          <li>Дайте визначення CNAPP за Gartner. Які чотири характеристики відрізняють CNAPP від набору точкових рішень?</li>
+          <li>Опишіть проблему "tool sprawl" та її наслідки для команд безпеки. Які метрики дозволяють виміряти цю проблему?</li>
+          <li>Перерахуйте п'ять обов'язкових стовпів CNAPP за Gartner Market Guide 2025. Які компоненти є опціональними?</li>
+          <li>Поясніть принцип "Shift Left + Shield Right" та концепцію policy parity у контексті CNAPP.</li>
+          <li>Що таке Cloud Asset Graph і чому графова модель дозволяє виявляти ризики, невидимі для класичних CSPM-інструментів?</li>
+          <li>Опишіть процес attack path analysis. Як обчислюється Risk Score шляху?</li>
+          <li>Розгляньте кейс Capital One (2019). Які компоненти CNAPP виявили б ланцюг атаки до інциденту? Як саме?</li>
+          <li>Порівняйте безагентну і агентну архітектури CNAPP. Які компроміси кожна модель створює?</li>
+          <li>Назвіть провідні платформи з Gartner MQ for CNAPP 2025 у категоріях Leaders і Visionaries. Чим відрізняються підходи Wiz і Sysdig?</li>
+          <li>Опишіть фази впровадження CNAPP та типові помилки на кожній з них.</li>
+          <li>Що таке code-to-cloud-кореляція? Який її практичний вияв при виявленні вразливості у production?</li>
+          <li>Які тренди визначатимуть розвиток CNAPP до 2027 р.? Як AI-агенти змінюють робочі процеси команд безпеки?</li>
         </ol>
-      </section>
 
-      <section>
-        <h2>Додаткові матеріали</h2>
+        <h3>Практичне завдання</h3>
+        <p><strong>Лабораторна робота: побудова mini-CNAPP на open-source-стеку.</strong></p>
+        <ol>
+          <li>Розгорніть тестове AWS-середовище з кількома навмисно неправильно конфігурованими ресурсами: публічний S3-бакет з тестовими даними, EC2 з IMDSv1, IAM-роль з <code>"Action": "*"</code>.</li>
+          <li>Запустіть Steampipe з модами для AWS Compliance і Cartography для побудови графової моделі ресурсів.</li>
+          <li>Напишіть Cypher-запит до Neo4j, що знаходить шлях від публічної точки входу (S3 / EC2 з 0.0.0.0/0) до ролі з надмірними правами.</li>
+          <li>Додайте Falco як runtime-сенсор на одну з EC2-машин. Згенеруйте тестову подію (читання <code>/etc/shadow</code>) і переконайтеся, що Falco її помітив.</li>
+          <li>Інтегруйте Checkov у GitHub Actions для одного з ваших Terraform-репозиторіїв.</li>
+          <li>Підготуйте звіт: які ризики виявив ваш стек, які — ні; що показувала б комерційна CNAPP-платформа в порівнянні; яку працю довелося б витратити на її аналог in-house.</li>
+        </ol>
+
+        <h3>Рекомендовані джерела для подальшого вивчення</h3>
         <ul>
-          <li><strong>Gartner Market Guide for CNAPP:</strong> Analyst report on CNAPP market</li>
-          <li><strong>CNCF Cloud Native Security Whitepaper:</strong> <a href="https://github.com/cncf/tag-security" target="_blank">github.com/cncf/tag-security</a></li>
-          <li><strong>Wiz Academy:</strong> <a href="https://www.wiz.io/academy" target="_blank">wiz.io/academy</a></li>
-          <li><strong>Prisma Cloud Documentation:</strong> <a href="https://docs.paloaltonetworks.com/prisma/prisma-cloud" target="_blank">docs.paloaltonetworks.com</a></li>
-          <li><strong>Microsoft Defender for Cloud:</strong> <a href="https://docs.microsoft.com/en-us/azure/defender-for-cloud/" target="_blank">docs.microsoft.com</a></li>
+          <li><strong>Gartner Market Guide for Cloud-Native Application Protection Platforms (2025)</strong> — еталонне джерело визначень і ринкової картини</li>
+          <li><strong>Gartner Magic Quadrant for CNAPP (April 2025)</strong> — Лідери, Challengers, Visionaries з аргументацією позицій</li>
+          <li><strong>CSA Top Threats to Cloud Computing — Pandemic Eleven (2024)</strong> — рейтинг загроз з детальним аналізом</li>
+          <li><strong>Sysdig Cloud-Native Security &amp; Usage Report 2024</strong> — статистика runtime-безпеки і поведінки атакувальників</li>
+          <li><strong>Wiz State of Cloud Security 2025</strong> — поглиблений звіт за результатами сканувань 250+ великих enterprise</li>
+          <li><strong>IBM Cost of a Data Breach Report 2024</strong> — економіка інцидентів, специфіка хмарних витоків</li>
+          <li><strong>MITRE ATT&amp;CK Cloud Matrix</strong> — таксономія тактик зловмисників у хмарі (<a href="https://attack.mitre.org/matrices/enterprise/cloud/" target="_blank">attack.mitre.org</a>)</li>
+          <li><strong>CISA Known Exploited Vulnerabilities Catalog (KEV)</strong> — пріоритезація CVE за фактичною експлуатацією (<a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank">cisa.gov/kev</a>)</li>
+          <li><strong>CNCF Cloud Native Security Whitepaper v2</strong> — таксономія cloud-native-безпеки від спільноти (<a href="https://github.com/cncf/tag-security" target="_blank">github.com/cncf/tag-security</a>)</li>
+          <li><strong>Wiz Academy</strong> — безкоштовні курси з cloud security (<a href="https://www.wiz.io/academy" target="_blank">wiz.io/academy</a>)</li>
+          <li><strong>Microsoft Defender for Cloud documentation</strong> — найбільш детальна документація Лідера MQ (<a href="https://learn.microsoft.com/en-us/azure/defender-for-cloud/" target="_blank">learn.microsoft.com</a>)</li>
+          <li><strong>Falco / Sigstore / OPA</strong> — open-source-проєкти CNCF, що формують технічний фундамент CNAPP</li>
         </ul>
+
+        <h3>Глосарій ключових термінів</h3>
+        <dl>
+          <dt><strong>CNAPP (Cloud-Native Application Protection Platform)</strong></dt>
+          <dd>Платформа захисту хмарних застосунків — уніфікована категорія засобів безпеки, що інтегрує CSPM, CWPP, CIEM, DSPM, безпеку контейнерів та IaC у єдиній моделі даних з аналізом шляхів атаки.</dd>
+
+          <dt><strong>CSPM (Cloud Security Posture Management)</strong></dt>
+          <dd>Управління станом безпеки конфігурацій — компонент CNAPP, що оцінює конфігурації хмарних ресурсів проти бенчмарків і регуляторних рамок.</dd>
+
+          <dt><strong>CWPP (Cloud Workload Protection Platform)</strong></dt>
+          <dd>Платформа захисту робочих навантажень — компонент CNAPP, що захищає віртуальні машини, контейнери та serverless через сканування вразливостей і runtime-моніторинг.</dd>
+
+          <dt><strong>CIEM (Cloud Infrastructure Entitlement Management)</strong></dt>
+          <dd>Управління правами в хмарі — компонент CNAPP, що аналізує IAM-конфігурації і виявляє надмірні чи невикористовувані права.</dd>
+
+          <dt><strong>DSPM (Data Security Posture Management)</strong></dt>
+          <dd>Управління безпекою даних — компонент CNAPP, що виявляє і класифікує чутливі дані, аналізує доступ до них.</dd>
+
+          <dt><strong>KSPM (Kubernetes Security Posture Management)</strong></dt>
+          <dd>Управління станом безпеки Kubernetes — оцінка конфігурацій кластерів, RBAC, NetworkPolicy, PodSecurityStandards.</dd>
+
+          <dt><strong>SSPM (SaaS Security Posture Management)</strong></dt>
+          <dd>Управління станом безпеки SaaS-середовищ — Salesforce, Microsoft 365, Workday, Snowflake.</dd>
+
+          <dt><strong>ASPM (Application Security Posture Management)</strong></dt>
+          <dd>Управління станом безпеки застосунків — поглиблений аналіз коду, API, залежностей; конвергує з CNAPP до 2027 р.</dd>
+
+          <dt><strong>Розростання інструментів (Tool Sprawl)</strong></dt>
+          <dd>Стан, коли організація використовує велику кількість ізольованих інструментів безпеки без обміну контекстом між ними.</dd>
+
+          <dt><strong>Шлях атаки (Attack Path)</strong></dt>
+          <dd>Послідовність кроків у хмарному середовищі, через які зловмисник може досягти критичного активу або привілеїв.</dd>
+
+          <dt><strong>Cloud Asset Graph</strong></dt>
+          <dd>Графова модель хмарного середовища — вершини: ресурси, ідентичності, дані; ребра: зв'язки доступу, мережі, довіри.</dd>
+
+          <dt><strong>Експлуатованість (Exploitability)</strong></dt>
+          <dd>Метрика, що відображає ймовірність успішного проходження шляху атаки на основі публічності, відомих експлойтів, EPSS, наявності автентифікації.</dd>
+
+          <dt><strong>Радіус ураження (Blast Radius)</strong></dt>
+          <dd>Обсяг ресурсів, що постраждають при компрометації одного активу або ідентичності.</dd>
+
+          <dt><strong>Crown Jewels</strong></dt>
+          <dd>Критичні активи організації — бази даних клієнтів, фінансові системи, секрети, інтелектуальна власність.</dd>
+
+          <dt><strong>Shift Left</strong></dt>
+          <dd>Перенесення перевірок безпеки якомога раніше у процес розробки — від продакшну до CI/CD, PR-перевірок, IDE-розширень.</dd>
+
+          <dt><strong>Shield Right</strong></dt>
+          <dd>Захист уже розгорнутих ресурсів у часі виконання — моніторинг runtime-поведінки, виявлення дрейфу конфігурацій.</dd>
+
+          <dt><strong>Policy as Code</strong></dt>
+          <dd>Декларативне описання політик безпеки у вигляді коду (OPA/Rego, Sentinel, Cedar) для застосування на всіх етапах життєвого циклу.</dd>
+
+          <dt><strong>eBPF (extended Berkeley Packet Filter)</strong></dt>
+          <dd>Технологія ядра Linux для безпечного виконання програм у kernel-просторі без модифікації коду — основа сучасного runtime-захисту.</dd>
+
+          <dt><strong>Snapshot Scanning / SideScanning™</strong></dt>
+          <dd>Безагентний підхід до сканування навантажень через створення знімків EBS-томів — спрощує впровадження, але обмежує runtime-видимість.</dd>
+
+          <dt><strong>Code-to-Cloud</strong></dt>
+          <dd>Концепція повної traceability від рядка коду до розгорнутого хмарного ресурсу — основа сучасного shift-left.</dd>
+
+          <dt><strong>SBOM (Software Bill of Materials)</strong></dt>
+          <dd>Декларативний список усіх компонентів у програмному забезпеченні — стандарти SPDX і CycloneDX, обов'язковий для регуляторної звітності у США з 2024 р.</dd>
+
+          <dt><strong>EPSS (Exploit Prediction Scoring System)</strong></dt>
+          <dd>Модель FIRST.org, що прогнозує ймовірність експлуатації CVE протягом 30 днів — використовується для пріоритезації разом з CVSS.</dd>
+
+          <dt><strong>CISA KEV (Known Exploited Vulnerabilities)</strong></dt>
+          <dd>Каталог вразливостей з підтвердженою активною експлуатацією, обов'язкових для виправлення в федеральних агентствах США.</dd>
+
+          <dt><strong>MTTD (Mean Time to Detect) / MTTR (Mean Time to Remediate)</strong></dt>
+          <dd>Ключові операційні метрики безпеки — середній час до виявлення і до усунення інциденту.</dd>
+        </dl>
       </section>
 
     </article>

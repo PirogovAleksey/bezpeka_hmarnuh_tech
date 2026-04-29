@@ -30,127 +30,139 @@
     <section class="slide">
       <h1>Компоненти CSPM</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 400 220" width="400" height="220">
-          <!-- Data flow diagram -->
-          <!-- Cloud sources -->
-          <rect x="20" y="20" width="60" height="35" rx="6" class="diagram-box"/>
-          <text x="50" y="43" text-anchor="middle" class="diagram-text-small">AWS</text>
-          <rect x="20" y="65" width="60" height="35" rx="6" class="diagram-box"/>
-          <text x="50" y="88" text-anchor="middle" class="diagram-text-small">Azure</text>
-          <rect x="20" y="110" width="60" height="35" rx="6" class="diagram-box"/>
-          <text x="50" y="133" text-anchor="middle" class="diagram-text-small">GCP</text>
-
-          <!-- Data Collection -->
-          <rect x="110" y="50" width="80" height="60" rx="8" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="150" y="75" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">Data</text>
-          <text x="150" y="95" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">Collection</text>
-
-          <!-- Policy Engine -->
-          <rect x="220" y="50" width="80" height="60" rx="8" fill="rgba(251, 191, 36, 0.2)" stroke="#fbbf24" stroke-width="2"/>
-          <text x="260" y="75" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">Policy</text>
-          <text x="260" y="95" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">Engine</text>
-
-          <!-- Output -->
-          <rect x="330" y="20" width="60" height="35" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
-          <text x="360" y="43" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Alerts</text>
-          <rect x="330" y="65" width="60" height="35" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
-          <text x="360" y="88" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Dashboard</text>
-          <rect x="330" y="110" width="60" height="35" rx="6" fill="rgba(74, 222, 128, 0.2)" stroke="#4ade80" stroke-width="2"/>
-          <text x="360" y="133" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Reports</text>
-
-          <!-- Arrows -->
-          <line x1="80" y1="80" x2="105" y2="80" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-cspm)"/>
-          <line x1="190" y1="80" x2="215" y2="80" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrow-cspm)"/>
-          <line x1="300" y1="80" x2="325" y2="80" stroke="#4ade80" stroke-width="2" marker-end="url(#arrow-cspm)"/>
-
-          <!-- Risk Analysis box at bottom -->
-          <rect x="150" y="160" width="100" height="40" rx="8" fill="rgba(168, 85, 247, 0.2)" stroke="#a855f7" stroke-width="2"/>
-          <text x="200" y="185" text-anchor="middle" class="diagram-text-small" fill="#a855f7">Risk Scoring</text>
-          <line x1="200" y1="110" x2="200" y2="155" stroke="#a855f7" stroke-width="2" stroke-dasharray="4"/>
-
+        <svg viewBox="0 0 560 280" width="560" height="280" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <marker id="arrow-cspm" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
               <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
             </marker>
           </defs>
+
+          <!-- Column labels -->
+          <text x="55" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Хмарні провайдери</text>
+          <text x="200" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Інвентаризація</text>
+          <text x="380" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Аналітичне ядро</text>
+          <text x="514" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Інтеграції</text>
+
+          <!-- Sources -->
+          <rect x="20" y="50" width="70" height="32" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="55" y="71" text-anchor="middle" fill="#e2e8f0" font-size="12">AWS</text>
+          <rect x="20" y="95" width="70" height="32" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="55" y="116" text-anchor="middle" fill="#e2e8f0" font-size="12">Azure</text>
+          <rect x="20" y="140" width="70" height="32" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="55" y="161" text-anchor="middle" fill="#e2e8f0" font-size="12">GCP</text>
+
+          <!-- Arrows sources → collection -->
+          <line x1="90" y1="66" x2="140" y2="105" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="90" y1="111" x2="140" y2="111" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="90" y1="156" x2="140" y2="117" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+          <text x="115" y="90" fill="#64748b" font-size="9" text-anchor="middle">API</text>
+
+          <!-- Collection -->
+          <rect x="145" y="85" width="110" height="52" rx="8" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="200" y="107" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="600">Збір</text>
+          <text x="200" y="124" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="600">даних</text>
+
+          <!-- Arrow collection → policy -->
+          <line x1="255" y1="111" x2="310" y2="111" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <!-- Policy Engine -->
+          <rect x="315" y="55" width="130" height="52" rx="8" fill="rgba(251,191,36,0.18)" stroke="#fbbf24" stroke-width="2"/>
+          <text x="380" y="77" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="600">Рушій</text>
+          <text x="380" y="94" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="600">політик</text>
+
+          <!-- Risk Analysis -->
+          <rect x="315" y="120" width="130" height="52" rx="8" fill="rgba(168,85,247,0.18)" stroke="#a855f7" stroke-width="2"/>
+          <text x="380" y="142" text-anchor="middle" fill="#c084fc" font-size="12" font-weight="600">Оцінка</text>
+          <text x="380" y="159" text-anchor="middle" fill="#c084fc" font-size="12" font-weight="600">ризиків</text>
+
+          <!-- Arrow collection branches to both -->
+          <line x1="270" y1="105" x2="310" y2="81" stroke="#64748b" stroke-width="1" stroke-dasharray="3" opacity="0.5"/>
+          <line x1="270" y1="118" x2="310" y2="146" stroke="#64748b" stroke-width="1" stroke-dasharray="3" opacity="0.5"/>
+
+          <!-- Policy → Risk -->
+          <line x1="380" y1="107" x2="380" y2="120" stroke="#a855f7" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <!-- Arrows policy/risk → outputs -->
+          <line x1="445" y1="81" x2="475" y2="71" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="445" y1="111" x2="475" y2="116" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="445" y1="146" x2="475" y2="161" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <!-- Outputs -->
+          <rect x="478" y="50" width="72" height="32" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="514" y="71" text-anchor="middle" fill="#4ade80" font-size="11">Сповіщення</text>
+          <rect x="478" y="95" width="72" height="32" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="514" y="116" text-anchor="middle" fill="#4ade80" font-size="11">Дашборд</text>
+          <rect x="478" y="140" width="72" height="32" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="514" y="161" text-anchor="middle" fill="#4ade80" font-size="11">Звіти</text>
+
+          <!-- Caption -->
+          <text x="280" y="220" text-anchor="middle" fill="#94a3b8" font-size="11">Безагентний збір через API → політики &amp; ризик-аналіз → інтеграції</text>
+          <text x="280" y="245" text-anchor="middle" fill="#64748b" font-size="10">SIEM · SOAR · Jira · Slack · PagerDuty</text>
         </svg>
       </div>
     </section>
 
     <section class="slide">
-      <h1>Data Collection Layer</h1>
+      <h1>Шар збору та політик</h1>
       <ul>
-        <li><strong>API Integration:</strong> AWS, Azure, GCP APIs</li>
-        <li><strong>Read-only access:</strong> Тільки читання конфігурацій</li>
-        <li><strong>Event-driven:</strong> CloudTrail, Activity Log для real-time</li>
-        <li><strong>Agentless:</strong> Не потребує агентів</li>
+        <li><strong>Інтеграція через API:</strong> AWS, Azure, GCP — доступ лише для читання (read-only)</li>
+        <li><strong>Оновлення за подіями:</strong> CloudTrail, Azure Activity Log — у реальному часі</li>
+        <li><strong>Безагентний режим:</strong> розгортання за хвилини, без інсталяції агентів</li>
+        <li><strong>Рушій політик:</strong> бібліотеки CIS/NIST + власні правила на OPA/Rego</li>
+        <li><strong>Політика як код (policy-as-code):</strong> однакові правила для runtime та IaC-сканування</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Policy Engine</h1>
-      <ul>
-        <li>Бібліотека правил (CIS, NIST, custom)</li>
-        <li><strong>OPA/Rego:</strong> Популярний policy language</li>
-        <li>Policy versioning та testing</li>
-        <li>Import/export для sharing</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Deployment моделі</h1>
+      <h1>Моделі розгортання</h1>
       <div class="slide-grid">
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
           <h3>SaaS</h3>
-          <p>Швидкий старт, auto-updates</p>
+          <p>Швидкий старт, автоматичні оновлення, вендор зберігає метадані</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div>
           <h3>Self-hosted</h3>
-          <p>Повний контроль</p>
+          <p>Повний контроль над даними (Prowler, CloudSploit)</p>
         </div>
         <div class="slide-grid-item">
           <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></div>
-          <h3>Hybrid</h3>
-          <p>Data on-prem, control SaaS</p>
+          <h3>Гібридна</h3>
+          <p>Дані локально, керування у SaaS</p>
         </div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>CI/CD інтеграція — Зсув ліворуч (Shift-Left)</h1>
+      <h1>CI/CD-інтеграція (Shift-Left)</h1>
       <ul>
-        <li>Сканування IaC до deployment</li>
-        <li><strong>Terraform:</strong> tfsec, checkov, terrascan</li>
-        <li><strong>CloudFormation:</strong> cfn-lint, cfn-nag</li>
-        <li>PR checks: блокування з misconfigurations</li>
+        <li><strong>Сканування IaC</strong> до розгортання: Terraform, CloudFormation, Bicep, Pulumi</li>
+        <li><strong>Інструменти:</strong> Checkov, tfsec, Terrascan, KICS, Trivy-config</li>
+        <li><strong>Pre-commit-хуки</strong> для розробників — виявлення проблем ще в IDE</li>
+        <li><strong>PR-перевірки:</strong> блокування помилкових конфігурацій до merge</li>
+        <li><strong>SARIF-формат</strong> для відображення у GitHub Security</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>SIEM/SOAR Integration</h1>
+      <h1>Інтеграція з SIEM, SOAR та тикетингом</h1>
       <ul>
-        <li><strong>SIEM:</strong> Forwarding alerts до Splunk, Sentinel</li>
-        <li><strong>SOAR:</strong> Triggering playbooks для auto-remediation</li>
-        <li>Correlation з іншими security events</li>
-        <li>Єдине реагування на інциденти (Incident Response)</li>
+        <li><strong>SIEM:</strong> пересилання знахідок у Splunk, Microsoft Sentinel, Elastic</li>
+        <li><strong>SOAR:</strong> запуск плейбуків для авторемедіації</li>
+        <li><strong>Тикетинг:</strong> автоматичне створення тикетів у Jira, ServiceNow + SLA-трекінг</li>
+        <li><strong>Сповіщення:</strong> Slack, Microsoft Teams, PagerDuty для критичних знахідок</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Інші інтеграції</h1>
+      <h1>Ключові висновки</h1>
       <ul>
-        <li><strong>Ticketing:</strong> Jira, ServiceNow auto-creation</li>
-        <li><strong>Communication:</strong> Slack, Teams, PagerDuty</li>
-        <li><strong>CMDB:</strong> Asset context enrichment</li>
-        <li><strong>API:</strong> Custom integrations</li>
+        <li>Архітектура CSPM — п'ять шарів: збір, нормалізація, політики, аналіз ризиків, представлення</li>
+        <li>Безагентний підхід став стандартом — швидкість розгортання важливіша за глибину runtime</li>
+        <li>Політика як код забезпечує єдиний набір правил для runtime та pre-deployment</li>
+        <li>CSPM не існує окремо — його цінність розкривається через інтеграції з SIEM, SOAR, CI/CD</li>
       </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Питання?</h1>
-      <p>Наступна тема: Інструменти та практика CSPM</p>
     </section>
   </div>
 

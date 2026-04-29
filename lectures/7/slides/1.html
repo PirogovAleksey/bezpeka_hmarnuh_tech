@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тема 7.1 — Проблема Cloud Misconfiguration | Безпека хмарних технологій</title>
+  <title>Тема 7.1 — Проблема помилкових конфігурацій | Безпека хмарних технологій</title>
   <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/slides.css">
@@ -24,87 +24,66 @@
   <div class="slide-deck">
     <section class="slide active">
       <h1>Безпека хмарних технологій</h1>
-      <p>Тема 7.1: Проблема Cloud Misconfiguration</p>
+      <p>Тема 7.1: Проблема помилкових конфігурацій (Cloud Misconfiguration)</p>
     </section>
 
     <section class="slide">
-      <h1>Що таке CSPM?</h1>
-      <ul>
-        <li><strong>Cloud Security Posture Management</strong> — управління станом безпеки хмари</li>
-        <li>Автоматичне виявлення misconfigurations</li>
-        <li>Моніторинг compliance у реальному часі</li>
-        <li>Пріоритезація та remediation ризиків</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Чому CSPM критично важливий?</h1>
+      <h1>Масштаб проблеми</h1>
       <div class="slide-grid">
         <div class="slide-grid-item">
-          <div class="slide-stat">65-70%</div>
-          <div class="slide-stat-label">інцидентів через misconfig</div>
+          <div class="slide-stat">&gt;80%</div>
+          <div class="slide-stat-label">хмарних витоків — базові помилкові конфігурації (Verizon DBIR 2025)</div>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-stat">197</div>
-          <div class="slide-stat-label">днів на виявлення</div>
+          <div class="slide-stat">№1</div>
+          <div class="slide-stat-label">загроза в рейтингу CSA Top Threats to Cloud Computing 2024</div>
+        </div>
+        <div class="slide-grid-item">
+          <div class="slide-stat">82%</div>
+          <div class="slide-stat-label">помилок — людський фактор, а не дефект платформи (CSA, 2024)</div>
         </div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>Типові misconfigurations</h1>
+      <h1>Таксономія помилкових конфігурацій</h1>
       <ul>
-        <li><strong>Storage:</strong> Публічні S3 buckets, Azure Blob без автентифікації</li>
-        <li><strong>Network:</strong> Security groups 0.0.0.0/0, відкритий SSH/RDP</li>
-        <li><strong>Identity:</strong> Надмірні IAM permissions, без MFA</li>
-        <li><strong>Encryption:</strong> Незашифровані диски, бази без TLS</li>
-        <li><strong>Logging:</strong> Вимкнений CloudTrail, відсутні audit logs</li>
+        <li><strong>Ідентичність (IAM):</strong> root без MFA, <code>"Action": "*"</code>, довготривалі ключі доступу</li>
+        <li><strong>Сховище (Storage):</strong> публічний S3-бакет, Azure Blob без автентифікації, без шифрування</li>
+        <li><strong>Мережа (Network):</strong> Security Group <code>0.0.0.0/0:22</code>, default VPC</li>
+        <li><strong>Обчислення (Compute):</strong> IMDSv1 замість v2 (CVE-2021-3156), публічні AMI</li>
+        <li><strong>Журналювання:</strong> CloudTrail вимкнено, відсутність перевірки цілісності журналів</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Чому помилки трапляються?</h1>
+      <h1>Знакові інциденти 2023–2025</h1>
       <ul>
-        <li><strong>Складність:</strong> AWS 200+ сервісів, кожен з десятками параметрів</li>
-        <li><strong>Швидкість DevOps:</strong> Deploy без security review</li>
-        <li><strong>IaC:</strong> Інфраструктура як код (Infrastructure as Code) масштабує і помилки теж</li>
-        <li><strong>Розрив навичок:</strong> DevOps ≠ Security expertise</li>
+        <li><strong>Snowflake / UNC5537 (2024):</strong> сотні клієнтських акаунтів, AT&amp;T (73 млн), Ticketmaster (560 млн) — причина: MFA не був обов'язковим</li>
+        <li><strong>Scattered Lapsus$ Hunters (2025):</strong> M&amp;S, Co-op, Jaguar Land Rover, клієнти Salesforce — викрадені OAuth-токени, SSO без обмежень за IP</li>
+        <li><strong>Microsoft AI Research (2023):</strong> надмірно широкий SAS-токен відкрив 38 ТБ внутрішніх даних</li>
+        <li><strong>Capital One (2019):</strong> помилково налаштований WAF + IMDSv1 → SSRF, 100+ млн записів, штраф $80 млн</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Capital One Breach (2019)</h1>
+      <h1>Чому помилки системні?</h1>
       <ul>
-        <li><strong>Причина:</strong> Misconfigured WAF → SSRF-атака</li>
-        <li><strong>Наслідки:</strong> 100+ млн записів клієнтів</li>
-        <li><strong>Штраф:</strong> $80 млн від OCC</li>
-        <li><strong>Root cause:</strong> Надмірні IAM permissions для WAF role</li>
+        <li><strong>Складність платформ:</strong> AWS — 200+ сервісів, десятки параметрів у кожному</li>
+        <li><strong>Швидкість DevOps:</strong> розгортання без перевірки безпеки (security review)</li>
+        <li><strong>IaC:</strong> інфраструктура як код масштабує і хороші практики, і помилки</li>
+        <li><strong>Модель спільної відповідальності:</strong> конфігурація — завжди на стороні клієнта</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Інші відомі кейси</h1>
+      <h1>Ключові висновки</h1>
       <ul>
-        <li><strong>Twitch (2021):</strong> Misconfigured server → 125 GB source code</li>
-        <li><strong>Facebook (2019):</strong> 540 млн записів у публічних S3</li>
-        <li><strong>Microsoft Power Apps (2021):</strong> Публічні API, 38 млн записів</li>
-        <li><strong>Спільне:</strong> Всі — misconfigurations, не zero-days</li>
+        <li>Помилкові конфігурації — причина №1 хмарних інцидентів (Verizon DBIR 2025, CSA 2024)</li>
+        <li>Ручні аудити та власні скрипти не масштабуються — потрібна автоматизація</li>
+        <li>Інциденти 2024–2025 підтверджують: проблема не зникає, а посилюється через SaaS та IAM-помилки</li>
+        <li>CSPM — спеціалізована категорія інструментів для безперервного виявлення таких помилок</li>
       </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Еволюція підходів</h1>
-      <ul>
-        <li><strong>Manual audits:</strong> Не масштабується, застаріває миттєво</li>
-        <li><strong>Scripts:</strong> Важко підтримувати, неповне покриття</li>
-        <li><strong>Native tools:</strong> Single-cloud, обмежена візуалізація</li>
-        <li><strong>CSPM:</strong> Комплексне рішення для enterprise</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Питання?</h1>
-      <p>Наступна тема: Основні функції CSPM</p>
     </section>
   </div>
 

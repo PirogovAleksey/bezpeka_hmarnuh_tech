@@ -258,43 +258,43 @@
         ]
       },
       7: {
-        title: 'Cloud Security Posture Management (CSPM)',
+        title: 'Управління станом безпеки хмари (Cloud Security Posture Management)',
         available: true,
         description: `
-          <p>У цій лекції ми розглянемо CSPM — категорію інструментів для автоматичного виявлення misconfigurations, порушень compliance та безпекових ризиків у хмарних середовищах. 65-70% хмарних інцидентів пов'язані з misconfigurations.</p>
-          <p>Ви дізнаєтесь про типові misconfigurations та їх наслідки, ключові функції CSPM (asset discovery, configuration assessment, risk prioritization), архітектуру CSPM-рішень та огляд інструментів — від native (AWS Config, Azure Defender) до third-party (Wiz, Prisma Cloud) та open source (Prowler).</p>
+          <p>У цій лекції розглядається CSPM — категорія інструментів для автоматичного виявлення помилкових конфігурацій (misconfigurations), порушень відповідності (compliance) та безпекових ризиків у хмарних середовищах. Понад 80% хмарних breach-ів за даними Verizon DBIR походять саме з помилкових конфігурацій.</p>
+          <p>Ви дізнаєтесь про типові помилкові конфігурації та їх наслідки, ключові функції CSPM (виявлення активів, оцінка конфігурацій, пріоритезація ризиків, усунення порушень), архітектуру CSPM-рішень та огляд інструментів — від нативних (AWS Config, Microsoft Defender for Cloud) до сторонніх (Wiz, Prisma Cloud) та open source (Prowler, Steampipe).</p>
         `,
         topics: [
-          { title: 'Проблема Cloud Misconfiguration', desc: 'Типові помилки конфігурації, реальні кейси (Capital One, Twitch)' },
-          { title: 'Основні функції CSPM', desc: 'Asset discovery, configuration assessment, compliance monitoring' },
-          { title: 'Архітектура та інтеграція', desc: 'API integration, policy engine, CI/CD shift-left' },
-          { title: 'Інструменти та практика', desc: 'Native tools, Wiz, Prisma Cloud, Prowler, впровадження' }
+          { title: 'Проблема помилкових конфігурацій', desc: 'Таксономія помилок, реальні кейси (Snowflake, Microsoft SAS, Capital One)' },
+          { title: 'Основні функції CSPM', desc: 'Виявлення активів, оцінка конфігурацій, моніторинг відповідності' },
+          { title: 'Архітектура та інтеграція', desc: 'API-інтеграція, рушій політик (OPA/Rego), CI/CD shift-left' },
+          { title: 'Інструменти та практика', desc: 'Нативні інструменти, Wiz, Prisma Cloud, Prowler, впровадження' }
         ],
         slides: [
-          { id: '7-1', title: 'Тема 7.1 — Проблема Misconfiguration', desc: 'Типові помилки, статистика, реальні кейси' },
-          { id: '7-2', title: 'Тема 7.2 — Основні функції CSPM', desc: 'Discovery, assessment, prioritization, remediation' },
-          { id: '7-3', title: 'Тема 7.3 — Архітектура CSPM', desc: 'Компоненти, deployment, інтеграції' },
-          { id: '7-4', title: 'Тема 7.4 — Інструменти CSPM', desc: 'Native, third-party, open source, впровадження' }
+          { id: '7-1', title: 'Тема 7.1 — Проблема помилкових конфігурацій', desc: 'Типові помилки, статистика, реальні кейси' },
+          { id: '7-2', title: 'Тема 7.2 — Основні функції CSPM', desc: 'Виявлення, оцінка, пріоритезація, усунення' },
+          { id: '7-3', title: 'Тема 7.3 — Архітектура CSPM', desc: 'Компоненти, моделі розгортання, інтеграції' },
+          { id: '7-4', title: 'Тема 7.4 — Інструменти CSPM', desc: 'Нативні, сторонні, open source, впровадження' }
         ]
       },
       8: {
-        title: 'Cloud-Native Application Protection Platform (CNAPP)',
+        title: 'Платформа захисту хмарних застосунків (Cloud-Native Application Protection Platform)',
         available: true,
         description: `
-          <p>У цій лекції ми розглянемо CNAPP — концепцію об'єднання всіх аспектів захисту cloud-native додатків в єдину платформу. CNAPP вирішує проблему "tool sprawl" — надмірної кількості ізольованих інструментів безпеки.</p>
-          <p>Ви дізнаєтесь про компоненти CNAPP (CSPM, CWPP, CIEM, DSPM), attack path analysis, graph-based підхід до risk prioritization, огляд ринку (Wiz, Prisma Cloud, Orca) та стратегії впровадження.</p>
+          <p>Лекція розкриває концепцію CNAPP — уніфікованої платформи захисту хмарних застосунків, що об'єднує CSPM, CWPP, CIEM, DSPM та безпеку IaC у єдиній моделі даних з аналізом шляхів атаки. Концепція уведена Gartner у 2021 р. і за чотири роки стала домінантною моделлю споживання хмарної безпеки на корпоративному ринку.</p>
+          <p>Розглянуто причини виникнення CNAPP (розростання інструментів), архітектурні шари платформи, графову модель Cloud Asset Graph, аналіз шляхів атаки за MITRE ATT&amp;CK, провідні платформи Magic Quadrant 2025 (Wiz, Palo Alto Prisma Cloud, Microsoft Defender, CrowdStrike, Orca, Sysdig) та фази впровадження. За даними IBM Cost of a Data Breach 2024, середня вартість витоку даних у хмарі — $5,17 млн.</p>
         `,
         topics: [
-          { title: 'Від Point Solutions до CNAPP', desc: 'Еволюція cloud security, tool sprawl, Gartner визначення' },
-          { title: 'Компоненти CNAPP', desc: 'CSPM, CWPP, CIEM, Container Security, IaC, DSPM' },
-          { title: 'Attack Path Analysis', desc: 'Graph-based approach, risk scoring, prioritization' },
-          { title: 'Ринок та впровадження', desc: 'Wiz, Prisma Cloud, Orca, критерії вибору, best practices' }
+          { title: 'Від точкових рішень до CNAPP', desc: 'Еволюція хмарної безпеки, tool sprawl, визначення Gartner, п\'ять стовпів' },
+          { title: 'Архітектура та компоненти CNAPP', desc: 'Шари платформи, CSPM, CWPP, CIEM, DSPM, IaC, Cloud Asset Graph' },
+          { title: 'Аналіз шляхів атаки', desc: 'Графовий підхід, мапінг MITRE ATT&CK, оцінка ризику, реальні кейси' },
+          { title: 'Ринок CNAPP та впровадження', desc: 'Magic Quadrant 2025, провідні платформи, фази розгортання, тренди до 2027' }
         ],
         slides: [
-          { id: '8-1', title: 'Тема 8.1 — Від Point Solutions до CNAPP', desc: 'Еволюція, tool sprawl, визначення CNAPP' },
-          { id: '8-2', title: 'Тема 8.2 — Компоненти CNAPP', desc: 'CSPM, CWPP, CIEM, DSPM, інтеграція' },
-          { id: '8-3', title: 'Тема 8.3 — Attack Path Analysis', desc: 'Graph-based, risk scoring, prioritization' },
-          { id: '8-4', title: 'Тема 8.4 — Ринок CNAPP', desc: 'Vendors, критерії вибору, впровадження' }
+          { id: '8-1', title: 'Тема 8.1 — Від точкових рішень до CNAPP', desc: 'Еволюція, tool sprawl, визначення Gartner, п\'ять стовпів' },
+          { id: '8-2', title: 'Тема 8.2 — Архітектура та компоненти CNAPP', desc: 'Шари платформи, шість компонентів, Cloud Asset Graph' },
+          { id: '8-3', title: 'Тема 8.3 — Аналіз шляхів атаки', desc: 'Графовий підхід, оцінка ризику, реальні інциденти' },
+          { id: '8-4', title: 'Тема 8.4 — Ринок та впровадження CNAPP', desc: 'MQ 2025, провідні платформи, фази впровадження, тренди' }
         ]
       },
       9: {

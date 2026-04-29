@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тема 8.2 — Компоненти CNAPP | Безпека хмарних технологій</title>
+  <title>Тема 8.2 — Архітектура та компоненти CNAPP | Безпека хмарних технологій</title>
   <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/slides.css">
@@ -24,147 +24,121 @@
   <div class="slide-deck">
     <section class="slide active">
       <h1>Безпека хмарних технологій</h1>
-      <p>Тема 8.2: Компоненти CNAPP</p>
+      <p>Тема 8.2: Архітектура та компоненти CNAPP</p>
     </section>
 
     <section class="slide">
-      <h1>6 основних компонентів</h1>
-      <div class="slide-grid" style="grid-template-columns: repeat(3, 1fr); gap: 1rem;">
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <h3>CSPM</h3>
-          <p>Posture Management</p>
-        </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
-          <h3>CWPP</h3>
-          <p>Workload Protection</p>
-        </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <h3>CIEM</h3>
-          <p>Entitlement Management</p>
-        </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 12H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89"/><path d="M6 16h.01M10 16h.01"/></svg></div>
-          <h3>Container</h3>
-          <p>Image + Runtime</p>
-        </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-          <h3>IaC</h3>
-          <p>Зсув ліворуч (Shift-Left) Security</p>
-        </div>
-        <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
-          <h3>DSPM</h3>
-          <p>Data Security</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="slide">
-      <h1>CSPM</h1>
-      <ul>
-        <li>Configuration assessment для cloud infrastructure</li>
-        <li>Моніторинг відповідності (Compliance) (CIS, SOC 2, PCI DSS)</li>
-        <li>Asset inventory та visibility</li>
-        <li>Детально — Лекція 7</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>CWPP</h1>
-      <ul>
-        <li><strong>Vulnerability Management:</strong> CVEs у workloads</li>
-        <li><strong>Захист середовища виконання (Runtime Protection):</strong> Behavior monitoring</li>
-        <li><strong>Malware Detection:</strong> Антивірус для cloud</li>
-        <li><strong>File Integrity:</strong> Виявлення змін</li>
-        <li><strong>Network:</strong> Microsegmentation</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>CIEM</h1>
-      <ul>
-        <li><strong>Permission Analysis:</strong> Хто має доступ до чого</li>
-        <li><strong>Мінімальні привілеї (Least Privilege):</strong> Excessive permissions</li>
-        <li><strong>Unused Access:</strong> Права без використання</li>
-        <li><strong>Cross-account:</strong> Mapping доступу</li>
-        <li><strong>Service Accounts:</strong> Non-human identities</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Container & IaC Security</h1>
-      <ul>
-        <li><strong>Image Scanning:</strong> CVEs, malware, secrets</li>
-        <li><strong>Registry Security:</strong> Захист registries</li>
-        <li><strong>K8s Security:</strong> RBAC, Network Policies</li>
-        <li><strong>IaC Scanning:</strong> Terraform, CloudFormation</li>
-        <li><strong>CI/CD Integration:</strong> Pre-deployment checks</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>DSPM</h1>
-      <ul>
-        <li><strong>Data Discovery:</strong> Де зберігаються дані</li>
-        <li><strong>Classification:</strong> PII, PHI, PCI, secrets</li>
-        <li><strong>Data Flow:</strong> Куди переміщуються</li>
-        <li><strong>Encryption:</strong> у стані спокою (at rest) та при передачі (in transit)</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Інтеграція компонентів</h1>
+      <h1>Шари CNAPP-платформи</h1>
       <div class="slide-diagram">
-        <svg viewBox="0 0 400 200" style="max-width: 500px;">
+        <svg viewBox="0 0 600 280" width="600" height="280" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <marker id="arrowhead8" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-              <polygon points="0 0, 10 3.5, 0 7" fill="currentColor"/>
+            <marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
             </marker>
           </defs>
-          <!-- Left boxes -->
-          <rect x="20" y="20" width="100" height="35" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <text x="70" y="42" text-anchor="middle" fill="currentColor" font-size="12">CSPM</text>
-          <rect x="20" y="85" width="100" height="35" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <text x="70" y="107" text-anchor="middle" fill="currentColor" font-size="12">CWPP</text>
-          <rect x="20" y="150" width="100" height="35" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <text x="70" y="172" text-anchor="middle" fill="currentColor" font-size="12">Container</text>
-          <!-- Plus signs -->
-          <text x="140" y="42" fill="var(--accent)" font-size="20" font-weight="bold">+</text>
-          <text x="140" y="107" fill="var(--accent)" font-size="20" font-weight="bold">+</text>
-          <text x="140" y="172" fill="var(--accent)" font-size="20" font-weight="bold">+</text>
-          <!-- Middle boxes -->
-          <rect x="160" y="20" width="100" height="35" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <text x="210" y="42" text-anchor="middle" fill="currentColor" font-size="12">DSPM</text>
-          <rect x="160" y="85" width="100" height="35" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <text x="210" y="107" text-anchor="middle" fill="currentColor" font-size="12">CIEM</text>
-          <rect x="160" y="150" width="100" height="35" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <text x="210" y="172" text-anchor="middle" fill="currentColor" font-size="12">CIEM</text>
-          <!-- Arrows -->
-          <line x1="265" y1="37" x2="285" y2="37" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead8)"/>
-          <line x1="265" y1="102" x2="285" y2="102" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead8)"/>
-          <line x1="265" y1="167" x2="285" y2="167" stroke="currentColor" stroke-width="2" marker-end="url(#arrowhead8)"/>
-          <!-- Result boxes -->
-          <rect x="290" y="10" width="100" height="55" rx="4" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="2"/>
-          <text x="340" y="32" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">Critical</text>
-          <text x="340" y="50" text-anchor="middle" fill="currentColor" font-size="10">Exposure</text>
-          <rect x="290" y="75" width="100" height="55" rx="4" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="2"/>
-          <text x="340" y="97" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">Exploitable</text>
-          <text x="340" y="115" text-anchor="middle" fill="currentColor" font-size="10">Path</text>
-          <rect x="290" y="140" width="100" height="55" rx="4" fill="var(--accent)" fill-opacity="0.2" stroke="var(--accent)" stroke-width="2"/>
-          <text x="340" y="162" text-anchor="middle" fill="currentColor" font-size="10" font-weight="bold">Privilege</text>
-          <text x="340" y="180" text-anchor="middle" fill="currentColor" font-size="10">Escalation</text>
+
+          <text x="60" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Джерела</text>
+          <text x="220" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Збір</text>
+          <text x="390" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Графовий рушій</text>
+          <text x="540" y="22" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">Інтерфейс</text>
+
+          <rect x="20" y="45" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="60" y="63" text-anchor="middle" fill="#e2e8f0" font-size="11">AWS · Azure · GCP</text>
+          <rect x="20" y="80" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="60" y="98" text-anchor="middle" fill="#e2e8f0" font-size="11">Kubernetes</text>
+          <rect x="20" y="115" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="60" y="133" text-anchor="middle" fill="#e2e8f0" font-size="11">CI/CD · Git</text>
+          <rect x="20" y="150" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="60" y="168" text-anchor="middle" fill="#e2e8f0" font-size="11">IaC репозиторії</text>
+          <rect x="20" y="185" width="80" height="28" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+          <text x="60" y="203" text-anchor="middle" fill="#e2e8f0" font-size="11">Identity Providers</text>
+
+          <line x1="100" y1="59" x2="155" y2="115" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+          <line x1="100" y1="94" x2="155" y2="125" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+          <line x1="100" y1="129" x2="155" y2="135" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+          <line x1="100" y1="164" x2="155" y2="145" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+          <line x1="100" y1="199" x2="155" y2="155" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <rect x="160" y="100" width="120" height="60" rx="8" fill="rgba(56,189,248,0.18)" stroke="#38bdf8" stroke-width="2"/>
+          <text x="220" y="124" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="600">Безагентний</text>
+          <text x="220" y="142" text-anchor="middle" fill="#38bdf8" font-size="11">+ агенти eBPF</text>
+
+          <line x1="280" y1="130" x2="320" y2="130" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+          <rect x="325" y="45" width="135" height="170" rx="10" fill="rgba(168,85,247,0.15)" stroke="#a855f7" stroke-width="2"/>
+          <text x="392" y="68" text-anchor="middle" fill="#c084fc" font-size="13" font-weight="600">Cloud Asset Graph</text>
+          <line x1="335" y1="80" x2="450" y2="80" stroke="#a855f7" stroke-opacity="0.4"/>
+          <text x="392" y="100" text-anchor="middle" fill="#e2e8f0" font-size="10">CSPM · CWPP</text>
+          <text x="392" y="116" text-anchor="middle" fill="#e2e8f0" font-size="10">CIEM · DSPM</text>
+          <text x="392" y="132" text-anchor="middle" fill="#e2e8f0" font-size="10">IaC · Containers</text>
+          <line x1="335" y1="143" x2="450" y2="143" stroke="#a855f7" stroke-opacity="0.4"/>
+          <text x="392" y="163" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="600">Attack Path Engine</text>
+          <text x="392" y="183" text-anchor="middle" fill="#94a3b8" font-size="9">кореляція знахідок</text>
+          <text x="392" y="200" text-anchor="middle" fill="#94a3b8" font-size="9">пріоритезація за впливом</text>
+
+          <rect x="480" y="55" width="115" height="28" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="537" y="73" text-anchor="middle" fill="#4ade80" font-size="11">Уніфікована консоль</text>
+          <rect x="480" y="90" width="115" height="28" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="537" y="108" text-anchor="middle" fill="#4ade80" font-size="11">PR · IDE інтеграції</text>
+          <rect x="480" y="125" width="115" height="28" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="537" y="143" text-anchor="middle" fill="#4ade80" font-size="11">SIEM · SOAR</text>
+          <rect x="480" y="160" width="115" height="28" rx="6" fill="rgba(74,222,128,0.15)" stroke="#4ade80" stroke-width="1.5"/>
+          <text x="537" y="178" text-anchor="middle" fill="#4ade80" font-size="11">Тикетинг · Slack</text>
+
+          <line x1="460" y1="95" x2="478" y2="73" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+          <line x1="460" y1="115" x2="478" y2="105" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+          <line x1="460" y1="140" x2="478" y2="138" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+          <line x1="460" y1="165" x2="478" y2="173" stroke="#64748b" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <text x="300" y="250" text-anchor="middle" fill="#94a3b8" font-size="11">Збір через API провайдерів та зонди eBPF → нормалізація у графі →</text>
+          <text x="300" y="268" text-anchor="middle" fill="#94a3b8" font-size="11">аналіз шляхів атаки → корельовані сповіщення з контекстом</text>
         </svg>
       </div>
-      <p style="text-align: center; margin-top: 1rem;"><strong>Кореляція — головна цінність CNAPP</strong></p>
     </section>
 
     <section class="slide">
-      <h1>Питання?</h1>
-      <p>Наступна тема: Attack Path Analysis</p>
+      <h1>Шість компонентів CNAPP</h1>
+      <ul>
+        <li><strong>CSPM</strong> — конфігурації, бенчмарки CIS/NIST, відповідність регуляторним рамкам</li>
+        <li><strong>CWPP</strong> — сканування образів, eBPF runtime-моніторинг, виявлення шкідливого ПЗ</li>
+        <li><strong>CIEM</strong> — ефективні права, виявлення надмірних дозволів, шляхи ескалації</li>
+        <li><strong>Container/Kubernetes Security</strong> — CVE в образах, KSPM, admission control</li>
+        <li><strong>IaC Security</strong> — Terraform, Bicep, Helm — у IDE, pre-commit, PR</li>
+        <li><strong>DSPM</strong> — виявлення PII/PCI, потоки даних, статус шифрування</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Cloud Asset Graph: чому графова модель</h1>
+      <ul>
+        <li><strong>Вершини:</strong> ресурси, ідентичності, мережі, дані, артефакти розробки</li>
+        <li><strong>Ребра:</strong> зв'язки доступу, IAM-права, мережева зв'язність, довірчі відносини</li>
+        <li><strong>Запит без графа:</strong> "знайди публічні бакети" — десятки тисяч результатів</li>
+        <li><strong>Запит з графом:</strong> "публічні бакети з PII, доступні з compromised pod через надмірну роль" — одиниці</li>
+        <li><strong>Принцип:</strong> цінність — у переходах між знахідками, а не у самих знахідках</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Кореляція компонентів: матриця збагачення</h1>
+      <ul>
+        <li><strong>CSPM (публічний бакет) + DSPM (PII):</strong> Critical — експозиція 2,1 млн записів</li>
+        <li><strong>CWPP (CVE-2024-21626) + Network (публічний ALB):</strong> експлуатовний з інтернету</li>
+        <li><strong>CIEM (iam:PassRole) + Container (compromised pod):</strong> шлях до admin</li>
+        <li><strong>IaC (незашифрований EBS) + CSPM (deployed):</strong> drift між кодом і runtime</li>
+        <li><strong>DSPM (БД-дублікат у dev) + CIEM (47 розробників):</strong> порушення GDPR Art. 5</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h1>Ключові висновки</h1>
+      <ul>
+        <li>CNAPP — не моноліт: чотири шари (збір, граф, аналіз, інтерфейс)</li>
+        <li>Сила платформи — у Cloud Asset Graph, що з'єднує дані всіх компонентів</li>
+        <li>DSPM з 2024 р. — фактичний обов'язковий стовп CNAPP</li>
+        <li>Безагентний підхід покриває 80–90% потреб; агенти eBPF — для глибокого runtime</li>
+        <li>Кореляція двох знахідок дає більше цінності, ніж сотня ізольованих</li>
+      </ul>
     </section>
   </div>
 

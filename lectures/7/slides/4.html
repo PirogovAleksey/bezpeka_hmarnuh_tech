@@ -24,136 +24,93 @@
   <div class="slide-deck">
     <section class="slide active">
       <h1>Безпека хмарних технологій</h1>
-      <p>Тема 7.4: Інструменти та практика CSPM</p>
+      <p>Тема 7.4: Інструменти, практика та еволюція до CNAPP</p>
     </section>
 
     <section class="slide">
-      <h1>Native Cloud Tools</h1>
-      <ul>
-        <li><strong>AWS:</strong> Config, Security Hub, Trusted Advisor</li>
-        <li><strong>Azure:</strong> Defender for Cloud, Azure Policy</li>
-        <li><strong>GCP:</strong> Security Command Center</li>
-        <li>Глибока інтеграція, включені у вартість</li>
-        <li>Обмеження: single-cloud only</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Third-Party Leaders</h1>
-      <ul>
-        <li><strong>Prisma Cloud:</strong> Comprehensive, multi-cloud, Gartner leader</li>
-        <li><strong>Wiz:</strong> Attack path analysis, graph-based, $10B+ startup</li>
-        <li><strong>Orca:</strong> SideScanning, agentless</li>
-        <li><strong>Lacework:</strong> Behavior-based anomaly detection</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Open Source Options</h1>
-      <ul>
-        <li><strong>Prowler:</strong> AWS/Azure/GCP, CIS Benchmarks, CLI</li>
-        <li><strong>CloudSploit:</strong> Multi-cloud scanning</li>
-        <li><strong>Steampipe:</strong> SQL interface до cloud APIs</li>
-        <li><strong>Checkov:</strong> IaC scanning (Terraform, K8s)</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Порівняння підходів</h1>
+      <h1>Ландшафт інструментів</h1>
       <div class="slide-diagram">
         <svg viewBox="0 0 420 180" width="420" height="180">
-          <!-- Native -->
           <rect x="20" y="20" width="110" height="120" rx="8" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="2"/>
-          <text x="75" y="45" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Native</text>
-          <text x="75" y="70" text-anchor="middle" class="diagram-text-small">Free</text>
-          <text x="75" y="90" text-anchor="middle" class="diagram-text-small">Single-cloud</text>
-          <text x="75" y="110" text-anchor="middle" class="diagram-text-small">Basic features</text>
-          <text x="75" y="130" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">Start here</text>
+          <text x="75" y="45" text-anchor="middle" class="diagram-text-bold" fill="#38bdf8">Нативні</text>
+          <text x="75" y="70" text-anchor="middle" class="diagram-text-small">безкоштовні</text>
+          <text x="75" y="90" text-anchor="middle" class="diagram-text-small">одна хмара</text>
+          <text x="75" y="110" text-anchor="middle" class="diagram-text-small">базові функції</text>
+          <text x="75" y="130" text-anchor="middle" class="diagram-text-small" fill="#38bdf8">початок</text>
 
-          <!-- Third-Party -->
           <rect x="155" y="20" width="110" height="120" rx="8" fill="rgba(251, 191, 36, 0.15)" stroke="#fbbf24" stroke-width="2"/>
-          <text x="210" y="45" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">Third-Party</text>
+          <text x="210" y="45" text-anchor="middle" class="diagram-text-bold" fill="#fbbf24">Сторонні</text>
           <text x="210" y="70" text-anchor="middle" class="diagram-text-small">$$$</text>
-          <text x="210" y="90" text-anchor="middle" class="diagram-text-small">Multi-cloud</text>
-          <text x="210" y="110" text-anchor="middle" class="diagram-text-small">Advanced</text>
-          <text x="210" y="130" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">Enterprise</text>
+          <text x="210" y="90" text-anchor="middle" class="diagram-text-small">мультихмара</text>
+          <text x="210" y="110" text-anchor="middle" class="diagram-text-small">розширені</text>
+          <text x="210" y="130" text-anchor="middle" class="diagram-text-small" fill="#fbbf24">enterprise</text>
 
-          <!-- Open Source -->
           <rect x="290" y="20" width="110" height="120" rx="8" fill="rgba(74, 222, 128, 0.15)" stroke="#4ade80" stroke-width="2"/>
           <text x="345" y="45" text-anchor="middle" class="diagram-text-bold" fill="#4ade80">Open Source</text>
-          <text x="345" y="70" text-anchor="middle" class="diagram-text-small">Free</text>
-          <text x="345" y="90" text-anchor="middle" class="diagram-text-small">Multi-cloud</text>
-          <text x="345" y="110" text-anchor="middle" class="diagram-text-small">DIY setup</text>
-          <text x="345" y="130" text-anchor="middle" class="diagram-text-small" fill="#4ade80">Flexible</text>
+          <text x="345" y="70" text-anchor="middle" class="diagram-text-small">безкоштовні</text>
+          <text x="345" y="90" text-anchor="middle" class="diagram-text-small">мультихмара</text>
+          <text x="345" y="110" text-anchor="middle" class="diagram-text-small">DIY-налаштування</text>
+          <text x="345" y="130" text-anchor="middle" class="diagram-text-small" fill="#4ade80">гнучкі</text>
 
-          <text x="210" y="165" text-anchor="middle" class="diagram-text-small">Вибір залежить від масштабу та бюджету</text>
+          <text x="210" y="165" text-anchor="middle" class="diagram-text-small">Вибір залежить від масштабу, мультихмарності та бюджету</text>
         </svg>
       </div>
     </section>
 
     <section class="slide">
+      <h1>Ключові платформи ринку</h1>
+      <ul>
+        <li><strong>Нативні:</strong> AWS Security Hub, Microsoft Defender for Cloud, GCP Security Command Center</li>
+        <li><strong>Wiz:</strong> безагентна, граф залежностей, аналіз шляхів атаки — оцінка компанії &gt; $10 млрд</li>
+        <li><strong>Palo Alto Prisma Cloud:</strong> лідер Gartner Magic Quadrant, CSPM + CWPP + CIEM + DSPM</li>
+        <li><strong>Orca Security:</strong> SideScanning через знімки дисків</li>
+        <li><strong>Open Source:</strong> Prowler (CLI + CIS), Steampipe (SQL), Checkov (IaC)</li>
+      </ul>
+    </section>
+
+    <section class="slide">
       <h1>Стратегія впровадження</h1>
       <div class="slide-timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">1</div>
-          <div class="timeline-text">Assessment: inventory</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1</div><div class="timeline-text">Оцінка (1–2 тижні)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">2</div>
-          <div class="timeline-text">Pilot: POC non-prod</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2</div><div class="timeline-text">Пілот (2–4 тижні)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">3</div>
-          <div class="timeline-text">Rollout: production</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">3</div><div class="timeline-text">Розгортання (4–8 тижнів)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">4</div>
-          <div class="timeline-text">Optimization</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">4</div><div class="timeline-text">Оптимізація (постійна)</div></div>
       </div>
     </section>
 
     <section class="slide">
       <h1>Найкращі практики (Best Practices)</h1>
       <ul>
-        <li><strong>Visibility first:</strong> Inventory перед enforcement</li>
-        <li><strong>Prioritize:</strong> Critical + public exposure + production</li>
-        <li><strong>Enable DevOps:</strong> Self-service, clear guidance</li>
-        <li><strong>Automate carefully:</strong> Low-risk спочатку</li>
-        <li><strong>Measure:</strong> MTTD, MTTR, compliance score</li>
+        <li><strong>Видимість насамперед:</strong> інвентаризація до примусу політик</li>
+        <li><strong>Пріоритезація:</strong> критичні + публічна експозиція + продакшн + регульовані дані</li>
+        <li><strong>Співпраця з DevOps:</strong> самообслуговування, чіткі інструкції з усунення</li>
+        <li><strong>Обережна автоматизація:</strong> низькоризикові дії — автоматично, IAM/мережа — ручне підтвердження</li>
+        <li><strong>Метрики:</strong> MTTD, MTTR, динаміка оцінки відповідності</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>CSPM → CNAPP</h1>
+      <h1>Еволюція CSPM → CNAPP</h1>
       <ul>
-        <li><strong>CNAPP</strong> = CSPM + CWPP + CIEM + DSPM</li>
-        <li>Correlated findings: повна картина ризику</li>
-        <li>Single pane of glass</li>
-        <li>Gartner: 75% нових CSPM буде CNAPP до 2025</li>
+        <li><strong>CNAPP</strong> — платформа захисту хмарних застосунків = CSPM + CWPP + CIEM + DSPM</li>
+        <li><strong>Корельовані знахідки:</strong> помилкова конфігурація + вразливість + надмірні права = шлях атаки</li>
+        <li><strong>Єдина панель</strong> (single pane of glass) для всієї хмарної безпеки</li>
+        <li><strong>Прогноз Gartner:</strong> до 2029 року 40% enterprise-впроваджень Zero Trust у хмарі спиратимуться на CNAPP</li>
       </ul>
     </section>
 
     <section class="slide">
       <h1>Ключові висновки</h1>
       <ul>
-        <li>Misconfigurations — #1 причина хмарних інцидентів</li>
-        <li>CSPM автоматизує detection та remediation</li>
-        <li>Вибір tool: native → third-party → open source</li>
-        <li>Інтеграція з DevOps критична для успіху</li>
+        <li>Помилкові конфігурації — причина №1 хмарних інцидентів (&gt;80%, Verizon DBIR 2025)</li>
+        <li>CSPM автоматизує виявлення, пріоритезацію та усунення на масштабі</li>
+        <li>Стратегія вибору: починати з нативних, розширювати сторонніми або open source</li>
+        <li>Інтеграція з DevOps та CI/CD — критична умова успіху CSPM-програми</li>
+        <li>Майбутнє — конвергенція з CWPP/CIEM/DSPM у єдину CNAPP-платформу</li>
       </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Питання?</h1>
-      <p>Наступна лекція: CNAPP — комплексний захист cloud-native додатків</p>
     </section>
   </div>
 

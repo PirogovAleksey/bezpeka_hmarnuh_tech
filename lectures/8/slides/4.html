@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тема 8.4 — Ринок CNAPP | Безпека хмарних технологій</title>
+  <title>Тема 8.4 — Ринок та впровадження CNAPP | Безпека хмарних технологій</title>
   <link rel="icon" type="image/svg+xml" href="../../../img/favicon.svg">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../css/slides.css">
@@ -24,120 +24,95 @@
   <div class="slide-deck">
     <section class="slide active">
       <h1>Безпека хмарних технологій</h1>
-      <p>Тема 8.4: Ринок CNAPP та впровадження</p>
+      <p>Тема 8.4: Ринок CNAPP, впровадження та майбутнє</p>
     </section>
 
     <section class="slide">
-      <h1>Gartner Magic Quadrant Leaders</h1>
+      <h1>Ринок CNAPP 2025: ключові події</h1>
       <ul>
-        <li><strong>Wiz:</strong> Agentless, graph-based, $10B+ startup</li>
-        <li><strong>Prisma Cloud:</strong> Most comprehensive, enterprise</li>
-        <li><strong>Microsoft Defender:</strong> Azure-native, M365 integration</li>
-        <li><strong>CrowdStrike:</strong> EDR heritage, threat intel</li>
+        <li><strong>Березень 2025:</strong> Google анонсує намір придбати Wiz за $32 млрд — найбільша угода в історії хмарної безпеки</li>
+        <li><strong>Magic Quadrant 2025 — Leaders:</strong> Wiz, Palo Alto Prisma Cloud, Microsoft Defender, CrowdStrike Falcon</li>
+        <li><strong>Visionaries:</strong> Sysdig, Aqua, Orca, Lacework (придбана Fortinet 2024), Check Point</li>
+        <li><strong>Прогноз:</strong> ринок $9,8 млрд (2024) → $33,4 млрд (2030), середньорічний приріст 22,7%</li>
+        <li><strong>2025:</strong> 75% нових придбань CSPM постачаються як частина CNAPP</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Інші ключові гравці</h1>
-      <ul>
-        <li><strong>Orca:</strong> SideScanning, 100% agentless</li>
-        <li><strong>Lacework:</strong> Behavior-based anomaly detection</li>
-        <li><strong>Aqua:</strong> Container-focused, open source (Trivy)</li>
-        <li><strong>Sysdig:</strong> Runtime security, Falco</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Критерії вибору</h1>
+      <h1>Порівняння провідних платформ</h1>
       <div class="slide-grid">
         <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div>
-          <h3>Coverage</h3>
-          <p>AWS, Azure, GCP, K8s</p>
+          <h3>Wiz</h3>
+          <p>100% безагентна, графова кореляція, найшвидше розгортання, attack path UX</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg></div>
-          <h3>Deployment</h3>
-          <p>Agentless vs Agent</p>
+          <h3>Prisma Cloud</h3>
+          <p>Гібридна, найширший функціонал, CSPM + CWPP + CIEM + DSPM + ASPM, регуляторика</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-          <h3>Depth</h3>
-          <p>CSPM, CWPP, CIEM</p>
+          <h3>Defender for Cloud</h3>
+          <p>Гібридна, нативна Azure-інтеграція, Security Copilot, ціна для M365 E5</p>
         </div>
         <div class="slide-grid-item">
-          <div class="slide-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-          <h3>Attack Paths</h3>
-          <p>Risk prioritization</p>
+          <h3>CrowdStrike Falcon</h3>
+          <p>Агентна + agentless, runtime-захист, threat intel, XDR-кореляція</p>
+        </div>
+        <div class="slide-grid-item">
+          <h3>Orca Security</h3>
+          <p>100% безагентна, SideScanning через знімки EBS, deep vulnerability</p>
+        </div>
+        <div class="slide-grid-item">
+          <h3>Sysdig</h3>
+          <p>eBPF-агентна, runtime detection (Falco), open-source-стек, контейнери</p>
         </div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>Фази впровадження</h1>
+      <h1>Впровадження: чотири фази</h1>
       <div class="slide-timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">2-4w</div>
-          <div class="timeline-text">Assessment</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1</div><div class="timeline-text">Оцінка та планування (2–4 тижні)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">3-4w</div>
-          <div class="timeline-text">POC Evaluation</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2</div><div class="timeline-text">Proof of Concept з 2 вендорами (3–4 тижні)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">4-6w</div>
-          <div class="timeline-text">Deployment</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">3</div><div class="timeline-text">Початкове розгортання (4–6 тижнів)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">Ongoing</div>
-          <div class="timeline-text">Operations</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">4</div><div class="timeline-text">Operationalization + shift-left (постійна)</div></div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>Найкращі практики (Best Practices)</h1>
+      <h1>Найкращі практики впровадження</h1>
       <ul>
-        <li><strong>Visibility first:</strong> Не enforcement одразу</li>
-        <li><strong>Attack paths focus:</strong> 10 paths > 1000 findings</li>
-        <li><strong>Enable DevOps:</strong> Self-service, clear guidance</li>
-        <li><strong>Зсув ліворуч (Shift-Left):</strong> CI/CD integration early</li>
-        <li><strong>Measure:</strong> MTTD, MTTR, coverage</li>
+        <li><strong>Спочатку видимість, потім примус:</strong> перший місяць — read-only, не блокувати deployments</li>
+        <li><strong>Фокус на шляхах атаки:</strong> 10 критичних шляхів важливіші за 10 000 знахідок Medium</li>
+        <li><strong>Self-service для DevOps:</strong> розробницькі дашборди, IDE-розширення, pre-commit hooks</li>
+        <li><strong>Інтеграція раніше в SDLC:</strong> shift-left + shield-right у єдиній політиці</li>
+        <li><strong>Метрики, що важливі:</strong> закриті attack paths, MTTD, MTTR, % coverage, prevented findings</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>Майбутнє CNAPP</h1>
+      <h1>Тренди розвитку до 2027 р.</h1>
       <ul>
-        <li><strong>AI/ML:</strong> Intelligent prioritization</li>
-        <li><strong>Середовище виконання (Runtime):</strong> eBPF, real-time behavior</li>
-        <li><strong>AppSec:</strong> SAST/DAST, API security integration</li>
-        <li><strong>Multi-cloud native:</strong> Cross-cloud attack paths</li>
-        <li>Gartner: 60% enterprises → CNAPP до 2026</li>
+        <li><strong>ASPM-конвергенція:</strong> SAST, SCA, API security стають частиною CNAPP</li>
+        <li><strong>SSPM:</strong> SaaS-середовища (Salesforce, M365, Snowflake) — новий клас активів</li>
+        <li><strong>AI-SPM:</strong> моніторинг LLM-розгортань, prompt injection, витік через prompts</li>
+        <li><strong>Cross-cloud attack paths:</strong> шляхи через AWS + Azure одночасно</li>
+        <li><strong>AI-агенти:</strong> Microsoft Security Copilot, Wiz AI Assistant, CrowdStrike Charlotte AI</li>
+        <li><strong>Платформена інженерія:</strong> інтеграція з Backstage / Port як self-service</li>
       </ul>
     </section>
 
     <section class="slide">
       <h1>Ключові висновки</h1>
       <ul>
-        <li>CNAPP = Consolidation of cloud security tools</li>
-        <li>Attack path analysis — головна диференціація</li>
-        <li>Context + correlation > isolated findings</li>
-        <li>Dev + Sec + Ops — єдина платформа для всіх</li>
-        <li>Market is maturing — CNAPP стає стандартом</li>
+        <li>Ринок CNAPP дозрів — стабільна група Лідерів і чіткі критерії вибору</li>
+        <li>Вибір залежить від контексту: швидкість (Wiz), широта (Prisma), runtime (CrowdStrike/Sysdig)</li>
+        <li>Впровадження — це не лише розгортання інструменту, а й трансформація процесів</li>
+        <li>Майбутнє — конвергенція з ASPM, SSPM, AI-SPM при незмінному графовому ядрі</li>
+        <li>До 2027 р.: 80% нових покупок CSPM/CWPP/CIEM відбуватимуться у формі CNAPP</li>
       </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Питання?</h1>
-      <p>Наступна лекція: AI та Machine Learning у хмарній безпеці</p>
     </section>
   </div>
 

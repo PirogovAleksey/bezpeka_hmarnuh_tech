@@ -28,104 +28,70 @@
     </section>
 
     <section class="slide">
-      <h1>5 ключових функцій CSPM</h1>
+      <h1>П'ять ключових функцій</h1>
       <div class="slide-timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">1</div>
-          <div class="timeline-text">Discovery</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1</div><div class="timeline-text">Виявлення активів (Discovery)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">2</div>
-          <div class="timeline-text">Assessment</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2</div><div class="timeline-text">Оцінка конфігурацій (Assessment)</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">3</div>
-          <div class="timeline-text">Prioritize</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">3</div><div class="timeline-text">Пріоритезація ризиків</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">4</div>
-          <div class="timeline-text">Відповідність (Compliance)</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">4</div><div class="timeline-text">Моніторинг відповідності</div></div>
         <div class="timeline-line"></div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-year">5</div>
-          <div class="timeline-text">Remediate</div>
-        </div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">5</div><div class="timeline-text">Усунення порушень (Remediation)</div></div>
       </div>
     </section>
 
     <section class="slide">
-      <h1>1. Asset Discovery</h1>
+      <h1>Виявлення та оцінка (1–2)</h1>
       <ul>
-        <li><strong>Compute:</strong> VMs, containers, serverless</li>
-        <li><strong>Storage:</strong> Object storage, databases</li>
-        <li><strong>Network:</strong> VPCs, security groups, load balancers</li>
-        <li><strong>Identity:</strong> IAM users, roles, service accounts</li>
-        <li>Real-time inventory через API polling</li>
+        <li><strong>Інвентаризація активів:</strong> ВМ, контейнери, serverless, об'єктне сховище, IAM-ролі, мережі</li>
+        <li><strong>Оновлення у реальному часі:</strong> опитування API (polling) + події хмари (event-driven)</li>
+        <li><strong>Оцінка проти CIS Benchmarks</strong> AWS/Azure/GCP, AWS Well-Architected</li>
+        <li><strong>Фреймворки відповідності:</strong> PCI DSS, HIPAA, SOC 2, GDPR</li>
+        <li><strong>Власні політики</strong> організації (наприклад, через OPA/Rego)</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>2. Configuration Assessment</h1>
+      <h1>Пріоритезація ризиків (3)</h1>
       <ul>
-        <li><strong>CIS Benchmarks:</strong> Стандартні перевірки для AWS/Azure/GCP</li>
-        <li><strong>Provider best practices:</strong> AWS Well-Architected</li>
-        <li><strong>Custom policies:</strong> Організаційні стандарти</li>
-        <li><strong>Фреймворки відповідності (Compliance):</strong> PCI DSS, HIPAA, SOC 2</li>
+        <li><strong>Критичність (severity):</strong> публічна експозиція проти внутрішньої помилки</li>
+        <li><strong>Придатність до експлуатації (exploitability):</strong> наскільки легко атакувати</li>
+        <li><strong>Важливість активу (asset criticality):</strong> продакшн проти dev-середовища</li>
+        <li><strong>Аналіз шляхів атаки (attack path analysis):</strong> чи існує ланцюг до чутливих даних</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>3. Risk Prioritization</h1>
+      <h1>Відповідність та усунення (4–5)</h1>
       <ul>
-        <li><strong>Severity:</strong> Public exposure vs internal misconfiguration</li>
-        <li><strong>Exploitability:</strong> Наскільки легко експлуатувати</li>
-        <li><strong>Asset criticality:</strong> Production vs dev environment</li>
-        <li><strong>Attack path:</strong> Чи є шлях до критичних даних</li>
+        <li><strong>Безперервний моніторинг:</strong> дашборди, автоматизовані звіти, аналіз розривів</li>
+        <li><strong>Збір доказів</strong> для аудиторського журналу</li>
+        <li><strong>Ручні інструкції</strong> для операторів (manual guidance)</li>
+        <li><strong>Напівавтоматичне:</strong> згенеровані CLI-команди та IaC-виправлення</li>
+        <li><strong>Превентивне:</strong> блокування небезпечних розгортань у CI/CD</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>4. Моніторинг відповідності (Compliance Monitoring)</h1>
+      <h1>Розширення функцій у сучасних CSPM</h1>
       <ul>
-        <li>Real-time compliance dashboards</li>
-        <li>Automated reports для аудиторів</li>
-        <li>Gap analysis: що потрібно виправити</li>
-        <li>Evidence collection для audit trails</li>
+        <li><strong>CIEM:</strong> аналіз IAM-прав, виявлення надмірних привілеїв та неактивних ідентичностей</li>
+        <li><strong>DSPM:</strong> пошук чутливих даних, моніторинг шифрування</li>
+        <li><strong>Мережева безпека:</strong> візуалізація топології, аналіз експозиції в інтернет</li>
+        <li><strong>Attack Path:</strong> моделювання реальних ланцюгів компрометації</li>
       </ul>
     </section>
 
     <section class="slide">
-      <h1>5. Remediation</h1>
+      <h1>Ключові висновки</h1>
       <ul>
-        <li><strong>Manual:</strong> Детальні інструкції для операторів</li>
-        <li><strong>Semi-automated:</strong> CLI commands, IaC patches</li>
-        <li><strong>Fully automated:</strong> Auto-fix за правилами</li>
-        <li><strong>Preventive:</strong> Блокування в CI/CD</li>
+        <li>CSPM — це п'ять функцій: виявлення, оцінка, пріоритезація, відповідність, усунення</li>
+        <li>Інвентаризація без пріоритезації створює втому від сповіщень (alert fatigue)</li>
+        <li>Пріоритезація за шляхами атаки — ключова відмінність сучасних платформ</li>
+        <li>CSPM еволюціонує у бік уніфікації з CIEM, DSPM та CWPP (CNAPP)</li>
       </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Розширені можливості</h1>
-      <ul>
-        <li><strong>CIEM:</strong> IAM permissions analysis, unused privileges</li>
-        <li><strong>DSPM:</strong> Sensitive data discovery, encryption status</li>
-        <li><strong>Network:</strong> Topology visualization, exposure analysis</li>
-        <li><strong>Attack Path:</strong> Моделювання можливих атак</li>
-      </ul>
-    </section>
-
-    <section class="slide">
-      <h1>Питання?</h1>
-      <p>Наступна тема: Архітектура та інтеграція CSPM</p>
     </section>
   </div>
 
